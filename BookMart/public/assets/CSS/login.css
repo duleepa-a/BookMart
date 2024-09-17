@@ -73,12 +73,16 @@ body{
     display: flex;
     float: right;
 }
-
+.title-link{
+  text-decoration: none;
+  color: #ffffff;
+}
 .navBar-right a {
     padding: 10px;
     font-weight: bold;
     margin-left: 85%;
     color: #02224E;
+    border: 2px solid #02224e00;
     text-decoration: none;
     font-size: 1.2em;
 }
@@ -90,10 +94,18 @@ body{
 }
 
 .transperant-bttn{
-    color: #02224E;
+  padding: 10px;
+  font-weight: bold;
+  margin-left: 85%;
+  color: #02224E;
+  border: 2px solid #02224e00;
+  text-decoration: none;
+  font-size: 1.2em;
 }
 .transperant-bttn:hover{
-    color: #02224E;
+  background-color:#F1F1F1;
+  color:#02224E;
+  border: 2px solid #02224E;
     
 }
 

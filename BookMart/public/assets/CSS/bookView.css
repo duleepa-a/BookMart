@@ -49,6 +49,13 @@ body{
     margin-left: 20px;
     color: #ffffff;
 }
+
+.title-link{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+
 .transperant-bttn{
     cursor: pointer;
     margin-right: 5px;

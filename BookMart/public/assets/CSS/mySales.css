@@ -3,10 +3,11 @@
     box-sizing: border-box;
 }
 
-body {
+body{
     background-color: #F1F1F1;
 }
 
+/* Nav Bar */
 .navBar{
     padding: 10px;
     margin-top:0;
@@ -24,36 +25,11 @@ body {
     color: #ffffff;
 }
 
-
 .title-link{
     text-decoration: none;
     color: #ffffff;
 }
 
-.highlight{
-    color: #BE5715;
-}
-
-.nav-links{
-    gap: 10px;
-}
-
-.transperant-bttn{
-    cursor: pointer;
-    margin-right: 5px;
-    padding: 10px;
-    color: #ffffff;
-    background: #02224E;
-    font-size: 0.8em;
-    border: none;
-    text-decoration: none;
-}
-.transperant-bttn:hover{
-    color: #02224E;
-    border-bottom: 2px solid #ffffff;
-    background: #ffffff;
-    
-}
 
 .navbar-links{
     font-family: sans-serif;
@@ -91,8 +67,8 @@ body {
 .navbar-links-select{
     font-family: sans-serif;
     color: white;
-    cursor: pointer;
     background-color: #02224E;
+    cursor: pointer;
     text-decoration: none;
     border: none;
     font-size: 0.8rem;
@@ -125,60 +101,146 @@ body {
     transform: translateY(-2px);
 }
 
-
-main {
-    padding: 2rem;
-    width: 90%;
-    margin: auto;
-}
-
-.orders-section h2 {
-    text-align: center;
-    font-size: 2rem;
+.highlight{
     color: #BE5715;
-    margin-bottom: 1rem;
 }
 
-.sort-by {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 1rem;
+.search-bar-div{
+    position: relative;
+    display: inline-block;
 }
 
-.sort-by button {
-    padding: 0.5rem 1rem;
-    background-color: #1b1e5c;
-    color: #fff;
-    border: none;
-    border-radius: 0px;
+.search-bar {
+    padding-left: 60px;
+    padding: 10px;
+    width: 400px;
+    border-radius: 5px;
+    border: solid 2px rgb(191, 183, 183);
+    background-color: #02224E;
+    color: rgb(191, 183, 183);
+    box-sizing: border-box;
+}
+
+.search-icon {
+    top:10px;
+    position: relative;
+    left: 20px; 
+    pointer-events: none; 
+    color: #aaa;
+}
+
+.nav-links{
+    row-gap: 10px;
+}
+
+.transperant-bttn{
     cursor: pointer;
+    margin-right: 30px;
+    padding: 10px;
+    color: #ffffff;
+    background: #02224E;
+    font-size: 0.9em;
+    border: none;
+    text-decoration: none;
+}
+.transperant-bttn:hover{
+    color: #02224E;
+    border-bottom: 2px solid #ffffff;
+    background: #ffffff;
+    
+}
+/* Nav Bar */
+
+.background-box{
+    background-color: white;
+    padding: 20px;
+    width: 80%;
+    margin:auto ;
+    border-radius: 10px;
 }
 
-.order-list {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(1, 1fr);
+.title-text{
+    text-align: center;
+    color: #BE5715;
 }
 
-.order-card {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 1rem;
-    border-radius: 0px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.controls {
+    margin-bottom: 20px;
+    display: flex; 
+    justify-content: space-between;
+    padding: 0px 20px;
 }
 
-.order-card h3 {
-    font-size: 1.2rem;
-    color: #333;
-    margin-bottom: 0.5rem;
+.controls button, .controls input {
+    padding: 10px 20px;
+    height: 40px;
+    width: 150px;
 }
 
-.order-card p {
-    margin: 0.3rem 0;
-    color: #666;
+.controls .search-bar{
+    background-color: #ffffff;
+    height: 40px;
+    width: 800px;
 }
 
+/* Table */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 1.2em;
+    text-align: left;
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid black;
+}
+
+.styled-table thead tr {
+    background-color: #02224E;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 1px solid #02224E;
+}
+
+.view-button {
+    background-color: #02224E;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.view-button:hover {
+    background-color: #BE5715;
+}
+
+.book-cover {
+    width: 100px; 
+    height: 150px; 
+    object-fit: stretch;
+    background-color: #f0f0f0;
+}
+/* Table */
+
+.single-button{
+    display: block; 
+    margin: 0 auto;
+}
+
+/* Footer */
 .footer {
     background-color: #002b54;
     color: white;
@@ -212,38 +274,4 @@ main {
     font-size: 14px;
     color: lightgray;
 }
-
-.view-btn {
-    margin-left: 91.5%;
-    padding: 0.5rem 0.8rem;
-    border: 3px solid #02224E;
-    background-color: #ffffff;
-    font-weight: bold;
-    color: #02224E;
-    font-size: 0.7rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    align-self: center;
-}
-
-.view-btn:hover {
-    color: #ffffff;
-    background-color: #02224E;
-}
-
-.form-group-row {
-    width: 90%;
-    display: flex;
-    justify-content: space-between;
-}
-
-.sort-bttn{
-    cursor: pointer;
-    margin-right: 5px;
-    padding: 10px;
-    color: #ffffff;
-    background: #02224E;
-    font-size: 0.8em;
-    border: none;
-    text-decoration: none;
-}
+/* Footer */

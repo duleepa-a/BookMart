@@ -1,4 +1,5 @@
 // Slider for the Ad Banner
+// Slider for the Ad Banner
 const slider = document.querySelector('.slider');
 const sliderImages = document.querySelectorAll('.slider-image');
 const prevButton = document.querySelector('.slider-prev');
@@ -13,20 +14,20 @@ function showSlide(index) {
     } else {
         currentSlide = index;
     }
-    slider.style.transform = `translateX(-${currentSlide*100}%)`;
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
 }
 
 nextButton.addEventListener('click', () => {
-    showSlide((currentSlide + 1));
+    showSlide(currentSlide + 1);
 });
 
 prevButton.addEventListener('click', () => {
-    showSlide((currentSlide + 1));
+    showSlide(currentSlide - 1);  // Move to the previous slide
 });
 
 // Automatic slide change every 3 seconds
 // setInterval(() => {
-//     showSlide((currentSlide + 1));
+//     showSlide(currentSlide + 1);
 // }, 3000);
 
 // Carousel for the New Arrivals
@@ -37,23 +38,33 @@ const bookCards = document.querySelector('.book-cards');
 let bookScrollAmount = 0;
 
 bookNextButton.addEventListener('click', () => {
-    bookScrollAmount += 300;
-    bookCards.scrollTo({
-        top: 0,
-        left: bookScrollAmount,
-        behavior: 'smooth'
-    });
+    const maxScrollLeft = bookCards.scrollWidth - bookCards.clientWidth; // Calculate the maximum scrollable width
+    if (bookScrollAmount < maxScrollLeft) { // Check if there's more content to scroll
+        bookScrollAmount += 300;
+        if (bookScrollAmount > maxScrollLeft) { // Prevent overscrolling beyond the last item
+            bookScrollAmount = maxScrollLeft;
+        }
+        bookCards.scrollTo({
+            top: 0,
+            left: bookScrollAmount,
+            behavior: 'smooth'
+        });
+    }
 });
 
 bookPrevButton.addEventListener('click', () => {
-    bookScrollAmount -= 300;
-    bookCards.scrollTo({
-        top: 0,
-        left: bookScrollAmount,
-        behavior: 'smooth'
-    });
+    if (bookScrollAmount > 0) { // Prevent scrolling before the first item
+        bookScrollAmount -= 300;
+        if (bookScrollAmount < 0) { // Prevent negative scroll amount
+            bookScrollAmount = 0;
+        }
+        bookCards.scrollTo({
+            top: 0,
+            left: bookScrollAmount,
+            behavior: 'smooth'
+        });
+    }
 });
-
 
 function showTab(tabId) {
     // Hide all tab contents
@@ -78,3 +89,31 @@ function showTab(tabId) {
 // Initially display the first tab
 document.getElementById('fiction').style.display = 'block';
 
+
+document.getElementById('logoutButton').addEventListener('click', function() {
+    
+    fetch('http://localhost/BookMart/public/user/logout', { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json(); 
+            throw new Error('Logout failed.');
+        }
+    })
+    .then(data => {
+        console.log(data); 
+        if (data.status === 'success') {
+            window.location.href = 'http://localhost/BookMart/public/'; 
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error during logout:', error);
+        alert('Logout failed. Please try again.');
+    });
+});
