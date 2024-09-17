@@ -9,7 +9,7 @@
 <body>
     <div class="navBar">
         <span class = "title">
-            <h2>Book<span class="highlight">Mart</span></h2>
+            <a href="<?= ROOT ?>/home" class="title-link"><h2>Book<span class="highlight">Mart</span></h2></a>
         </span>
         
         <div class="nav-links">
@@ -22,7 +22,7 @@
                 </select>
                 <a href="<?= ROOT ?>/CourierProfile" class="navbar-links">My Profile</a>
                 <a href="<?= ROOT ?>/Login" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
-                <button class="navbar-links-select">Log Out</button>
+                <button class="navbar-links-select" id="logoutButton">Log Out</button>
             </div>
     </div>
 
@@ -120,6 +120,6 @@
         </div>
     </div>
 
-    <script src="<?= ROOT ?>/1.js"></script>
+    <script src="<?= ROOT ?>/assets/JS/courierHome.js"></script>
 </body>
 </html>

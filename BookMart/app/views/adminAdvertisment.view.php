@@ -9,7 +9,7 @@
 <body>
     <div class="navBar">
         <span class = "title">
-            <h2>Book<span class="highlight">Mart</span></h2>
+        <a href="<?= ROOT ?>/home" class="title-link"><h2>Book<span class="highlight">Mart</span></h2></a>
         </span>
     </div>
     <div class="container"> 

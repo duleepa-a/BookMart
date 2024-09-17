@@ -1,7 +1,7 @@
 <?php
 
 if($_SERVER['SERVER_NAME'] == 'localhost'){
-    define('DBNAME','my_db');
+    define('DBNAME','bookMart');
     define('DBHOST','localhost');
     define('DBUSER','root');
     define('DBPASS','');

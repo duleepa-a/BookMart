@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/bookView.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>BookMart </title>
+    <title><?= $book->title; ?> </title> <!-- Dynamic title based on book -->
 </head>
 <body>
     <div class="navBar">
         <span class = "title">
-            <h2>Book<span class="highlight">Mart</span></h2>
+        <a href="<?= ROOT ?>/home" class="title-link"><h2>Book<span class="highlight">Mart</span></h2></a>
         </span>
         <div class="search-bar-div">
             <input type="text" class="search-bar" placeholder="Search your book, bookstore" />
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
         </div>
         <div class="nav-links">
-                <select id="genres" name="genres" class="navbar-links-select" >
+                <select id="genres" name="genres" class="navbar-links-select">
                     <option value="" disabled selected>Genres</option>
                     <option value="fiction">Fiction</option>
                     <option value="novels">Novels</option>
@@ -31,50 +31,59 @@
                 <button class="navbar-links-select">Log Out</button>
             </div>
     </div>
-    <div class="container">
-            <div class="book-container">
-                <div class="book-image">
-                    <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Daughter of Man">
-                </div>
-                <div class="book-details">
-                    <div class="book-title">
-                        <h1>Harry Potter and the Cursed Child</h1> 
-                        <p class="bookstore">sarasavi bookshop</p>
-                    </div>
-                    <div class="book-price-details">
-                      <div class="book-details-availabitiy-condition">
-                        <div class="book-details-availability">
-                            In Stock
-                        </div> 
-                        <div class="book-details-condition">
-                          Brand new
-                        </div>
+    <?php if (isset($book) && !empty($book)): ?>
+      <div class="container">
+          <div class="book-container">
+              <div class="book-image">
+                  <img src="<?= ROOT ?>/assets/Images/book cover images/<?= $book->cover_image; ?>" alt="<?= $book->title; ?>">
+              </div>
+              <div class="book-details">
+                  <div class="book-title">
+                      <h1><?= $book->title; ?></h1>
+                      <p class="bookstore"><?= $seller->username; ?></p>
+                  </div>
+                  <div class="book-price-details">
+                      <div class="book-details-availability-condition">
+                          <div class="book-details-availability">
+                              <?= $book->quantity > 0 ? 'In Stock' : 'Out of Stock'; ?>
+                          </div>
+                          <div class="book-details-condition">
+                              <?= ucfirst($book->book_condition); ?>
+                          </div>
                       </div>
-                        <p class="old-price"><del>LKR 2000.00</del></p> 
-                        <p class="price">LKR 1500.00</p>
-                    </div>
-                    <div class="book-info">
-                        <h3>Book Info</h3>
-                        <ul>
-                            <li><strong>Language</strong>: English</li>
-                            <li><strong>Author</strong>: L.J. Sysco</li>
-                            <li><strong>Genre</strong>: Fiction</li>
-                            <li><strong>Publisher</strong>: sdsds</li>
-                            <li><strong>ISBN</strong>: 2003132</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+                      <?php if ($book->discount > 0): ?>
+                      <p class="old-price"><del>LKR <?= number_format($book->price); ?></del></p>
+                      <?php else: ?>
+                        <p class="old-price"><del></del></p>
+                       <?php endif; ?>
+                      <p class="price">LKR <?= number_format($book->price - ($book->price * $book->discount / 100)); ?></p>
+                  </div>
+                  <div class="book-info">
+                      <h3>Book Info</h3>
+                      <ul>
+                          <li><strong>Language</strong>: <?= $book->language; ?></li>
+                          <li><strong>Author</strong>: <?= $book->author; ?></li>
+                          <li><strong>Genre</strong>: <?= ucfirst($book->genre); ?></li>
+                          <li><strong>Publisher</strong>: <?= $book->publisher; ?></li>
+                          <li><strong>ISBN</strong>: <?= $book->ISBN; ?></li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
         <div class="product-actions">
-        <div class="quantity-selector">
-            <button class="quantity-btn">-</button>
-            <span class="quantity">1</span>
-            <button class="quantity-btn">+</button>
-        </div>
-        <button class="buy-now-btn">Buy now</button>
-        <button class="add-to-cart-btn">Add to cart</button>
+            <div class="quantity-selector">
+                <button class="quantity-btn">-</button>
+                <span class="quantity">1</span>
+                <button class="quantity-btn">+</button>
+            </div>
+            <button class="buy-now-btn">Buy now</button>
+            <button class="add-to-cart-btn">Add to cart</button>
         </div>
     </div>
+    <?php else: ?>
+      <p>Book details are not available.</p>
+    <?php endif; ?>
     <nav class="tabs">
         <button class="tab-button active first-child" onclick="showTab('book-reviews')">Book Reviews</button>
         <button class="tab-button" onclick="showTab('book-view-description')">Description</button>
@@ -141,7 +150,7 @@
           
     </div>
     <div class="tab-content" id="book-view-description" style="display: none;">
-        <p class="book-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti consectetur asperiores vero harum! Obcaecati tenetur, corporis blanditiis labore molestias velit sapiente illum? Facere ex, laborum ducimus quo sequi tempore a!</p>
+        <p class="book-description"><?= $book->description; ?></p>
         <br><br>
     </div>
 
