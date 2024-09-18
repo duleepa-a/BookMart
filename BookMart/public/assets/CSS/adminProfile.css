@@ -144,6 +144,11 @@
     margin-right: 80%;
 }
 
+.title-link{
+    text-decoration: none;
+    color: #ffffff;
+}
+
 .highlight{
     color: #BE5715;
 }

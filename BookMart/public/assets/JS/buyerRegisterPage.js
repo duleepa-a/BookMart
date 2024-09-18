@@ -1,11 +1,12 @@
 function showTab(tabId) {
-    // Hide all tab contents
+
+    event.preventDefault();
     var tabContents = document.getElementsByClassName('tab-content');
     for (var i = 0; i < tabContents.length; i++) {
         tabContents[i].style.display = 'none';
     }
 
-    // Remove 'active' class from all tab buttons
+ 
     var tabButtons = document.getElementsByClassName('tab-button');
     for (var i = 0; i < tabButtons.length; i++) {
         tabButtons[i].classList.remove('active');
@@ -18,6 +19,6 @@ function showTab(tabId) {
     event.currentTarget.classList.add('active');
 }
 
-// Initially display the first tab
-document.getElementById('personal-details').style.display = 'block';
+
+document.getElementById('login-credentials').style.display = 'block';
 

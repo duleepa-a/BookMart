@@ -332,3 +332,8 @@ flex: 1;
 .error{
     color: #A90505;
 }
+
+.title-link{
+    text-decoration: none;
+    color: #02224E;
+  }

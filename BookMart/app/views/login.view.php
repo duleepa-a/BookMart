@@ -19,7 +19,7 @@
         <div class="first-half">
             <div class="navBar-left">
                 <nav class="title">
-                    <span class="title-name">Book<span class="highlight">Mart</span></span>
+                <a href="<?= ROOT ?>/home" class="title-link"><span class="title-name">Book<span class="highlight">Mart</span></span></a>
                 </nav>
             </div>
             <div class="hero-content"> 
@@ -29,19 +29,19 @@
         </div>
         <div class="second-half">
             <div class="navBar-right">
-                <a class="transperant-bttn" href="#">Sign In</a>
+                <a class="transperant-bttn" href="<?= ROOT ?>/register" >Sign In</a>
             </div>
             <div class="right-content">
                 <center>
                 <div class="login-form-container">
                 <h1 class="login-text-heading">LOGIN</h1> <br/>                
-                    <form onSubmit={handleSubmit} class="login-form">
+                    <form onSubmit={handleSubmit} class="login-form" method="POST" action="<?= ROOT ?>/user/login">
                       <div class="form-group">
                         <label htmlFor="name" class='label'>Email Or Username</label><br/>
                         <input
                           type="text"
                           id="name"
-                          name="name"
+                          name="username"
                           placeholder='USERNAME OR EMAIL'
                           value=""
                           onChange={handleChange}

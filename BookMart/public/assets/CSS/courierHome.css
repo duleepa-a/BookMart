@@ -24,6 +24,12 @@ body {
     color: #ffffff;
 }
 
+
+.title-link{
+    text-decoration: none;
+    color: #ffffff;
+}
+
 .highlight{
     color: #BE5715;
 }
@@ -85,6 +91,7 @@ body {
 .navbar-links-select{
     font-family: sans-serif;
     color: white;
+    cursor: pointer;
     background-color: #02224E;
     text-decoration: none;
     border: none;
