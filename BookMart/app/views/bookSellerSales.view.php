@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../public/assets/CSS/MySales.css">    <!-- Edit path later -->
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/bookSellerSales.css">    <!-- Edit path later -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>My Listings</title>
 </head>
@@ -140,4 +140,7 @@
             &copy; 2024 BookMart. All rights reserved.
         </div>
     </div>                  <!-- Footer division end -->
+
+    <script src="<?= ROOT ?>/assets/JS/bookSellerSales.js"></script>
+
 </body>

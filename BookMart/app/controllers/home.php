@@ -1,32 +1,38 @@
 <?php
 
-class Home extends Controller{
+require 'Book.php';
 
+class Home extends Controller{
+    
     public function index($a = '', $b = '' , $c = ''){
-        if(isset($_SESSION['user_role'])) {
+        $bookController = new Book();
+        $newArrivals = $bookController->getNewArrivals();
+        $data = ['newArrivals' => $newArrivals];
+
+        if(isset($_SESSION['user_role']) &&  isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'active' ) {
             $userRole = $_SESSION['user_role'];
 
             switch($userRole) {
+                case 'bookStore':
+                    $this->view('bookStoreHome');
+                    break;
                 case 'admin':
-                    $this->view('admin/home');
+                    $this->view('adminHome');
                     break;
-                case 'bookstore':
-                    $this->view('bookstore/home');
-                    break;
-                case 'bookseller':
-                    $this->view('bookseller/home');
+                case 'bookSeller':
+                    $this->view('bookSellerHome',$data);
                     break;
                 case 'courier':
-                    $this->view('courier/home');
+                    $this->view('courierHome');
                     break;
-                case 'bookbuyer':
-                    $this->view('bookbuyer/home');
+                case 'buyer':
+                    $this->view('buyerHome',$data);
                     break;
                 default:
-                    $this->view('home'); 
+                    $this->view('home',$data); 
             }
         } else {
-            $this->view('home');
+            $this->view('home',$data);
         }
     }
     
