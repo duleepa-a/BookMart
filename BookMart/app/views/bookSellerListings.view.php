@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./CSS/MyListings.css">
+    <link rel="stylesheet" href="../../public/assets/CSS/MyListings.css">   <!-- Edit path later -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>My Listings</title>
 </head>
+
 <body>
-    <div class="navBar">
+    
+    <div class="navBar">    <!-- navBar division begin -->
         <span class = "title">
             <h2>Book<span class="highlight">Mart</span></h2>
         </span>
@@ -30,27 +32,30 @@
                 <a href="./Login.html" class="transperant-bttn"><i class="fa-solid fa-bell"></i></a>
                 <button class="transperant-bttn">Log Out</button>
             </div>
-    </div>
+    </div>                  <!-- navBar division end -->
+    
     <br><br>
   
-    <div class="background-box">         
+    <div class="background-box">    <!-- inner background box begin -->        
         <h1 class="title-text">My Listings</h1>
+
         <br><br>
 
-        <div class="controls">
+        <div class="controls">      <!-- First row division begin -->
             <input type="text" placeholder="Search..." class="search-bar">
             <button>Search</button>
-        </div>
-        <div class="controls">
+        </div>                      <!-- First row division end -->
+
+        <div class="controls">      <!-- Button row division begin -->
             <button>Select All</button>
             <button>Edit</button>
             <button>Update Status</button>
             <button>Delete</button>
             <button>Filter</button>
             <button>Sort</button>
-        </div>
+        </div>                      <!-- Button row division end -->
 
-        <table class="styled-table">
+        <table class="styled-table">    <!-- Table division begin -->
             <thead>
                 <tr>
                     <th></th>
@@ -121,13 +126,17 @@
                     <td><button class="view-button">View</button></td>
                 </tr>
             </tbody>
-        </table>
+        </table>                        <!-- Table division end -->
+
         <div class="controls">
             <button class="single-button">View More</button>
         </div>
+        
         <br><br>
-    </div> 
-    <div class="footer">
+
+    </div>                          <!-- inner background box begin -->
+
+    <div class="footer">    <!-- Footer divison begin -->
         <div class="links">
             <a href="./contactUs.html">Contact Us</a><br><br>
             <a href="./aboutUs.html">About Us</a>
@@ -136,5 +145,6 @@
         <div class="copyright">
             &copy; 2024 BookMart. All rights reserved.
         </div>
-    </div>
+    </div>                  <!-- Footer divison end -->
+
 </body>

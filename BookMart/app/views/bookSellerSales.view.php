@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./CSS/MySales.css">
+    <link rel="stylesheet" href="../../public/assets/CSS/MySales.css">    <!-- Edit path later -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>My Listings</title>
 </head>
+
 <body>
-    <div class="navBar">
+
+    <div class="navBar">        <!-- NavBar division begin -->
         <span class = "title">
             <h2>Book<span class="highlight">Mart</span></h2>
         </span>
@@ -30,22 +32,24 @@
                 <a href="./Login.html" class="transperant-bttn"><i class="fa-solid fa-bell"></i></a>
                 <button class="transperant-bttn">Log Out</button>
             </div>
-    </div>
+    </div>                      <!-- NavBar division end -->
+    
     <br><br>
   
-    <div class="background-box">         
+    <div class="background-box">    <!-- Inner background box begin -->       
         <h1 class="title-text">My Sales</h1>
+        
         <br><br>
 
-        <div class="controls">
+        <div class="controls">  <!-- First row division begin -->
             <input type="text" placeholder="Search..." class="search-bar">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
             <button>Search</button>
             <button>Filter</button>
             <button>Sort</button>
-        </div>
+        </div>                  <!-- First row division end -->
 
-        <table class="styled-table">
+        <table class="styled-table">    <!-- Table divison begin -->
             <thead>
                 <tr>
                     <th></th>
@@ -116,13 +120,17 @@
                     <td><button class="view-button">View</button></td>
                 </tr>
             </tbody>
-        </table>
+        </table>                        <!-- Table divison end -->
+
         <div class="controls">
             <button class="single-button">View More</button>
         </div>
+
         <br><br>
-    </div> 
-    <div class="footer">
+
+    </div>                          <!-- Inner background box end -->
+
+    <div class="footer">    <!-- Footer division begin -->
         <div class="links">
             <a href="./contactUs.html">Contact Us</a><br><br>
             <a href="./aboutUs.html">About Us</a>
@@ -131,5 +139,5 @@
         <div class="copyright">
             &copy; 2024 BookMart. All rights reserved.
         </div>
-    </div>
+    </div>                  <!-- Footer division end -->
 </body>
