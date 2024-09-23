@@ -35,7 +35,7 @@
     </div>                  <!-- navBar division end -->
     
     <br><br>
-  
+    <center>
     <div class="background-box">    <!-- inner background box begin -->        
         <h1 class="title-text">My Listings</h1>
 
@@ -132,9 +132,9 @@
             <button class="single-button">View More</button>
         </div>
         
-        <br><br>
+    </div>                          <!-- inner background box end -->
 
-    </div>                          <!-- inner background box begin -->
+    <br><br>
 
     <div class="footer">    <!-- Footer divison begin -->
         <div class="links">
