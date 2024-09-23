@@ -3,34 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/index.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/bookSellerHome.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>BookMart </title>
 </head>
 <body>
-    <div class="navBar">
+
+    <div class="navBar">    <!-- navBar division begin -->
         <span class = "title">
-        <a href="<?= ROOT ?>/home" class="title-link"><h2>Book<span class="highlight">Mart</span></h2></a>
+            <h2>Book<span class="highlight">Mart</span></h2>
         </span>
         <div class="search-bar-div">
             <input type="text" class="search-bar" placeholder="Search your book, bookstore" />
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
         </div>
         <div class="nav-links">
-                <select id="genres" name="genres" class="navbar-links-select" >
+                <select id="genres" name="genres" class="transperant-bttn" >
                     <option value="" disabled selected>Genres</option>
                     <option value="fiction">Fiction</option>
                     <option value="novels">Novels</option>
                     <option value="history">History</option>
                 </select>
-                <a href="" class="navbar-links">My Profile</a>
-                <a href="" class="navbar-links">Orders</a>
-                <a href="" class="navbar-links">Chat</a>
-                <a href="" class="navbar-links"><i class="fa-solid fa-cart-shopping"></i></a>
-                <a href="" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
-                <button id="logoutButton" class="navbar-links-select">Log Out</button>
-        </div>
-    </div>
+                <a href="./Login.html" class="transperant-bttn">My Profile</a>
+                <a href="./Login.html" class="transperant-bttn">Orders</a>
+                <a href="./Login.html" class="transperant-bttn">Chat</a>
+                <a href="./Login.html" class="transperant-bttn"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="./Login.html" class="transperant-bttn"><i class="fa-solid fa-bell"></i></a>
+                <button class="transperant-bttn">Log Out</button>
+            </div>
+    </div>                  <!-- navBar division end -->
+
     <div class="slider-container">
         <div class="slider">
             <img src="<?= ROOT ?>/assets/Images/ad banner 3.jpg" alt="Ad Banner 3" class="slider-image"/>
