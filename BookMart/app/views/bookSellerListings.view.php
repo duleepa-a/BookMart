@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/bookSellerListings.css">   <!-- Edit path later -->
+    <link rel="stylesheet" href="../../public/assets/CSS/bookSellerListings.css"> <!-- Add CSS file path here -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>My Listings</title>
+    <title>My Title</title> <!-- Add Title here -->
 </head>
 
 <body>
@@ -15,8 +15,8 @@
             <h2>Book<span class="highlight">Mart</span></h2>
         </span>
         <div class="search-bar-div">
+            <i class="fa-solid fa-magnifying-glass search-icon" class="search-icon"></i>
             <input type="text" class="search-bar" placeholder="Search your book, bookstore" />
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
         </div>
         <div class="nav-links">
                 <select id="genres" name="genres" class="transperant-bttn" >
@@ -131,7 +131,7 @@
         <div class="controls">
             <button class="single-button">View More</button>
         </div>
-        
+
     </div>                          <!-- inner background box end -->
 
     <br><br>
@@ -147,6 +147,6 @@
         </div>
     </div>                  <!-- Footer divison end -->
 
-    <script src="<?= ROOT ?>/assets/JS/bookSellerListings.js"></script>
+    <!-- <script src="../assets/JS/JS.js"></script> --> <!-- Add JS file here -->
 
 </body>
