@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../public/assets/CSS/bookSellerProfile.css">    <!-- Edit path later -->
+    <link rel="stylesheet" href="../../public/assets/CSS/bookSellerProfile.css"> <!-- Add CSS file path here -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>My Profile</title>
+    <title>My Title</title> <!-- Add Title here -->
 </head>
 
 <body>
-
-    <div class="navBar">        <!-- NavBar division begin -->
+    
+    <div class="navBar">    <!-- navBar division begin -->
         <span class = "title">
             <h2>Book<span class="highlight">Mart</span></h2>
         </span>
         <div class="search-bar-div">
+            <i class="fa-solid fa-magnifying-glass search-icon" class="search-icon"></i>
             <input type="text" class="search-bar" placeholder="Search your book, bookstore" />
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
         </div>
         <div class="nav-links">
                 <select id="genres" name="genres" class="transperant-bttn" >
@@ -32,11 +32,12 @@
                 <a href="./Login.html" class="transperant-bttn"><i class="fa-solid fa-bell"></i></a>
                 <button class="transperant-bttn">Log Out</button>
             </div>
-    </div>                      <!-- NavBar division end -->
+    </div>                  <!-- navBar division end -->
     
     <br><br>
-  
-    <div class="background-box">    <!-- Inner background box begin -->  
+
+    <div class="background-box">    <!-- inner background box begin -->        
+        
         <h1 class="title-text">My Profile</h1>
     
         <br><br>
@@ -135,11 +136,11 @@
                 <button class="save-button" onclick="showTab('Password change')" >Change & Save</button>
             </div>                                              <!-- BookSeller Password change end -->
 
-    </div>                          <!-- Inner background box end -->
+    </div>                          <!-- inner background box end -->
 
     <br><br>
 
-    <div class="footer">    <!-- Footer division begin -->
+    <div class="footer">    <!-- Footer divison begin -->
         <div class="links">
             <a href="./contactUs.html">Contact Us</a><br><br>
             <a href="./aboutUs.html">About Us</a>
@@ -148,8 +149,8 @@
         <div class="copyright">
             &copy; 2024 BookMart. All rights reserved.
         </div>
-    </div>                  <!-- Footer division end -->
+    </div>                  <!-- Footer divison end -->
 
-    <script src="../../public/assets/JS/bookSellerProfile.js"></script>
+    <script src="../../public/assets/JS/bookSellerProfile.js"></script> <!-- Edit JS path later -->
 
 </body>
