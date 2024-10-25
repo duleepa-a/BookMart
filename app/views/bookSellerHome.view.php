@@ -24,10 +24,11 @@
                     <option value="history">History</option>
                 </select>
                 <a href="" class="navbar-links">My Profile</a>
-                <a href="" class="navbar-links">Orders</a>
+                <a href="./bookSellerListings" class="navbar-links">Listings</a>
+                <a href="./bookSellerSales" class="navbar-links">Sales</a>
                 <a href="" class="navbar-links">Chat</a>
-                <a href="" class="navbar-links"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
-                <a href="" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
+                <a href="" class="navbar-links"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
                 <button id="logoutButton" class="navbar-links-select">Log Out</button>
         </div>
     </div>
@@ -72,7 +73,7 @@
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <p class="message-text">No new arrivals at the moment.</p>
+                        <p>No new arrivals at the moment.</p>
                     <?php endif; ?>
                 </div>
                 <button class="next"><i class="fa-solid fa-chevron-right fa-lg"></i></button>
@@ -86,49 +87,180 @@
         <nav class="tabs">
             <button class="tab-button active first-child" onclick="showTab('fiction')">Fiction</button>
             <button class="tab-button" onclick="showTab('history')">History</button>
-            <button class="tab-button" onclick="showTab('novel')">Novel</button>
+            <button class="tab-button last-child" onclick="showTab('novel')">Novel</button>
             <button class="tab-button" onclick="showTab('romance')">Romance</button>
-            <button class="tab-button" onclick="showTab('mystery')">Mystery</button>
-            <button class="tab-button" onclick="showTab('horror')">Horror</button>
+            <button class="tab-button last-child" onclick="showTab('mystrey')">Mystrey</button>
+            <button class="tab-button last-child" onclick="showTab('horror')">Horror</button>
             <button class="tab-button" onclick="showTab('young-adult')">Young-Adult</button>
-            <button class="tab-button" onclick="showTab('sci-fi')">Sci-fi</button>
+            <button class="tab-button last-child" onclick="showTab('sci-fi')">Sci-fi</button>
             <button class="tab-button last-child" onclick="showTab('crime')">Crime</button>
         </nav>
 
-        <?php
-        $genres = ['fiction', 'history', 'novel', 'romance', 'mystery', 'horror', 'young-adult', 'sci-fi', 'crime']; 
-
-        foreach ($genres as $genre): 
-            $books = $bestSellers[$genre] ?? []; // Get books for the current genre or an empty array
-        ?>
-
-        <div class="tab-content" id="<?= $genre ?>" style="display: <?= $genre === 'fiction' ? 'block' : 'none' ?>;">
+        <div class="tab-content" id="fiction">
             <div class="carousel">
-                <button class="prev prev-<?= $genre ?>"><i class="fa-solid fa-chevron-left fa-lg"></i></button>
-                <div class="book-cards book-cards-<?= $genre ?>">
-                    <?php if (empty($books)): ?>
-                        <p class="message-text">No books available in this genre.</p>
-                    <?php else: ?>
-                        <?php foreach ($books as $book): ?>
-                            <div class="book-card">
-                                <a href="<?= ROOT ?>/BookView?id=<?= $book->id ?>" class="book-card-link">
-                                    <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($book->cover_image) ?>" alt="<?= htmlspecialchars($book->title) ?>">
-                                    <p><?= htmlspecialchars($book->title) ?></p>
-                                    <p class="price">
-                                        <span class="old-price">Rs. <?= htmlspecialchars($book->price + ($book->price * $book->discount / 100)) ?></span><br> 
-                                        Rs. <?= htmlspecialchars($book->price) ?>
-                                    </p>
-                                    <br>
-                                </a>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                <button class="prev"><i class="fa-solid fa-chevron-left fa-lg"></i></button>
+                <div class="book-cards">
+                    <div class="book-card">
+                        <a href="<?= ROOT ?>/BookView" class="book-card-link">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                        </a>
+                    </div>
+                    <div class="book-card">
+                        <a href="<?= ROOT ?>/BookView" class="book-card-link">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                        </a>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    
                 </div>
-                <button class="next next-<?= $genre ?>"><i class="fa-solid fa-chevron-right fa-lg"></i></button>
+                <button class="next"><i class="fa-solid fa-chevron-right fa-lg"></i></button>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="novel" style="display: none;">
+            <div class="carousel">
+                <button class="prev">&lt;</button>
+                <div class="book-cards">
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Ha</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    
+                </div>
+                <button class="next">&gt;</button>
             </div>
         </div>
 
-        <?php endforeach; ?>
+        <div class="tab-content" id="history" style="display: none;">
+            <div class="carousel">
+                <button class="prev">&lt;</button>
+                <div class="book-cards">
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>The cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    <div class="book-card">
+                        <img src="<?= ROOT ?>/assets/Images/book cover images/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg" alt="Harry Potter and the Cursed Child">
+                        <p>Harry Potter and the cursed child</p>
+                        <p class="price"><span class="old-price">Rs. 2800</span><br> Rs. 2300</p>
+                        <br>
+                    </div>
+                    
+                </div>
+                <button class="next">&gt;</button>
+            </div>
+        </div>
         
         <br><br>
         <p class="sub-heading">EXPLORE INSIGHTS FROM OUR BOOKLOVERS</p>
@@ -157,7 +289,7 @@
         </div>
 
         <div class="login-link">
-            <a href=#>Show all <i class="fa-solid fa-arrow-right-long"></i></a>
+            <a href=#>See more</a>
         </div>
         <br>
         <center>
@@ -190,36 +322,13 @@
                 </div>
             </div>
         </div>
-            <br><br>        
-            <h1>Book Stores you may be interested in</h1>
-            <br><br>
-            <div class="bookstore-carousel">
-                <button class="bookstore-prev"><i class="fa-solid fa-chevron-left fa-lg"></i></button>
-                <div class="bookstore-cards">
-                    <div class="bookstore-card">
-                        <div class="bookstore-details">
-                            <div class="bookstore-image-div">
-                            <img src="<?= ROOT ?>/assets/Images/bookstore-profile-pics/sarasavi-logo.svg" class="bookstore-image" alt="Placeholder Image">
-                            </div>
-                            <div class="bookstore-followers-details"> 
-                                <h3 class="bookstore-name"> Sarasavi</h3>
-                                <p>506 followers</p>
-                            </div>
-                        </div>
-                        <div class="follow-bttn-div">
-                            <button class="follow-btn">Follow <i class="fa-light fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <button class="bookstore-next"><i class="fa-solid fa-chevron-right fa-lg"></i></button>
-            </div>
         </center>
     </div>
     <br><br><br>
     <div class="footer">
         <div class="links">
-            <a href="<?= ROOT ?>/contactUs">Contact Us</a><br><br>
-            <a href="<?= ROOT ?>/aboutUs">About Us</a>
+            <a href="./contactUs.html">Contact Us</a><br><br>
+            <a href="./aboutUs.html">About Us</a>
         </div>
         <br>
         <div class="copyright">
