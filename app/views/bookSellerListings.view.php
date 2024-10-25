@@ -10,30 +10,9 @@
 
 <body>
     
-    <div class="navBar">        <!-- navBar division begin -->
-        <span class = "title">
-        <a href="<?= ROOT ?>/home" class="title-link"><h2>Book<span class="highlight">Mart</span></h2></a>
-        </span>
-        <div class="search-bar-div">
-            <input type="text" class="search-bar" placeholder="Search your book, bookstore" />
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        </div>
-        <div class="nav-links">
-                <select id="genres" name="genres" class="navbar-links-select" >
-                    <option value="" disabled selected>Genres</option>
-                    <option value="fiction">Fiction</option>
-                    <option value="novels">Novels</option>
-                    <option value="history">History</option>
-                </select>
-                <a href="" class="navbar-links">My Profile</a>
-                <a href="./bookSellerListings" class="navbar-links">Listings</a>
-                <a href="./bookSellerSales" class="navbar-links">Sales</a>
-                <a href="" class="navbar-links">Chat</a>
-                <a href="" class="navbar-links"><i class="fa-solid fa-cart-shopping"></i></a>
-                <a href="" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
-                <button id="logoutButton" class="navbar-links-select">Log Out</button>
-        </div>
-    </div>                  <!-- navBar division end -->
+    <!-- navBar division begin -->
+    <?php include 'bookSellerNavBar.view.php'; ?>
+    <!-- navBar division end -->
     
     <br><br>
     <center>
@@ -137,16 +116,9 @@
 
     <br><br>
 
-    <div class="footer">    <!-- Footer divison begin -->
-        <div class="links">
-            <a href="./contactUs.html">Contact Us</a><br><br>
-            <a href="./aboutUs.html">About Us</a>
-        </div>
-        <br>
-        <div class="copyright">
-            &copy; 2024 BookMart. All rights reserved.
-        </div>
-    </div>                  <!-- Footer divison end -->
+    <!-- Footer division begin -->
+    <?php include 'bookSellerFooter.view.php'; ?>
+    <!-- Footer division end -->
 
     <script src="<?= ROOT ?>/assets/JS/bookSellerlistings.js"></script>
 
