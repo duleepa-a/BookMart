@@ -20,8 +20,8 @@ class App{
         ],
         'bookSeller' => [
             'BookSellerHome' => ['index','storePage', 'viewSales'],
-            'MySales' => ['index'], 
-            'MyListings' => ['index'], 
+            'BookSellerSales' => ['index'], 
+            'BookSellerListings' => ['index'], 
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'] 
@@ -33,7 +33,7 @@ class App{
     
 
     private $publicAccess = [
-        '_404' => ['index'],
+        '-404' => ['index'],
         'BookSellerRegister' => ['index'],
         'BookstoreRegister' => ['index'],
         'BookView' => ['index'],
@@ -44,7 +44,7 @@ class App{
         'Register' => ['index'],
         'Home' => ['index'],
         'Book' => ['index'],['getNewArrivals'],
-        'User' => ['login','logout','registerBuyer','registerCourier','registerBookSeller','registerBookStore','checkusername'],
+        'User' => ['login','logout','registerBuyer','registerCourier','registerBookSeller','registerBookStore'],
 
     ];
 
@@ -96,7 +96,7 @@ class App{
             call_user_func_array([$controller, $this->method], $URL);
         } else {
             // Redirect to unauthorized access page or show an error
-            redirect('unauthorized');
+            header("Location: /unauthorized");
             exit();
         }
     }
