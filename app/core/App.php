@@ -22,6 +22,9 @@ class App{
             'BookSellerHome' => ['index','storePage', 'viewSales'],
             'BookSellerSales' => ['index'], 
             'BookSellerListings' => ['index'], 
+            'BookSellerProfile' => ['index'],
+            'BookSellerArticles' => ['index'],
+            'BookSellerArticleDetail' => ['index'],
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'] 
