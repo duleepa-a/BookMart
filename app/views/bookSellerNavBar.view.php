@@ -16,7 +16,7 @@
             <a href="./bookSellerProfile" class="navbar-links">Profile</a>
             <a href="./bookSellerListings" class="navbar-links">Listings</a>
             <a href="./bookSellerSales" class="navbar-links">Sales</a>
-            <a href="" class="navbar-links">Chat</a>
+            <a href="./bookSellerArticles" class="navbar-links">Articles</a>
             <a href="" class="navbar-links"><i class="fa-solid fa-cart-shopping"></i></a>
             <a href="" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
             <button id="logoutButton" class="navbar-links-select">Log Out</button>
