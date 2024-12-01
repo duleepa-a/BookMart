@@ -1,0 +1,9 @@
+<?php
+
+class Chat extends Controller{
+
+    public function index(){
+        $this->view('chat');
+    }
+
+}
