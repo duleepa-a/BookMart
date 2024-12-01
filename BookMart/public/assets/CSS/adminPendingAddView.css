@@ -1,0 +1,174 @@
+*{
+    font-family: 'poppins',Calibri, sans-serif;
+}
+body{
+    background-color: #F1F1F1;
+}
+
+.title{
+    align-items:left;
+    text-align: left;
+    margin-left: 20%;
+    color: #02224E;
+}
+
+.title-link{
+    text-decoration: none;
+    color: #02224E;
+}
+
+.highlight{
+    color: #BE5715;
+}
+
+.container {
+    width: 100%;
+    text-align: left;
+}
+
+.container h1{
+    margin-top: 20px;
+    color: #BE5715;
+}
+
+.box {
+    background-color: #ffffff;
+    padding: 2%;
+    margin-top: 1%;
+    margin-left: 15%;
+    margin-right: 15%;
+    border-radius: 2%;
+}
+
+#form{
+    width: 80%; 
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.user-info .info-row {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.label {
+    width: 200px;
+    font-weight: bold;
+}
+
+#startDate, #endDate {
+    margin-right: 20px;
+}
+
+.preview-btn {
+    margin-left: 10px;
+    padding: 4px 12px;
+    background-color: #002855;
+    border: 2px solid #002855;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.preview-btn:hover {
+    background-color:white;
+    color: #002855; 
+}
+
+.date-info {
+    margin-bottom: 8px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 0 100px;
+}
+
+.approve-btn, .reject-btn {
+    padding: 12px 40px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.approve-btn {
+    background-color: #02224E;
+    color: white;
+}
+
+.reject-btn {
+    background-color: #02224E;
+    color: white;
+}
+
+.approve-btn:hover {
+    background-color: #F20000;
+}
+
+.reject-btn:hover {
+    background-color: #F20000;
+}
+
+
+
+
+.sidebar {
+    width: 15%;
+    height: 100vh;
+    background-color: #f6f8fc;
+    position: fixed;
+    top: 9%;
+    left: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.001);
+}
+
+.sidebar ul {
+    margin-top: 20px;
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-right: 10px;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px;
+    font-size: 16px;
+    color: #000;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.sidebar ul li a i {
+    margin-left: 20px;
+    margin-right: 15px;
+}
+
+.sidebar ul li a:hover{
+    background-color: #eaeaea;
+    color: #333;
+}
+
+.sidebar ul li a.active {
+    background-color: #f4e2d7;
+    color: #BE5715;
+    font-weight: 600;
+}
+
+.sidebar-heading{
+    margin-left: 30px;
+    margin-bottom: 80px;
+    margin-top: 50px;
+}
+
+
