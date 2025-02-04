@@ -48,7 +48,8 @@ class App{
             'BuyerHome' => ['index', 'viewOrders'],
             'BuyerOrders' => ['index', 'trackOrder'],
             'BuyerReview' => ['index', 'trackOrder'],
-            'BuyerProfile' => ['index']  
+            'BuyerProfile' => ['index'],
+            'Cart' => ['index']
         ],
         'courier' => [
             'CourierHome' => ['index', 'viewOrders'], 
