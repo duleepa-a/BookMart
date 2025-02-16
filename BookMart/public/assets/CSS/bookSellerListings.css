@@ -8,18 +8,11 @@ body{
     background-color: #F1F1F1;
 }
 
-.background-box{
-    background-color: white;
+.container{
+    width:85%;
+    margin-top: 6%;
+    margin-left: 15%;
     padding: 20px;
-    width: 80%;
-    border-radius: 10px;
-    padding-top: 60px;
-    padding-left: 90px;
-}
-
-.title-text{
-    text-align: center;
-    color: #BE5715;
 }
 
 .controls {
@@ -41,59 +34,211 @@ body{
     width: 1100px;
 }
 
-/* Table */
-.styled-table {
+.inventory-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 1.2em;
+    background: #fff;
+    margin-top: 10px;
+}
+
+.inventory-table thead tr {
+    background-color:  #f4f7fc;
+    color: #555;
+}
+
+.inventory-table th, .inventory-table td {
+    padding: 12px;
     text-align: left;
-    background-color: #ffffff;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    border: 1px solid black;
 }
 
-.styled-table thead tr {
-    background-color: #02224E;
-    color: #ffffff;
-    text-align: left;
-}
-
-.styled-table th,
-.styled-table td {
-    padding: 12px 15px;
-}
-
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-}
-
-.styled-table tbody tr:last-of-type {
-    border-bottom: 1px solid #02224E;
-}
-
-.view-button {
-    background-color: #02224E;
-    color: #ffffff;
-    border: none;
-    padding: 8px 16px;
+.inventory-table tbody tr:hover {
+    background-color: #f9f9f9;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.view-button:hover {
-    background-color: #BE5715;
 }
 
 .book-cover {
-    width: 100px; 
-    height: 150px; 
-    object-fit: stretch;
-    background-color: #f0f0f0;
+    width: 120px;
+    height: 180px;
+    background-color: #ddd;
+    border-radius: 0;
 }
-/* Table */
 
-.single-button{
-    display: block; 
-    margin: 0 auto;
+.book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit; /* Matches the border-radius of the parent */
 }
+
+.status {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.status.active { color: green; }
+.status.inactive { color: gray; }
+.status.out-of-stock { color: rgb(250, 74, 74); }
+
+/* Modal styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show modal */
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Dark overlay */
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Modal content */
+.modal-content {
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    max-width: 90%;
+}
+
+.modal-content h2 {
+    margin: 0 0 10px;
+    font-size: 2rem;
+    color: #BE5715;
+}
+
+.modal-content label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.modal-content input, 
+.modal-content select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #a49f9f;
+}
+
+.modal-actions {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    grid-column: span 3; 
+    gap: 10px;
+}
+
+.modal-actions button {
+    padding: 15px 50px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.modal-actions button[type="submit"] {
+    border:solid 3px #02224E;
+    background-color: #02224e00;
+    color: #02224E;
+}
+
+.modal-actions button.close-modal {
+    background-color: #c2413800;
+    border:solid 3px #000000;
+    color: #000000;
+}
+
+.modal-actions button.delete-modal {
+    background-color: #c2413800;
+    border:solid 3px #ff0000;
+    color: #ff0000;
+}
+
+
+.modal-actions button[type="submit"]:hover {
+    border:solid 3px #02224E;
+    background-color: #02224e;
+    color: #ffffff;
+}
+
+.modal-actions button.close-modal:hover {
+    background-color: #000000;
+    border:solid 3px #000000;
+    color: #ffffff;
+}
+
+.modal-actions button.delete-modal:hover {
+    background-color: #ff0000;
+    border:solid 3px #ff0000;
+    color: #ffffff;
+}
+
+.book-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    z-index: 1000;
+}
+.book-toast.hidden {
+    display: none;
+}
+.book-toast .buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.update-book-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.8rem; /* Spacing between rows and columns */
+  }
+
+  .update-book-formlabel {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+  }
+
+  .update-book-form input,
+  .update-book-form select,
+  .update-book-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+
+  .update-book-form .full-width {
+    grid-column: span 3; /* Spans across both columns */
+  }
+
