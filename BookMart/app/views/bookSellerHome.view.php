@@ -34,7 +34,7 @@
                 <a href="./articles" class="navbar-links">Articles</a>
                 <a href="" class="navbar-links"><i class="fa-solid fa-cart-shopping"></i></a>
                 <a href="./notifications" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
-                <button id="logoutButtonBookSeller" class="navbar-links-select">Log Out</button>
+                <button id="logoutButton" class="navbar-links-select">Log Out</button>
         </div>
     </div>         
     <!-- navBar division end -->
