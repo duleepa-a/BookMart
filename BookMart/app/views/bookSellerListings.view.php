@@ -190,9 +190,9 @@
         <div class="modal" id="delete-book-modal">
             <div class="modal-overlay"></div>
             <div class="modal-content">
-                <form class="delete-book-form" method="POST" action="<?= ROOT ?>/book/deleteBook">
+                <form class="delete-book-form" method="POST" action="<?= ROOT ?>/bookSellerListings/deleteBook">
                     <h2>Confirm Deletion</h2>
-                    <input type="hidden" id="delete-book-ids" name="book_ids">
+                    <input type="hidden" id="delete-book-ids" name="book_id">
                     
                     <div class="delete-confirmation-message">
                         <p>Are you sure you want to delete the following books?</p>
