@@ -44,7 +44,7 @@ class BookSellerSidebar extends Controller{
                     }
                     if (!is_dir($uploadDir)) {
                         echo "Directory does not exist. Creating: $uploadDir<br>";
-                        mkdir($uploadDir, 0777, true); // Creates directory if missing
+                        mkdir($uploadDir, 0777, true);
                     }
                     if (!is_writable($uploadDir)) {
                         echo "Directory is not writable: $uploadDir<br>";
@@ -53,32 +53,43 @@ class BookSellerSidebar extends Controller{
                         $bookData['cover_image'] = $filename;
                     } else {
                         echo "Error uploading cover image!";
-                        // $this->view('addBook', $bookData);
                         return;
                     }
                 } else {
                     echo "Invalid file type!";
-                    // $this->view('addBook', $bookData);
                     return;
                 }
             } else {
                 echo "Cover image is required!";
-                // $this->view('addBook', $bookData);
                 return;
             }
 
-            // Validate and save the book data
-            // if ($bookModel->validate($bookData)) {
-                echo("Validation passed");
-                if ($bookModel->insert($bookData)) {
-                    redirect('bookSellerListings');
+            echo("Validation passed");
+            if ($bookModel->insert($bookData)) {
+                // Get the last inserted book ID using the bookModel
+                $query = "SELECT id FROM book WHERE seller_id = :seller_id ORDER BY id DESC LIMIT 1";
+                $data = ['seller_id' => $_SESSION['user_id']];
+                $result = $bookModel->query($query, $data);
+                
+                if ($result) {
+                    // Insert into listing table using the bookModel
+                    $listingQuery = "INSERT INTO book_status (book_id, seller_id) VALUES (:book_id, :seller_id)";
+                    $listingData = [
+                        'book_id' => $result[0]->id,
+                        'seller_id' => $_SESSION['user_id']
+                    ];
+                    
+                    if (!$bookModel->query($listingQuery, $listingData)) {
+                        redirect('bookSellerListings');
+                    } else {
+                        echo "Error creating listing!";
+                    }
                 } else {
-                    echo "Something went wrong!";
+                    echo "Error retrieving book ID!";
                 }
-            // } else {
-            //     echo("Validation failed");
-                // $this->view('addBook', $bookData);
-            // }
+            } else {
+                echo "Something went wrong!";
+            }
         } else {
             echo("addBook GET request");
             $this->view('addBook');

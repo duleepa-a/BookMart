@@ -24,94 +24,84 @@
     <br><br>
     <center>
     <div class="background-box">    <!-- inner background box begin -->        
-        
         <h1 class="title-text">My Sales</h1>
-        
+
         <br><br>
 
-        <div class="controls">  <!-- First row division begin -->
+        <div class="controls">      <!-- First row division begin -->
             <input type="text" placeholder="Search..." class="search-bar">
             <button>Search</button>
-            <button>Filter</button>
-            <button>Sort</button>
-        </div>                  <!-- First row division end -->
-
-        <table class="styled-table">    <!-- Table divison begin -->
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Book Cover</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Condition</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox"></td>
-                    <td><img src="/api/placeholder/50/75" alt="Book Cover" class="book-cover" onerror="this.onerror=null; this.src='./CSS/Images/Book Icon/Book Icon.jpeg';"></td>
-                    <td>The Great Gatsby</td>
-                    <td>F. Scott Fitzgerald</td>
-                    <td>Fiction</td>
-                    <td>Rs.2000.00</td>
-                    <td>Good</td>
-                    <td>Available</td>
-                    <td><button class="view-button">View</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox"></td>
-                    <td><img src="/api/placeholder/50/75" alt="Book Cover" class="book-cover" onerror="this.onerror=null; this.src='./CSS/Images/Book Icon/Book Icon.jpeg';"></td>
-                    <td>To Kill a Mockingbird</td>
-                    <td>Harper Lee</td>
-                    <td>Classic</td>
-                    <td>Rs.1000.00</td>
-                    <td>Like New</td>
-                    <td>Delivering</td>
-                    <td><button class="view-button">View</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox"></td>
-                    <td><img src="/api/placeholder/50/75" alt="Book Cover" class="book-cover" onerror="this.onerror=null; this.src='./CSS/Images/Book Icon/Book Icon.jpeg';"></td>
-                    <td>1984</td>
-                    <td>George Orwell</td>
-                    <td>Science Fiction</td>
-                    <td>Rs.1500.00</td>
-                    <td>Fair</td>
-                    <td>Available</td>
-                    <td><button class="view-button">View</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox"></td>
-                    <td><img src="/api/placeholder/50/75" alt="Book Cover" class="book-cover" onerror="this.onerror=null; this.src='./CSS/Images/Book Icon/Book Icon.jpeg';"></td>
-                    <td>Harry Potter and the Sorceror's Stone</td>
-                    <td>J. K. Rowling</td>
-                    <td>Fiction</td>
-                    <td>Rs.3500.00</td>
-                    <td>Fair</td>
-                    <td>Available</td>
-                    <td><button class="view-button">View</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="row-checkbox"></td>
-                    <td><img src="/api/placeholder/50/75" alt="Book Cover" class="book-cover" onerror="this.onerror=null; this.src='./CSS/Images/Book Icon/Book Icon.jpeg';"></td>
-                    <td>Percy Jackson and the Lighting Thief</td>
-                    <td>Rick Riordan</td>
-                    <td>Fiction</td>
-                    <td>Rs.2500.00</td>
-                    <td>Good</td>
-                    <td>Available</td>
-                    <td><button class="view-button">View</button></td>
-                </tr>
-            </tbody>
-        </table>                        <!-- Table divison end -->
+        </div>                      <!-- First row division end -->
 
         <div class="controls">
-            <button class="single-button">View More</button>
-        </div>
+            <button class="select-all-button">Select All</button>
+            <button class="edit-button" disabled>Edit</button>
+            <button>Update Status</button>
+            <button class="delete-button" disabled>Delete</button>
+            <button>Filter</button>
+            <button>Sort</button>
+        </div>                      <!-- Button row division end -->
+
+        <?php if (!empty($inventory)) : ?>
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" class="select-all-checkbox"></th>
+                        <th>Book Cover</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Genre</th>
+                        <th>Publisher</th>
+                        <th>Condition</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($inventory as $book) : ?>
+                        <tr class="book-row" 
+                            data-book_id="<?= $book->id ?>" 
+                            data-title="<?= htmlspecialchars($book->title) ?>"
+                            data-isbn="<?= htmlspecialchars($book->ISBN) ?>"
+                            data-author="<?= htmlspecialchars($book->author) ?>"
+                            data-genre="<?= htmlspecialchars($book->genre ?? '') ?>"
+                            data-publisher="<?= htmlspecialchars($book->publisher ?? '') ?>"
+                            data-condition="<?= htmlspecialchars($book->book_condition ?? '') ?>"
+                            data-language="<?= htmlspecialchars($book->language ?? '') ?>"
+                            data-price="<?= htmlspecialchars($book->price) ?>"
+                            data-discount="<?= htmlspecialchars($book->discount) ?>"
+                            data-quantity="<?= htmlspecialchars($book->quantity ?? 0) ?>"
+                            data-description="<?= htmlspecialchars($book->description) ?>">
+                            <td><input type="checkbox" class="book-checkbox"></td>
+                            <td>
+                                <?php if (!empty($book->cover_image)) : ?>
+                                    <div class="book-cover">
+                                        <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($book->cover_image) ?>" alt="Book Cover" class="book-cover-img" />
+                                    </div>
+                                <?php else : ?>
+                                    <div class="book-cover placeholder"></div>
+                                <?php endif; ?>
+                            </td>
+                            <td><?= htmlspecialchars($book->title) ?></td>
+                            <td><?= htmlspecialchars($book->author) ?></td>
+                            <td><?= htmlspecialchars($book->genre ?? 'N/A') ?></td>
+                            <td><?= htmlspecialchars($book->publisher ?? 'N/A') ?></td>
+                            <td><?= htmlspecialchars($book->book_condition ?? 'N/A') ?></td>
+                            <td>Rs. <?= htmlspecialchars($book->price) ?></td>
+                            <td><?= htmlspecialchars($book->quantity ?? '0') ?></td>
+                            <td class="status <?= (isset($book->quantity) && $book->quantity > 0) ? 'active' : 'out-of-stock' ?>">
+                                <?= (isset($book->quantity) && $book->quantity > 0) ? 'Available' : 'Out of Stock' ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else : ?>
+            <div class="no-books-message">
+                <p>No books to display!</p>
+            </div>
+        <?php endif; ?>
 
     </div>                          <!-- inner background box end -->
 
