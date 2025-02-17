@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to update button states
     function updateButtonStates() {
         editButton.disabled = selectedBooks.size !== 1;
-        deleteButton.disabled = selectedBooks.size === 0;
+        deleteButton.disabled = selectedBooks.size !== 1;
     }
 
     // Function to populate update modal with book data
@@ -99,21 +99,19 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear previous list
         booksToDeleteList.innerHTML = '';
         
-        // Create list of books to delete
-        const bookIds = [];
-        selectedBooks.forEach(bookRow => {
-            const title = bookRow.dataset.title;
-            const bookId = bookRow.dataset.book_id;
-            bookIds.push(bookId);
-            
-            const bookItem = document.createElement('div');
-            bookItem.className = 'book-to-delete';
-            bookItem.textContent = title;
-            booksToDeleteList.appendChild(bookItem);
-        });
+        // Get the single selected book
+        const bookRow = selectedBooks.values().next().value;
+        const title = bookRow.dataset.title;
+        const bookId = bookRow.dataset.book_id;
         
-        // Set book IDs for form submission
-        deleteBookIds.value = bookIds.join(',');
+        // Create confirmation message for single book
+        const bookItem = document.createElement('div');
+        bookItem.className = 'book-to-delete';
+        bookItem.textContent = title;
+        booksToDeleteList.appendChild(bookItem);
+        
+        // Set single book ID for form submission
+        deleteBookIds.value = bookId;
         
         // Show delete modal
         deleteModal.classList.add('active');
@@ -136,77 +134,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Handle update form submission
-    const updateForm = document.querySelector('.update-book-form');
-    updateForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this);
-        
-        fetch(`${ROOT}/bookSellerListings/updateBook`, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            try {
-                const result = JSON.parse(data);
-                if (result.status === 'success') {
-                    location.reload(); // Refresh to show updated data
-                } else {
-                    alert('Error updating book: ' + result.message);
-                }
-            } catch (e) {
-                // Handle non-JSON response
-                if (data.includes('redirect')) {
-                    location.reload();
-                } else {
-                    alert('Error updating book. Please try again.');
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while updating the book');
-        });
-    });
-
-    // Handle delete form submission
-    const deleteForm = document.querySelector('.delete-book-form');
-    deleteForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData();
-        const bookIds = this.querySelector('#delete-book-ids').value;
-        formData.append('book_id', bookIds);
-        
-        fetch(`${ROOT}/bookSellerListings/deleteBook`, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            try {
-                const result = JSON.parse(data);
-                if (result.status === 'success') {
-                    location.reload();
-                } else {
-                    alert('Error deleting books: ' + result.message);
-                }
-            } catch (e) {
-                // Handle non-JSON response
-                if (data.includes('redirect')) {
-                    location.reload();
-                } else {
-                    alert('Error deleting books. Please try again.');
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while deleting books');
-        });
-    });
-
-    // Other existing event listeners remain the same...
 });
