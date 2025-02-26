@@ -97,9 +97,9 @@
                     <div>
                         <label for="language">Language:</label>
                         <select id="language" name="language" required>
-                        <option value="english">English</option>
-                        <option value="sinhala">Sinhala</option>
-                        <option value="tamil">Tamil</option>
+                        <option value="English">English</option>
+                        <option value="Sinhala">Sinhala</option>
+                        <option value="Tamil">Tamil</option>
                         </select>
                     </div>
 
