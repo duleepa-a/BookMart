@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to update button states
     function updateButtonStates() {
         editButton.disabled = selectedBooks.size !== 1;
-        deleteButton.disabled = selectedBooks.size !== 1;
+        deleteButton.disabled = selectedBooks.size === 0;
     }
 
     // Function to populate update modal with book data
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         modalForm.querySelector('#update-book-id').value = bookData.book_id;
         
         // Populate text fields
-        const textFields = ['title', 'ISBN', 'author', 'publisher', 'price', 
+        const textFields = ['title', 'isbn', 'author', 'publisher', 'price', 
                           'discount', 'quantity', 'description'];
         textFields.forEach(field => {
             const input = modalForm.querySelector(`#update-${field}`);
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Populate select fields
-        const selectFields = ['genre', 'book_condition', 'language'];
+        const selectFields = ['genre', 'condition', 'language'];
         selectFields.forEach(field => {
             const select = modalForm.querySelector(`#update-${field}`);
             if (select) select.value = bookData[field] || '';
@@ -99,19 +99,27 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear previous list
         booksToDeleteList.innerHTML = '';
         
-        // Get the single selected book
-        const bookRow = selectedBooks.values().next().value;
-        const title = bookRow.dataset.title;
-        const bookId = bookRow.dataset.book_id;
+        // Get all selected books
+        const selectedBooksArray = Array.from(selectedBooks);
         
-        // Create confirmation message for single book
-        const bookItem = document.createElement('div');
-        bookItem.className = 'book-to-delete';
-        bookItem.textContent = title;
-        booksToDeleteList.appendChild(bookItem);
-        
-        // Set single book ID for form submission
-        deleteBookIds.value = bookId;
+        // Process each selected book
+        selectedBooksArray.forEach(bookRow => {
+            const title = bookRow.dataset.title;
+            const bookId = bookRow.dataset.book_id;
+            
+            // Create confirmation message for each book
+            const bookItem = document.createElement('div');
+            bookItem.className = 'book-to-delete';
+            bookItem.textContent = title;
+            booksToDeleteList.appendChild(bookItem);
+            
+            // Add book ID to the list
+            if (deleteBookIds.value) {
+                deleteBookIds.value += ',' + bookId;
+            } else {
+                deleteBookIds.value = bookId;
+            }
+        });
         
         // Show delete modal
         deleteModal.classList.add('active');

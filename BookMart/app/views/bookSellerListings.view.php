@@ -63,7 +63,7 @@
                         <tr class="book-row" 
                             data-book_id="<?= $book->id ?>" 
                             data-title="<?= htmlspecialchars($book->title) ?>"
-                            data-isbn="<?= htmlspecialchars($book->ISBN) ?>"
+                            data-ISBN="<?= htmlspecialchars($book->ISBN) ?>"
                             data-author="<?= htmlspecialchars($book->author) ?>"
                             data-genre="<?= htmlspecialchars($book->genre ?? '') ?>"
                             data-publisher="<?= htmlspecialchars($book->publisher ?? '') ?>"
@@ -115,7 +115,7 @@
                     </div>
                     <div>
                         <label for="ISBN">ISBN:</label>
-                        <input type="text" id="update-ISBN" name="ISBN" required>
+                        <input type="text" id="update-isbn" name="ISBN" required>
                     </div>
                     <div>
                         <label for="update-author">Author:</label>
@@ -158,7 +158,7 @@
                     </div>
                     <div>
                         <label for="book_condition">Condition:</label>
-                        <select id="update-book_condition" name="book_condition" required>
+                        <select id="update-condition" name="book_condition" required>
                         <option value="new">New</option>
                         <option value="like-new">Like New</option>
                         <option value="good">Good</option>
