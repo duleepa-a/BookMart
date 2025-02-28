@@ -24,7 +24,7 @@
         
         <div class="cards-container">
             <div class="card">
-            <a class="bookstore-card-link" href="<?= ROOT ?>/BuyerRegister">
+            <a class="bookstore-card-link" href="<?= ROOT ?>/Buyer/register">
                 <img src="<?= ROOT ?>/assets/Images/buyer-icon.png" alt="Buyer Icon">
                 <p>I'm a <span class="highlight-card">buyer</span> searching for books to buy</p>
             </a>

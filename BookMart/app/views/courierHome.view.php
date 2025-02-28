@@ -14,7 +14,10 @@
 </head>
 <body>
 
-    <?php include 'courierNavbar.view.php'; ?> 
+    <!-- navBar division begin -->
+    <?php include 'homeNavBar.view.php'; ?>        
+    <!-- navBar division end -->
+     
     <div class="sidebar">
         <ul>
             <h1 class="sidebar-heading">Welcome Back Courier!</h1>

@@ -12,43 +12,8 @@
 </head>
 <body>
     
-    <!-- navBar division begin -->
-    <div class="navBar">
-        <span class = "title">
-        <a href="<?= ROOT ?>/book/search" class="title-link"><h2>Book<span class="highlight">Mart</span></h2></a>
-        </span>
-        <div class="search-bar-div">
-            <form action="<?= ROOT ?>/book/search" method="GET" class="search-form ">
-                <input 
-                    type="text" 
-                    name="keyword" 
-                    class="search-bar" 
-                    placeholder="Search your book, bookstore"
-                    required  
-                />
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            </form>
-        </div>
-        <div class="nav-links">
-                <select id="genres" name="genres" class="navbar-links-select" >
-                    <option value="" disabled selected>Genres</option>
-                    <option value="fiction">Fiction</option>
-                    <option value="novels">Novels</option>
-                    <option value="history">History</option>
-                   </select>
-                <?php if(!isset($_SESSION['user_status'])):?>
-                  <a href="<?= ROOT ?>/Login" class="navbar-links">Log In</a>
-                  <a href="<?= ROOT ?>/Register" class="navbar-links">Sign In</a>
-                <?php else: ?>
-                  <a href="./Login.html" class="navbar-links">My Profile</a>
-                  <a href="./Login.html" class="navbar-links">Orders</a>
-                  <a href="./Login.html" class="navbar-links">Chat</a>
-                  <a href="./Login.html" class="navbar-links"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
-                  <a href="./Login.html" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
-                  <button id="logoutButton" class="navbar-links-select">Log Out</button>
-                <?php endif; ?>
-        </div>     
-    </div>
+   <!-- navBar division begin -->
+   <?php include 'homeNavBar.view.php'; ?>
     <!-- navBar division end -->
 
     <!-- navBar division begin -->

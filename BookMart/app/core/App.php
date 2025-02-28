@@ -13,7 +13,6 @@ class App{
             'AdminViewallusers' => ['index'],
             'AdminBookstoreRequests' => ['index'],
             'Admin' => ['index','bookstoreView','viewBookStore','approve','reject'],
-            'AdminViewallusers' => ['index'],
             'AdminViewbuyer' => ['index'],
             'AdminViewcourier' => ['index'],
             'AdminViewseller' => ['index'],
@@ -46,9 +45,7 @@ class App{
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],
-            'BuyerOrders' => ['index', 'trackOrder'],
-            'BuyerReview' => ['index', 'trackOrder'],
-            'BuyerProfile' => ['index'],
+            'Buyer' => ['index', 'orders','trackOrder','register','reviews','myProfile'],
             'Cart' => ['index']
         ],
         'courier' => [
@@ -66,8 +63,7 @@ class App{
         'BookSellerRegister' => ['index'],
         'BookstoreRegister' => ['index'],
         'BookView' => ['index'],
-        'BuyerRegister' => ['index'],
-        'BookSellerRegister' => ['index'],
+        'Buyer' => ['register'],
         'CourierRegister' => ['index'],
         'Login' => ['index'],
         'Register' => ['index'],
@@ -84,7 +80,8 @@ class App{
         'Notifications' => ['index'],
         'MyArticles' => ['index'],
         'ArticleUpdate' => ['index', 'updateArticle', 'deleteArticle'],
-        'Chat' => ['index'],
+        'Chat' => ['index','chatbox','fetchMessages','send'],
+        'Payment' => ['index','checkOut','process','success','cancel']
     ];
 
     private function splitURL() {

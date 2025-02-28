@@ -1,0 +1,247 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'poppins',Calibri, sans-serif;
+}
+
+body {
+    margin-top: 4.2%;
+    background-color: #F1F1F1;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.checkout-container {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100vh;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.order-details {
+    flex: 2;
+    min-width: 300px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+.order-summary {
+    flex: 1;
+    min-width: 300px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    padding-bottom: 30px;
+    height:fit-content; 
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.book-item {
+    display: flex;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.book-image {
+    width: 120px;
+    height: 180px;
+    background-color: #ddd;
+    border-radius: 0;
+    margin-right: 40px;
+}
+
+.book-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.book-info {
+    flex: 1;
+}
+
+.book-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.book-author {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.price-info {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align text to the start */
+    margin-top: 10px;
+}
+
+.discounted-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #FF6600;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.discount-tag {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.qty-info {
+    font-size: 14px;
+    color: #666;
+    text-align: right;
+    margin-top: 10px;
+}
+
+.address-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.address-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.edit-link {
+    color: #0099cc;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.total-price {
+    color: #FF6600;
+}
+
+.vat-text {
+    font-size: 12px;
+    color: #666;
+    text-align: right;
+    margin-top: 5px;
+}
+
+.checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #FF6600;
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.promo-box {
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.promo-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    font-size: 14px;
+}
+
+.promo-btn {
+    padding: 10px 20px;
+    background-color: #0099cc;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .checkout-container {
+        flex-direction: column;
+    }
+}

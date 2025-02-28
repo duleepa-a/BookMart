@@ -12,9 +12,9 @@
 </head>
 <body>
     <!-- navBar division begin -->
-    <?php include 'bookSellerNavBar.view.php'; ?>
+    <?php include 'homeNavBar.view.php'; ?>
     <!-- navBar division end -->
-
+     
     <!-- Sidebar division begin -->
     <?php include 'bookSellerSidebar.view.php'; ?>
     <!-- Sidebar division end -->
