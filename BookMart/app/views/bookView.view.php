@@ -11,42 +11,12 @@
     <title><?= $book->title; ?> </title>
 </head>
 <body>
-    <div class="navBar">
-        <span class = "title">
-        <a href="<?= ROOT ?>/home" class="title-link"><h2>Book<span class="highlight">Mart</span></h2></a>
-        </span>
-        <div class="search-bar-div">
-            <form action="<?= ROOT ?>/book/search" method="GET" class="search-form ">
-                <input 
-                    type="text" 
-                    name="keyword" 
-                    class="search-bar" 
-                    placeholder="Search your book, bookstore"
-                    required  
-                />
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            </form>
-        </div>
-        <div class="nav-links">
-                <select id="genres" name="genres" class="navbar-links-select" >
-                    <option value="" disabled selected>Genres</option>
-                    <option value="fiction">Fiction</option>
-                    <option value="novels">Novels</option>
-                    <option value="history">History</option>
-                   </select>
-                <?php if(!isset($_SESSION['user_status'])):?>
-                  <a href="<?= ROOT ?>/Login" class="navbar-links">Log In</a>
-                  <a href="<?= ROOT ?>/Register" class="navbar-links">Sign In</a>
-                <?php else: ?>
-                  <a href="./Login.html" class="navbar-links">My Profile</a>
-                  <a href="./Login.html" class="navbar-links">Orders</a>
-                  <a href="./Login.html" class="navbar-links">Chat</a>
-                  <a href="./Login.html" class="navbar-links"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
-                  <a href="./Login.html" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
-                  <button id="logoutButton" class="navbar-links-select">Log Out</button>
-                <?php endif; ?>
-        </div>     
-    </div>
+
+<!-- navBar division begin -->
+<?php include 'homeNavBar.view.php'; ?>        
+<!-- navBar division end -->
+
+    <div class="large-container">
     <?php if (isset($book) && !empty($book)): ?>
       <div class="container">
           <div class="book-container">
@@ -111,11 +81,11 @@
                   </div>
                   <div class="product-actions">
                         <div class="quantity-selector">
-                            <button class="quantity-btn">-</button>
-                              <span class="quantity">1</span>
-                            <button class="quantity-btn">+</button>
+                            <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                              <span class="quantity" id="quantity">1</span>
+                            <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
                         </div>
-                      <button class="buy-now-btn">Buy now</button>
+                      <button class="buy-now-btn" onclick="buyNow()">Buy now</button>
                       <button class="add-to-cart-btn">Add to cart</button>
                   </div>
               </div>
@@ -188,20 +158,20 @@
                 <button class="prev"><i class="fa-solid fa-chevron-left fa-lg"></i></button>
                 <div class="book-cards">
                     <?php if (isset($recommended) && !empty($recommended)): ?>
-                        <?php foreach ($recommended as $book): ?>
+                        <?php foreach ($recommended as $recbook): ?>
                             <div class="book-card">
-                                <?php if ($book->discount != 0 ) : ?>
-                                    <div class="bookcard-discount"><?= htmlspecialchars($book->discount) ?>%</div>
+                                <?php if ($recbook->discount != 0 ) : ?>
+                                    <div class="bookcard-discount"><?= htmlspecialchars($recbook->discount) ?>%</div>
                                 <?php endif; ?>
                                 <a href="<?= ROOT ?>/BookView/index/<?= $book->id ?>" class="book-card-link">
-                                <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($book->cover_image) ?>" alt="<?= htmlspecialchars($book->title) ?>">
-                                <p><?= htmlspecialchars($book->title) ?></p>
+                                <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($recbook->cover_image) ?>" alt="<?= htmlspecialchars($recbook->title) ?>">
+                                <p><?= htmlspecialchars($recbook->title) ?></p>
                                 <p class="bookcard-price">
-                                    <?php if ($book->discount != 0 ): ?>
-                                        <span class="bookcard-old-price">Rs. <?= htmlspecialchars($book->price) ?></span><br>
-                                        Rs. <?= htmlspecialchars($book->price - ($book->price)*($book->discount)/100) ?>
+                                    <?php if ($recbook->discount != 0 ): ?>
+                                        <span class="bookcard-old-price">Rs. <?= htmlspecialchars($recbook->price) ?></span><br>
+                                        Rs. <?= htmlspecialchars($recbook->price - ($recbook->price)*($recbook->discount)/100) ?>
                                     <?php else: ?>
-                                        Rs. <?= htmlspecialchars($book->price) ?>
+                                        Rs. <?= htmlspecialchars($recbook->price) ?>
                                     <?php endif; ?>
                                 </p>
                                 <br>
@@ -233,7 +203,28 @@
                 <br><br>
             </div>
         </div>
-    </footer>
+    </footer> 
+    </div>
     <script src="<?= ROOT ?>/assets/JS/bookView.js"></script>
+    <script>
+        let maxQuantity = <?php echo $book->quantity; ?>; 
+
+        function changeQuantity(amount) {
+            let quantityElement = document.getElementById("quantity");
+            let quantity = parseInt(quantityElement.innerText);
+
+            quantity = Math.min(maxQuantity, Math.max(1, quantity + amount));
+
+            quantityElement.innerText = quantity;
+        }
+
+
+        function buyNow() {
+            let quantity = document.getElementById("quantity").innerText;
+            let productId = <?php echo $book->id; ?>; 
+            
+            window.location.href = "<?= ROOT ?>/payment/checkOut/" + productId + "/" +quantity;
+        }
+    </script>
 </body>
 </html>

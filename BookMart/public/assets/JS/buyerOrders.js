@@ -44,6 +44,8 @@ function showTab(tabId) {
     // Show the selected tab content
     document.getElementById(tabId).style.display = 'block';
 
+    console.log(document.getElementById(tabId));
+
     // Add 'active' class to the clicked tab button
     event.currentTarget.classList.add('active');
 }

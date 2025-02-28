@@ -12,8 +12,8 @@
 </head>
 <body>
     
-    <!-- navBar division begin -->
-    <?php include 'bookSellerNavBar.view.php'; ?>
+   <!-- navBar division begin -->
+   <?php include 'homeNavBar.view.php'; ?>
     <!-- navBar division end -->
 
     <!-- navBar division begin -->

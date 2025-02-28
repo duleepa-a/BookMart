@@ -24,7 +24,7 @@ class UserModel {
         $userId = $this->insert($userData);
         if ($userId) {
             echo(" user data done");
-            $buyerModel = new Buyer();
+            $buyerModel = new BuyerModel();
             $result = $this->findUserByUsernameOrEmail($userData['email']);
             $user = $result; // Get the first object from the array
             $buyerData['user_id'] = $user->ID;
