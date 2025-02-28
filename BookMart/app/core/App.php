@@ -38,10 +38,11 @@ class App{
         'bookSeller' => [
             'BookSellerHome' => ['index','storePage', 'viewSales'],
             'BookSellerSales' => ['index'], 
-            'BookSellerListings' => ['index'], 
+            'BookSellerListings' => ['index', 'updateBook', 'deleteBook'], 
             'BookSellerProfile' => ['index'],
             'BookSellerArticles' => ['index'],
             'BookSellerArticleDetail' => ['index'],
+            'BookSellerSidebar' => ['index', 'addBook'],
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],

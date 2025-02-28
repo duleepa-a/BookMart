@@ -17,8 +17,9 @@
     <!-- navBar division end -->
 
     <!-- navBar division begin -->
-    <!-- navBar division end -->
     <?php include 'bookSellerSidebar.view.php'; ?>
+    <!-- navBar division end -->
+     
     <br><br>
     <center>
     <div class="background-box">
