@@ -52,7 +52,7 @@
                     investigates the factors behind this renaissance and how local bookstores are adapting...</p>
                 </div>
                 <div class="article-footer">
-                    <a href="./articleDetail" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="<?= ROOT ?>/articles/detail" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
 
@@ -68,7 +68,7 @@
                     We examine its impact on readers of all ages and how it's shaping modern storytelling...</p>
                 </div>
                 <div class="article-footer">
-                    <a href="./articleDetail" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="<?= ROOT ?>/articles/detail" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>

@@ -40,8 +40,7 @@ class App{
             'BookSellerSales' => ['index'], 
             'BookSellerListings' => ['index', 'updateBook', 'deleteBook'], 
             'BookSellerProfile' => ['index'],
-            'BookSellerArticles' => ['index'],
-            'BookSellerArticleDetail' => ['index'],
+            'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],
             'BookSellerSidebar' => ['index', 'addBook'],
         ],
         'buyer' => [
@@ -75,11 +74,8 @@ class App{
         'User' => ['login','logout','registerBuyer','registerCourier','registerBookSeller','registerBookStore','checkusername','checkemail'],
         'Loading' => ['index'],
         'ContactUs' => ['index','create'],
-        'Articles' => ['index'],
-        'ArticleDetail' => ['index'],
-        'ArticleCreation' => ['index', 'addArticle'],
+        'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],
         'Notifications' => ['index'],
-        'MyArticles' => ['index'],
         'ArticleUpdate' => ['index', 'updateArticle', 'deleteArticle'],
         'Chat' => ['index','chatbox','fetchMessages','send'],
         'Payment' => ['index','checkOut','process','success','cancel']

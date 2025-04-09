@@ -43,7 +43,7 @@
                         </div>
                         <div class="article-footer">
                             <p></p>
-                            <a href="./articleDetail/<?= htmlspecialchars($article->ID) ?>" class="read-more">
+                            <a href="<?= ROOT ?>/articles/detail/<?= htmlspecialchars($article->ID) ?>" class="read-more">
                                 Read More <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </div>

@@ -4,7 +4,7 @@
             <li><a href="<?= ROOT ?>/bookSellerListings" class="active" ><i class="fa-solid fa-book"></i>My Listings</a></li>
             <li><a href="<?= ROOT ?>/bookSellerSales"><i class="fa-solid fa-chart-column"></i>My Sales</a></li>
             <li><a href="<?= ROOT ?>/articles"><i class="fa-solid fa-cart-plus"></i>Articles</a></li>
-            <li><a href="<?= ROOT ?>/myArticles"><i class="fa-solid fa-comment-dots"></i>My Articles</a></li>
+            <li><a href="<?= ROOT ?>/articles/myArticles"><i class="fa-solid fa-comment-dots"></i>My Articles</a></li>
             <li><a href="<?= ROOT ?>/bookSellerProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
         </ul>   
 </div>

@@ -26,7 +26,7 @@
         <h1 class="title-text">My Articles</h1>
 
         <div class="controls">
-            <button class="view-more-button" onClick="location.href='./articleCreation';">Create Article</button>
+            <button class="view-more-button" onClick="location.href='<?= ROOT ?>/articles/create';">Create Article</button>
         </div>
         
         <div class="articles-container">
@@ -45,10 +45,10 @@
                             <p><?= substr(htmlspecialchars($article->Content), 0, 200) ?>...</p>
                         </div>
                         <div class="article-footer">
-                            <a href="./articleUpdate/<?= htmlspecialchars($article->ID) ?>" class="read-more">
+                            <a href="<?= ROOT ?>/articles/update/<?= htmlspecialchars($article->ID) ?>" class="read-more">
                                 Update
                             </a>
-                            <a href="./articleDetail/<?= htmlspecialchars($article->ID) ?>" class="read-more">
+                            <a href="<?= ROOT ?>/articles/detail/<?= htmlspecialchars($article->ID) ?>" class="read-more">
                                 Read More <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </div>

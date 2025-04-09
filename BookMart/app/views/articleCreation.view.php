@@ -20,7 +20,7 @@
     <!-- Sidebar division end -->
 
     <div class="create-article-container">
-        <form class="article-form" id="articleCreationForm" action="<?= ROOT ?>/articleCreation/addArticle" method="POST">
+        <form class="article-form" id="articleCreationForm" action="<?= ROOT ?>/articles/addArticle" method="POST">
             <div class="form-group">
                 <label for="article-title">Article Title</label>
                 <input type="text" id="title" name="title" placeholder="Enter your article title" required>

@@ -20,7 +20,7 @@
     <!-- Sidebar division end -->
 
     <div class="create-article-container">
-        <form class="article-form" id="articleUpdateForm" action="<?= ROOT ?>/articleUpdate/updateArticle" method="POST">
+        <form class="article-form" id="articleUpdateForm" action="<?= ROOT ?>/articles/updateArticle" method="POST">
         <?php if (isset($data['articles'])): ?>
                 <input type="hidden" name="article_id" value="<?= htmlspecialchars($data['article_id']) ?>">
             
@@ -54,7 +54,7 @@
     <div class="modal" id="delete-article-modal">
         <div class="modal-overlay"></div>
         <div class="modal-content">
-            <form class="delete-article-form" method="POST" action="<?= ROOT ?>/articleUpdate/deleteArticle">
+            <form class="delete-article-form" method="POST" action="<?= ROOT ?>/articles/deleteArticle">
                 <h2 class="full-width">Delete Article</h2>
                 <p>Are you sure you want to delete this article?</p>
                 <p id="delete-article-details"></p>
