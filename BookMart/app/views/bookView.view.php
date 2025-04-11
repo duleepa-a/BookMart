@@ -102,50 +102,37 @@
     </nav>
 
     <div class="tab-content" id="book-reviews">
-        <div class="review-container">
-        <div class="card">
-            <div class="card-header">
-                <span class="user-name">Duleepa Edirisinghe</span>
-                <span class="date">2024/08/20</span>
+    <div class="review-container">
+            <?php if (!empty($reviews)): ?>
+                <?php foreach ($reviews as $review): ?>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="user-name"><?= htmlspecialchars($review->username) ?></span>
+                            <span class="date"><?= date('Y/m/d', strtotime($review->review_date)) ?></span>
+                        </div>
+                        <div class="card-content">
+                            <div class="rating-stars">
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <i class="fas fa-star" style="color: <?= $i <= $review->rating ? '#ffc107' : '#e4e5e9' ?>;"></i>
+                                <?php endfor; ?>
+                            </div>
+                            <p><?= nl2br(htmlspecialchars($review->comment)) ?></p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="like-icon <?= $review->liked == 1 ? 'liked' : '' ?>" data-review-id="<?= $review->id ?>">
+                                <i class="fa-solid fa-thumbs-up"></i>
+                            </span>
+                            <span class="like-count"><?= htmlspecialchars($review->likes) ?></span>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+            <div class="no-review-box">
+                <p>No reviews yet for this book.</p>
             </div>
-            <div class="card-content">
-                "The Great Gatsby" is a timeless classic. Fitzgerald's writing style is captivating, and the themes of ambition and love still resonate today. Highly recommended for literature enthusiasts!
-            </div>
-            <div class="card-footer">
-                <span class="like-icon"><i class="fa-solid fa-thumbs-up"></i></span>
-                <span class="like-count">12</span>
-            </div>
+            <?php endif; ?>
         </div>
-
-        <div class="card">
-            <div class="card-header">
-                <span class="user-name">Nimantha Madushan</span>
-                <span class="date">2024/08/18</span>
-            </div>
-            <div class="card-content">
-                I recently read "1984" by George Orwell, and it blew my mind! The dystopian world Orwell creates is terrifying yet thought-provoking. A must-read for anyone who enjoys science fiction with deep societal commentary.
-            </div>
-            <div class="card-footer">
-                <span class="like-icon"><i class="fa-solid fa-thumbs-up"></i></span>
-                <span class="like-count">9</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header">
-                <span class="user-name">Rasheen Mohommad</span>
-                <span class="date">2024/08/16</span>
-            </div>
-            <div class="card-content">
-                "To Kill a Mockingbird" is an incredible read! Harper Lee's portrayal of racial injustice in the Deep South is both heartbreaking and inspiring. The characters, especially Atticus Finch, are unforgettable.
-            </div>
-            <div class="card-footer">
-                <span class="like-icon"><i class="fa-solid fa-thumbs-up"></i></span>
-                <span class="like-count">15</span>
-            </div>
-            </div>
-          </div>
-          <br><br><br>
+        <br><br><br>
     </div>
     <div class="tab-content" id="book-view-description" style="display: none;">
       <div class="book-description">
@@ -163,7 +150,7 @@
                                 <?php if ($recbook->discount != 0 ) : ?>
                                     <div class="bookcard-discount"><?= htmlspecialchars($recbook->discount) ?>%</div>
                                 <?php endif; ?>
-                                <a href="<?= ROOT ?>/BookView/index/<?= $book->id ?>" class="book-card-link">
+                                <a href="<?= ROOT ?>/BookView/index/<?= $recbook->id ?>" class="book-card-link">
                                 <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($recbook->cover_image) ?>" alt="<?= htmlspecialchars($recbook->title) ?>">
                                 <p><?= htmlspecialchars($recbook->title) ?></p>
                                 <p class="bookcard-price">
@@ -207,6 +194,32 @@
     </div>
     <script src="<?= ROOT ?>/assets/JS/bookView.js"></script>
     <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.like-icon').forEach(function (icon) {
+                icon.addEventListener('click', function () {
+                    const reviewId = this.getAttribute('data-review-id');
+                    const likeCountElem = this.nextElementSibling;
+                    const iconElem = this;
+
+                    fetch('http://localhost/BookMart/public/user/like', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: 'id=' + encodeURIComponent(reviewId)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log(data.likes)
+                            likeCountElem.textContent = data.likes;
+                            iconElem.classList.toggle('liked', data.liked);
+                        } else {
+                        
+                        }
+                    });
+                });
+            });
+        });
         let maxQuantity = <?php echo $book->quantity; ?>; 
 
         function changeQuantity(amount) {

@@ -58,6 +58,12 @@ class Book extends Controller{
         return $bookModel->where(['genre' => $genre]);
     }
 
+    public function getReviews($id){
+        $reviewModel = new ReviewModel();
+
+        return $reviewModel->where(['book_id' => $id]);
+    }
+
     public function addBook(){
         $bookModel = new BookModel();
         echo("addBook");

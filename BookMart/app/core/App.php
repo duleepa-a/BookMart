@@ -34,6 +34,7 @@ class App{
             'BookstoreProfile' => ['index'],
             'BookstoreAnalytics' => ['index'],
             'Book' => ['addBook','updateBook','deleteBook'],
+            'User' => ['like'],
         ],
         'bookSeller' => [
             'BookSellerHome' => ['index','storePage', 'viewSales'],
@@ -42,18 +43,23 @@ class App{
             'BookSellerProfile' => ['index'],
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],
             'BookSellerSidebar' => ['index', 'addBook'],
+            'User' => ['like'],
+            'Payment' => ['index','checkOut','process','success','cancel']
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],
-            'Buyer' => ['index', 'orders','trackOrder','register','reviews','myProfile'],
-            'Cart' => ['index']
+            'Buyer' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile'],
+            'Cart' => ['index'],
+            'User' => ['like'],
+            'Payment' => ['index','checkOut','process','success','cancel']
         ],
         'courier' => [
             'CourierHome' => ['index', 'viewOrders'], 
             'CourierProfile' => ['index'],
             'CourierOrders' => ['index'],
             'CourierOrderDetails' => ['index'],
-            'CourierEarns' => ['index']
+            'CourierEarns' => ['index'],
+            'User' => ['like'],
         ]
     ];
     
@@ -78,7 +84,6 @@ class App{
         'Notifications' => ['index'],
         'ArticleUpdate' => ['index', 'updateArticle', 'deleteArticle'],
         'Chat' => ['index','chatbox','fetchMessages','send'],
-        'Payment' => ['index','checkOut','process','success','cancel']
     ];
 
     private function splitURL() {

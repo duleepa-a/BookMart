@@ -92,7 +92,7 @@ Trait Model{
     }
 
     public function update($id,$data,$id_column = 'id'){
-        
+        $id_column = $this->order_column;
         if(!empty($this->allowedColumns)){
             foreach($data as $key => $value){
                 if(!in_array($key,$this->allowedColumns)){

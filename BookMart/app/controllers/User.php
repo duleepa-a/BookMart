@@ -292,5 +292,54 @@ class User extends Controller {
                 echo json_encode(['error' => 'Method Not Allowed']);
             }
         }
+
+
+        public function like(){
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $review_id = $_POST['id'];
+                $user_id = $_SESSION['user_id'];
+        
+                if (!$user_id) {
+                    echo json_encode(['success' => false, 'error' => 'Login required']);
+                    return;
+                }
+    
+                $reviewlikeModel = new ReviewLike();
+                $reviewModel = new ReviewModel();
+                
+                $review = $reviewModel->first(['id' => $review_id]); 
+                if (!$review) {
+                    echo json_encode(['success' => false, 'error' => 'Review not found']);
+                    return;
+                }                
+                $likes = $review->likes;
+
+                // Check if user already liked
+                $likeExists = $reviewlikeModel->first(['user_id' => $user_id,'review_id' => $review_id]); 
+                
+                if ($likeExists) {
+                    // Unlike it
+                    $reviewlikeModel->delete($likeExists->id);
+
+                    $likes = $likes - 1;
+                    if($likes <= 0){
+                        $likes = 0;
+                    }
+                    
+                    $reviewModel->update($review->id,['likes' => $likes]);
+        
+                    echo json_encode(['success' => true, 'likes' => $likes, 'liked' => false]);
+                } else {
+                    // Like it
+                    $reviewlikeModel->insert(['user_id' => $user_id,'review_id' => $review_id]);
+        
+                    $likes = $likes+1;
+        
+                    $reviewModel->update($review->id,['likes' => $likes]);
+        
+                    echo json_encode(['success' => true, 'likes' => $likes, 'liked' => true]);
+                }
+            }
+        }
         
     }

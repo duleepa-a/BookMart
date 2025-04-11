@@ -373,6 +373,11 @@ button.prev:hover, button.next:hover {
     font-size: 14px;
     margin-left: 5px;
   }
+
+  .like-icon.liked i {
+    color: #000000;
+    cursor: pointer;
+}
   
 
 .condition-details{
