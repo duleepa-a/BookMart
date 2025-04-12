@@ -26,13 +26,7 @@ class App{
             
         ],
         'bookStore' => [
-            'BookStoreController' => ['storePage', 'manageInventory'],
-            'BookstoreInventory' => ['index'], 
-            'BookstoreOrders' => ['index'],
-            'BookstoreAds' => ['index'], 
-            'BookstoreReviews' => ['index'],
-            'BookstoreProfile' => ['index'],
-            'BookstoreAnalytics' => ['index'],
+            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','myProfile','markAsRead'],
             'Book' => ['addBook','updateBook','deleteBook'],
             'User' => ['like'],
         ],
@@ -76,6 +70,7 @@ class App{
         'Home' => ['index'],
         'BookList' => ['index'],
         'BookByGenres' => ['index'],
+        'Payment' => ['checkOut'],
         'Book' => ['index','getNewArrivals','search'],
         'User' => ['login','logout','registerBuyer','registerCourier','registerBookSeller','registerBookStore','checkusername','checkemail'],
         'Loading' => ['index'],

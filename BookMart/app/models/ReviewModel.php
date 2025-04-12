@@ -14,7 +14,8 @@ class ReviewModel{
         'likes',
         'comment',
         'seller_rating',
-        'review_date'
+        'review_date',
+        'is_read'
     ];
 
 }

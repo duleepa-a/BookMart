@@ -17,12 +17,12 @@
     <div class="sidebar">
         <ul>
             <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button></li>
-            <li><a href="<?= ROOT ?>/bookstoreInventory" ><i class="fa-solid fa-book"></i>My Inventory</a></li>
-            <li><a href="<?= ROOT ?>/bookstoreAnalytics"><i class="fa-solid fa-chart-column"></i>Analytics</a></li>
-            <li><a href="<?= ROOT ?>/bookstoreOrders" ><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
-            <li><a href="<?= ROOT ?>/bookstoreReviews" class="active"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
-            <li><a href="<?= ROOT ?>/bookstoreAds"><i class="fa-solid fa-up-right-from-square"></i>Ads & Offers</a></li>
-            <li><a href="<?= ROOT ?>/bookstoreProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/inventory" ><i class="fa-solid fa-book"></i>My Inventory</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/Analytics"><i class="fa-solid fa-chart-column"></i>Analytics</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/orders" ><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/getReviews" class="active"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/advertisments"><i class="fa-solid fa-up-right-from-square"></i>Ads & Offers</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/myProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
         </ul>   
     </div>
     <div class="container">
@@ -133,7 +133,7 @@
                 </form>
             </div>
         </div>
-        <h1 class="page-title">You Have 4 New Reviews</h1>
+        <h1 class="page-title">You Have <?= $unreadcount === 0 ? 'No' : htmlspecialchars($unreadcount) ?> New Reviews</h1>
         <div class="inventory-toolbar">
             <input type="text" placeholder="Search your book in the inventory" class="inventory-search-bar">
             <div class="filter">
@@ -146,92 +146,59 @@
             </div>
         </div>
         <table class="reviews-table">
-        <thead>
-            <tr>
-                <th>Book Title</th>
-                <th>Date</th>
-                <th>Customer Name</th>
-                <th>Content</th>
-                <th>Ratings</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>The Great Gatsby</td>
-                <td>2024-11-20</td>
-                <td>John Doe</td>
-                <td>Amazing story with a timeless message.</td>
-                <td class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
-                </td>
-                <td>
-                    <button class="reply-btn">Reply</button>
-                    <button class="read-btn">Mark as Read</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1984</td>
-                <td>2024-11-15</td>
-                <td>Jane Smith</td>
-                <td>Thought-provoking and relevant.</td>
-                <td class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
-                </td>
-                <td>
-                    <button class="reply-btn">Reply</button>
-                    <button class="read-btn">Mark as Read</button>
-                </td>
-            </tr>
-            <tr>
-                <td>To Kill a Mockingbird</td>
-                <td>2024-11-10</td>
-                <td>Michael Brown</td>
-                <td>A heartfelt and compelling read.</td>
-                <td class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </td>
-                <td>
-                    <button class="reply-btn">Reply</button>
-                    <button class="read-btn">Mark as Read</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Pride and Prejudice</td>
-                <td>2024-11-18</td>
-                <td>Emily White</td>
-                <td>A delightful and witty classic.</td>
-                <td class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
-                </td>
-                <td>
-                    <button class="reply-btn">Reply</button>
-                    <button class="read-btn">Mark as Read</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-        </div>
+            <thead>
+                <tr>
+                    <th>Book Title</th>
+                    <th>Date</th>
+                    <th>Customer Name</th>
+                    <th>Content</th>
+                    <th>Ratings</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if (!empty($reviews)): ?>
+                <?php foreach ($reviews as $review): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($review->book_title) ?></td>
+                        <td><?= date('Y-m-d', strtotime($review->review_date)) ?></td>
+                        <td><?= htmlspecialchars($review->buyer_name) ?></td>
+                        <td><?= htmlspecialchars($review->comment) ?></td>
+                        <td class="stars">
+                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                <i class="<?= $i <= $review->rating ? 'fas' : 'far' ?> fa-star"></i>
+                            <?php endfor; ?>
+                        </td>
+                        <td>
+                            <button class="reply-btn" data-user="<?= $review->buyer_id ?>">Reply</button>
+                            <?php if ($review->is_read == 0 ): ?><button class="read-btn" data-review="<?= $review->id ?>">Mark as Read</button><?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr><td colspan="6" style="text-align:center;">No reviews found.</td></tr>
+            <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
     </div>
     <footer class="small-footer">
             <p>&copy; 2024 BookMart, all rights reserved.</p>
     </footer> 
     <script src="<?= ROOT ?>/assets/JS/bookstoreHome.js"></script>
+    <script>
+        document.querySelectorAll('.reply-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const userId = this.getAttribute('data-user');
+                window.location.href = `<?= ROOT ?>/chat/chatbox/${userId}`;
+            });
+        });
+        document.querySelectorAll('.read-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const reviewId = this.getAttribute('data-review');
+                window.location.href = `<?= ROOT ?>/BookstoreController/markAsRead/${reviewId}`;
+            });
+        });
+    </script>
 </body>
 </html>

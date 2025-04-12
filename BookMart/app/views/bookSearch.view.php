@@ -16,6 +16,58 @@
     <!-- navBar division end -->
 
     <div class="large-container">
+        <form id="filter-form" method="GET">
+        <div class="filter-sidebar">
+            <h2>Shop By</h2>
+            <div class="filter-section">
+                <h4>Condition</h4>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="brand-new" value="new" class="filter-input" name="condition">
+                        <label for="brand-new">Brand New</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="second-hand" value="second-hand" class="filter-input" name="condition">
+                        <label for="second-hand">Second Hand</label>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-section">
+                <h4>Author</h4>
+                    <div class="filter-search">
+                        <input type="text" placeholder="Search Author" class="filter-input" name="author">
+                    </div>
+            </div>
+            <div class="filter-section">
+                <h4>Price</h4>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="text" placeholder="Min Price" class="filter-input" name="min_price">
+                    </div>
+                    <div class="filter-option">
+                        <input type="text" placeholder="Max Price" class="filter-input" name="max_price">
+                    </div>
+                </div>
+            </div>
+            <div class="filter-section">
+                <h4>Condition</h4>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="english" value="english" name="language" class="filter-input">
+                        <label for="english">English</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="sinhala" value="sinhala" name="language" class="filter-input">
+                        <label for="sinhala">Sinhala</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="tamil" value="tamil" name="language" class="filter-input">
+                        <label for="tamil">Tamil</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
         <div class="container">
             <h2 class="container-heading">
                 Search results for <span class="keyword-heading">keyword "<?= $keyword; ?>"</span>
@@ -23,25 +75,30 @@
             <?php if (!empty($books)): ?>
                 <div class="result-container">
                     <?php foreach ($books as $book): ?>
-                        <div class="book-card">
+                        <?php 
+                                        $discountedPrice = $book->price - ($book->price * ($book->discount / 100)); 
+                        ?>
+                        <div class="book-card"
+                        data-condition="<?= $book->book_condition ?>"
+                        data-language="<?= $book->language ?>"
+                        data-author="<?= strtolower($book->author) ?>"
+                        data-price="<?= !empty($book->discount) ? ($book->price - ($book->price * $book->discount / 100)) : $book->price ?>"
+                        >
                             <div class="book-image">
                                 <a href="<?= ROOT ?>/BookView/index/<?= $book->id ?>" class="book-card-link">
                                 <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($book->cover_image) ?>" 
                                     alt="<?= htmlspecialchars($book->title) ?> Book Cover">
-                                <?php if (!empty($book->discount)): ?>
+                                <?php if ($book->discount != 0): ?>
                                     <div class="discount-badge"><?= htmlspecialchars($book->discount) ?>%</div>
                                 <?php endif; ?>
                                 </a>
                             </div>
                             <div class="book-info">
                                 <h3><?= htmlspecialchars(strtoupper($book->title)) ?></h3>
-                                <p class="original-price">LKR <?= number_format($book->price, 2) ?></p>
-                                <?php if (!empty($book->discount)): ?>
-                                    <?php 
-                                        $discountedPrice = $book->price - ($book->price * ($book->discount / 100)); 
-                                    ?>
-                                    <p class="discounted-price">LKR <?= number_format($discountedPrice, 2) ?></p>
+                                <?php if ($book->discount != 0): ?>
+                                    <p class="original-price">LKR <?= number_format($book->price, 2) ?></p>
                                 <?php endif; ?>
+                                    <p class="discounted-price">LKR <?= number_format($discountedPrice, 2) ?></p>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -74,5 +131,49 @@
     </div>
     
     <script src="<?= ROOT ?>/assets/JS/bookByGenres.js"></script>
+    <script>
+            document.querySelectorAll('.filter-input').forEach(input => {
+                input.addEventListener('input', filterBooks);
+                input.addEventListener('change', filterBooks);
+            });
+
+            function filterBooks() {
+                const bookCards = document.querySelectorAll('.book-card');
+
+                const selectedConditions = Array.from(document.querySelectorAll('input[name="condition"]:checked')).map(el => el.value);
+                const selectedLanguages = Array.from(document.querySelectorAll('input[name="language"]:checked')).map(el => el.value);
+                const authorSearch = document.querySelector('input[name="author"]')?.value.trim().toLowerCase();
+                const minPrice = parseFloat(document.querySelector('input[name="min_price"]')?.value) || 0;
+                const maxPrice = parseFloat(document.querySelector('input[name="max_price"]')?.value) || Infinity;
+
+                bookCards.forEach(card => {
+                    const condition = card.dataset.condition;
+                    const language = card.dataset.language.toLowerCase();
+                    const author = card.dataset.author.toLowerCase();
+                    const price = parseFloat(card.dataset.price);
+
+                    let matchesCondition = true;
+                    if (selectedConditions.length === 1) {
+                        if (selectedConditions[0] === 'new') {
+                            matchesCondition = condition === 'new';
+                        } else if (selectedConditions[0] === 'second-hand') {
+                            matchesCondition = condition !== 'new';
+                        }
+                    }
+
+                    let matchesLanguage = selectedLanguages.length === 0 || selectedLanguages.includes(language);
+                    let matchesAuthor = !authorSearch || author.includes(authorSearch);
+                    let matchesPrice = (price >= minPrice && price <= maxPrice);
+
+                    console.log(maxPrice);
+
+                    if (matchesCondition && matchesLanguage && matchesAuthor && matchesPrice) {
+                        card.style.display = "block";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            }
+        </script>
 </body>
 </html>

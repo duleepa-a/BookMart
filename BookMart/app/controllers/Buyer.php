@@ -11,7 +11,7 @@ class Buyer extends Controller{
     
         $orderModel = new Order();
         $orderModel->setLimit(50);
-        $orders = $orderModel->where(['buyer_id' => $buyerId]);
+        $orders = $orderModel->where(['buyer_id' => $_SESSION['user_id']]);
     
         $bookModel = new BookModel(); 
         $userModel = new UserModel();     
@@ -137,7 +137,7 @@ class Buyer extends Controller{
 
     public function reviews() {
         $buyerModel = new BuyerModel();
-        $buyerId = $buyerModel->first(['user_id' => $_SESSION['user_id']])->id;
+        $buyerId = $_SESSION['user_id'];
     
         $orderModel = new Order();
         $orderModel->setLimit(50);
@@ -150,6 +150,14 @@ class Buyer extends Controller{
             'buyer_id' => $buyerId,
             'order_status' => 'reviewed'
         ]);
+
+        if (!is_array($reviewedOrders)) {
+            $reviewedOrders = [];
+        }
+
+        if (!is_array($completedOrders)) {
+            $completedOrders = [];
+        }
     
         $reviewModel = new ReviewModel();
         $userModel = new UserModel();

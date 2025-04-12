@@ -186,6 +186,8 @@ input[type="checkbox"] {
   
   .original-price {
     font-size: 12px;
+    text-decoration: line-through;
+    color: rgb(126, 0, 0);
   }
   
   .discounted-price {

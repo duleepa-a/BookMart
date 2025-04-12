@@ -16,44 +16,36 @@
     <!-- navBar division end -->
     <div class="large-container">
         <div class="container"> 
-            <div class="dashboard">
-                <div class="card">
-                    <div class="icon">
-                        <i class="fa-solid fa-dollar-sign"></i>
-                    </div>
-                    <div class="value">
-                        <h3>Net Revenue</h3>
-                        <span class="span-value">LKR.136.4k</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="icon">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </div>
-                    <div class="value">
-                        <h3>Orders</h3>
-                        <span class="span-value">600M</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="icon">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-                    <div class="value">
-                        <h3>Customers</h3>
-                        <span class="span-value">100k</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="icon">
-                        <i class="fa-solid fa-book"></i>
-                    </div>
-                    <div class="value">
-                        <h3>Inventory</h3>
-                        <span class="span-value">500</span>
-                    </div>
+            <div class="card-container">
+            <div class="card">
+                <i class="fa-solid fa-dollar-sign card-icon"></i>
+                <div class="card-content">
+                    <div class="card-title">Net Revenue</div>
+                    <div class="card-value">Rs.50K</div>
                 </div>
             </div>
+            <div class="card">
+                <i class="fa-solid fa-cart-shopping card-icon"></i>
+                <div class="card-content">
+                    <div class="card-title">Orders</div>
+                    <div class="card-value">40K</div>
+                </div>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-user card-icon"></i>
+                <div class="card-content">
+                    <div class="card-title">Customers</div>
+                    <div class="card-value">342</div>
+                </div>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-book card-icon"></i>
+                <div class="card-content">
+                    <div class="card-title">Inventory</div>
+                    <div class="card-value">127</div>
+                </div>
+            </div>
+        </div>
             <br><br>
             <div class="hero-section">
                 <div class="hero left">
@@ -157,7 +149,7 @@
             <div class="low-stock-div">
                 <div class="header">
                     <h2 class="low-stock-heading">Books low on stock</h2>
-                    <a href="<?= ROOT ?>/bookstoreInventory" class="inventory-bttn">Go to Inventory</a>
+                    <a href="<?= ROOT ?>/BookstoreController/inventory" class="inventory-bttn">Go to Inventory</a>
                 </div>
                 <table class="low-stock-table">
                 <thead>

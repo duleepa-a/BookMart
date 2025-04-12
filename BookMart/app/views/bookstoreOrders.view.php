@@ -17,12 +17,12 @@
     <div class="sidebar">
         <ul>
             <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button></li>
-            <li><a href="<?= ROOT ?>/bookstoreInventory" ><i class="fa-solid fa-book"></i>My Inventory</a></li>
-            <li><a href="<?= ROOT ?>/bookstoreAnalytics"><i class="fa-solid fa-chart-column"></i>Analytics</a></li>
-            <li><a href="<?= ROOT ?>/bookstoreOrders" class="active"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
-            <li><a href="<?= ROOT ?>/bookstoreReviews"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
-            <li><a href="<?= ROOT ?>/bookstoreAds"><i class="fa-solid fa-up-right-from-square"></i>Ads & Offers</a></li>
-            <li><a href="<?= ROOT ?>/bookstoreProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/inventory" ><i class="fa-solid fa-book"></i>My Inventory</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/Analytics"><i class="fa-solid fa-chart-column"></i>Analytics</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/orders" class="active"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/getReviews"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/advertisments"><i class="fa-solid fa-up-right-from-square"></i>Ads & Offers</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/myProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
         </ul>   
     </div>
     <div class="container">
@@ -139,7 +139,7 @@
                     <i class="fas fa-box-open fa-lg"></i>
                     </div>
                     <div class="stat-content">
-                    <h3 class="accepted">24</h3>
+                    <h3 class="accepted"><?= htmlspecialchars($count['shipping']) ?></h3>
                     <p>Accepted Orders</p>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                     <i class="fas fa-clock fa-lg"></i>
                     </div>
                     <div class="stat-content">
-                    <h3 class="pending">78</h3>
+                    <h3 class="pending"><?= htmlspecialchars($count['pending']) ?></h3>
                     <p>Pending Orders</p>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                     <i class="fas fa-check-circle fa-lg"></i>
                     </div>
                     <div class="stat-content">
-                    <h3 class="completed">1861</h3>
+                    <h3 class="completed"><?= htmlspecialchars($count['completed']) ?></h3>
                     <p>Completed Orders</p>
                     </div>
                 </div>
@@ -166,7 +166,7 @@
                     <i class="fas fa-shopping-cart fa-lg"></i>
                     </div>
                     <div class="stat-content">
-                    <h3 class="returned">54</h3>
+                    <h3 class="returned"><?= htmlspecialchars($count['canceled'] )?></h3>
                     <p>Returned Orders</p>
                     </div>
                 </div>
@@ -196,42 +196,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><input type="checkbox" class="select-order"></td>
-                        <td>ORD12345</td>
-                        <td>2024-11-01</td>
-                        <td>John Smith</td>
-                        <td>+94 77 123 4567</td>
-                        <td>Rs.45.99</td>
-                        <td class="status pending">Pending</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-order"></td>
-                        <td>ORD12346</td>
-                        <td>2024-11-03</td>
-                        <td>Mary Johnson</td>
-                        <td>+94 71 987 6543</td>
-                        <td>Rs.32.50</td>
-                        <td class="status done">Done</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-order"></td>
-                        <td>ORD12347</td>
-                        <td>2024-11-05</td>
-                        <td>Michael Brown</td>
-                        <td>+94 75 567 8910</td>
-                        <td>Rs.78.20</td>
-                        <td class="status done">Done</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-order"></td>
-                        <td>ORD12348</td>
-                        <td>2024-11-06</td>
-                        <td>Lisa Davis</td>
-                        <td>+94 76 223 4455</td>
-                        <td>Rs.23.15</td>
-                        <td class="status pending">Pending</td>
-                    </tr>
+                    <?php if (!empty($orders)): ?>
+                        <?php foreach ($orders as $order): ?>
+                            <tr>
+                                <td><input type="checkbox" class="select-order"></td>
+                                <td><?= htmlspecialchars($order->order_id) ?></td>
+                                <td><?= date('Y-m-d', strtotime($order->created_on)) ?></td>
+                                <td><?= htmlspecialchars($order->buyer_name) ?></td>
+                                <td><?= htmlspecialchars($order->buyer_contact) ?></td>
+                                <td>Rs. <?= number_format($order->total_amount, 2) ?></td>
+                                <td class="status <?= strtolower($order->order_status) ?>">
+                                    <?= ucfirst($order->order_status) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="7" style="text-align:center;">No orders found.</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>            
     </div>

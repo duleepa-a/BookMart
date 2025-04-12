@@ -1,6 +1,6 @@
 <?php
 
-require 'Book.php';
+require 'BookView.php';
 
 class Payment extends Controller{
 
@@ -8,6 +8,7 @@ class Payment extends Controller{
         
     }
     public function checkOut($bookId, $qty) {
+
         $bookModel = new BookModel();
         $buyerModel = new BuyerModel(); 
     
@@ -31,7 +32,7 @@ class Payment extends Controller{
 
         $orderdetails = [
             'book_id' => $bookId,
-            'buyer_id' => $buyer->id,
+            'buyer_id' => $_SESSION['user_id'],
             'quantity' => $qty,
             'discount' => $book->discount,
             'discounted_Price' => $discountedPrice,
@@ -78,6 +79,7 @@ class Payment extends Controller{
         $orderData = [
             'buyer_id' => $orderdetails['buyer_id'],
             'book_id' => $bookId,
+            'seller_id'=> $book->seller_id,
             'order_status' => 'pending',
             'payment_status' => 'successful',
             'quanitity' => $orderdetails['quantity'],
@@ -100,7 +102,6 @@ class Payment extends Controller{
         ];
         $paymentModel->insert($paymentData);
     
-        // Display success message
         echo "<h2>Payment Successful!</h2>";
         echo "<p>Thank you for your purchase.</p>";
     }
