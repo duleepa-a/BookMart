@@ -4,33 +4,49 @@ class Articles extends Controller {
     
     // Main index method - shows list of articles
     public function index() {
-        $articles = $this->getArticles();
-        
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+    
+        // Fetch one extra to check if more articles exist
+        $articles = $this->getArticles(null, $limit + 1);
+    
+        // Slice it to only show the actual limit
+        $displayArticles = array_slice($articles, 0, $limit);
+    
         $data = [
-            'articles' => $articles,
+            'articles' => $displayArticles,
+            'limit' => $limit,
+            'hasMore' => count($articles) > $limit,
         ];
-        
+    
         $this->view('articles', $data);
     }
     
     // Get articles with optional limit
-    public function getArticles($articleId = null) {
+    public function getArticles($articleId = null, $limit = 5) {
         $article = new ArticleModel();
-        
+        $article->setLimit($limit);
+    
         if ($articleId !== null) {
-            $article->setLimit(1);
             return $article->where(['ID' => $articleId]);
         } else {
-            $article->setLimit(5);
             return $article->findAll();
         }
-    }
+    }    
     
     // Get only new articles
     public function getNewArticles() {
         $article = new ArticleModel();
         $article->setLimit(2);
         return $article->findAll();
+    }
+
+    public function getRecomendedArticles($id = null) {
+        if ($id === null) {
+            return null;
+        }
+        $article = new ArticleModel();
+        $article->setLimit(2);
+        return $article->where([], ['ID' => $id]);
     }
     
     // Article creation view
@@ -64,10 +80,12 @@ class Articles extends Controller {
     // Article detail view
     public function detail($id) {
         $articles = $this->getArticles($id);
+        $recArticles = $this->getRecomendedArticles($id);
         
         $data = [
             'articles' => [$articles[0]],
-            'article_id' => $id
+            'article_id' => $id,
+            'recomended' => $recArticles
         ];
         
         $this->view('articleDetail', $data);
@@ -120,19 +138,27 @@ class Articles extends Controller {
     // MyArticles functionality - shows only user's articles
     public function myArticles() {
         $userId = $_SESSION['user_id'];
-        $articles = $this->getUserArticles($userId);
-        
+
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+
+        $articles = $this->getUserArticles($userId, $limit + 1);
+
+        $displayArticles = array_slice($articles, 0, $limit);
+
         $data = [
-            'articles' => $articles,
+            'articles' => $displayArticles,
+            'limit' => $limit,
+            'hasMore' => count($articles) > $limit,
         ];
         
         $this->view('myArticles', $data);
     }
     
     // Get articles for a specific user
-    public function getUserArticles($userId) {
+    public function getUserArticles($userId, $limit = 5) {
         $article = new ArticleModel();
-        $article->setLimit(5);
+        $article->setLimit($limit);
         return $article->where(['seller_id' => $userId]);
     }
+    
 }

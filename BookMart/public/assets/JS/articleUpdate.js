@@ -5,11 +5,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeModalButtons = deleteArticleModal.querySelectorAll('.close-modal');
     
     function openModal() {
-        deleteArticleModal.style.display = 'block';
+        deleteArticleModal.classList.add('active');
     }
     
     function closeModal() {
-        deleteArticleModal.style.display = 'none';
+        deleteArticleModal.classList.remove('active');
     }
     
     if (deleteArticleTrigger) {

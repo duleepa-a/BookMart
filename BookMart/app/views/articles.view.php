@@ -13,7 +13,7 @@
 <body>
     
    <!-- navBar division begin -->
-   <?php include 'homeNavBar.view.php'; ?>
+   <?php include 'secondaryNavBar.view.php'; ?>
     <!-- navBar division end -->
 
     <!-- navBar division begin -->
@@ -24,11 +24,9 @@
     <center>
     <div class="background-box">
         <h1 class="title-text">Latest Articles</h1>
-        <br><br>
 
         <div class="articles-container">
             <?php if (!empty($data['articles'])): ?>
-                <?php $counter = 0; ?>
                 <?php foreach ($data['articles'] as $article): ?>
                     <div class="article-card">
                         <div class="article-header">
@@ -48,13 +46,13 @@
                             </a>
                         </div>
                     </div>
-                    <?php $counter++; ?>
                 <?php endforeach; ?>
-                <?php if ($counter == 5): ?>
+                <?php if ($data['hasMore']): ?>
                     <div class="controls">
-                        <button class="view-more-button">View More</button>
+                        <a href="?limit=<?= $data['limit'] + 5 ?>" class="view-more-button">View More</a>
                     </div>
                 <?php endif; ?>
+
                 
             <?php else: ?>
                 <p>No articles found.</p>
@@ -69,6 +67,6 @@
     <!-- Footer division begin -->
     <?php include 'bookSellerFooter.view.php'; ?>
     <!-- Footer division end -->
-    <script src="<?= ROOT ?>/assets/JS/bookSellerlistings.js"></script>
+    <script src="<?= ROOT ?>/assets/JS/articles.js"></script>
 </body>
 </html>

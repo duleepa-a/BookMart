@@ -47,12 +47,12 @@
                     <a href="" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
                 <?php elseif ($_SESSION['user_role'] == 'bookSeller'): ?>
                     <!-- Links for bookseller -->
-                    <a href="./bookSellerProfile" class="navbar-links">Profile</a>
-                    <a href="./bookSellerListings" class="navbar-links">Listings</a>
-                    <a href="./bookSellerSales" class="navbar-links">Sales</a>
-                    <a href="./articles" class="navbar-links">Articles</a>
+                    <a href="<?= ROOT ?>/bookSellerProfile" class="navbar-links">Profile</a>
+                    <a href="<?= ROOT ?>/bookSellerListings" class="navbar-links">Listings</a>
+                    <a href="<?= ROOT ?>/bookSellerSales" class="navbar-links">Sales</a>
+                    <a href="<?= ROOT ?>/articles" class="navbar-links">Articles</a>
                     <a href="" class="navbar-links"><i class="fa-solid fa-cart-shopping"></i></a>
-                    <a href="./notifications" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
+                    <a href="<?= ROOT ?>/notifications" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
                 <?php elseif ($_SESSION['user_role'] == 'admin'): ?>
                     <!-- Links for admin -->
                     <a href="" class="navbar-links">My Profile</a>

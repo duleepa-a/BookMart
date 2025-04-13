@@ -13,14 +13,14 @@
 <body>
     
     <!-- navBar division begin -->
-    <?php include 'bookSellerNavBar.view.php'; ?>
+    <?php include 'secondaryNavBar.view.php'; ?>
     <!-- navBar division end -->
 
     <!-- navBar division begin -->
     <?php include 'bookSellerSidebar.view.php'; ?>
     <!-- navBar division end -->
     
-    <br><br>
+    <br>
     <center>
     <div class="background-box">
         <article class="article-full">
@@ -42,35 +42,36 @@
     <section class="recommended-section">
         <h2 class="recommended-heading">Recommended Articles</h2>
         <div class="recommended-container">
-            <div class="article-card">
-                <div class="recommended-header">
-                    <h2>Independent Bookstores: A Renaissance</h2>
-                    <span class="article-meta">By Michael Chen | October 12, 2024</span>
-                </div>
-                <div class="article-content">
-                    <p>Despite the digital age, independent bookstores are experiencing a surprising revival. This piece 
-                    investigates the factors behind this renaissance and how local bookstores are adapting...</p>
-                </div>
-                <div class="article-footer">
-                    <a href="<?= ROOT ?>/articles/detail" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            </div>
 
-            <br>
+        <?php if (!empty($data['articles'])): ?>
+            <?php $counter = 0; ?>
+            <?php foreach ($data['recomended'] as $article): ?>
+                <?php if ($counter == 2) break; ?>
+                <div class="article-card">
+                    <div class="article-header">
+                        <h2><?= htmlspecialchars($article->Title) ?></h2>
+                        <span class="article-meta">
+                            By <?= htmlspecialchars($article->Author) ?> | 
+                            <?= date('F d, Y', strtotime($article->created_at)) ?>
+                        </span>
+                    </div>
+                    <div class="article-content">
+                        <p><?= substr(htmlspecialchars($article->Content), 0, 200) ?>...</p>
+                    </div>
+                    <div class="article-footer">
+                        <p></p>
+                        <a href="<?= ROOT ?>/articles/detail/<?= htmlspecialchars($article->ID) ?>" class="read-more">
+                            Read More <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <br>
+                <?php $counter++; ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No articles found.</p>
+        <?php endif; ?>
 
-            <div class="article-card">
-                <div class="recommended-header">
-                    <h2>The Rise of Young Adult Literature</h2>
-                    <span class="article-meta">By Emma Thompson | October 10, 2024</span>
-                </div>
-                <div class="article-content">
-                    <p>Young Adult literature has become one of the most dynamic and influential categories in publishing. 
-                    We examine its impact on readers of all ages and how it's shaping modern storytelling...</p>
-                </div>
-                <div class="article-footer">
-                    <a href="<?= ROOT ?>/articles/detail" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            </div>
         </div>
     </section>
 

@@ -12,7 +12,7 @@
 </head>
 <body>
     <!-- navBar division begin -->
-    <?php include 'homeNavBar.view.php'; ?>
+    <?php include 'secondaryNavBar.view.php'; ?>
     <!-- navBar division end -->
 
     <!-- Sidebar division begin -->

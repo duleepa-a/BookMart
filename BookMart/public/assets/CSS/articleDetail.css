@@ -8,10 +8,17 @@ body {
     background-color: #F1F1F1;
 }
 
+.container{
+    width:85%;
+    margin-top: 6%;
+    margin-left: 15%;
+    padding: 20px;
+}
+
 .background-box {
     background-color: white;
     padding: 40px;
-    width: 80%;
+    width: 95%;
     border-radius: 10px;
     min-height: 600px;
     max-width: 1200px;
@@ -67,12 +74,11 @@ body {
     max-width: 1200px;
     margin: 60px auto 0;
     padding: 0 20px;
-    padding-left: 90px;
 }
 
 .recommended-heading {
     text-align: center;
-    color: #02224E;
+    color: #BE5715;
     font-size: 2rem;
     margin-bottom: 30px;
 }

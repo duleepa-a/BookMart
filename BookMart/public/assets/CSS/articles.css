@@ -9,13 +9,12 @@ body {
 }
 
 .background-box {
-    background-color: white;
     padding: 20px;
-    width: 80%;
+    width:90%;
     border-radius: 10px;
     min-height: 600px;
     padding-top: 60px;
-    padding-left: 90px;
+    padding-left: 180px;
 }
 
 .title-text {
@@ -96,7 +95,7 @@ body {
 }
 
 .view-more-button {
-    background-color: #02224E;
+    background-color: #BE5715;
     color: white;
     border: none;
     padding: 12px 30px;
@@ -107,7 +106,7 @@ body {
 }
 
 .view-more-button:hover {
-    background-color: #BE5715;
+    background-color: #02224E;
 }
 
 @media (max-width: 768px) {
@@ -271,3 +270,4 @@ body {
     gap: 10px;
     margin-right: 10px;
 }
+

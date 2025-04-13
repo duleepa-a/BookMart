@@ -14,7 +14,7 @@
 <body>
     
     <!-- navBar division begin -->
-    <?php include 'bookSellerNavBar.view.php'; ?>
+    <?php include 'secondaryNavBar.view.php'; ?>
     <!-- navBar division end -->
 
     <!-- navBar division begin -->
@@ -23,7 +23,7 @@
     
     <br><br>
     <center>
-    <div class="background-box">    <!-- inner background box begin -->        
+    <div>    <!-- inner background box begin -->        
         <h1 class="title-text">My Listings</h1>
 
         <br><br>
