@@ -86,7 +86,7 @@
                             <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
                         </div>
                       <button class="buy-now-btn" onclick="buyNow()">Buy now</button>
-                      <button class="add-to-cart-btn">Add to cart</button>
+                      <button class="add-to-cart-btn" onclick="addToCart()">Add to cart</button>
                   </div>
               </div>
           </div>
@@ -273,6 +273,16 @@
             let productId = <?php echo $book->id; ?>; 
             
             window.location.href = "<?= ROOT ?>/payment/checkOut/" + productId + "/" +quantity;
+        }
+        function addToCart() {
+            if (!isLoggedIn) {
+                showAlert("Please log in to add this item to the cart.");
+                return;
+            }
+            let quantity = document.getElementById("quantity").innerText;
+            let productId = <?php echo $book->id; ?>; 
+            
+            window.location.href = "<?= ROOT ?>/payment/addToCart/" + productId + "/" +quantity;
         }
     </script>
 </body>

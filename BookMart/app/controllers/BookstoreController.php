@@ -3,6 +3,23 @@ require 'Book.php';
 
 class BookstoreController extends Controller{
 
+    public function showProfile($seller_id){
+        $storeModel = new BookStore();
+        $book = new Book();
+
+        $storeDetails =$storeModel ->first(['user_id' => $seller_id]);
+
+        $booksByStore = $book->getBooksByBookstore($seller_id);
+        
+        $data = 
+        [
+            'storeDetails' => $storeDetails,
+            'booksByStore' => $booksByStore
+        ];
+
+        $this->view('bookstoreProfilePage',$data);
+    }
+
     public function getReviews(){
         if (!isset($_SESSION['user_id'])) {
             redirect('login');

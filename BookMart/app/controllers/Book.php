@@ -66,6 +66,7 @@ class Book extends Controller{
 
     public function addBook(){
         $bookModel = new BookModel();
+        $bookstore = new BookstoreController();
         echo("addBook");
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo("addBook POST in");
@@ -128,7 +129,7 @@ class Book extends Controller{
             // if ($bookModel->validate($bookData)) {
                 echo("Validation passed");
                 if ($bookModel->insert($bookData)) {
-                    redirect('bookstoreInventory');
+                    redirect('BookstoreController/inventory');
                 } else {
                     echo "Something went wrong!";
                 }
@@ -196,7 +197,7 @@ class Book extends Controller{
             show($bookId);
             // Update the book record in the database
             if (!($bookModel->update($bookId, $bookData))) {
-                redirect('bookstoreInventory');
+                redirect('BookstoreController/inventory');
             } else {
                 echo "Something went wrong while updating the book!";
             }
@@ -211,7 +212,7 @@ class Book extends Controller{
         
         show($id);
         $bookModel->delete($id);
-        redirect('bookstoreInventory');
+        redirect('BookstoreController/inventory');
         
     }
 }

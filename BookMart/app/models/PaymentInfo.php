@@ -13,4 +13,8 @@ class PaymentInfo {
         'payment_gateway',
         'payment_date'
     ];
+
+    public function __construct() {
+        $this->order_column = 'payment_id';
+    }
 }

@@ -38,14 +38,13 @@ class App{
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],
             'BookSellerSidebar' => ['index', 'addBook'],
             'User' => ['like'],
-            'Payment' => ['index','checkOut','process','success','cancel']
+            'Payment' => ['index','checkOut','process','success','cancel','cartView']
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],
             'Buyer' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile'],
-            'Cart' => ['index'],
             'User' => ['like'],
-            'Payment' => ['index','checkOut','process','success','cancel']
+            'Payment' => ['index','checkOut','process','success','cancel','cartView','addToCart','cartCheckout','cartSuccess','increase','decrease','deleteSelected','clear','removeBook','deleteSelected']
         ],
         'courier' => [
             'CourierHome' => ['index', 'viewOrders'], 
@@ -62,6 +61,7 @@ class App{
         '_404' => ['index'],
         'BookSellerRegister' => ['index'],
         'BookstoreRegister' => ['index'],
+        'BookstoreController' => ['showProfile'],
         'BookView' => ['index'],
         'Buyer' => ['register'],
         'CourierRegister' => ['index'],

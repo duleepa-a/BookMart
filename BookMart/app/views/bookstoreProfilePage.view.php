@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/bookstoreProfilePage.css">
+    <title><?= htmlspecialchars($storeDetails->store_name) ?></title>
+</head>
+<body>
+        <!-- navBar division begin -->
+        <?php include 'homeNavBar.view.php'; ?>        
+        <!-- navBar division end -->
+        <div class="container">
+            <header>
+                <div class="profile-section">
+                    <img src="" alt="<?= htmlspecialchars($storeDetails->store_name) ?>" class="profile-picture">
+                    <div class="profile-info">
+                        <h1 class="store-name"><?= htmlspecialchars($storeDetails->store_name) ?> <span class="badge">Verified</span></h1>
+                        <p class="store-tagline">Owned by <?= htmlspecialchars($storeDetails->owner_name) ?></p>
+                        <div class="stats">
+                            <!-- You can replace these hardcoded stats with actual dynamic values if available -->
+                            <div class="stat"><strong>4.8</strong> Rating</div>
+                            <div class="stat"><strong>12.5k</strong> Followers</div>
+                            <div class="stat"><strong><?= count($booksByStore) ?></strong> Books</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary"><i class="fas fa-comment"></i> Chat with Store</button>
+                            <button class="btn btn-outline"><i class="fas fa-bookmark"></i> Follow</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="main-content">
+                <!-- Special Offers Section (Static or dynamic if needed) -->
+                <div class="special-offers-section">
+                    <div class="section-title">
+                        Special Offers
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    <div class="offers-container">
+                        <div class="offer-card">
+                            <img src="/api/placeholder/300/150" alt="Spring Sale" class="offer-image">
+                        </div>
+                        <div class="offer-card">
+                            <img src="/api/placeholder/300/150" alt="Book Club Membership" class="offer-image">
+                        </div>
+                        <div class="offer-card">
+                            <img src="/api/placeholder/300/150" alt="Author Signing Event" class="offer-image">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Books Section -->
+                <div class="books-section">
+                    <div class="section-title">
+                        Featured Books
+                    </div>
+                    <div class="carousel">
+                        <div class="carousel-container">
+                            <?php foreach ($booksByStore as $book): ?>
+                                <div class="book-card">
+                                    <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($book->cover_image) ?>" alt="Book Cover" class="book-cover">
+                                    <div class="book-info">
+                                        <h3 class="book-title"><?= htmlspecialchars($book->title) ?></h3>
+                                        <p class="book-author">by <?= htmlspecialchars($book->author) ?></p>
+                                        <p class="book-price">Rs. <?= number_format($book->price, 2) ?></p>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="carousel-nav">
+                            <button class="carousel-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                            <button class="carousel-btn" id="next-btn"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Section -->
+                <div class="about-section">
+                    <div class="section-title">About <?= htmlspecialchars($storeDetails->store_name) ?></div>
+                    <p class="about-text">
+                        <?= htmlspecialchars($storeDetails->store_name) ?> is an independent bookstore based in <?= htmlspecialchars($storeDetails->city) ?>, <?= htmlspecialchars($storeDetails->province) ?>. We offer a diverse collection of books to cater to readers of all kinds.
+                    </p>
+                    <p class="about-text">
+                        For more information, feel free to contact us. We're always happy to help book lovers find their next great read!
+                    </p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt contact-icon"></i>
+                            <span><?= htmlspecialchars($storeDetails->street_address) ?>, <?= htmlspecialchars($storeDetails->city) ?>, <?= htmlspecialchars($storeDetails->district) ?>, <?= htmlspecialchars($storeDetails->province) ?></span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone contact-icon"></i>
+                            <span><?= htmlspecialchars($storeDetails->phone_number) ?></span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope contact-icon"></i>
+                            <span><?= htmlspecialchars($storeDetails->owner_email) ?></span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock contact-icon"></i>
+                            <span>Open: Mon-Sat 9AM-8PM, Sun 11AM-5PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <script>
+        // Carousel functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousels = document.querySelectorAll('.carousel-container');
+            
+            // First carousel
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const carousel1 = carousels[0];
+            
+            let position1 = 0;
+            const cardWidth = 165; // card width + gap
+            const visibleCards = Math.floor(carousel1.offsetWidth / cardWidth);
+            const maxPosition = Math.max(0, carousel1.children.length - visibleCards);
+            
+            prevBtn.addEventListener('click', function() {
+                if (position1 > 0) {
+                    position1--;
+                    carousel1.style.transform = `translateX(-${position1 * cardWidth}px)`;
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (position1 < maxPosition) {
+                    position1++;
+                    carousel1.style.transform = `translateX(-${position1 * cardWidth}px)`;
+                }
+            });
+            
+            // Second carousel
+            const prevBtn2 = document.getElementById('prev-btn-2');
+            const nextBtn2 = document.getElementById('next-btn-2');
+            const carousel2 = carousels[1];
+            
+            let position2 = 0;
+            const maxPosition2 = Math.max(0, carousel2.children.length - visibleCards);
+            
+            prevBtn2.addEventListener('click', function() {
+                if (position2 > 0) {
+                    position2--;
+                    carousel2.style.transform = `translateX(-${position2 * cardWidth}px)`;
+                }
+            });
+            
+            nextBtn2.addEventListener('click', function() {
+                if (position2 < maxPosition2) {
+                    position2++;
+                    carousel2.style.transform = `translateX(-${position2 * cardWidth}px)`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

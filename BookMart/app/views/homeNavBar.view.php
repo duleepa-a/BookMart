@@ -46,7 +46,7 @@
                     <a href="<?= ROOT ?>/buyer/myProfile" class="navbar-links">My Profile</a>
                     <a href="<?= ROOT ?>/buyer/orders" class="navbar-links">Orders</a>
                     <a href="<?= ROOT ?>/Chat" class="navbar-links">Chat</a>
-                    <a href="" class="navbar-links"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+                    <a href="<?= ROOT ?>/Payment/cartView" class="navbar-links"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
                     <a href="" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
                 <?php elseif ($_SESSION['user_role'] == 'bookSeller'): ?>
                     <!-- Links for bookseller -->
@@ -54,7 +54,7 @@
                     <a href="./bookSellerListings" class="navbar-links">Listings</a>
                     <a href="./bookSellerSales" class="navbar-links">Sales</a>
                     <a href="./articles" class="navbar-links">Articles</a>
-                    <a href="" class="navbar-links"><i class="fa-solid fa-cart-shopping"></i></a>
+                    <a href="<?= ROOT ?>/Payment/cartView" class="navbar-links"><i class="fa-solid fa-cart-shopping"></i></a>
                     <a href="./notifications" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
                 <?php elseif ($_SESSION['user_role'] == 'admin'): ?>
                     <!-- Links for admin -->
