@@ -62,11 +62,11 @@ class Chat extends Controller{
             echo json_encode(["error" => "Unauthorized"]);
             exit;
         }
-
-        $chatModel = new ChatModel();
         $userId = $_SESSION['user_id'];
+        $chatModel = new ChatModel();
 
         $messages = $chatModel->getMessages($userId, $receiverId);
+        $chatModel->markAsRead($userId,$receiverId);
 
         echo json_encode($messages);
         exit;

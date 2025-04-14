@@ -26,14 +26,9 @@ class App{
             
         ],
         'bookStore' => [
-            'BookStoreController' => ['storePage', 'manageInventory'],
-            'BookstoreInventory' => ['index'], 
-            'BookstoreOrders' => ['index'],
-            'BookstoreAds' => ['index'], 
-            'BookstoreReviews' => ['index'],
-            'BookstoreProfile' => ['index'],
-            'BookstoreAnalytics' => ['index'],
+            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','myProfile','markAsRead'],
             'Book' => ['addBook','updateBook','deleteBook'],
+            'User' => ['like'],
         ],
         'bookSeller' => [
             'BookSellerHome' => ['index','storePage', 'viewSales'],
@@ -43,18 +38,22 @@ class App{
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],
             'BookSellerSidebar' => ['index', 'addBook'],
             'Auctions' => ['index', 'details'],
+            'User' => ['like'],
+            'Payment' => ['index','checkOut','process','success','cancel','cartView']
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],
-            'Buyer' => ['index', 'orders','trackOrder','register','reviews','myProfile'],
-            'Cart' => ['index']
+            'Buyer' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile'],
+            'User' => ['like'],
+            'Payment' => ['index','checkOut','process','success','cancel','cartView','addToCart','cartCheckout','cartSuccess','increase','decrease','deleteSelected','clear','removeBook','deleteSelected']
         ],
         'courier' => [
             'CourierHome' => ['index', 'viewOrders'], 
             'CourierProfile' => ['index'],
             'CourierOrders' => ['index'],
             'CourierOrderDetails' => ['index'],
-            'CourierEarns' => ['index']
+            'CourierEarns' => ['index'],
+            'User' => ['like'],
         ]
     ];
     
@@ -63,6 +62,7 @@ class App{
         '_404' => ['index'],
         'BookSellerRegister' => ['index'],
         'BookstoreRegister' => ['index'],
+        'BookstoreController' => ['showProfile'],
         'BookView' => ['index'],
         'Buyer' => ['register'],
         'CourierRegister' => ['index'],
@@ -71,6 +71,7 @@ class App{
         'Home' => ['index'],
         'BookList' => ['index'],
         'BookByGenres' => ['index'],
+        'Payment' => ['checkOut'],
         'Book' => ['index','getNewArrivals','search'],
         'User' => ['login','logout','registerBuyer','registerCourier','registerBookSeller','registerBookStore','checkusername','checkemail'],
         'Loading' => ['index'],
@@ -79,7 +80,6 @@ class App{
         'Notifications' => ['index'],
         'ArticleUpdate' => ['index', 'updateArticle', 'deleteArticle'],
         'Chat' => ['index','chatbox','fetchMessages','send'],
-        'Payment' => ['index','checkOut','process','success','cancel']
     ];
 
     private function splitURL() {

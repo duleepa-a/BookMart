@@ -2,10 +2,14 @@
 
 Trait Database{
 
-    protected function connect(){
-        $string = "mysql:hostname=".DBHOST.";dbname=".DBNAME;
-        $conn = new PDO($string,DBUSER,DBPASS);
-        return $conn;
+    private $pdo;
+
+    protected function connect() {
+        if (!$this->pdo) {
+            $string = "mysql:hostname=" . DBHOST . ";dbname=" . DBNAME;
+            $this->pdo = new PDO($string, DBUSER, DBPASS);
+        }
+        return $this->pdo;
     }
 
     public function query($query,$data = []){
@@ -40,6 +44,10 @@ Trait Database{
         }
 
         return false;
+    }
+
+    public function get_last_id() {
+        return $this->connect()->lastInsertId();
     }
 
 

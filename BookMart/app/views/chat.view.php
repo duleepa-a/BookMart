@@ -51,6 +51,17 @@
     <!-- Footer division begin -->
     <?php include 'smallFooter.view.php'; ?>
     <!-- Footer division end -->
+    <script>
+        window.addEventListener("pageshow", function (event) {
+            if (event.persisted || (window.performance && performance.getEntriesByType("navigation")[0].type === "back_forward")) {
+                window.location.reload();
+            }
+        });
 
+        setInterval(function () {
+            window.location.reload();
+        }, 10000);
+        
+    </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 
-require 'Book.php';
+require 'BookView.php';
 
 class Payment extends Controller{
 
@@ -8,6 +8,7 @@ class Payment extends Controller{
         
     }
     public function checkOut($bookId, $qty) {
+
         $bookModel = new BookModel();
         $buyerModel = new BuyerModel(); 
     
@@ -31,7 +32,7 @@ class Payment extends Controller{
 
         $orderdetails = [
             'book_id' => $bookId,
-            'buyer_id' => $buyer->id,
+            'buyer_id' => $_SESSION['user_id'],
             'quantity' => $qty,
             'discount' => $book->discount,
             'discounted_Price' => $discountedPrice,
@@ -78,6 +79,7 @@ class Payment extends Controller{
         $orderData = [
             'buyer_id' => $orderdetails['buyer_id'],
             'book_id' => $bookId,
+            'seller_id'=> $book->seller_id,
             'order_status' => 'pending',
             'payment_status' => 'successful',
             'quanitity' => $orderdetails['quantity'],
@@ -89,20 +91,18 @@ class Payment extends Controller{
             'district' => $orderdetails['district'],
             'city' => $orderdetails['city'],
         ];
-        $orderModel->insert($orderData);
+        $insertedorder=$orderModel->insert($orderData);
         
-        $orderId = $orderModel->first(['buyer_id' => $orderdetails['buyer_id'] , 'order_status' => 'pending'])->order_id;
+        $orderId = $insertedorder->order_id;
     
         $paymentModel = new PaymentInfo();
         $paymentData = [
             'order_id' => $orderId,
             'payment_amount' => $orderData['total_amount']
         ];
-        $paymentModel->insert($paymentData);
+        $payment=$paymentModel->insert($paymentData);
     
-        // Display success message
-        echo "<h2>Payment Successful!</h2>";
-        echo "<p>Thank you for your purchase.</p>";
+        $this->view('paymentSuccess',['payment' => $payment]);
     }
     
     public function cancel() {
@@ -147,8 +147,202 @@ class Payment extends Controller{
         curl_close($ch);
 
         echo $response;
+
+        
     }
 
+    public function addToCart($bookId,$bookQuantity) {
+        $quantity = $bookQuantity ?? 1;
+        $bookModel = new BookModel();
+        $book = $bookModel->first(['id' => $bookId]);
 
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
+        }
+
+        if (isset($_SESSION['cart'][$bookId])) {
+            $_SESSION['cart'][$bookId]['quantity'] += $quantity;
+        } else {
+
+            if ($book) {
+                $discountedPrice = $book->price - ($book->price * $book->discount / 100);
+
+                $_SESSION['cart'][$bookId] = [
+                    'book_id' => $bookId,
+                    'title' => $book->title,
+                    'price' => $discountedPrice,
+                    'original_price' => $book->price,
+                    'discount' => $book->discount,
+                    'quantity' => $quantity,
+                    'max_quantity'=>$book->quantity,
+                    'cover_image' => $book->cover_image,
+                ];
+            }
+        }
+
+        if($_SESSION['cart'][$bookId]['quantity'] >= $book->quantity){
+            $_SESSION['cart'][$bookId]['quantity'] = $book->quantity;
+        }
+
+        $this->cartView();
+    }
+
+    public function cartView(){
+        $this->view('cart',['cart'=> $_SESSION['cart'] ?? []]);
+    }
+
+    public function cartCheckout() {
+        $secretKey = 'sk_test_51QwNzUFwD7Ut7Vs9FPBW5K38e9dwzqBJs8FvydvTKar0oCVaHKBiogjJxJsUdvs39C5WuDU05Xk8wuWE42pCgaRg002dFEvGvW';
+        $cart = $_SESSION['cart'] ?? [];
+    
+        if (empty($cart)) {
+            echo "Cart is empty.";
+            return;
+        }
+    
+        $lineItems = [];
+        $totalAmount = 0;
+    
+        foreach ($cart as $item) {
+            $lineItems[] = [
+                'price_data' => [
+                    'currency' => 'lkr',
+                    'product_data' => ['name' => $item['title']],
+                    'unit_amount' => $item['price'] * 100, 
+                ],
+                'quantity' => $item['quantity'],
+            ];
+            $totalAmount += $item['price'] * $item['quantity'];
+        }
+    
+        $fields = [
+            'payment_method_types' => ['card'],
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => ROOT . '/payment/cartSuccess',
+            'cancel_url' => ROOT . '/payment/cancel',
+        ];
+    
+        $ch = curl_init('https://api.stripe.com/v1/checkout/sessions');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $secretKey,
+            'Content-Type: application/x-www-form-urlencoded',
+        ]);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields));
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+        
+        $session = json_decode($response);
+        
+        if (isset($session->url)) {
+            header("Location: " . $session->url);
+            exit;
+        } else {
+            echo "Failed to create Stripe session.";
+        }
+    }
+    
+    public function cartSuccess() {
+        if (!isset($_SESSION['cart'])) {
+            echo "No cart found!";
+            return;
+        }
+    
+        $cart = $_SESSION['cart'];
+        $buyerId = $_SESSION['user_id'];
+    
+        $buyerModel = new BuyerModel();
+        $bookModel = new BookModel();
+        $orderModel = new Order();
+        $paymentModel = new PaymentInfo();
+    
+        $buyer = $buyerModel->first(['user_id' => $buyerId]);
+    
+        foreach ($cart as $item) {
+            $bookId = $item['book_id'];
+            $book = $bookModel->first(['id' => $bookId]);
+    
+            if (!$book) continue;
+    
+            $discountedPrice = $item['price'];
+            $quantity = $item['quantity'];
+            $totalAmount = $discountedPrice * $quantity;
+            $deliveryFee = 250;
+    
+            // Reduce book stock
+            $bookModel->update($bookId, [
+                'quantity' => max(0, $book->quantity - $quantity)
+            ]);
+    
+            // Insert order
+            $orderData = [
+                'buyer_id' => $buyerId,
+                'book_id' => $bookId,
+                'seller_id' => $book->seller_id,
+                'order_status' => 'pending',
+                'payment_status' => 'successful',
+                'quanitity' => $quantity,
+                'delivery_fee' => $deliveryFee,
+                'discount_applied' => $item['discount'],
+                'total_amount' => $totalAmount + $deliveryFee,
+                'shipping_address' => $buyer->street_address,
+                'province' => $buyer->province,
+                'district' => $buyer->district,
+                'city' => $buyer->city,
+            ];
+    
+            $order=$orderModel->insert($orderData);            
+
+            $payment=$paymentModel->insert([
+                'order_id' => $order->order_id,
+                'payment_amount' => $orderData['total_amount']
+            ]);
+        }
+        unset($_SESSION['cart']);
+    
+        $this->view('paymentSuccess',['payment' => $payment]);
+    }
+    
+    public function increase($bookId,$quantity){
+        if (isset($_SESSION['cart'][$bookId])) {
+
+            if($_SESSION['cart'][$bookId]['quantity'] + 1 <= $quantity){
+                $_SESSION['cart'][$bookId]['quantity'] += 1;
+            };
+        }
+        $this->cartView();
+    }
+    
+    public function decrease($bookId) {
+        if (isset($_SESSION['cart'][$bookId])) {
+            $_SESSION['cart'][$bookId]['quantity'] -= 1;
+            if ($_SESSION['cart'][$bookId]['quantity'] <= 0) {
+                unset($_SESSION['cart'][$bookId]);
+            }
+        }
+        $this->cartView();
+    }
+
+    public function deleteSelected() {
+        if (!empty($_POST['book_ids'])) {
+            foreach ($_POST['book_ids'] as $bookId) {
+                unset($_SESSION['cart'][$bookId]);
+            }
+        }
+        $this->cartView();
+    }
+
+    public function clear() {
+        unset($_SESSION['cart']);
+        $this->cartView();
+    }
+
+    public function removeBook($bookId){
+        unset($_SESSION['cart'][$bookId]);
+        $this->cartView();
+    }
 
 }

@@ -30,67 +30,84 @@
         </nav>
 
         <div class="tab-content" id="to-be-review" >
-            <div class="purchase-card">
-                <div class="purchase-details">
-                    <p class="purchase-header">Purchased on : 2024-11-22</p>
-                    <div class="item-details">
-                    <img src="<?= ROOT ?>/assets/Images/book cover images/674455351cb0d.jpg" alt="Ring" class="item-image" />
-                    <div class="item-description">
-                        <p class="item-title">
-                        The Notebook
-                        </p>
-                        <p class="item-specs">By Nicholas, Condition : New</p>
-                    </div>
-                    </div>
+             <?php if (empty($orders)): ?>
+                <div class="message-div">
+                    <p class="message-text">No orders available to review.</p>
                 </div>
-                <div class="seller-section">
-                    <p class="seller-header">Sold by</p>
-                    <button class="review-button">REVIEW</button>
-                </div>
-            </div>
-        </div>
-        <div class="tab-content" id="history" style="display: none;" >
-            <div class="review-card-unique">
-                <div class="purchase-details">
-                    <p class="purchase-header">Purchased on : 2024-08-09</p>
-                    <div class="item-details-unique">
-                        <img src="<?= ROOT ?>/assets/Images/book cover images/674455351cb0d.jpg" alt="Product" class="item-image" />
-                        <div class="item-description-unique">
-                            <p class="item-title">
-                                The Notebook
-                            </p>
-                            <p class="item-specs">By Nicholas, Condition : New</p>
-                            <div class="rating-section-unique">
-                                <span class="stars-unique">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </span>
-                                <span class="rating-text-unique">Delightful</span>
-                            </div>
-                            <div class="review-box-unique">
-                                <p>Good Quality product! Highly recommended.</p>
-                                <div class="likes-unique">
-                                    <i class="fas fa-thumbs-up"></i>
-                                    <span>0</span>
-                                </div>
+            <?php else: ?>
+            <?php foreach ($orders as $order): ?>
+                <div class="purchase-card">
+                    <div class="purchase-details">
+                        <p class="purchase-header">Purchased on : <?= date('Y-m-d', strtotime($order->created_on)) ?></p>
+                        <div class="item-details">
+                            <img src="<?= ROOT ?>/assets/Images/book cover images/<?= $order->cover_image ?>" alt="Book cover" class="item-image" />
+                            <div class="item-description">
+                                <p class="item-title"><?= $order->book_title ?></p>
+                                <p class="item-specs">By <?= $order->book_author ?>, Condition: <?= $order->condition ?></p>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="seller-section">
-                    <p class="seller-header">Sold by</p>
-                    <p class="seller-review-header">Your seller review:</p>
-                    <div class="seller-review-icons-unique">
-                    <i class="fas fa-frown"></i>
-                    <i class="fas fa-meh"></i>
-                    <i class="fas fa-smile"></i>
+                    <div class="seller-section">
+                        <p class="seller-header">Sold by : <?= $order->seller_username ?></p>
+                        <form action="<?= ROOT ?>/buyer/addReview" method="post">
+                            <input type="hidden" name="order_id" value="<?= $order->order_id ?>">
+                            <input type="hidden" name="book_id" value="<?= $order->book_id ?>">
+                            <input type="hidden" name="seller_id" value="<?= $order->seller_id?>">
+                            <input type="hidden" name="seller_username" value="<?= $order->seller_username?>">
+                            <button type="submit" class="review-button">REVIEW</button>
+                        </form>
                     </div>
                 </div>
-            </div>           
+            <?php endforeach; ?>
+            <?php endif; ?>
         </div>
+
+        <div class="tab-content" id="history" style="display: none;">
+            <?php if (!empty($history)): ?>
+                <?php foreach ($history as $order): ?>
+                    <div class="review-card-unique">
+                        <div class="purchase-details">
+                            <p class="purchase-header">Purchased on : <?= htmlspecialchars($order->created_on) ?></p>
+                            <div class="item-details-unique">
+                                <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($order->cover_image) ?>" alt="Product" class="item-image" />
+                                <div class="item-description-unique">
+                                    <p class="item-title"><?= htmlspecialchars($order->book_title) ?></p>
+                                    <p class="item-specs">By <?= htmlspecialchars($order->book_author) ?>, Condition : <?= htmlspecialchars($order->condition) ?></p>
+                                    <div class="rating-section-unique">
+                                        <span class="stars-unique">
+                                            <?php for ($i = 0; $i < 5; $i++): ?>
+                                                <i class="fas fa-star<?= $i < $order->review->rating ? '' : '-o' ?>"></i>
+                                            <?php endfor; ?>
+                                        </span>
+                                    </div>
+                                    <div class="review-box-unique">
+                                        <p><?= htmlspecialchars($order->review->comment) ?></p>
+                                        <div class="likes-unique">
+                                            <i class="fas fa-thumbs-up"></i>
+                                            <span><?= htmlspecialchars($order->review->likes) ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="seller-section">
+                            <p class="seller-header">Sold by <?= htmlspecialchars($order->seller_username) ?></p>
+                            <p class="seller-review-header">Your seller review:</p>
+                            <div class="seller-review-icons-unique">
+                                <i class="fas fa-frown <?= ($order->review->seller_rating == 1) ? 'active-rating' : '' ?>"></i>
+                                <i class="fas fa-meh <?= ($order->review->seller_rating == 2) ? 'active-rating' : '' ?>"></i>
+                                <i class="fas fa-smile <?= ($order->review->seller_rating == 3) ? 'active-rating' : '' ?>"></i>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="message-div">
+                    <p class="message-text">Your history is empty</p>
+                </div>
+            <?php endif; ?>
+        </div>
+
     </div>    
     <footer class="small-footer">
             <p>&copy; 2024 BookMart, all rights reserved.</p>

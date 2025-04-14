@@ -18,8 +18,11 @@ class ChatModel{
     }
 
     public function markAsRead($receiver_id, $sender_id) {
-        $query = "UPDATE messages SET is_read = 1 WHERE receiver_id = :receiver AND sender_id = :sender";
-        $this->query($query, ["receiver" => $receiver_id, "sender" => $sender_id]);
+        $allMessages = $this->where(['receiver_id' => $receiver_id ,"sender_id" => $sender_id ]);
+        
+        foreach($allMessages as $message){
+            $this->update($message->id,['is_read' => 1]);
+        }
     }
 
     public function getChatList($currentUserId)

@@ -14,6 +14,10 @@ class UserModel {
         'createdAt'
     ];
 
+    public function __construct() {
+        $this->order_column = 'ID';
+    }
+
     public function findUserByUsernameOrEmail($usernameOrEmail) {
         $query = "SELECT * FROM user WHERE username = :usernameOrEmail OR email = :usernameOrEmail";
         return $this->getRow($query, ['usernameOrEmail' => $usernameOrEmail]);
@@ -145,4 +149,9 @@ class UserModel {
         return $user !== false;
     }
 
+    
+
 }
+
+
+    

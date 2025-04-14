@@ -15,4 +15,8 @@ class ArticleModel {
         'created_at'
     ];
 
+    public function __construct() {
+        $this->order_column = 'ID';
+    }
+
 }

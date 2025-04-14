@@ -11,76 +11,120 @@
   <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/cart.css">
 </head>
 <body>
-  <div class="cart-container">
-    <div class="cart-items">
-      <div class="cart-header">
-        <input type="checkbox"> SELECT ALL (3 ITEM(S))
-        <button class="delete-btn"><i class="fas fa-trash"></i> DELETE</button>
-      </div><hr>
+  <?php include 'homeNavBar.view.php'; ?>  
+  <div class="container">
+  <?php if (!empty($cart)): ?>
+        <div class="cart-container">
+          <div class="cart-items">
+            <div class="cart-header">
+              <div class="select-all">
+                <input type="checkbox" id="selectAll">
+                <label for="selectAll">SELECT ALL <?= count($cart) ?> ITEM(S)</label>
+              </div>
+              <button class="delete-btn"><i class="fas fa-trash"></i> Delete All</button>
+            </div>
+            <hr>
 
-      <!-- Item 1 -->
-      <div class="cart-item">
-        <input type="checkbox">
-        <img src="b1.jpg" alt="Example Image" width="100" height="100">
+            <?php $subtotal = 0; ?>
+            <?php foreach ($cart as $item): ?>
+              <?php
+                $itemTotal = $item['price'] * $item['quantity'];
+                $subtotal += $itemTotal;
+              ?>
+              <div class="cart-item" data-id="<?= $item['book_id'] ?>">
+                <input type="checkbox">
+                <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($item['cover_image']) ?>" alt="Book Cover">
 
-        <div class="item-details">
-          <h4>Sarasavi</h4>
-          <p>Five Feet Apart</p>
-          <p>Rs. <span class="price">2599.00</span> <span class="original-price">Rs. 2999.00</span></p>
-        </div>
-        <div class="quantity">
-          <input type="button" value="-">
-          <input type="text" value="1">
-          <input type="button" value="+">
-        </div>
-        <button class="icon-btn"><i class="fas fa-trash-alt"></i></button>
+                <div class="item-details">
+                  <h4><?= htmlspecialchars($item['seller_username'] ?? 'Seller') ?></h4> <!-- Optional -->
+                  <p><?= htmlspecialchars($item['title']) ?></p>
+                  <p>
+                    Rs. <span class="price"><?= number_format($item['price'], 2) ?></span>
+                    <?php if ($item['discount'] > 0): ?>
+                      <span class="original-price">Rs. <?= number_format($item['original_price'], 2) ?></span>
+                    <?php endif; ?>
+                  </p>
+                </div>
+
+                <div class="quantity">
+                  <input type="button" value="-" class="qty-decrease" data-id="<?= $item['book_id'] ?>">
+                  <input type="text" value="<?= $item['quantity'] ?>" readonly>
+                  <input type="button" value="+" class="qty-increase" data-id="<?= $item['book_id'] ?>" data-quantity="<?= $item['max_quantity'] ?>">
+                </div>
+
+                <form action="<?= ROOT ?>/Payment/removeBook/<?= $item['book_id'] ?>" method="post">
+                  <button class="icon-btn"><i class="fas fa-trash-alt"></i></button>
+                </form>
+              </div>
+            <?php endforeach; ?>
+          </div>
+
+          <div class="order-summary">
+            <h3>Order Summary</h3>
+            <p>Subtotal: <span>Rs. <?= number_format($subtotal, 2) ?></span></p>
+            <p>Shipping Fee: <span>Rs. <?= number_format(count($cart)*250,2) ?></span></p>
+            <input type="text" placeholder="Enter Voucher Code" class="inuput-textbox">
+            <button class="apply-btn">APPLY</button>
+            <hr>
+            <h4>Total: <span>Rs. <?= number_format($subtotal + number_format(count($cart)*250,2), 2) ?></span></h4>
+            <form action="<?= ROOT ?>/Payment/cartCheckout" method="post">
+              <button class="checkout-btn">PROCEED TO CHECKOUT</button>
+            </form>
+          </div>
       </div>
-
-      <!-- Item 2 -->
-      <div class="cart-item">
-        <input type="checkbox">
-        <img src="b2.jpg" alt="Example Image" width="100" height="100">
-        <div class="item-details">
-          <h4>Perfect Deals</h4>
-          <p>Little Women</p>
-          <p>Rs. <span class="price">4749.05</span> <span class="original-price">Rs. 4999.00</span></p>
-        </div>
-        <div class="quantity">
-          <input type="button" value="-">
-          <input type="text" value="1">
-          <input type="button" value="+">
-        </div>
-        <button class="icon-btn"><i class="fas fa-trash-alt"></i></button>
-      </div>
-
-      <!-- Unavailable Item -->
-      <div class="cart-item unavailable">
-        <input type="checkbox" disabled>
-        <img src="b3.jpg" alt="Example Image" width="100" height="100">
-        <div class="item-details">
-          <h4>Unavailable Item</h4>
-          <p>It End Wih Us</p>
-          <p class="out-of-stock">Out of stock</p>
-        </div>
-        <div class="quantity">
-          <input type="button" value="-" disabled>
-          <input type="text" value="1" disabled>
-          <input type="button" value="+" disabled>
-        </div>
-        <button class="icon-btn"><i class="fas fa-trash-alt"></i></button>
-      </div>
+  <?php else: ?>
+      <div class="empty-cart">
+      <h2>Your cart is currently empty.</h2>
     </div>
-
-    <div class="order-summary">
-      <h3>Order Summary</h3>
-      <p>Subtotal: <span>Rs. 0</span></p>
-      <p>Shipping Fee: <span>Rs. 0</span></p>
-      <input type="text" placeholder="Enter Voucher Code">
-      <button class="apply-btn">APPLY</button>
-      <hr>
-      <h4>Total: <span>Rs. 0</span></h4>
-      <button class="checkout-btn">PROCEED TO CHECKOUT</button>
+  <?php endif; ?>
     </div>
   </div>
+  <script>
+    document.querySelectorAll('.qty-increase').forEach(button => {
+      button.addEventListener('click', () => {
+        const bookId = button.dataset.id;
+        const quantity = button.dataset.quantity;
+        window.location.href = `<?= ROOT ?>/Payment/increase/${bookId}/${quantity}`;
+      });
+    });
+
+    document.querySelectorAll('.qty-decrease').forEach(button => {
+      button.addEventListener('click', () => {
+        const bookId = button.dataset.id;
+        window.location.href = `<?= ROOT ?>/Payment/decrease/${bookId}`;
+      });
+    });
+    const selectAll = document.getElementById('selectAll');
+    selectAll.addEventListener('change', function() {
+      document.querySelectorAll('.cart-item input[type="checkbox"]:not(:disabled)').forEach(cb => {
+        cb.checked = this.checked;
+      });
+    });
+
+    
+    document.querySelector('.delete-btn').addEventListener('click', () => {
+      const checked = document.querySelectorAll('.cart-item input[type="checkbox"]:checked');
+      const ids = Array.from(checked).map(cb => cb.closest('.cart-item').dataset.id);
+      if (ids.length > 0) {
+        const form = document.createElement('form');
+        form.method = 'post';
+        form.action = '<?= ROOT ?>/Payment/deleteSelected';
+
+        ids.forEach(id => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'book_ids[]';
+          input.value = id;
+          form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+      }
+    });
+
+
+  </script>
+
 </body>
 </html>
