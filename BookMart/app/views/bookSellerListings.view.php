@@ -21,7 +21,6 @@
     <?php include 'bookSellerSidebar.view.php'; ?>
     <!-- navBar division end -->
     
-    <br><br>
     <center>
     <div>    <!-- inner background box begin -->        
         <h1 class="title-text">My Listings</h1>

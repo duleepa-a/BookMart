@@ -42,6 +42,7 @@ class App{
             'BookSellerProfile' => ['index'],
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],
             'BookSellerSidebar' => ['index', 'addBook'],
+            'Auctions' => ['index', 'details'],
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],

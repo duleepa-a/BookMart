@@ -6,7 +6,7 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         <ul>
             <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button></li>
             <li><a href="<?= ROOT ?>/bookSellerListings" class="<?= strpos($currentPath, '/bookSellerListings') !== false ? 'active' : '' ?>" class="active" ><i class="fa-solid fa-book"></i>My Listings</a></li>
-            <li><a href="<?= ROOT ?>/bookSellerSales" class="<?= strpos($currentPath, '/bookSellerSales') !== false ? 'active' : '' ?>"><i class="fa-solid fa-chart-column"></i>My Sales</a></li>
+            <li><a href="<?= ROOT ?>/auctions" class="<?= strpos($currentPath, '/auctions') !== false ? 'active' : '' ?>"><i class="fa-solid fa-chart-column"></i>Auctions</a></li>
             <li><a href="<?= ROOT ?>/articles" class="<?= strpos($currentPath, '/articles') !== false && strpos($currentPath, '/myArticles') === false ? 'active' : '' ?>"><i class="fa-solid fa-cart-plus"></i>Articles</a></li>
             <li><a href="<?= ROOT ?>/articles/myArticles" class="<?= strpos($currentPath, '/articles/myArticles') !== false ? 'active' : '' ?>"><i class="fa-solid fa-comment-dots"></i>My Articles</a></li>
             <li><a href="<?= ROOT ?>/bookSellerProfile" class="<?= strpos($currentPath, '/bookSellerProfile') !== false ? 'active' : '' ?>"><i class="fa-regular fa-user"></i>Profile</a></li>
