@@ -33,11 +33,11 @@ class App{
         'bookSeller' => [
             'BookSellerHome' => ['index','storePage', 'viewSales'],
             'BookSellerSales' => ['index'], 
-            'BookSellerListings' => ['index', 'updateBook', 'deleteBook'], 
+            'BookSellerListings' => ['index', 'addBook', 'updateBook', 'deleteBook'], 
             'BookSellerProfile' => ['index'],
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],
-            'BookSellerSidebar' => ['index', 'addBook'],
-            'Auctions' => ['index', 'details'],
+            'BookSellerSidebar' => ['index'],
+            'Auctions' => ['index', 'details', 'createAuction', 'updateBid'],
             'User' => ['like'],
             'Payment' => ['index','checkOut','process','success','cancel','cartView']
         ],

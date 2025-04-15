@@ -17,7 +17,7 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     <div id="add-book-modal"class="modal hidden">
     <div class="modal-overlay"></div>
         <div class="modal-content">
-        <form class="add-book-form" method="POST" action="<?= ROOT ?>/bookSellerSidebar/addBook" enctype="multipart/form-data">
+        <form class="add-book-form" method="POST" action="<?= ROOT ?>/bookSellerListings/addBook" enctype="multipart/form-data">
             <h2 class="full-width">Add Book</h2>
 
             <!-- Title -->
@@ -80,10 +80,11 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
             </div>
 
             <!-- Quantity -->
-            <div>
+            <div style="display: none;">
                 <label for="quantity">Quantity:</label>
-                <input type="number" id="quantity" name="quantity" min="1" required>
+                <input type="number" id="quantity" name="quantity" min="1" value="1">
             </div>
+
 
             <!-- Condition -->
             <div>

@@ -35,7 +35,7 @@
         <div class="controls">
             <button class="select-all-button">Select All</button>
             <button class="edit-button" disabled>Edit</button>
-            <button>Update Status</button>
+            <button class="auction-button" disabled>Create Auction</button>
             <button class="delete-button" disabled>Delete</button>
             <button>Filter</button>
             <button>Sort</button>
@@ -50,8 +50,8 @@
                         <th>Title</th>
                         <th>Author</th>
                         <th>Genre</th>
-                        <th>Publisher</th>
                         <th>Condition</th>
+                        <th>Original Price</th>
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Status</th>
@@ -71,7 +71,9 @@
                             data-price="<?= htmlspecialchars($book->price) ?>"
                             data-discount="<?= htmlspecialchars($book->discount) ?>"
                             data-quantity="<?= htmlspecialchars($book->quantity ?? 0) ?>"
-                            data-description="<?= htmlspecialchars($book->description) ?>">
+                            data-description="<?= htmlspecialchars($book->description) ?>"
+                            data-status="<?= htmlspecialchars($book->status) ?>"
+                            data-cover_image="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($book->cover_image ?? '') ?>">
                             <td><input type="checkbox" class="book-checkbox"></td>
                             <td>
                                 <?php if (!empty($book->cover_image)) : ?>
@@ -85,12 +87,12 @@
                             <td><?= htmlspecialchars($book->title) ?></td>
                             <td><?= htmlspecialchars($book->author) ?></td>
                             <td><?= htmlspecialchars($book->genre ?? 'N/A') ?></td>
-                            <td><?= htmlspecialchars($book->publisher ?? 'N/A') ?></td>
                             <td><?= htmlspecialchars($book->book_condition ?? 'N/A') ?></td>
-                            <td>Rs. <?= htmlspecialchars($book->price) ?></td>
+                            <td>Rs. <?= number_format($book->price, 2) ?></td>
+                            <td>Rs. <?= number_format($book->price * (1 - $book->discount/100), 2) ?></td>
                             <td><?= htmlspecialchars($book->quantity ?? '0') ?></td>
-                            <td class="status <?= (isset($book->quantity) && $book->quantity > 0) ? 'active' : 'out-of-stock' ?>">
-                                <?= (isset($book->quantity) && $book->quantity > 0) ? 'Available' : 'Out of Stock' ?>
+                            <td class="status <?= ($book->status == 'available') ? 'available' : (($book->status == 'auction') ? 'auction' : (($book->status == 'sold') ? 'sold' : (($book->status == 'delivery') ? 'delivery' : 'completed'))) ?>">
+                            <?= ($book->status == 'available') ? 'Available' : (($book->status == 'auction') ? 'Auction' : (($book->status == 'sold') ? 'Sold' : (($book->status == 'delivery') ? 'Delivery' : 'Completed'))) ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -200,6 +202,54 @@
 
                     <div class="modal-actions">
                         <button type="submit" class="delete-confirm-button">Delete</button>
+                        <button type="button" class="close-modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="create-auction-modal">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <form class="create-auction-form" method="POST" action="<?= ROOT ?>/auctions/createAuction" enctype="multipart/form-data">
+                    <h2>Create Auction</h2>
+                    <input type="hidden" id="auction-book-id" name="book_id">
+                    
+                    <!-- Book details display section -->
+                    <div class="full-width book-details">
+                        <div class="book-info">
+                            <div class="book-cover">
+                                <img id="auction-book-cover" src="" alt="Book Cover">
+                            </div>
+                            <div class="book-metadata">
+                                <h3 id="auction-book-title">Book Title</h3>
+                                <p id="auction-book-author">Author Name</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="starting-price">Starting Price (Rs.):</label>
+                        <input type="number" id="starting-price" name="starting_price" step="0.01" min="0.01" required>
+                    </div>
+                    
+                    <div>
+                        <label for="buy-now-price">Buy Now Price (Rs.):</label>
+                        <input type="number" id="buy-now-price" name="buy_now_price" step="0.01" placeholder="Leave empty for no buy now option">
+                    </div>
+                    
+                    <div>
+                        <label for="start-time">Start Time:</label>
+                        <input type="datetime-local" id="start-time" name="start_time" required>
+                    </div>
+                    
+                    <div>
+                        <label for="end-time">End Time:</label>
+                        <input type="datetime-local" id="end-time" name="end_time" required>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="submit" class="create-auction-button">Create Auction</button>
                         <button type="button" class="close-modal">Cancel</button>
                     </div>
                 </form>
