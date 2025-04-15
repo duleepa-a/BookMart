@@ -14,9 +14,10 @@ class AuctionModel {
         'start_time',
         'end_time',
         'is_closed',
-        'winner_user_id',
         'created_at',
-        'current_bidder_id'
+        'previous_bid',
+        'current_bidder_id',
+        'winner_user_id',
     ];
 
     public function getActiveAuctions($limit = 1) {
@@ -37,6 +38,37 @@ class AuctionModel {
                   JOIN user u ON a.seller_id = u.ID
                   WHERE a.id = :id";
         return $this->query($query, ['id' => $id])[0] ?? null;
+    }
+
+    public function createAuction($data) {
+        $auctionData = [
+            'book_id' => $data['book_id'],
+            'seller_id' => $data['seller_id'],
+            'starting_price' => $data['starting_price'],
+            'current_price' => $data['starting_price'], 
+            'buy_now_price' => $data['buy_now_price'],
+            'start_time' => $data['start_time'],
+            'end_time' => $data['end_time'],
+        ];
+        
+        $result = $this->insert($auctionData);
+        if ($result) {
+            $query = "UPDATE listings SET status = 'auction' WHERE book_id = :book_id";
+            $params = ['book_id' => $data['book_id']];
+            $this->query($query, $params); 
+        }
+        return $result;
+    }
+
+    public function updateAuctionBid($data) {
+        $auctionData = [
+            'current_price' => $data['current_price'],
+            'previous_bid' => $data['previous_bid'],
+            'current_bidder_id' => $data['current_bidder_id'],
+        ];
+        
+        return $this->update($data['id'], $auctionData);
+
     }
 
     public function closeAuction($auctionId, $winnerId = null) {

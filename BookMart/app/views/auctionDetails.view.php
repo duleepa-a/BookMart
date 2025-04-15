@@ -119,22 +119,24 @@
                                 <?php endif; ?>
                             </div>
 
-                            <div class="bid-form">
+                            <form class="bid-form" method="POST" action="<?= ROOT ?>/auctions/updateBid" enctype="multipart/form-data">
+                                <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
+                                <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->current_price) ?>">
                                 <div class="form-group">
                                     <div class="currency-symbol">Rs.</div>
-                                    <input type="number" class="bid-input" placeholder="Enter your bid amount" min="<?= htmlspecialchars($auction->current_price) ?>" step="100">
+                                    <input type="number" name="bid" class="bid-input" placeholder="Enter your bid amount" min="<?= htmlspecialchars($auction->current_price+100) ?>" value="<?= htmlspecialchars($auction->current_price+100) ?>" step="0.1">
                                 </div>
                                 <small>Minimum bid: Rs. <?= number_format($auction->current_price+100, 2)?> (current bid + Rs. 100.00)</small>
                                 
                                 <div class="auction-buttons">
-                                    <button class="bid-button place-bid">
+                                    <button type="submit" class="bid-button place-bid">
                                         <i class="fas fa-gavel"></i> Place Bid
                                     </button>
-                                    <button class="bid-button buy-now-btn">
+                                    <button type='button' class="bid-button buy-now-btn" <?= empty($auction->buy_now_price) ? 'disabled' : '' ?>>
                                         <i class="fas fa-shopping-cart"></i> Buy Now
                                     </button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
