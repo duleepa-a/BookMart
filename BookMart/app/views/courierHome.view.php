@@ -117,6 +117,10 @@
             </div>
         </section>
     </main>
+
+    <!-- footer begin -->
+    <?php include 'footer.view.php'; ?>   
+    <!-- footer end -->
     
 
     <script src="<?= ROOT ?>/assets/JS/courierHome.js"></script>

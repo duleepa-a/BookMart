@@ -1,5 +1,8 @@
 <?php
 
+require 'BookstoreController.php';
+require 'Buyer.php';
+
 class User extends Controller {
     
         private $userModel;
@@ -341,5 +344,60 @@ class User extends Controller {
                 }
             }
         }
+
+        public function changePassword(){
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $currentPassword = $_POST['current-password'] ?? '';
+                $newPassword = $_POST['password'] ?? '';
+                $confirmPassword = $_POST['confirm-password'] ?? '';
+
+                $bookstore = new BookstoreController();
+                $buyer = new Buyer();
+
+                $userRole = $_SESSION['user_role'];
+
+                if ($newPassword !== $confirmPassword) {
+                    $_SESSION['error'] = "New passwords do not match.";
+                    if($userRole =='bookStore'){
+                        $bookstore->myProfile();
+                    }
+                    else if($userRole == 'buyer'){
+                        $buyer->myProfile();
+                    }
+                }
+
+
+                $userId = $_SESSION['user_id'];
+                $userModel = new UserModel();
+
+    
+                $user = $userModel->first(['ID' => $userId]);
+
+                if ($user && password_verify($currentPassword, $user->password)) {
+                    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+              
+                    $userModel->update($userId,['password'=> $hashedPassword]);
+
+                    $_SESSION['success'] = "Password changed successfully.";
+                    if($userRole =='bookStore'){
+                        $bookstore->myProfile();
+                    }
+                    else if($userRole == 'buyer'){
+                        $buyer->myProfile();
+                    }
+                    
+                } else {
+                    $_SESSION['error'] = "Current password is incorrect.";
+                    if($userRole =='bookStore'){
+                        $bookstore->myProfile();
+                    }
+                    else if($userRole == 'buyer'){
+                        $buyer->myProfile();
+                    }
+                }
+            }
+        }
+
         
     }

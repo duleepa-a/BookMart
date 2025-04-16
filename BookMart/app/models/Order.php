@@ -55,10 +55,11 @@ class Order {
             'completed' => 0,
         ];
 
-        foreach ($result as $row) {
-            $counts[$row->status_group] = $row->count;
+        if($result){
+            foreach ($result as $row) {
+                $counts[$row->status_group] = $row->count;
+            }
         }
-
         return $counts;
     }
 

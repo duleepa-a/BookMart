@@ -47,7 +47,9 @@ class BookstoreController extends Controller{
         $userModel = new UserModel();
     
         $books = $bookModel->where(['seller_id' => $_SESSION['user_id']]);
-        $bookIds = array_column($books, 'id');
+        if($books){
+            $bookIds = array_column($books, 'id');
+        }
 
         $reviews = [];
         if (!empty($bookIds)) {
@@ -119,85 +121,183 @@ class BookstoreController extends Controller{
         $count= $orderModel->getOrderStatusCountsBySeller($_SESSION['user_id']);
         $orders = $orderModel->where(['seller_id' => $_SESSION['user_id']]);
 
-        foreach ($orders as $order) {
-            $user = $userModel->first(['id' => $order->buyer_id]);
-            $buyer=$buyerModel->first(['user_id'=>$order->buyer_id]);
-            $order->buyer_name = $user->username ?? 'Unknown';
-            $order->buyer_contact = $buyer->phone_number ?? 'N/A'; 
+        if($orders){
+            foreach ($orders as $order) {
+                $user = $userModel->first(['id' => $order->buyer_id]);
+                $buyer=$buyerModel->first(['user_id'=>$order->buyer_id]);
+                $order->buyer_name = $user->username ?? 'Unknown';
+                $order->buyer_contact = $buyer->phone_number ?? 'N/A'; 
+            }
         }
 
         $this->view('bookstoreOrders', ['orders' => $orders , 'count' => $count]);
     }
     
     public function myProfile(){
-        $store = new BookStore;
+        $storeModel = new BookStore;
+        $userModel = new UserModel();
         $data = ['user_id' => $_SESSION['user_id']];
-        $s=$store->first($data);
+        
+        $store=$storeModel->first($data);
+        $store->email = $userModel->first(['ID' => $_SESSION['user_id']])->email;
 
-        $storedata = ['store' => $s ];
+        $storedata = ['store' => $store];
         
         $this->view('bookstoreProfile',$storedata);
     }
 
 
-    public function requestAdvertisment()
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $advModel = new StoreAdvModel();
+    public function requestAdvertisment(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $advModel = new StoreAdvModel();
 
-        $title = htmlspecialchars(trim($_POST['title']));
-        $start_date = $_POST['start_date'] ?? null;
-        $end_date = $_POST['end_date'] ?? null;
-        $image = $_FILES['image'];
+            $title = htmlspecialchars(trim($_POST['title']));
+            $start_date = $_POST['start_date'] ?? null;
+            $end_date = $_POST['end_date'] ?? null;
+            $image = $_FILES['image'];
 
-        if (empty($title) || empty($image['name'])) {
-            echo "Title and image are required.";
-            return;
-        }
+            if (empty($title) || empty($image['name'])) {
+                echo "Title and image are required.";
+                return;
+            }
 
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-        $extension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            $extension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
 
-        if (!in_array($extension, $allowedExtensions)) {
-            echo "Invalid image file type.";
-            return;
-        }
+            if (!in_array($extension, $allowedExtensions)) {
+                echo "Invalid image file type.";
+                return;
+            }
 
-        $uniqueName = uniqid('adv_', true) . '.' . $extension;
-        $uploadDir = 'C:\xampp\htdocs\BookMart\public\assets\Images\store_advertisments';
-        $uploadPath = $uploadDir . '\\' . $uniqueName;
+            $uniqueName = uniqid('adv_', true) . '.' . $extension;
+            $uploadDir = 'C:\xampp\htdocs\BookMart\public\assets\Images\store_advertisments';
+            $uploadPath = $uploadDir . '\\' . $uniqueName;
 
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
 
-        if (!move_uploaded_file($image['tmp_name'], $uploadPath)) {
-            echo "Image upload failed.";
-            $this->orders();
-            return;
-        }
+            if (!move_uploaded_file($image['tmp_name'], $uploadPath)) {
+                echo "Image upload failed.";
+                $this->orders();
+                return;
+            }
 
-        $imagePath = $uniqueName;
+            $imagePath = $uniqueName;
 
-        $data = [
-            'title' => $title,
-            'image_path' => $imagePath,
-            'start_date' => $start_date,
-            'end_date' => $end_date,
-            'store_id' => $_SESSION['user_id'] ?? null, 
-        ];
+            $data = [
+                'title' => $title,
+                'image_path' => $imagePath,
+                'start_date' => $start_date,
+                'end_date' => $end_date,
+                'store_id' => $_SESSION['user_id'] ?? null, 
+            ];
 
-        if ($advModel->insert($data)) {
-            $this->advertisments();
+            if ($advModel->insert($data)) {
+                $this->advertisments();
+            } else {
+                echo "Failed to submit advertisement.";
+            }
         } else {
-            echo "Failed to submit advertisement.";
+            echo "Invalid request method.";
         }
-    } else {
-        echo "Invalid request method.";
     }
-}
 
-    
+    public function updateStoreDetails(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $storeName = $_POST['store-name'] ?? '';
+            $phoneNumber = $_POST['phone-number'] ?? '';
+            $streetAddress = $_POST['street-address'] ?? '';
+            $city = $_POST['city'] ?? '';
+            $district = $_POST['district'] ?? '';
+            $province = $_POST['province'] ?? '';
 
+            $errors = [];
+
+            if (empty($storeName)) $errors['store-name'] = "Store name is required.";
+            if (!preg_match('/^\d{10}$/', $phoneNumber)) $errors['phone-number'] = "Invalid phone number.";
+            if (empty($streetAddress)) $errors['street-address'] = "Street address is required.";
+            if (empty($city)) $errors['city'] = "City is required.";
+            if (empty($district)) $errors['district'] = "District is required.";
+            if (empty($province)) $errors['province'] = "Province is required.";
+
+            if (empty($errors)) {
+                $storeModel = new BookStore();
+
+                $userId = $storeModel->first(['user_id' => $_SESSION['user_id']])->id ?? null;
+
+                if ($userId) {
+                    $storeModel->update($userId, [
+                        'store_name' => $storeName,
+                        'phone_number' => $phoneNumber,
+                        'street_address' => $streetAddress,
+                        'city' => $city,
+                        'district' => $district,
+                        'province' => $province,
+                    ]);
+
+                    $this->myProfile(); 
+                } else {
+                    $_SESSION['error'] = "You must be logged in to update your store.";
+                    redirect('login');
+                }
+            } else {
+                $_SESSION['form_errors'] = $errors;
+                $this->myProfile();  
+            }
+        }
+    }
+
+    public function updateOwnerDetails(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ownerName = $_POST['owner-name'] ?? '';
+            $ownerEmail = $_POST['email-owner'] ?? '';
+            $ownerPhone = $_POST['phone-number-owner'] ?? '';
+            $ownerNIC = $_POST['NIC-owner'] ?? '';
+            
+            $managerName = $_POST['manager-name'] ?? '';
+            $managerEmail = $_POST['email-manager'] ?? '';
+            $managerPhone = $_POST['phone-number-manager'] ?? '';
+            $managerNIC = $_POST['NIC-manager'] ?? '';
+
+            $errors = [];
+
+            if (empty($ownerName)) $errors['owner-name'] = "Owner name is required.";
+            if (!filter_var($ownerEmail, FILTER_VALIDATE_EMAIL)) $errors['email-owner'] = "Invalid owner email address.";
+            if (!preg_match('/^\d{10}$/', $ownerPhone)) $errors['phone-number-owner'] = "Invalid owner phone number.";
+            if (!preg_match('/^\d{9}[vVxX]|\d{12}$/', $ownerNIC)) $errors['NIC-owner'] = "Invalid NIC for owner.";
+
+            if (empty($managerName)) $errors['manager-name'] = "Manager name is required.";
+            if (!filter_var($managerEmail, FILTER_VALIDATE_EMAIL)) $errors['email-manager'] = "Invalid manager email address.";
+            if (!preg_match('/^\d{10}$/', $managerPhone)) $errors['phone-number-manager'] = "Invalid manager phone number.";
+            if (!preg_match('/^\d{9}[vVxX]|\d{12}$/', $managerNIC)) $errors['NIC-manager'] = "Invalid NIC for manager.";
+
+            if (empty($errors)) {
+                $storeModel = new BookStore();
+                $userId = $storeModel->first(['user_id' => $_SESSION['user_id']])->id ?? null;
+
+                if ($userId) {
+                    $storeModel->update($userId, [
+                        'owner_name' => $ownerName,
+                        'owner_email' => $ownerEmail,
+                        'owner_phone_number' => $ownerPhone,
+                        'owner_nic' => $ownerNIC,
+                        'manager_name' => $managerName,
+                        'manager_email' => $managerEmail,
+                        'manager_phone_number' => $managerPhone,
+                        'manager_nic' => $managerNIC,
+                    ]);
+
+                    $this->myProfile(); // Redirect to profile view
+                } else {
+                    $_SESSION['error'] = "You must be logged in to update owner details.";
+                    redirect('login');
+                }
+            } else {
+                $_SESSION['form_errors'] = $errors;
+                $this->myProfile(); 
+            }
+        }
+    }
 
 }

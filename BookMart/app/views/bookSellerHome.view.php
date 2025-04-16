@@ -62,8 +62,30 @@
                     </div>
                     <button class="next"><i class="fa-solid fa-chevron-right fa-lg"></i></button>
                 </div>
-            <br>
-            <br>
+                <br>
+            <br>   
+            <div class="paragraph-section section">
+                <div class="paragraph-text">
+                    <h1 id="dynamic-heading">"Connecting Book Lovers Across Sri Lanka"</h1>
+                    <p id="dynamic-paragraph">
+                        "From timeless classics to the latest reads, find everything in one convenient marketplace."
+                    </p>
+                </div>
+                <div class="paragraph-button">
+                    <button class="btn-paragraph-hero" 
+                    onclick="navigateTo('<?= ROOT ?>/register')">Start Shopping
+                        <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            fill-rule="evenodd"
+                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+                            clip-rule="evenodd"
+                        ></path>
+                        </svg>
+                    </button>
+                    
+                </div>
+            </div>
+            <br><br>
             <p class="sub-heading">DISCOVER OUR TOP BESTSELLERS</p> 
             <h1>Best Seller's</h1>
             <br><br>
@@ -182,11 +204,53 @@
 
         <br><br>
 
-        <!-- Footer division begin -->
-            <?php include 'bookSellerFooter.view.php'; ?>
-        <!-- Footer division end -->
+        <!-- footer begin -->
+            <?php include 'footer.view.php'; ?>   
+        <!-- footer end -->
     </div>
     <script src="<?= ROOT ?>/assets/JS/index.js"></script>
+    <script>
+        const headings = [
+            "Connecting Book Lovers Across Sri Lanka",
+            "Your Story Starts Here New and Pre-loved Books Await",
+            "Buy, Sell, and Explore  All in One Place",
+            "Empowering Local Bookstores and Sellers",
+            "Where Every Book Finds a Home"
+        ];
+
+        const paragraphs = [
+            "From timeless classics to the latest reads, find everything in one convenient marketplace.",
+            "Discover affordable second-hand treasures or sell your own — BookMart makes it easy.",
+            "Support local bookstores while finding your next great read.",
+            "Browse, list, and connect with fellow readers and sellers across the country.",
+            "Experience the joy of books with a platform built for readers, by readers."
+        ];
+
+
+        let currentIndex = 0;
+
+        function updateText() {
+            const headingElement = document.getElementById("dynamic-heading");
+            const paragraphElement = document.getElementById("dynamic-paragraph");
+
+            headingElement.classList.add("fade");
+            paragraphElement.classList.add("fade");
+          
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % headings.length; 
+                headingElement.textContent = `"${headings[currentIndex]}"`;
+                paragraphElement.textContent = paragraphs[currentIndex];
+
+                headingElement.classList.remove("fade");
+                paragraphElement.classList.remove("fade");
+            }, 750); 
+        }
+        setInterval(updateText, 4000);
+
+        function navigateTo(page) {
+            window.location.href = page; 
+        }
+    </script>
     
 </body>
 </html>

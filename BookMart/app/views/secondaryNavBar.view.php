@@ -18,9 +18,14 @@
             <select id="genres" name="genres" class="navbar-links-select" onchange="navigateToGenre()">
                 <option value="" disabled selected>Genres</option>
                 <option value="fiction">Fiction</option>
+                <option value="romance">Romance</option>
                 <option value="novels">Novels</option>
                 <option value="history">History</option>
-                <option value="romance">Romance</option>
+                <option value="horror">Horror</option>
+                <option value="young-adult">Young-Adult</option>
+                <option value="sci-fi">Sci-Fi</option>
+                <option value="Crime">Crime</option>
+                <option value="education">Education</option>
             </select>
             <?php if (!isset($_SESSION['user_status'])): ?>
                 <!-- Links for guests -->
@@ -30,13 +35,13 @@
                 <!-- Links for logged-in users -->
                 <?php if ($_SESSION['user_role'] == 'bookStore'): ?>
                     <!-- Links for bookstore -->
-                    <select id="menu" name="menu" class="navbar-links-select" >
+                    <select id="menu" name="menu" class="navbar-links-select" onchange="navigateToMenu()">
                         <option value="" disabled selected>Menu</option>
-                        <option value="My-Inventory">My Inventory</option>
+                        <option value="inventory">My Inventory</option>
                         <option value="Analytics">Analytics</option>
-                        <option value="Orders">Orders</option>
-                        <option value="Reviews">Reviews</option>
-                        <option value="Ads">Ads & Offers</option>
+                        <option value="orders">Orders</option>
+                        <option value="getReviews">Reviews</option>
+                        <option value="advertisments">Ads & Offers</option>
                     </select>
                     <a href="<?= ROOT ?>/Chat" class="navbar-links">Chat</a>
                     <a href="" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
@@ -76,6 +81,15 @@
             window.location.href = "<?= ROOT ?>/bookByGenres/" + selectedGenre;
         }
     }
+
+    function navigateToMenu() {
+        const menuSelect = document.getElementById('menu');
+        const selectedMenu = menuSelect.value;
+        if (selectedMenu) {
+            window.location.href = "<?= ROOT ?>/BookstoreController/" + selectedMenu;
+        }
+    }
+
     document.getElementById('logoutButton').addEventListener('click', function() {
     
     fetch('http://localhost/BookMart/public/user/logout', { 

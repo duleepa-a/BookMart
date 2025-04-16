@@ -171,6 +171,7 @@
                     </div>
                 </div>
             </div>
+            <?php if (!empty($orders)): ?>
             <div class="inventory-toolbar">
             <input type="text" placeholder="Search your book in the inventory" class="inventory-search-bar">
             <div class="filter">
@@ -196,7 +197,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (!empty($orders)): ?>
                         <?php foreach ($orders as $order): ?>
                             <tr>
                                 <td><input type="checkbox" class="select-order"></td>
@@ -210,13 +210,11 @@
                                 </td>
                             </tr>
                         <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="7" style="text-align:center;">No orders found.</td>
-                        </tr>
-                    <?php endif; ?>
                 </tbody>
-            </table>            
+            </table>
+            <?php else: ?>
+                        <div class="message-div">No orders found.</div>
+            <?php endif; ?>            
     </div>
     <footer class="small-footer">
             <p>&copy; 2024 BookMart, all rights reserved.</p>

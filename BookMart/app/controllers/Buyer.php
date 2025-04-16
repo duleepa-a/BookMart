@@ -80,7 +80,17 @@ class Buyer extends Controller{
         $this->view('buyerTrackOrder');
     }
     public function myProfile(){
-        $this->view('buyerProfile');
+        $buyerModel = new BuyerModel;
+        $userModel = new UserModel();
+        $data = ['user_id' => $_SESSION['user_id']];
+        
+        $buyer=$buyerModel->first($data);
+        $user = $userModel->first(['ID' => $_SESSION['user_id']]);
+        $buyer->email = $user->email;
+        $buyer->username = $user->username;
+
+        $buyerData = ['buyer' => $buyer];
+        $this->view('buyerProfile',$buyerData);
     }
 
     public function register(){
@@ -221,6 +231,64 @@ class Buyer extends Controller{
         }
     
         $this->view('buyerReview', ['orders' => $unreviewedOrders ,'history' => $history]);
+    }
+    
+    public function updatePersonalDetails() {
+        if (!isset($_SESSION['user_id'])) {
+            redirect('login');
+            return;
+        }
+    
+        $buyerModel = new BuyerModel();
+        $userId = $buyerModel->first(['ID' => $_SESSION['user_id']])->id;
+    
+        $data = [
+            'full_name' => trim($_POST['full-name'] ?? ''),
+            'gender' => $_POST['gender'] ?? null,
+            'dob' => $_POST['dob'] ?? null,
+            'phone_number' => trim($_POST['phone-number'] ?? ''),
+            'street_address' => trim($_POST['street-address'] ?? ''),
+            'city' => $_POST['city'] ?? null,
+            'district' => $_POST['district'] ?? null,
+            'province' => $_POST['province'] ?? null,
+        ];
+    
+    
+        $buyerModel->update($userId, $data);
+    
+        $_SESSION['success'] = "Your personal details have been updated successfully!";
+
+        $this->myProfile();
+    }
+
+    public function updateLoginDetails() {
+        if (!isset($_SESSION['user_id'])) {
+            redirect('login');
+            return;
+        }
+    
+        $userId = $_SESSION['user_id'];
+        $newUsername = trim($_POST['username'] ?? '');
+    
+        if (empty($newUsername)) {
+            $_SESSION['error'] = "Username cannot be empty.";
+            $this->myProfile();
+            return;
+        }
+
+        $userModel = new UserModel();
+      
+    
+        if ($userModel->isUsernameTaken($newUsername)) {
+            $_SESSION['error'] = "This username is already taken.";
+            $this->myProfile();
+            return;
+        }
+    
+        $userModel->update($userId, ['username' => $newUsername]);
+    
+        $_SESSION['success'] = "Username updated successfully!";
+        $this->myProfile();
     }
     
 
