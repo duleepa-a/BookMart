@@ -104,7 +104,9 @@
                 
                 <div class="form-group-row">
                     <div class="form-group">
-                        <label for="phone-number">Phone Number:</label>
+                        <label for="phone-number">Phone Number:
+                            <span class="error-phone" style="display: none; color: red;">Please enter a valid phone number</span>
+                        </label>
                         <input type="text" id="phone-number" placeholder="Please enter your phone number" name="phone-number" required>
                     </div>
                     <div class="form-group">

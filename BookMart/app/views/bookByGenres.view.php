@@ -108,8 +108,10 @@
             </div>
                 <?php endif; ?>
     </div>
+    <!-- footer begin -->
+    <?php include 'footer.view.php'; ?>   
+    <!-- footer end -->
     </div>
-    
     <script src="<?= ROOT ?>/assets/JS/bookByGenres.js"></script>
     <script>
             document.querySelectorAll('.filter-input').forEach(input => {

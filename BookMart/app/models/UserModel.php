@@ -138,6 +138,10 @@ class UserModel {
         $data = ['username' => $username];
         $user = $this->first($data);
 
+        if ($user && isset($_SESSION['user_id']) && $user->ID == $_SESSION['user_id']) {
+            return false; 
+        }
+
         return $user !== false;
     }
 

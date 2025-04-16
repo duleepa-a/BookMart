@@ -23,12 +23,13 @@ class App{
             'AdminSearchorders' => ['index'],
             'AdminPendingAddView' => ['index'],
             'AdminViewContactUs' => ['index','delete','update'],
+            'User' => ['changePassword'],
             
         ],
         'bookStore' => [
-            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','myProfile','markAsRead','requestAdvertisment'],
+            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','myProfile','markAsRead','requestAdvertisment','updateStoreDetails','updateOwnerDetails'],
             'Book' => ['addBook','updateBook','deleteBook'],
-            'User' => ['like'],
+            'User' => ['like','changePassword'],
             'Payment' => ['payAd','adSuccess','adCancel'],
         ],
         'bookSeller' => [
@@ -39,13 +40,13 @@ class App{
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],
             'BookSellerSidebar' => ['index'],
             'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],
-            'User' => ['like'],
+             'User' => ['like','changePassword'],
             'Payment' => ['index','checkOut','process','success','cancel','cartView']
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],
-            'Buyer' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile'],
-            'User' => ['like'],
+            'Buyer' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile','updateLoginDetails','updatePersonalDetails'],
+            'User' => ['like','changePassword'],
             'Payment' => ['index','checkOut','process','success','cancel','cartView','addToCart','cartCheckout','cartSuccess','increase','decrease','deleteSelected','clear','removeBook','deleteSelected']
         ],
         'courier' => [
@@ -54,7 +55,7 @@ class App{
             'CourierOrders' => ['index'],
             'CourierOrderDetails' => ['index'],
             'CourierEarns' => ['index'],
-            'User' => ['like'],
+            'User' => ['like','changePassword'],
         ]
     ];
     

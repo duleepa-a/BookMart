@@ -73,9 +73,9 @@
         </div>
         
     </div>
-    <footer class="small-footer">
-            <p>&copy; 2024 BookMart, all rights reserved.</p>
-    </footer> 
+     <!-- footer begin -->
+     <?php include 'smallFooter.view.php'; ?>   
+    <!-- footer end --> 
     </div>
 
     <script src="<?= ROOT ?>/assets/JS/adminHome.js"></script>
