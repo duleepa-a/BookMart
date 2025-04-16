@@ -60,22 +60,44 @@ class AuctionModel {
         return $result;
     }
 
-    public function updateAuctionBid($data) {
-        $auctionData = [
-            'current_price' => $data['current_price'],
-            'previous_bid' => $data['previous_bid'],
-            'current_bidder_id' => $data['current_bidder_id'],
-        ];
+    public function updateAuction($data) {
+        $auctionData = [];
+
+        if (array_key_exists('current_price', $data)) {
+            $auctionData['current_price'] = $data['current_price'];
+        }
+
+        if (array_key_exists('previous_bid', $data)) {
+            $auctionData['previous_bid'] = $data['previous_bid'];
+        }
+
+        if (array_key_exists('current_bidder_id', $data)) {
+            $auctionData['current_bidder_id'] = $data['current_bidder_id'];
+        }
+
+        if (array_key_exists('winner_user_id', $data)) {
+            $auctionData['winner_user_id'] = $data['winner_user_id'];
+        }
+
+        if (array_key_exists('is_closed', $data)) {
+            $auctionData['is_closed'] = $data['is_closed'];
+        }
+
+        $result = $this->update($data['id'], $auctionData);
+
+        if(isset($data['sold']) && $data['sold'] == '1') {
+            if ($data['is_closed'] == '1') {
+                $query = "UPDATE listings SET status = 'sold' WHERE book_id = :book_id";
+                $params = ['book_id' => $data['book_id']];
+                $this->query($query, $params); 
+            }
+        }
         
-        return $this->update($data['id'], $auctionData);
+        return $result;
 
     }
 
-    public function closeAuction($auctionId, $winnerId = null) {
-        $data = ['is_closed' => 1];
-        if ($winnerId !== null) {
-            $data['winner_user_id'] = $winnerId;
-        }
-        return $this->update($auctionId, $data);
+    public function deleteAuction($auctionId) {
+        return $this->delete($auctionId);
     }
 }
