@@ -576,3 +576,14 @@ input{
     color: red;
     font-weight: bold;
 }
+
+.message-div{
+    height:50vh;
+    text-align: center;
+    align-content: center;
+    width: 100%;
+}
+
+.message-text{
+    color: #333;
+}

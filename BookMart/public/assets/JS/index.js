@@ -208,7 +208,6 @@ document.getElementById('logoutButton').addEventListener('click', function() {
 
 
 
-
 //carousel for best sellers
 
 // Carousel for the New Arrivals

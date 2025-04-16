@@ -134,6 +134,7 @@
             </div>
         </div>
         <h1 class="page-title">You Have <?= $unreadcount === 0 ? 'No' : htmlspecialchars($unreadcount) ?> New Reviews</h1>
+        <?php if (!empty($reviews)): ?>
         <div class="inventory-toolbar">
             <input type="text" placeholder="Search your book in the inventory" class="inventory-search-bar">
             <div class="filter">
@@ -157,7 +158,6 @@
                 </tr>
             </thead>
             <tbody>
-            <?php if (!empty($reviews)): ?>
                 <?php foreach ($reviews as $review): ?>
                     <tr>
                         <td><?= htmlspecialchars($review->book_title) ?></td>
@@ -175,12 +175,14 @@
                         </td>
                     </tr>
                 <?php endforeach; ?>
-            <?php else: ?>
-                <tr><td colspan="6" style="text-align:center;">No reviews found.</td></tr>
-            <?php endif; ?>
             </tbody>
         </table>
     </div>
+    <?php else: ?>
+        <div class="message-div">
+            No reviews found.
+        </div>
+            <?php endif; ?>
     </div>
     <footer class="small-footer">
             <p>&copy; 2024 BookMart, all rights reserved.</p>

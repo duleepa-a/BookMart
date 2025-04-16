@@ -38,9 +38,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const confirmPasswordInput = document.getElementById("confirm-password");
     const confirmPasswordError = document.querySelector(".confirm-password-error");
 
+    const phoneInput = document.getElementById("phone-number");
+
     let usernameIsValid = false;
     let emailIsValid = false;
     let passwordIsValid = false;
+    let phoneIsValid = false;
 
     // Check if username is taken
     usernameInput.addEventListener("input", function () {
@@ -138,9 +141,24 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    phoneInput.addEventListener("input", function () {
+        const phoneNumber = phoneInput.value;
+    
+        const phoneError = document.querySelector(".error-phone");
+        const validPhoneRegex = /^\d{10}$/; // Adjust regex as per your requirement
+    
+        if (validPhoneRegex.test(phoneNumber)) {
+            phoneIsValid = true;
+            phoneError.style.display = "none"; // Hide error message
+        } else {
+            phoneIsValid = false;
+            phoneError.style.display = "inline"; // Show error message
+        }
+    });
+
     // Prevent form submission if validation fails
     registerForm.addEventListener("submit", function (event) {
-        if (!usernameIsValid || !emailIsValid || !passwordIsValid || passwordInput.value !== confirmPasswordInput.value) {
+        if (!usernameIsValid || !emailIsValid || !passwordIsValid || phoneIsValid || passwordInput.value !== confirmPasswordInput.value) {
             event.preventDefault(); // Prevent form submission
             alert("Please correct the errors before submitting the form.");
         }

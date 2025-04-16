@@ -134,6 +134,7 @@
             </div>
         </div>
         <h1 class="inventory-title">My Inventory</h1>
+        <?php if (!empty($inventory)) : ?>
         <div class="inventory-toolbar">
             <input type="text" placeholder="Search your book in the inventory" class="inventory-search-bar">
             <button class="sort-button">Sort by <i class="fa-solid fa-sort-down "></i></button>
@@ -143,7 +144,6 @@
             <button class="update-status">Update Status</button>
             <button class="remove-button">Remove</button>
         </div>
-        <?php if (!empty($inventory)) : ?>
             <table class="inventory-table">
                 <thead>
                     <tr>
@@ -201,7 +201,7 @@
                 </tbody>
             </table>
         <?php else : ?>
-            <div class="no-books-message">
+            <div class="message-div">
                 <p>No books found in your inventory. Start adding books to your collection!</p>
             </div>
         <?php endif; ?>
@@ -308,9 +308,9 @@
             </div>
         </div>
     </div>
-    <footer class="small-footer">
-            <p>&copy; 2024 BookMart, all rights reserved.</p>
-    </footer>     
+     <!-- footer begin -->
+     <?php include 'smallFooter.view.php'; ?>   
+    <!-- footer end -->     
     <script src="<?= ROOT ?>/assets/JS/bookstoreInventory.js"></script>
 </body>
 </html>

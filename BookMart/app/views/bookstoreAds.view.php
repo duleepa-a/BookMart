@@ -78,6 +78,7 @@
     </div>
             <h1 class="inventory-title">Advertisments & Offers </h1>
             <br>
+            <?php if (!empty($advertisments)): ?>
             <div class="tab-content" id="Advertisments">
                 <div class="inventory-toolbar">
                     <input type="text" placeholder="Search advertisements" class="inventory-search-bar">
@@ -106,7 +107,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (!empty($advertisments)): ?>
                             <?php foreach ($advertisments as $ad): ?>
                                 <tr>
                                     <td><input type="checkbox" class="select-order"></td>
@@ -147,13 +147,12 @@
                                 </td>
                                 </tr>
                             <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr><td colspan="8">No advertisements found.</td></tr>
-                        <?php endif; ?>
                     </tbody>
-                </table>
-
+            </table>
             </div> 
+            <?php else: ?>
+                            <div class="message-div">No advertisements found.</div>
+            <?php endif; ?>
     </div>
     <footer class="small-footer">
             <p>&copy; 2024 BookMart, all rights reserved.</p>
