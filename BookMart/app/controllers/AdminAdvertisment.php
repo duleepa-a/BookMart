@@ -4,9 +4,32 @@ class AdminAdvertisment extends Controller{
 
     public function index(){
         $ads = $this->getAllAds();
+
+        $store_add = new StoreAdvModel();
+        $userModel = new BookStore();
+        $storeAds = $store_add->findAll();
         
-        $data = ['advertisements' => $ads,
-                ];
+        
+
+        $pendingStoreAds = [];
+        $acceptedStoreAds = [];
+
+        foreach ($storeAds as $ad) {
+            $user = $userModel->first(['user_id' => $ad->store_id]);
+            $ad->store_name = $user->store_name;
+            if ($ad->status === 'pending') {
+                $pendingStoreAds[] = $ad;
+            } elseif ($ad->status === 'approved') {
+                $acceptedStoreAds[] = $ad;
+            }
+        }
+
+        $data = [
+            'advertisements' => $ads,
+            'pendingStoreAds' => $pendingStoreAds,
+            'approvedAds' => $acceptedStoreAds,
+        ];
+
         $this->view('adminAdvertisment',$data);
     }
 
@@ -124,5 +147,29 @@ class AdminAdvertisment extends Controller{
         redirect('adminAdvertisment');
         
     }
+
+    public function handleAdDecision() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $adId = $_POST['ad_id'];
+            $amount = $_POST['payment_amount'];
+            $action = $_POST['action'];
+    
+            $storeAddModel = new StoreAdvModel();
+    
+            if ($action === 'accept') {
+                $storeAddModel->update($adId, [
+                    'payment_amount' => $amount,
+                    'status' => 'approved'
+                ]);
+            } elseif ($action === 'reject') {
+                $storeAddModel->update($adId, [
+                    'status' => 'rejected'
+                ]); 
+            }
+    
+            redirect('adminAdvertisment'); 
+        }
+    }
+    
 
 }

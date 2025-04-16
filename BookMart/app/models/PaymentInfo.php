@@ -8,6 +8,7 @@ class PaymentInfo {
 
     protected $allowedColumns = [
         'order_id',
+        'ad_id',
         'transaction_id',
         'payment_amount',
         'payment_gateway',

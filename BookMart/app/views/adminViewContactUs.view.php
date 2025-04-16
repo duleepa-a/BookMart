@@ -12,35 +12,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="navBar">
-        <span class = "title">
-            <a href="<?= ROOT ?>/home" class="title-link"><h2>Book<span class="highlight">Mart</span></h2></a>
-        </span>
-        <div class="search-bar-div">
-            <form action="<?= ROOT ?>/book/search" method="GET" class="search-form ">
-                <input 
-                    type="text" 
-                    name="keyword" 
-                    class="search-bar" 
-                    placeholder="Search your book, bookstore"
-                    required  
-                />
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            </form>
-        </div>
-        <div class="nav-links">
-                <select id="orders" name="orders" class="navbar-links-select" >
-                    <option value="" disabled selected>Orders</option>
-                    <option value="all">All Orders</option>
-                    <option value="accepted">Accepted Orders</option>
-                    <option value="pending">Pending Orders</option>
-                    <option value="completed">Completed Orders</option>
-                </select>
-                <a href="<?= ROOT ?>/CourierProfile" class="navbar-links">My Profile</a>
-                <a href="<?= ROOT ?>/Login" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
-                <button class="navbar-links-select" id="logoutButton">Log Out</button>
-            </div>
-    </div>
+    <!-- navBar division begin -->
+<?php include 'adminNavBar.view.php'; ?>
+    <!-- navBar division end -->
     <div class="sidebar">
         <ul>
             <h1 class="sidebar-heading">Hi Admin!</h1>
@@ -70,6 +44,7 @@
                     
                     
                           <div class="table-wrapper">
+                          <?php if(!empty($contactform)): ?>
                             <table>
                               <thead>
                                 <tr>
@@ -81,7 +56,6 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                <?php if(!empty($contactform)): ?>
                                   <?php foreach ($contactform as $contactdetails): ?>
                                 <tr>
                                   <td><?= $contactdetails->id ?></td>
@@ -131,6 +105,7 @@
     
                 <div class="tab-content" id="bank-details" style="display: none;">
                         <div class="table-wrapper">
+                        <?php if(!empty($markedcontact)): ?>
                           <table>
                             <thead>
                               <tr>
@@ -142,7 +117,6 @@
                               </tr>
                             </thead>
                             <tbody>
-                            <?php if(!empty($markedcontact)): ?>
                                   <?php foreach ($markedcontact as $contactdetails): ?>
                                 <tr>
                                   <td><?= $contactdetails->id ?></td>

@@ -51,14 +51,39 @@ header {
     margin-top: -50px;
 }
 
-.profile-picture {
+.profile-picture-wrapper {
     width: 150px;
     height: 150px;
     border-radius: 50%;
+    overflow: hidden;
     border: 5px solid white;
-    object-fit: cover;
     background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.profile-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profile-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+}
+
 
 .profile-info {
     flex: 1;
@@ -143,27 +168,56 @@ header {
     padding: 20px;
 }
 
+.carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
 .offers-container {
     display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding: 10px 0;
+    transition: transform 0.5s ease-in-out;
+    height: 150px;
 }
 
 .offer-card {
-    min-width: 300px;
+    min-width: 100%;
+    max-width: 100%;
     height: 150px;
     border-radius: 8px;
     overflow: hidden;
-    position: relative;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    flex-shrink: 0;
 }
 
 .offer-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit:contain;
+    display: block;
 }
+
+.offer-carousel-btn {
+    position: absolute;
+    top: 50%;
+    background-color: #be561500;
+    transform: translateY(-50%);
+    color: black;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1;
+    
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+
 
 .books-section {
     background-color: white;
@@ -201,6 +255,7 @@ header {
 
 .book-card {
     min-width: 150px;
+    max-width: 150px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     transition: transform 0.2s ease;
@@ -211,7 +266,6 @@ header {
 }
 
 .book-cover {
-    width: 100%;
     height: 200px;
     object-fit: cover;
 }

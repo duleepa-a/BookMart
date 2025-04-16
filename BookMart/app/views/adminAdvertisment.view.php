@@ -223,33 +223,102 @@
             
 
             <!--Pending Advertisement-->
-            <div class="tab-content" id="pending-add" >
+            <div class="tab-content" id="pending-add">
                 <input type="text" class="search" placeholder="Search">
                 <br><br>
-                <table class="advertisement-table ">
-                    <thead>
-                        <tr>
-                            <th>Advertisement Title</th>
-                            <th>Submitted by</th>
-                            <th>Submitted on</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr >
-                        <a href="<?= ROOT ?>/adminPendingAddView" class="pending-link"> <td>New Arrivals</td></a>
-                            <td>Sarasavi Book Shop</td>
-                            <td>August 18, 2024, 10.45 AM</td>
-                        </tr>
-                        <tr> 
-                        <a href="<?= ROOT ?>/adminPendingAddView" class="pending-link">
-                            <td>Holiday Gift Guide</td>
-                        </a>
-                            <td>Samudra Book Shop</td>
-                            <td>September 12, 2024, 8.40 AM</td>
-                            
-                        </tr>
-                    </tbody>
-                </table><br><br><br>
+                <div style="overflow-x: auto;">
+                    <?php if (!empty($pendingStoreAds)): ?>
+                        <table class="advertisement-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Advertisement Title</th>
+                                    <th>Submitted by</th>
+                                    <th>Submitted on</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Payment Amount (Rs.)</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($pendingStoreAds as $ad): ?>
+                                    <tr>
+                                        <form method="POST" action="<?= ROOT ?>/adminAdvertisment/handleAdDecision">
+                                            <input type="hidden" name="ad_id" value="<?= $ad->id ?>">
+                                            <td>
+                                                <img src="<?= ROOT ?>/assets/Images/store_advertisments/<?= htmlspecialchars($ad->image_path) ?>" alt="Ad Image" style="height: 80px; width: auto;">
+                                            </td>
+                                            <td><?= htmlspecialchars($ad->title) ?></td>
+                                            <td><?= htmlspecialchars($ad->store_name ?? 'N/A') ?></td> <!-- store_name should be joined when fetching -->
+                                            <td><?= date('F j, Y, g:i A', strtotime($ad->posted_date)) ?></td>
+                                            <td><?= date('F j, Y', strtotime($ad->start_date)) ?></td>
+                                            <td><?= date('F j, Y', strtotime($ad->end_date)) ?></td>
+                                            <td>
+                                                <input type="number" name="payment_amount" min="0" step="0.01" required style="width: 100px;">
+                                            </td>
+                                            <td>
+                                                <button type="submit" name="action" value="accept" class="btn btn-success">Accept</button>
+                                                <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php else: ?>
+                        <p>No pending advertisements available at the moment.</p>
+                    <?php endif; ?>
+                </div>
+
+                <br><br><br>
+                <div class="pagination">
+                    <button class="page-button previous">&lt;</button>
+                    <button class="page-button">1</button>
+                    <button class="page-button">2</button>
+                    <button class="page-button">3</button>
+                    <button class="page-button next">&gt;</button>
+                </div>
+            </div>
+
+
+            <!--Approved Advertisement-->
+            <div class="tab-content" id="approved-add">
+                <input type="text" class="search" placeholder="Search">
+                <br><br>
+
+                <?php if (!empty($approvedAds)): ?>
+                    <div class="table-wrapper">
+                        <table class="advertisement-table">
+                            <thead>
+                                <tr>
+                                    <th>Advertisement Title</th>
+                                    <th>Submitted by</th>
+                                    <th>Advertisement Time</th>
+                                    <th>Price (Rs.)</th>
+                                    <th>Payment Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($approvedAds as $ad): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($ad->title) ?></td>
+                                        <td><?= htmlspecialchars($ad->store_name ?? 'N/A') ?></td>
+                                        <td><?= date('Y/m/d', strtotime($ad->start_date)) ?> - <?= date('Y/m/d', strtotime($ad->end_date)) ?></td>
+                                        <td><?= number_format($ad->payment_amount, 2) ?></td>
+                                        <td style="color: <?= $ad->active_status ? 'green' : 'red' ?>;">
+                                            <?= $ad->active_status? 'Paid' : 'Unpaid' ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php else: ?>
+                    <p>No approved advertisements available at the moment.</p>
+                <?php endif; ?>
+
+                <br><br><br>
 
                 <div class="pagination">
                     <button class="page-button previous">&lt;</button>
@@ -263,46 +332,6 @@
                 </div>
             </div>
 
-            <!--Approved Advertisement-->
-            <div class="tab-content" id="approved-add">
-                <input type="text" class="search" placeholder="Search">
-                <br><br>
-                <table class="advertisement-table">
-                    <thead>
-                        <tr>
-                            <th>Advertisement Title</th>
-                            <th>Submitted by</th>
-                            <th>Advertisement time</th>
-                            <th>Price (Rs.)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>New Arrivals</td>
-                            <td>Sarasavi Book Shop</td>
-                            <td>2024/08/26 - 2024/09/09</td>
-                            <td>10,000</td>
-                        </tr>
-                        <tr>
-                            <td>Holiday Gift Guide</td>
-                            <td>Samudra Book Shop</td>
-                            <td>2024/07/10 - 2024/07/24</td>
-                            <td>8,000</td>
-                        </tr>
-                    </tbody>
-                </table><br><br><br>
-
-                <div class="pagination">
-                    <button class="page-button previous">&lt;</button>
-                    <button class="page-button">4</button>
-                    <button class="page-button">5</button>
-                    <button class="page-button">6</button>
-                    <button class="page-button">7</button>
-                    <button class="page-button">8</button>
-                    <button class="page-button">9</button>
-                    <button class="page-button next">&gt</button>
-                </div>
-            </div>
         </div>
     </div>
 
