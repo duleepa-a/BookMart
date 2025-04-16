@@ -27,112 +27,55 @@
     </div>
     <div class="container">
     <div id="add-book-modal"class="modal hidden">
-            <div class="modal-overlay"></div>
-            <div class="modal-content">
-                <form class="add-book-form" method="POST" action="<?= ROOT ?>/book/addBook" enctype="multipart/form-data">
-                    <h2 class="full-width">Add Book</h2>
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <form class="add-adv-form" method="POST" action="<?= ROOT ?>/BookstoreController/requestAdvertisment" enctype="multipart/form-data">
+                <h2 class="full-width">Add Advertisement</h2>
 
-                    <!-- Title -->
-                    <div>
-                        <label for="title">Title:</label>
-                        <input type="text" id="title" name="title" required>
+                <!-- Advertisement Title -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <div>
+                            <label for="ad_title">Title:</label>
+                            <input type="text" id="ad_title" name="title" required>
+                        </div>
                     </div>
+                        <!-- Ad Image -->
+                    <div class="form-group">
+                        <div>
+                            <label for="ad_image">Advertisement Image:</label>
+                            <input type="file" id="ad_image" name="image" accept="image/*" required>
+                            <small style="color: #666;">Recommended image size: 1200 × 150 pixels (w × h)</small>
+                        </div>
+                    </div>
+                </div>
 
-                    <!-- ISBN -->
-                    <div>
-                        <label for="ISBN">ISBN:</label>
-                        <input type="text" id="ISBN" name="ISBN" required>
+                <div class="form-row">
+                    <div class="form-group">    
+                    <!-- Start Date -->
+                        <div>
+                            <label for="start_date">Start Date:</label>
+                            <input type="date" id="start_date" name="start_date">
+                        </div>
                     </div>
-
-                    <!-- Author -->
-                    <div>
-                        <label for="author">Author:</label>
-                        <input type="text" id="author" name="author" required>
+                    <!-- End Date -->
+                    <div class="form-group">
+                        <div>
+                            <label for="end_date">End Date:</label>
+                            <input type="date" id="end_date" name="end_date">
+                        </div>
                     </div>
-
-                    <!-- Genre -->
-                    <div>
-                        <label for="genre">Genre:</label>
-                        <select id="genre" name="genre" required>
-                        <option value="">-- Select Genre --</option>
-                        <option value="fiction">Fiction</option>
-                        <option value="non-fiction">Non-Fiction</option>
-                        <option value="mystery">Mystery</option>
-                        <option value="fantasy">Fantasy</option>
-                        <option value="science-fiction">Science Fiction</option>
-                        <option value="biography">Biography</option>
-                        <option value="history">History</option>
-                        <option value="children">Children</option>
-                        <option value="romance">Romance</option>
-                        </select>
-                    </div>
-
-                    <!-- Publisher -->
-                    <div>
-                        <label for="publisher">Publisher:</label>
-                        <input type="text" id="publisher" name="publisher" required>
-                    </div>
-
-                    <!-- Cover Image -->
-                    <div>
-                        <label for="cover_image">Cover Image:</label>
-                        <input type="file" id="cover_image" name="cover_image" accept="image/*" required>
-                    </div>
-
-                    <!-- Price -->
-                    <div>
-                        <label for="price">Price:</label>
-                        <input type="number" id="price" name="price" step="0.01" min="0.01" required>
-                    </div>
-
-                    <!-- Discount -->
-                    <div>
-                        <label for="discount">Discount (%):</label>
-                        <input type="number" id="discount" name="discount" step="0.01" min="0" max="100">
-                    </div>
-
-                    <!-- Quantity -->
-                    <div>
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" id="quantity" name="quantity" min="1" required>
-                    </div>
-
-                    <!-- Condition -->
-                    <div>
-                        <label for="book_condition">Condition:</label>
-                        <select id="book_condition" name="book_condition" required>
-                        <option value="new">New</option>
-                        <option value="like-new">Like New</option>
-                        <option value="good">Good</option>
-                        <option value="acceptable">Acceptable</option>
-                        <option value="poor">Poor</option>
-                        </select>
-                    </div>
-
-                    <!-- Language -->
-                    <div>
-                        <label for="language">Language:</label>
-                        <select id="language" name="language" required>
-                        <option value="english">English</option>
-                        <option value="sinhala">Sinhala</option>
-                        <option value="tamil">Tamil</option>
-                        </select>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="full-width">
-                        <label for="description">Description:</label>
-                        <textarea id="description" name="description" rows="4" required></textarea>
-                    </div>
-
-                    <!-- Modal Actions -->
-                    <div class="modal-actions">
-                        <button type="submit">Add</button>
-                        <button type="button" class="close-modal">Cancel</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <!-- Modal Actions -->
+                <div class="modal-actions">
+                    <button type="submit">Post Ad</button>
+                    <button type="button" class="close-modal">Cancel</button>
+                </div>
+            </form>
         </div>
+            
+        
+    </div>
             <h1 class="inventory-title">Advertisments & Offers </h1>
             <br>
             <div class="tab-content" id="Advertisments">
@@ -152,51 +95,64 @@
                     <thead>
                         <tr>
                             <th><input type="checkbox" class="select-all"></th>
-                            <th>Ad ID</th>
+                            <th>Image</th>
                             <th>Title</th>
-                            <th>Bookstore</th>
-                            <th>Posted Date</th>
                             <th>Status</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Payment</th>
+                            <th>Active</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><input type="checkbox" class="select-order"></td>
-                            <td>AD123</td>
-                            <td>Holiday Book Sale</td>
-                            <td>Colombo Books</td>
-                            <td>2024-11-20</td>
-                            <td class="status pending">Pending</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="select-order"></td>
-                            <td>AD124</td>
-                            <td>Back to School Discounts</td>
-                            <td>Kandy Reads</td>
-                            <td>2024-11-18</td>
-                            <td class="status approved">Approved</td>
-                            
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="select-order"></td>
-                            <td>AD125</td>
-                            <td>Year-End Clearance Sale</td>
-                            <td>Jaffna Literature</td>
-                            <td>2024-11-15</td>
-                            <td class="status rejected">Rejected</td>
-                            
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="select-order"></td>
-                            <td>AD126</td>
-                            <td>New Arrivals: Fiction</td>
-                            <td>Galle Pages</td>
-                            <td>2024-11-22</td>
-                            <td class="status approved">Approved</td>
-                            
-                        </tr>
+                        <?php if (!empty($advertisments)): ?>
+                            <?php foreach ($advertisments as $ad): ?>
+                                <tr>
+                                    <td><input type="checkbox" class="select-order"></td>
+
+                                    <!-- Image Preview -->
+                                    <td>
+                                        <?php if (!empty($ad->image_path)): ?>
+                                            <img src="<?= ROOT ?>\assets\Images\store_advertisments\<?= $ad->image_path ?>" alt="Ad Image" style="width: 100px; height: auto; object-fit: cover;">
+                                        <?php else: ?>
+                                            No image
+                                        <?php endif; ?>
+                                    </td>
+
+                                    <td><?= htmlspecialchars($ad->title) ?></td>
+
+                                    <!-- Status with styling -->
+                                    <td class="status <?= strtolower($ad->status) ?>">
+                                        <?= ucfirst($ad->status) ?>
+                                    </td>
+
+                                    <td><?= $ad->start_date ?></td>
+                                    <td><?= $ad->end_date ?></td>
+                                    <td>Rs. <?= number_format($ad->payment_amount, 2) ?></td>
+                                    <!-- Active Status -->
+                                    <td>
+                                        <?= $ad->active_status == 1 ? '<span style="color: green;">Active</span>' : '<span style="color: red;">Inactive</span>' ?>
+                                    </td>
+                                    <td>
+                                    <?php if ($ad->payment_amount > 0 && $ad->active_status == 0): ?>
+                                        <form method="POST" action="<?= ROOT ?>/Payment/payAd">
+                                            <input type="hidden" name="ad_id" value="<?= $ad->id ?>">
+                                            <input type="hidden" name="amount" value="<?= $ad->payment_amount ?>">
+                                            <button type="submit" class="pay-now-btn">Pay Now</button>
+                                        </form>
+                                    <?php else: ?>
+                                        <span style="color: gray;">-</span>
+                                    <?php endif; ?>
+                                </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr><td colspan="8">No advertisements found.</td></tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
+
             </div> 
     </div>
     <footer class="small-footer">

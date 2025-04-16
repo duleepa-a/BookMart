@@ -5,16 +5,33 @@ class BookstoreController extends Controller{
 
     public function showProfile($seller_id){
         $storeModel = new BookStore();
+        $booksellerModel = new BookSeller();
         $book = new Book();
+        $advetismentsModel = new StoreAdvModel();
+        $userModel = new UserModel();
 
-        $storeDetails =$storeModel ->first(['user_id' => $seller_id]);
+        $user = $userModel->first(['ID' => $seller_id]);
+        $is_store = ($user && $user->role === 'bookStore');
 
+        if($is_store){
+            $storeDetails =$storeModel ->first(['user_id' => $seller_id]); 
+            $advetisments=$advetismentsModel->where(['store_id' => $seller_id, 'active_status' => 1]);
+        }
+        else{
+            $storeDetails = $booksellerModel->first(['user_id' => $seller_id]);
+            $storeDetails->email_address = $userModel->first(['ID' => $seller_id])->email;
+            $storeDetails->store_name = $storeDetails->full_name;
+            $advetisments =[];
+        }
         $booksByStore = $book->getBooksByBookstore($seller_id);
-        
+
+
         $data = 
         [
             'storeDetails' => $storeDetails,
-            'booksByStore' => $booksByStore
+            'booksByStore' => $booksByStore,
+            'advetisments' => $advetisments,
+            'is_store' => $is_store
         ];
 
         $this->view('bookstoreProfilePage',$data);
@@ -82,7 +99,12 @@ class BookstoreController extends Controller{
     }
 
     public function advertisments(){
-        $this->view('bookstoreAds');
+
+        $advModel = new StoreAdvModel();
+
+        $advetisments = $advModel->where(['store_id' => $_SESSION['user_id']]);
+
+        $this->view('bookstoreAds',['advertisments' => $advetisments]);
     }
 
     public function orders(){
@@ -116,6 +138,66 @@ class BookstoreController extends Controller{
         
         $this->view('bookstoreProfile',$storedata);
     }
+
+
+    public function requestAdvertisment()
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $advModel = new StoreAdvModel();
+
+        $title = htmlspecialchars(trim($_POST['title']));
+        $start_date = $_POST['start_date'] ?? null;
+        $end_date = $_POST['end_date'] ?? null;
+        $image = $_FILES['image'];
+
+        if (empty($title) || empty($image['name'])) {
+            echo "Title and image are required.";
+            return;
+        }
+
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        $extension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
+
+        if (!in_array($extension, $allowedExtensions)) {
+            echo "Invalid image file type.";
+            return;
+        }
+
+        $uniqueName = uniqid('adv_', true) . '.' . $extension;
+        $uploadDir = 'C:\xampp\htdocs\BookMart\public\assets\Images\store_advertisments';
+        $uploadPath = $uploadDir . '\\' . $uniqueName;
+
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        if (!move_uploaded_file($image['tmp_name'], $uploadPath)) {
+            echo "Image upload failed.";
+            $this->orders();
+            return;
+        }
+
+        $imagePath = $uniqueName;
+
+        $data = [
+            'title' => $title,
+            'image_path' => $imagePath,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'store_id' => $_SESSION['user_id'] ?? null, 
+        ];
+
+        if ($advModel->insert($data)) {
+            $this->advertisments();
+        } else {
+            echo "Failed to submit advertisement.";
+        }
+    } else {
+        echo "Invalid request method.";
+    }
+}
+
+    
 
 
 }

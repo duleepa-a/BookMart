@@ -26,7 +26,7 @@
               <div class="book-details">
                   <div class="book-title">
                       <h1><?= $book->title; ?></h1>
-                      <p class="bookstore"><?= $seller->username; ?></p>
+                      <a href="<?= ROOT ?>/BookstoreController/showProfile/<?= $seller->ID; ?>" style="text-decoration:none;"><p class="bookstore"><?= $seller->username; ?></p></a>
                   </div>
                   <div class="book-price-details">
                     <div class="book-details-availability-condition">

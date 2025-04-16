@@ -17,43 +17,65 @@
         <div class="container">
             <header>
                 <div class="profile-section">
-                    <img src="" alt="<?= htmlspecialchars($storeDetails->store_name) ?>" class="profile-picture">
+                    <div class="profile-picture-wrapper">
+                        <?php if (!empty($storeDetails->profile_picture_url)): ?>
+                            <img src="<?= htmlspecialchars($storeDetails->profile_picture_url) ?>" alt="<?= htmlspecialchars($storeDetails->store_name) ?>" class="profile-picture">
+                        <?php else: ?>
+                            <div class="profile-placeholder">
+                                <?= strtoupper(substr($storeDetails->store_name, 0, 2)) ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>        
                     <div class="profile-info">
                         <h1 class="store-name"><?= htmlspecialchars($storeDetails->store_name) ?> <span class="badge">Verified</span></h1>
-                        <p class="store-tagline">Owned by <?= htmlspecialchars($storeDetails->owner_name) ?></p>
+                        <?php if($is_store):?><p class="store-tagline">Owned by <?= htmlspecialchars($storeDetails->owner_name) ?></p> <?php endif;?>
                         <div class="stats">
-                            <!-- You can replace these hardcoded stats with actual dynamic values if available -->
                             <div class="stat"><strong>4.8</strong> Rating</div>
-                            <div class="stat"><strong>12.5k</strong> Followers</div>
+                            <?php if($is_store):?>
+                                <div class="stat"><strong>12.5k</strong> Followers</div>
+                            <?php endif;?>
                             <div class="stat"><strong><?= count($booksByStore) ?></strong> Books</div>
                         </div>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary"><i class="fas fa-comment"></i> Chat with Store</button>
-                            <button class="btn btn-outline"><i class="fas fa-bookmark"></i> Follow</button>
-                        </div>
+                        <?php if(isset($_SESSION['user_id'])): ?> 
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" onclick="chatWithStore(<?= $storeDetails->user_id?>)"><i class="fas fa-comment"></i> Chat with Store</button>
+                                <?php if($is_store):?>
+                                    <button class="btn btn-outline"><i class="fas fa-bookmark"></i> Follow</button>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </header>
 
             <div class="main-content">
                 <!-- Special Offers Section (Static or dynamic if needed) -->
-                <div class="special-offers-section">
-                    <div class="section-title">
-                        Special Offers
-                        <a href="#" class="view-all">View All</a>
+                <?php if($is_store):?>
+                    <div class="special-offers-section">
+                        <div class="section-title">
+                            Special Offers
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+
+                        <?php if (!empty($advetisments)) : ?>
+                            <div class="carousel-wrapper">
+                                <button class="offer-carousel-btn prev-btn">&#10094;</button>
+
+                                <div class="offers-container" id="offersCarousel">
+                                    <?php foreach ($advetisments as $ad) : ?>
+                                        <div class="offer-card">
+                                            <img src="<?= ROOT ?>\assets\Images\store_advertisments\<?= $ad->image_path ?>" alt="<?= htmlspecialchars($ad->title) ?>" class="offer-image">
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+
+                                <button class="offer-carousel-btn next-btn">&#10095;</button>
+                            </div>
+                        <?php else : ?>
+                            <p class="no-ads-message">No active advertisements available at the moment.</p>
+                        <?php endif; ?>
                     </div>
-                    <div class="offers-container">
-                        <div class="offer-card">
-                            <img src="/api/placeholder/300/150" alt="Spring Sale" class="offer-image">
-                        </div>
-                        <div class="offer-card">
-                            <img src="/api/placeholder/300/150" alt="Book Club Membership" class="offer-image">
-                        </div>
-                        <div class="offer-card">
-                            <img src="/api/placeholder/300/150" alt="Author Signing Event" class="offer-image">
-                        </div>
-                    </div>
-                </div>
+                <?php endif; ?>
 
                 <!-- Books Section -->
                 <div class="books-section">
@@ -79,35 +101,56 @@
                         </div>
                     </div>
                 </div>
-
+                <?php if($is_store):?>
                 <!-- About Section -->
-                <div class="about-section">
-                    <div class="section-title">About <?= htmlspecialchars($storeDetails->store_name) ?></div>
-                    <p class="about-text">
-                        <?= htmlspecialchars($storeDetails->store_name) ?> is an independent bookstore based in <?= htmlspecialchars($storeDetails->city) ?>, <?= htmlspecialchars($storeDetails->province) ?>. We offer a diverse collection of books to cater to readers of all kinds.
-                    </p>
-                    <p class="about-text">
-                        For more information, feel free to contact us. We're always happy to help book lovers find their next great read!
-                    </p>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt contact-icon"></i>
-                            <span><?= htmlspecialchars($storeDetails->street_address) ?>, <?= htmlspecialchars($storeDetails->city) ?>, <?= htmlspecialchars($storeDetails->district) ?>, <?= htmlspecialchars($storeDetails->province) ?></span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone contact-icon"></i>
-                            <span><?= htmlspecialchars($storeDetails->phone_number) ?></span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-envelope contact-icon"></i>
-                            <span><?= htmlspecialchars($storeDetails->owner_email) ?></span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-clock contact-icon"></i>
-                            <span>Open: Mon-Sat 9AM-8PM, Sun 11AM-5PM</span>
+                    <div class="about-section">
+                        <div class="section-title">About <?= htmlspecialchars($storeDetails->store_name) ?></div>
+                        <p class="about-text">
+                            <?= htmlspecialchars($storeDetails->store_name) ?> is an independent bookstore based in <?= htmlspecialchars($storeDetails->city) ?>, <?= htmlspecialchars($storeDetails->province) ?>. We offer a diverse collection of books to cater to readers of all kinds.
+                        </p>
+                        <p class="about-text">
+                            For more information, feel free to contact us. We're always happy to help book lovers find their next great read!
+                        </p>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt contact-icon"></i>
+                                <span><?= htmlspecialchars($storeDetails->street_address) ?>, <?= htmlspecialchars($storeDetails->city) ?>, <?= htmlspecialchars($storeDetails->district) ?>, <?= htmlspecialchars($storeDetails->province) ?></span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone contact-icon"></i>
+                                <span><?= htmlspecialchars($storeDetails->phone_number) ?></span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope contact-icon"></i>
+                                <span><?= htmlspecialchars($storeDetails->owner_email) ?></span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-clock contact-icon"></i>
+                                <span>Open: Mon-Sat 9AM-8PM, Sun 11AM-5PM</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php else: ?>
+                    <div class="about-section">
+                        <div class="section-title">About <?= htmlspecialchars($storeDetails->store_name) ?></div>
+                        <p class="about-text">
+                            <?= htmlspecialchars($storeDetails->store_name) ?> is an independent bookseller based in <?= htmlspecialchars($storeDetails->city) ?>, <?= htmlspecialchars($storeDetails->province) ?> that offers a diverse collection of books to cater to readers of all kinds.
+                        </p>
+                        <p class="about-text">
+                            For more information, feel free to contact us. We're always happy to help book lovers find their next great read!
+                        </p>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-phone contact-icon"></i>
+                                <span><?= htmlspecialchars($storeDetails->phone_number) ?></span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope contact-icon"></i>
+                                <span><?= htmlspecialchars($storeDetails->email_address) ?></span>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif;?>
             </div>
         </div>
 
@@ -115,54 +158,77 @@
     <script>
         // Carousel functionality
         document.addEventListener('DOMContentLoaded', function() {
+            // Special offers carousel
+            const prevOfferBtn = document.querySelector('.special-offers-section .prev-btn');
+            const nextOfferBtn = document.querySelector('.special-offers-section .next-btn');
+            const offersCarousel = document.getElementById('offersCarousel');
+            
+            if (offersCarousel && prevOfferBtn && nextOfferBtn) {
+                let currentPosition = 0;
+                const totalOffers = offersCarousel.children.length;
+                
+                // Hide previous button initially
+                prevOfferBtn.style.visibility = totalOffers > 1 ? 'visible' : 'hidden';
+                nextOfferBtn.style.visibility = totalOffers > 1 ? 'visible' : 'hidden';
+                
+                prevOfferBtn.addEventListener('click', function() {
+                    if (currentPosition > 0) {
+                        currentPosition--;
+                        offersCarousel.style.transform = `translateX(-${currentPosition * 100}%)`;
+                        
+                        // Show/hide navigation buttons as needed
+                        nextOfferBtn.style.visibility = 'visible';
+                        prevOfferBtn.style.visibility = currentPosition === 0 ? 'hidden' : 'visible';
+                    }
+                });
+                
+                nextOfferBtn.addEventListener('click', function() {
+                    if (currentPosition < totalOffers - 1) {
+                        currentPosition++;
+                        offersCarousel.style.transform = `translateX(-${currentPosition * 100}%)`;
+                        
+                        // Show/hide navigation buttons as needed
+                        prevOfferBtn.style.visibility = 'visible';
+                        nextOfferBtn.style.visibility = currentPosition === totalOffers - 1 ? 'hidden' : 'visible';
+                    }
+                });
+            }
+            
+            // Your existing carousel code can remain below this
             const carousels = document.querySelectorAll('.carousel-container');
-            
-            // First carousel
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const carousel1 = carousels[0];
-            
-            let position1 = 0;
-            const cardWidth = 165; // card width + gap
-            const visibleCards = Math.floor(carousel1.offsetWidth / cardWidth);
-            const maxPosition = Math.max(0, carousel1.children.length - visibleCards);
-            
-            prevBtn.addEventListener('click', function() {
-                if (position1 > 0) {
-                    position1--;
-                    carousel1.style.transform = `translateX(-${position1 * cardWidth}px)`;
-                }
-            });
-            
-            nextBtn.addEventListener('click', function() {
-                if (position1 < maxPosition) {
-                    position1++;
-                    carousel1.style.transform = `translateX(-${position1 * cardWidth}px)`;
-                }
-            });
-            
-            // Second carousel
-            const prevBtn2 = document.getElementById('prev-btn-2');
-            const nextBtn2 = document.getElementById('next-btn-2');
-            const carousel2 = carousels[1];
-            
-            let position2 = 0;
-            const maxPosition2 = Math.max(0, carousel2.children.length - visibleCards);
-            
-            prevBtn2.addEventListener('click', function() {
-                if (position2 > 0) {
-                    position2--;
-                    carousel2.style.transform = `translateX(-${position2 * cardWidth}px)`;
-                }
-            });
-            
-            nextBtn2.addEventListener('click', function() {
-                if (position2 < maxPosition2) {
-                    position2++;
-                    carousel2.style.transform = `translateX(-${position2 * cardWidth}px)`;
-                }
-            });
+            // ... rest of your existing code
         });
+
+        function chatWithStore(storeId) {
+            console.log(storeId);
+            window.location.href = "<?= ROOT ?>/Chat/chatbox/" + storeId ;
+        }
+
+        const carousel = document.getElementById('offersCarousel');
+        const cards = document.querySelectorAll('.offer-card');
+        const totalSlides = cards.length;
+        let currentSlide = 0;
+
+        function updateSlide() {
+            const offset = -currentSlide * 100;
+            carousel.style.transform = `translateX(${offset}%)`;
+        }
+
+        function showNextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlide();
+        }
+
+        function showPrevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlide();
+        }
+
+        document.querySelector('.next-btn').addEventListener('click', showNextSlide);
+        document.querySelector('.prev-btn').addEventListener('click', showPrevSlide);
+
+        // Auto slide every 5 seconds
+        setInterval(showNextSlide, 5000);
     </script>
 </body>
 </html>

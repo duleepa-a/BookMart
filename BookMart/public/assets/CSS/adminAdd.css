@@ -581,12 +581,27 @@ body {
     width: 100%;
     border-collapse: collapse;
     background: #fff;
-    margin-top: 10px;
+    margin-top: 1rem;
 }
 
 .advertisement-table th,.advertisement-table td {
-    padding: 14px;
     text-align: left;
+    padding: 12px;
+    word-wrap: break-word;
+    vertical-align: middle
+}
+
+.advertisement-table img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+.advertisement-table input[type="number"] {
+    width: 100px;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
 }
 
 .advertisement-table thead tr {
@@ -601,6 +616,37 @@ body {
 .advertisement-table tbody tr:hover {
     background-color: #f9f6f4;
     cursor: pointer;
+}
+
+.btn {
+    padding: 6px 14px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top:5px;
+    margin-right: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #45a049;
+}
+
+.btn-danger {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #da190b;
 }
 
 .search {
@@ -643,3 +689,11 @@ body {
     }
   }
   
+  .advertisement-table td {
+    vertical-align: middle;
+}
+
+.advertisement-table td:last-child {
+    font-weight: bold;
+}
+
