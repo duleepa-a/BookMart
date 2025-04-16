@@ -345,4 +345,85 @@ class Payment extends Controller{
         $this->cartView();
     }
 
+    public function adSuccess(){
+    $adId = $_GET['ad_id'] ?? null;
+    $amount = $_GET['amount'] ?? null;
+
+    if ($adId) {
+        $advModel = new StoreAdvModel();
+        $paymentModel = new PaymentInfo();
+        
+        $advModel->update($adId, ['active_status' => 1]);
+
+
+        $paymentData = [
+            'ad_id' => $adId,
+            'payment_amount' => $amount,
+            'type' => 'advertisment'
+        ];
+
+        $payment = $paymentModel->insert($paymentData);
+        
+        $this->view('paymentSuccess',['payment' => $payment]);
+    } else {
+        echo "Invalid ad reference.";
+    }
+}
+
+
+    public function payAd(){
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['ad_id'], $_POST['amount'])) {
+            echo "Invalid payment request.";
+            return;
+        }
+
+        $adId = $_POST['ad_id'];
+        $amount = floatval($_POST['amount']);
+        $secretKey = 'sk_test_51QwNzUFwD7Ut7Vs9FPBW5K38e9dwzqBJs8FvydvTKar0oCVaHKBiogjJxJsUdvs39C5WuDU05Xk8wuWE42pCgaRg002dFEvGvW';
+
+        if ($amount <= 0) {
+            echo "Invalid payment amount.";
+            return;
+        }
+
+        $lineItems = [[
+            'price_data' => [
+                'currency' => 'lkr',
+                'product_data' => ['name' => "Advertisement ID #$adId"],
+                'unit_amount' => $amount * 100, // Stripe uses cents
+            ],
+            'quantity' => 1,
+        ]];
+
+        $fields = [
+            'payment_method_types' => ['card'],
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => ROOT . "/payment/adSuccess?ad_id=$adId&amount=$amount",
+            'cancel_url' => ROOT . "/payment/adCancel?ad_id=$adId",
+        ];
+
+        $ch = curl_init('https://api.stripe.com/v1/checkout/sessions');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $secretKey,
+            'Content-Type: application/x-www-form-urlencoded',
+        ]);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields));
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $session = json_decode($response);
+
+        if (isset($session->url)) {
+            header("Location: " . $session->url);
+            exit;
+        } else {
+            echo "Failed to create Stripe session for advertisement.";
+        }
+    }
+
+
 }

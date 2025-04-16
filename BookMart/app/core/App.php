@@ -8,7 +8,7 @@ class App{
     private $roleAccess = [
         'admin' => [
             'AdminHome' => ['index'],
-            'AdminAdvertisment' => ['index', 'addAdvertisement', 'getAllAds', 'updateAdvertisement', 'deleteAdvertisement'], 
+            'AdminAdvertisment' => ['index', 'addAdvertisement', 'getAllAds', 'updateAdvertisement', 'deleteAdvertisement','handleAdDecision'], 
             'AdminProfile' => ['index'],
             'AdminViewallusers' => ['index'],
             'AdminBookstoreRequests' => ['index'],
@@ -26,9 +26,10 @@ class App{
             
         ],
         'bookStore' => [
-            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','myProfile','markAsRead'],
+            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','myProfile','markAsRead','requestAdvertisment'],
             'Book' => ['addBook','updateBook','deleteBook'],
             'User' => ['like'],
+            'Payment' => ['payAd','adSuccess','adCancel'],
         ],
         'bookSeller' => [
             'BookSellerHome' => ['index','storePage', 'viewSales'],
