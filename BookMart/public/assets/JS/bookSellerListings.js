@@ -1,32 +1,34 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Get DOM elements
     const editButton = document.querySelector('.edit-button');
     const deleteButton = document.querySelector('.delete-button');
+    const auctionButton = document.querySelector('.auction-button');
     const updateModal = document.getElementById('update-book-modal');
     const deleteModal = document.getElementById('delete-book-modal');
+    const auctionModal = document.getElementById('create-auction-modal');
     const closeModalButtons = document.querySelectorAll('.close-modal');
     const selectAllButton = document.querySelector('.select-all-button');
     const selectAllCheckbox = document.querySelector('.select-all-checkbox');
     const bookCheckboxes = document.querySelectorAll('.book-checkbox');
     
-    // Track selected books
     let selectedBooks = new Set();
 
-    // Function to update button states
     function updateButtonStates() {
-        editButton.disabled = selectedBooks.size !== 1;
-        deleteButton.disabled = selectedBooks.size === 0;
+        const selectedArray = Array.from(selectedBooks);
+        const selectedCount = selectedArray.length;
+
+        const allAvailable = selectedArray.every(bookRow => bookRow.dataset.status === 'available');
+
+        editButton.disabled = !(selectedCount === 1 && allAvailable);
+        auctionButton.disabled = !(selectedCount === 1 && allAvailable);
+        deleteButton.disabled = !(selectedCount > 0 && allAvailable);
     }
 
-    // Function to populate update modal with book data
     function populateUpdateModal(bookRow) {
         const modalForm = updateModal.querySelector('.update-book-form');
         const bookData = bookRow.dataset;
         
-        // Set book ID
         modalForm.querySelector('#update-book-id').value = bookData.book_id;
         
-        // Populate text fields
         const textFields = ['title', 'isbn', 'author', 'publisher', 'price', 
                           'discount', 'quantity', 'description'];
         textFields.forEach(field => {
@@ -34,12 +36,39 @@ document.addEventListener('DOMContentLoaded', function() {
             if (input) input.value = bookData[field] || '';
         });
         
-        // Populate select fields
         const selectFields = ['genre', 'condition', 'language'];
         selectFields.forEach(field => {
             const select = modalForm.querySelector(`#update-${field}`);
             if (select) select.value = bookData[field] || '';
         });
+    }
+
+    function populateAuctionModal(bookRow) {
+        const modalForm = auctionModal.querySelector('.create-auction-form');
+        const bookData = bookRow.dataset;
+        
+        modalForm.querySelector('#auction-book-id').value = bookData.book_id;
+        
+        document.getElementById('auction-book-title').textContent = bookData.title || 'Book Title';
+        document.getElementById('auction-book-author').textContent = bookData.author || 'Author Name';
+        
+        const coverImg = document.getElementById('auction-book-cover');
+        if (bookData.cover_image) {
+            coverImg.src = bookData.cover_image;
+        } 
+        else {
+            coverImg.src = '/images/default-book-cover.jpg';
+        }
+
+        document.getElementById('starting-price').value = bookData.price || '0.01';
+        document.getElementById('buy-now-price').min = bookData.price || '0.01';
+        
+        setMinDateTime();
+
+        document.getElementById('starting-price').addEventListener('change', function() {
+            document.getElementById('buy-now-price').min = this.value;
+        });
+
     }
 
     // Handle individual checkbox changes
@@ -124,6 +153,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show delete modal
         deleteModal.classList.add('active');
     });
+
+    // Handle auction button click
+    auctionButton.addEventListener('click', function() {
+        if (selectedBooks.size !== 1) return;
+        
+        const selectedRow = selectedBooks.values().next().value;
+        populateAuctionModal(selectedRow);
+        auctionModal.classList.add('active');
+    });
     
     // Handle modal closes
     closeModalButtons.forEach(button => {
@@ -142,32 +180,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-});
-
-document.getElementById('logoutButtonBookSeller').addEventListener('click', function() {
+    function setMinDateTime() {
+        const now = new Date();
+        // Format: YYYY-MM-DDThh:mm
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        
+        const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+        
+        document.getElementById('start-time').min = formattedDateTime;
+        
+        // Set default value to current time
+        document.getElementById('start-time').value = formattedDateTime;
+        
+        // Set end time min to be same as start time
+        document.getElementById('end-time').min = formattedDateTime;
+        
+        // Set end time default to current time + 7 days
+        const endDate = new Date(now);
+        endDate.setDate(now.getDate() + 7);
+        const endYear = endDate.getFullYear();
+        const endMonth = String(endDate.getMonth() + 1).padStart(2, '0');
+        const endDay = String(endDate.getDate()).padStart(2, '0');
+        const endHours = String(endDate.getHours()).padStart(2, '0');
+        const endMinutes = String(endDate.getMinutes()).padStart(2, '0');
+        
+        const formattedEndDateTime = `${endYear}-${endMonth}-${endDay}T${endHours}:${endMinutes}`;
+        document.getElementById('end-time').value = formattedEndDateTime;
+    }
     
-    fetch('http://localhost/BookMart/public/user/logout', { 
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
+    // Update end time minimum when start time changes
+    document.getElementById('start-time').addEventListener('change', function() {
+        document.getElementById('end-time').min = this.value;
+        
+        // If end time is now before start time, update it
+        if (document.getElementById('end-time').value < this.value) {
+            document.getElementById('end-time').value = this.value;
         }
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json(); 
-            throw new Error('Logout failed.');
-        }
-    })
-    .then(data => {
-        console.log(data); 
-        if (data.status === 'success') {
-            window.location.href = 'http://localhost/BookMart/public/'; 
-        } else {
-            alert('Error: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error during logout:', error);
-        alert('Logout failed. Please try again.');
     });
+
 });

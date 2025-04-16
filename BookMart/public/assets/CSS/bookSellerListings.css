@@ -8,6 +8,11 @@ body{
     background-color: #F1F1F1;
 }
 
+.title-text {
+    text-align: center;
+    color: #BE5715;
+}
+
 .container{
     width:85%;
     margin-top: 6%;
@@ -75,9 +80,11 @@ body{
     text-transform: capitalize;
 }
 
-.status.active { color: green; }
-.status.inactive { color: gray; }
-.status.out-of-stock { color: rgb(250, 74, 74); }
+.status.available { color: green; }
+.status.auction { color: rgb(255, 106, 0); }
+.status.sold { color: rgb(250, 74, 74); }
+.status.delivery { color: rgb(116, 43, 0); }
+.status.completed { color: rgb(4, 0, 255); }
 
 /* Modal styles */
 .modal {
@@ -218,13 +225,13 @@ body{
 }
 
 
-.update-book-form {
+.update-book-form, .create-auction-form {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 0.8rem; /* Spacing between rows and columns */
   }
 
-  .update-book-formlabel {
+  .update-book-formlabel, .create-auction-formlabel {
     display: block;
     font-weight: bold;
     margin-bottom: 0.3rem;
@@ -232,13 +239,58 @@ body{
 
   .update-book-form input,
   .update-book-form select,
-  .update-book-form textarea {
+  .update-book-form textarea,
+  .create-auction-form input,
+  .create-auction-form select,
+  .create-auction-form textarea {
     width: 100%;
     padding: 0.5rem;
     box-sizing: border-box;
   }
 
-  .update-book-form .full-width {
+  .update-book-form .full-width, .create-auction-form .full-width {
     grid-column: span 3; /* Spans across both columns */
   }
 
+  .book-details {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #eaeaea;
+}
+
+.book-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.book-cover {
+    width: 120px;
+    height: 180px;
+    background-color: #ddd;
+    border-radius: 0;
+    flex-shrink: 0;
+}
+
+.book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.book-metadata {
+    flex-grow: 1;
+}
+
+.book-metadata h3 {
+    margin: 0 0 10px;
+    color: #02224E;
+}
+
+.book-metadata p {
+    margin: 5px 0;
+    color: #555;
+}

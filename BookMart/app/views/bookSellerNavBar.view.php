@@ -29,5 +29,6 @@
 </div>                  <!-- navBar division end -->
 
 <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/bookSellerNavBar.css">
+<script src="<?= ROOT ?>/assets/JS/bookSellerLogout.js"></script>
 
 

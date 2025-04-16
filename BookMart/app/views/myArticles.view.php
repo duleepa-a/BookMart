@@ -13,7 +13,7 @@
 <body>
     
     <!-- navBar division begin -->
-    <?php include 'bookSellerNavBar.view.php'; ?>
+    <?php include 'secondaryNavBar.view.php'; ?>
     <!-- navBar division end -->
 
     <!-- navBar division begin -->
@@ -31,7 +31,6 @@
         
         <div class="articles-container">
             <?php if (!empty($data['articles'])): ?>
-                <?php $counter = 0; ?>
                 <?php foreach ($data['articles'] as $article): ?>
                     <div class="article-card">
                         <div class="article-header">
@@ -46,23 +45,24 @@
                         </div>
                         <div class="article-footer">
                             <a href="<?= ROOT ?>/articles/update/<?= htmlspecialchars($article->ID) ?>" class="read-more">
-                                Update
+                                Update 
                             </a>
+                            <p></p>
                             <a href="<?= ROOT ?>/articles/detail/<?= htmlspecialchars($article->ID) ?>" class="read-more">
                                 Read More <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
-                    <?php $counter++; ?>
                 <?php endforeach; ?>
-                <?php if ($counter == 5): ?>
+                <?php if ($data['hasMore']): ?>
                     <div class="controls">
-                        <button class="view-more-button">View More</button>
+                        <a href="?limit=<?= $data['limit'] + 5 ?>" class="view-more-button">View More</a>
                     </div>
                 <?php endif; ?>
+
                 
             <?php else: ?>
-                <p>No articles found. Create your first article!</p>
+                <p>No articles found.</p>
             <?php endif; ?>
         </div>
 

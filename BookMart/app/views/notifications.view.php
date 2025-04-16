@@ -13,18 +13,17 @@
 <body>
     
     <!-- navBar division begin -->
-    <?php include 'bookSellerNavBar.view.php'; ?>
+    <?php include 'secondaryNavBar.view.php'; ?>
     <!-- navBar division end -->
 
     <!-- Sidebar division begin -->
     <?php include 'bookSellerSidebar.view.php'; ?>
     <!-- Sidebar division end -->
     
-    <br><br>
     <center>
     <div class="background-box">
         <h1 class="title-text">Notifications</h1>
-        <br><br>
+        <br>
         
         <div class="notifications-container">
             <div class="notification-card">
