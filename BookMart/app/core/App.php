@@ -39,8 +39,8 @@ class App{
             'BookSellerProfile' => ['index'],
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],
             'BookSellerSidebar' => ['index'],
-            'Auctions' => ['index', 'details', 'createAuction', 'updateBid'],
-            'User' => ['like','changePassword'],
+            'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],
+             'User' => ['like','changePassword'],
             'Payment' => ['index','checkOut','process','success','cancel','cartView']
         ],
         'buyer' => [

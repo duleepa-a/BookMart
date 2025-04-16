@@ -297,23 +297,55 @@ body {
 }
 
 .buy-now-btn {
-    background-color: #BE5715;
+    background-color: #a44b11;
     color: white;
     border: none;
 }
 
 .buy-now-btn:hover {
-    background-color: #a44b11;
+    background-color: #BE5715;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.buy-now-btn:disabled {
+.buy-now-btn:disabled, .complete-auction-btn:disabled, .delete-auction-btn:disabled {
     background-color: #ccc; 
     color: #666; 
     box-shadow: none;
     transform: none;
     opacity: 0.7;
+}
+
+.buy-now-btn:disabled:hover, .complete-auction-btn:disabled:hover, .delete-auction-btn:disabled:hover {
+    background-color: #ccc; 
+    color: #666; 
+    box-shadow: none;
+    transform: none;
+    opacity: 0.7;
+}
+
+.complete-auction-btn {
+    background-color: #046f00;
+    color: white;
+    border: none;
+}
+
+.complete-auction-btn:hover {
+    background-color: #00bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-auction-btn {
+    background-color: #a00000;
+    color: white;
+    border: none;
+}
+
+.delete-auction-btn:hover {
+    background-color: #d70000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .seller-info {
