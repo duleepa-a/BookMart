@@ -1,24 +1,75 @@
 <?php
 
 class Articles extends Controller {
-    
-    // Main index method - shows list of articles
+
     public function index() {
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = max(1, $page); 
+        $perPage = 5;
     
-        // Fetch one extra to check if more articles exist
-        $articles = $this->getArticles(null, $limit + 1);
+        $fetchLimit = $page * $perPage + 1;
+        $articles = $this->getArticles(null, $fetchLimit);
     
-        // Slice it to only show the actual limit
-        $displayArticles = array_slice($articles, 0, $limit);
+        if (!is_array($articles) || empty($articles)) {
+            $data = [
+                'articles' => [],
+                'page' => $page,
+                'hasNext' => false,
+                'hasPrevious' => false,
+                'showPageControl' => false,
+            ];
+        } else {
+            $start = ($page - 1) * $perPage;
+            $pagedArticles = array_slice($articles, $start, $perPage);
+            $hasNext = count($articles) > $page * $perPage;
     
-        $data = [
-            'articles' => $displayArticles,
-            'limit' => $limit,
-            'hasMore' => count($articles) > $limit,
-        ];
+            $data = [
+                'articles' => $pagedArticles,
+                'page' => $page,
+                'hasNext' => $hasNext,
+                'hasPrevious' => $page > 1,
+                'showPageControl' => count($articles) > $perPage,
+            ];
+        }
     
         $this->view('articles', $data);
+    }
+    
+
+    // MyArticles functionality - shows only user's articles
+    public function myArticles() {
+        $userId = $_SESSION['user_id'];
+
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = max(1, $page); 
+        $perPage = 5;
+    
+        $fetchLimit = $page * $perPage + 1;
+        $articles = $this->getUserArticles($userId, $fetchLimit);
+    
+        if (!is_array($articles) || empty($articles)) {
+            $data = [
+                'articles' => [],
+                'page' => $page,
+                'hasNext' => false,
+                'hasPrevious' => false,
+                'showPageControl' => false,
+            ];
+        } else {
+            $start = ($page - 1) * $perPage;
+            $pagedArticles = array_slice($articles, $start, $perPage);
+            $hasNext = count($articles) > $page * $perPage;
+    
+            $data = [
+                'articles' => $pagedArticles,
+                'page' => $page,
+                'hasNext' => $hasNext,
+                'hasPrevious' => $page > 1,
+                'showPageControl' => count($articles) > $perPage,
+            ];
+        }
+    
+        $this->view('myArticles', $data);
     }
     
     // Get articles with optional limit
@@ -135,24 +186,7 @@ class Articles extends Controller {
         redirect('articles/myArticles');
     }
     
-    // MyArticles functionality - shows only user's articles
-    public function myArticles() {
-        $userId = $_SESSION['user_id'];
-
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
-
-        $articles = $this->getUserArticles($userId, $limit + 1);
-
-        $displayArticles = array_slice($articles, 0, $limit);
-
-        $data = [
-            'articles' => $displayArticles,
-            'limit' => $limit,
-            'hasMore' => count($articles) > $limit,
-        ];
-        
-        $this->view('myArticles', $data);
-    }
+    
     
     // Get articles for a specific user
     public function getUserArticles($userId, $limit = 5) {

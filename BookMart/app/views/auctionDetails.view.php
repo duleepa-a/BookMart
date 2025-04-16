@@ -174,7 +174,7 @@
                                     <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
                                     <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->current_price) ?>">
                                     <input type="hidden" name="bid-amount" id="bid-amount" value="<?= htmlspecialchars($auction->current_price+100) ?>">
-                                    <button type="submit" class="bid-button place-bid">
+                                    <button type="submit" class="bid-button place-bid" <?= ($auction->current_bidder_id == $_SESSION['user_id']) ? 'disabled' : '' ?>>
                                         <i class="fas fa-gavel"></i> Place Bid
                                     </button>
                                 </form>
