@@ -29,7 +29,31 @@ class AuctionModel {
                   ORDER BY auction.end_time ASC
                   LIMIT $limit";
         return $this->query($query);
-    }    
+    }   
+    
+    public function getUserAuctions($id = null, $limit = 1) {
+        $query = "SELECT auction.*, book.title, book.author, book.cover_image AS image, book.description, book.book_condition, user.username AS seller_name 
+                  FROM auction
+                  JOIN book ON auction.book_id = book.id
+                  JOIN user ON auction.seller_id = user.ID
+                  WHERE auction.seller_id = :id
+                  ORDER BY auction.end_time ASC
+                  LIMIT $limit";
+        $params = ['id' => $id];
+        return $this->query($query, $params);
+    } 
+
+    public function getParticipatingAuctions($id = null, $limit = 1) {
+        $query = "SELECT auction.*, book.title, book.author, book.cover_image AS image, book.description, book.book_condition, user.username AS seller_name 
+                  FROM auction
+                  JOIN book ON auction.book_id = book.id
+                  JOIN user ON auction.seller_id = user.ID
+                  WHERE auction.current_bidder_id = :id OR auction.winner_user_id = :id
+                  ORDER BY auction.end_time ASC
+                  LIMIT $limit";
+        $params = ['id' => $id];
+        return $this->query($query, $params);
+    } 
 
     public function getAuctionWithBook($id) {
         $query = "SELECT a.*, b.title, b.author, b.cover_image AS image, b.description, b.book_condition, u.username AS seller_name

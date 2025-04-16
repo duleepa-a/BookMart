@@ -186,6 +186,62 @@ body {
     background-color: #02224E;
 }
 
+.controls {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.view-more-button {
+    background-color: #BE5715;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+}
+
+.view-more-button:hover {
+    background-color: #02224E;
+}
+
+.page-number {
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+.auction-tabs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.auction-tab {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+}
+
+.auction-tab:hover {
+    background-color: #e2e2e2;
+}
+
+.auction-tab.selected {
+    background-color: #007BFF;
+    color: white;
+    border-color: #007BFF;
+}
+
 @media (max-width: 768px) {
     .auction-card {
         flex-direction: column;

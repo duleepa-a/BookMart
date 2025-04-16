@@ -308,7 +308,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.buy-now-btn:disabled, .complete-auction-btn:disabled, .delete-auction-btn:disabled {
+.buy-now-btn:disabled, .complete-auction-btn:disabled, .delete-auction-btn:disabled, .place-bid:disabled {
     background-color: #ccc; 
     color: #666; 
     box-shadow: none;

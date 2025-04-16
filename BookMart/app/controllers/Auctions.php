@@ -4,28 +4,60 @@ class Auctions extends Controller {
 
     public function index() {
         $auctionModel = new AuctionModel();
-        $bookModel = new BookModel();
-        $userModel = new UserModel();
 
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
-
-        $auctions = $auctionModel->getActiveAuctions($limit+1);
-
-        if (empty($auctions)) {
-            $this->view('auctions', ['auctions' => [], 'limit' => $limit, 'hasMore' => false]);
+        $view = isset($_GET['view']) ? $_GET['view'] : 'latest';
+        $validViews = ['latest', 'myAuctions', 'participating'];
+        if (! in_array($view, $validViews)) {
+            $view = 'latest';
         }
-        else {
-            $displayAuctions = array_slice($auctions, 0, $limit);
 
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = max(1, $page); 
+        $perPage = 5;
+        $fetchLimit = $page * $perPage + 1;
+
+        switch ($view) {
+            case 'myAuctions':
+                $auctions = $auctionModel->getUserAuctions($_SESSION['user_id'], $fetchLimit);
+                break;
+    
+            case 'participating':
+                $auctions = $auctionModel->getParticipatingAuctions($_SESSION['user_id'], $fetchLimit);
+                break;
+    
+            case 'latest':
+            default:
+                $auctions = $auctionModel->getActiveAuctions($fetchLimit);
+                break;
+        }
+    
+        if (!is_array($auctions) || empty($auctions)) {
             $data = [
-                'auctions' => $displayAuctions,
-                'limit' => $limit,
-                'hasMore' => count($auctions) > $limit,
+                'auctions' => [],
+                'page' => $page,
+                'hasNext' => false,
+                'hasPrevious' => false,
+                'showPageControl' => false,
                 'userid' => $_SESSION['user_id'] ?? null,
+                'selectedTab' => $view,
             ];
-
-            $this->view('auctions', $data);
+        } else {
+            $start = ($page - 1) * $perPage;
+            $pagedAuctions = array_slice($auctions, $start, $perPage);
+            $hasNext = count($auctions) > $page * $perPage;
+    
+            $data = [
+                'auctions' => $pagedAuctions,
+                'page' => $page,
+                'hasNext' => $hasNext,
+                'hasPrevious' => $page > 1,
+                'showPageControl' => count($auctions) > $perPage,
+                'userid' => $_SESSION['user_id'] ?? null,
+                'selectedTab' => $view,
+            ];
         }
+    
+        $this->view('auctions', $data);
     }
 
     public function details($id) {
