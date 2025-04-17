@@ -17,6 +17,15 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("minutes").textContent = "00";
             document.getElementById("seconds").textContent = "00";
             clearInterval(timerInterval);
+
+            const popup = document.getElementById("auctionEndedPopup");
+            popup.classList.remove('popup-hidden');
+            popup.classList.add('popup-visible');
+
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+
             return;
         }
 
@@ -30,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
         document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
     }
-    console.log("isClosed: ", isClosed);
     if (isClosed === '0') {
         updateTimer();
         var timerInterval = setInterval(updateTimer, 1000);

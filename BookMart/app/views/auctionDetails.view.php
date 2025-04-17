@@ -253,6 +253,10 @@
         </div>
     </div>
 
+    <div id="auctionEndedPopup" class="popup-hidden">
+        Auction has ended. Reloading...
+    </div>
+
     <br><br>
 
     <!-- Footer division begin -->
