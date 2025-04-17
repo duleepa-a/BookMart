@@ -66,6 +66,22 @@ class Auctions extends Controller {
         $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
     
         $mainAuction = $auctionModel->getAuctionWithBook($id);
+
+        if ($mainAuction && !$mainAuction->is_closed) {
+            $timeQuery = "SELECT NOW() as server_time";
+            $result = $auctionModel->query($timeQuery);
+            $db_time = $result[0]->server_time;
+    
+            if ($db_time >= $mainAuction->end_time) {
+                $auctionData = [
+                    'id' => $id,
+                    'winner_user_id' => $mainAuction->current_bidder_id,
+                    'is_closed' => 1,
+                ];
+                $auctionModel->updateAuction($auctionData);
+                $mainAuction = $auctionModel->getAuctionWithBook($id);
+            }
+        }
         $auctions = $auctionModel->getActiveAuctions($limit + 1);
     
         if (!empty($auctions)) {
@@ -188,7 +204,7 @@ class Auctions extends Controller {
     
             $updateListing = "UPDATE listings SET status = 'available' WHERE book_id = :book_id";
             $params = ['book_id' => $bookId];
-            $auction->query($updateListing, ['book_id' => $bookId]);
+            $auction->query($updateListing, $params);
     
             redirect('auctions');
         } 

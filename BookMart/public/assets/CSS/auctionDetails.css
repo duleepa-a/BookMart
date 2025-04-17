@@ -566,6 +566,31 @@ body {
     background-color: #02224E;
 }
 
+#auctionEndedPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 20px 30px;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 9999;
+    font-size: 18px;
+    text-align: center;
+    display: none;
+}
+
+.popup-visible {
+    display: block !important;
+}
+
+.popup-hidden {
+    display: none !important;
+}
+
 @media (max-width: 1024px) {
     .auction-content {
         flex-direction: column;
