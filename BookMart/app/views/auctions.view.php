@@ -23,6 +23,21 @@
     <div class="background-box">
         <h1 class="title-text">Auctions</h1>
 
+        <div class="auction-tabs">
+            <form method="get" style="display:inline;">
+                <input type="hidden" name="view" value="latest">
+                <button type="submit" class="auction-tab <?= ($data['selectedTab'] == 'latest') ? 'selected' : '' ?>">Latest Auctions</button>
+            </form>
+            <form method="get" style="display:inline;">
+                <input type="hidden" name="view" value="myAuctions">
+                <button type="submit" class="auction-tab <?= ($data['selectedTab'] == 'myAuctions') ? 'selected' : '' ?>">My Auctions</button>
+            </form>
+            <form method="get" style="display:inline;">
+                <input type="hidden" name="view" value="participating">
+                <button type="submit" class="auction-tab <?= ($data['selectedTab'] == 'participating') ? 'selected' : '' ?>">Participating Auctions</button>
+            </form>
+        </div>
+
         <div class="auctions-container">
             <?php if (!empty($data['auctions'])): ?>
                 <?php foreach ($data['auctions'] as $auction): ?>
@@ -65,9 +80,25 @@
                         </div>
                     </div>
                 <?php endforeach; ?>
-                <?php if ($data['hasMore']): ?>
+                <?php if ($data['showPageControl']): ?>
                     <div class="controls">
-                        <a href="?limit=<?= $data['limit'] + 5 ?>" class="view-more-button">View More</a>
+                        <?php if ($data['hasPrevious']): ?>
+                            <form method="get" style="display:inline;">
+                                <input type="hidden" name="page" value="<?= $data['page'] - 1 ?>">
+                                <input type="hidden" name="view" value="<?= $data['selectedTab'] ?>">
+                                <button type="submit" class="view-more-button">Previous</button>
+                            </form>
+                        <?php endif; ?>
+
+                        <span class="page-number">Page <?= $data['page'] ?></span>
+
+                        <?php if ($data['hasNext']): ?>
+                            <form method="get" style="display:inline;">
+                                <input type="hidden" name="page" value="<?= $data['page'] + 1 ?>">
+                                <input type="hidden" name="view" value="<?= $data['selectedTab'] ?>">
+                                <button type="submit" class="view-more-button">Next</button>
+                            </form>
+                        <?php endif; ?>
                     </div>
                 <?php endif; ?>
             <?php else: ?>

@@ -54,13 +54,26 @@
                         </div>
                     </div>
                 <?php endforeach; ?>
-                <?php if ($data['hasMore']): ?>
+                <?php if ($data['showPageControl']): ?>
                     <div class="controls">
-                        <a href="?limit=<?= $data['limit'] + 5 ?>" class="view-more-button">View More</a>
+                        <?php if ($data['hasPrevious']): ?>
+                            <form method="get" style="display:inline;">
+                                <input type="hidden" name="page" value="<?= $data['page'] - 1 ?>">
+                                <button type="submit" class="view-more-button">Previous</button>
+                            </form>
+                        <?php endif; ?>
+
+                        <span class="page-number">Page <?= $data['page'] ?></span>
+
+                        <?php if ($data['hasNext']): ?>
+                            <form method="get" style="display:inline;">
+                                <input type="hidden" name="page" value="<?= $data['page'] + 1 ?>">
+                                <button type="submit" class="view-more-button">Next</button>
+                            </form>
+                        <?php endif; ?>
                     </div>
                 <?php endif; ?>
-
-                
+      
             <?php else: ?>
                 <p>No articles found.</p>
             <?php endif; ?>

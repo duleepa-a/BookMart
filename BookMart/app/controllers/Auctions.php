@@ -4,28 +4,60 @@ class Auctions extends Controller {
 
     public function index() {
         $auctionModel = new AuctionModel();
-        $bookModel = new BookModel();
-        $userModel = new UserModel();
 
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
-
-        $auctions = $auctionModel->getActiveAuctions($limit+1);
-
-        if (empty($auctions)) {
-            $this->view('auctions', ['auctions' => [], 'limit' => $limit, 'hasMore' => false]);
+        $view = isset($_GET['view']) ? $_GET['view'] : 'latest';
+        $validViews = ['latest', 'myAuctions', 'participating'];
+        if (! in_array($view, $validViews)) {
+            $view = 'latest';
         }
-        else {
-            $displayAuctions = array_slice($auctions, 0, $limit);
 
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = max(1, $page); 
+        $perPage = 5;
+        $fetchLimit = $page * $perPage + 1;
+
+        switch ($view) {
+            case 'myAuctions':
+                $auctions = $auctionModel->getUserAuctions($_SESSION['user_id'], $fetchLimit);
+                break;
+    
+            case 'participating':
+                $auctions = $auctionModel->getParticipatingAuctions($_SESSION['user_id'], $fetchLimit);
+                break;
+    
+            case 'latest':
+            default:
+                $auctions = $auctionModel->getActiveAuctions($fetchLimit);
+                break;
+        }
+    
+        if (!is_array($auctions) || empty($auctions)) {
             $data = [
-                'auctions' => $displayAuctions,
-                'limit' => $limit,
-                'hasMore' => count($auctions) > $limit,
+                'auctions' => [],
+                'page' => $page,
+                'hasNext' => false,
+                'hasPrevious' => false,
+                'showPageControl' => false,
                 'userid' => $_SESSION['user_id'] ?? null,
+                'selectedTab' => $view,
             ];
-
-            $this->view('auctions', $data);
+        } else {
+            $start = ($page - 1) * $perPage;
+            $pagedAuctions = array_slice($auctions, $start, $perPage);
+            $hasNext = count($auctions) > $page * $perPage;
+    
+            $data = [
+                'auctions' => $pagedAuctions,
+                'page' => $page,
+                'hasNext' => $hasNext,
+                'hasPrevious' => $page > 1,
+                'showPageControl' => count($auctions) > $perPage,
+                'userid' => $_SESSION['user_id'] ?? null,
+                'selectedTab' => $view,
+            ];
         }
+    
+        $this->view('auctions', $data);
     }
 
     public function details($id) {
@@ -34,6 +66,22 @@ class Auctions extends Controller {
         $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
     
         $mainAuction = $auctionModel->getAuctionWithBook($id);
+
+        if ($mainAuction && !$mainAuction->is_closed) {
+            $timeQuery = "SELECT NOW() as server_time";
+            $result = $auctionModel->query($timeQuery);
+            $db_time = $result[0]->server_time;
+    
+            if ($db_time >= $mainAuction->end_time) {
+                $auctionData = [
+                    'id' => $id,
+                    'winner_user_id' => $mainAuction->current_bidder_id,
+                    'is_closed' => 1,
+                ];
+                $auctionModel->updateAuction($auctionData);
+                $mainAuction = $auctionModel->getAuctionWithBook($id);
+            }
+        }
         $auctions = $auctionModel->getActiveAuctions($limit + 1);
     
         if (!empty($auctions)) {
@@ -156,7 +204,7 @@ class Auctions extends Controller {
     
             $updateListing = "UPDATE listings SET status = 'available' WHERE book_id = :book_id";
             $params = ['book_id' => $bookId];
-            $auction->query($updateListing, ['book_id' => $bookId]);
+            $auction->query($updateListing, $params);
     
             redirect('auctions');
         } 

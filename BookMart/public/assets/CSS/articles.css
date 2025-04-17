@@ -102,11 +102,17 @@ body {
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
+    margin: 0 5px;
     transition: background-color 0.3s ease;
 }
 
 .view-more-button:hover {
     background-color: #02224E;
+}
+
+.page-number {
+    font-weight: bold;
+    margin: 0 10px;
 }
 
 @media (max-width: 768px) {

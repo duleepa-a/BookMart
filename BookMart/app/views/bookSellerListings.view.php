@@ -153,10 +153,8 @@
                         <label for="discount">Discount (%):</label>
                         <input type="number" id="update-discount" name="discount" step="0.01" min="0" max="100">
                     </div>
-                    <div>
-                        <label for="update-quantity">Quantity:</label>
-                        <input type="number" id="update-quantity" name="quantity" min="0" required>
-                    </div>
+
+                        <input type="hidden" id="update-quantity" name="quantity" min="0" required>
                     <div>
                         <label for="book_condition">Condition:</label>
                         <select id="update-condition" name="book_condition" required>
