@@ -262,8 +262,8 @@ button.prev:hover, button.next:hover {
 }
 
 .follow-btn {
-    background-color: #0073b1;
-    border: solid 1px #0073b1 ;
+    background-color: #004080;
+    border: solid 3px #004080 ;
     width: 100%;
     color: #fff;
     padding: 10px 20px;
@@ -274,7 +274,7 @@ button.prev:hover, button.next:hover {
 }
 
 .follow-btn:hover {
-    color: #0073b1;
+    color: #004080;
     background-color: #005f8b00;
 }
 
@@ -630,3 +630,28 @@ button.bookstore-prev:hover, button.bookstore-next:hover {
     }
   }
   
+  .bookstore-placeholder {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #cfcfcf;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #fff;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.no-recommendations-message {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    color: #666;
+    font-size: 1.1rem;
+    font-style: italic;
+    margin: 50px;
+}

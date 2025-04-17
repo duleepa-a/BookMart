@@ -10,66 +10,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="navBar">
-        <span class = "title">
-        <a href="<?= ROOT ?>/book/search" class="title-link"><h2>Book<span class="highlight">Mart</span></h2></a>
-        </span>
-        <div class="search-bar-div">
-            <form action="<?= ROOT ?>/book/search" method="GET" class="search-form ">
-                <input 
-                    type="text" 
-                    name="keyword" 
-                    class="search-bar" 
-                    placeholder="Search your book, bookstore"
-                    required  
-                />
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            </form>
-        </div>
-        <div class="nav-links">
-                <select id="genres" name="genres" class="navbar-links-select" >
-                    <option value="" disabled selected>Genres</option>
-                    <option value="fiction">Fiction</option>
-                    <option value="novels">Novels</option>
-                    <option value="history">History</option>
-                   </select>
-                <?php if(!isset($_SESSION['user_status'])):?>
-                  <a href="<?= ROOT ?>/Login" class="navbar-links">Log In</a>
-                  <a href="<?= ROOT ?>/Register" class="navbar-links">Sign In</a>
-                <?php else: ?>
-                  <a href="./Login.html" class="navbar-links">My Profile</a>
-                  <a href="./Login.html" class="navbar-links">Orders</a>
-                  <a href="./Login.html" class="navbar-links">Chat</a>
-                  <a href="./Login.html" class="navbar-links"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
-                  <a href="./Login.html" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
-                  <button id="logoutButton" class="navbar-links-select">Log Out</button>
-                <?php endif; ?>
-        </div>     
+    <!-- navBar division begin -->
+    <?php include 'homeNavBar.view.php'; ?>
+    <!-- navBar division end -->
+    <div class="container">
+      <div class="contact-container">
+        <h1>CONTACT US</h1>
+        <p>
+          Send us a message and we'll get back to you as soon as possible.<br>
+          Looking forward to hearing from you.
+        </p>
+        <form class="contact-form" id="contactForm" action="<?= ROOT ?>/ContactUs/create" enctype="multipart/form-data" method="POST">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+          <label for="email">E-mail:</label>
+          <input type="email" id="email" name="email" placeholder="Enter your e-mail" required>
+
+          <label for="message">Message:</label>
+          <textarea id="message" name="message" rows="5" placeholder="Enter your message" required></textarea>
+
+          <input type="hidden" id="status" name="status" placeholder="0" required>
+
+          <button type="submit" class="submit-btn">Send</button>
+        </form>
+      </div>
     </div>
-
-  <div class="contact-container">
-    <h1>CONTACT US</h1>
-    <p>
-      Send us a message and we'll get back to you as soon as possible.<br>
-      Looking forward to hearing from you.
-    </p>
-    <form class="contact-form" id="contactForm" action="<?= ROOT ?>/ContactUs/create" enctype="multipart/form-data" method="POST">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" placeholder="Enter your name" required>
-
-      <label for="email">E-mail:</label>
-      <input type="email" id="email" name="email" placeholder="Enter your e-mail" required>
-
-      <label for="message">Message:</label>
-      <textarea id="message" name="message" rows="5" placeholder="Enter your message" required></textarea>
-
-      <label for="status">Status:</label>
-      <input type="hidden" id="status" name="status" placeholder="0" required>
-
-      <button type="submit" class="submit-btn">Send</button>
-    </form>
-  </div>
-
 
   <!-- <?php if (isset($_SESSION['flash_message'])): ?>
     <div class="flash-message">

@@ -179,25 +179,49 @@
             <h1>Book Stores you may be interested in</h1>
             <br><br>
             <div class="bookstore-carousel">
+            <?php if (!empty($recommendBookstores)): ?>
                 <button class="bookstore-prev"><i class="fa-solid fa-chevron-left fa-lg"></i></button>
                 <div class="bookstore-cards">
-                    <div class="bookstore-card">
-                        <div class="bookstore-details">
-                            <div class="bookstore-image-div">
-                            <img src="<?= ROOT ?>/assets/Images/bookstore-profile-pics/sarasavi-logo.svg" class="bookstore-image" alt="Placeholder Image">
+                        <?php foreach ($recommendBookstores as $store): ?>
+                            <div class="bookstore-card">
+                                <div class="bookstore-details">
+                                    <div class="bookstore-image-div">
+                                        <?php if (!empty($store->profile_picture)): ?>
+                                            <a href="<?= ROOT ?>/BookstoreController/showProfile/<?= $store->user_id; ?>" style="text-decoration:none;">
+                                            <img 
+                                                src="<?= ROOT ?>/assets/Images/bookstore-profile-pics/<?= htmlspecialchars($store->profile_picture) ?>" 
+                                                class="bookstore-image" 
+                                                alt="<?= htmlspecialchars($store->store_name) ?> Logo"
+                                            >
+                                            </a>
+                                        <?php else: ?>
+                                            <div class="bookstore-placeholder">
+                                                <?= strtoupper(substr($store->store_name, 0, 2)) ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="bookstore-followers-details"> 
+                                        <h3 class="bookstore-name"><?= htmlspecialchars($store->store_name) ?></h3>
+                                        <p><?= htmlspecialchars($store->followers) ?> followers</p>
+                                    </div>
+                                </div>
+                                <div class="follow-bttn-div">
+                                    <button 
+                                        class="follow-btn" 
+                                        id="followButton"
+                                        data-store="<?= $store->user_id ?>">
+                                        Follow <i class="fa-light fa-plus"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="bookstore-followers-details"> 
-                                <h3 class="bookstore-name"> Sarasavi</h3>
-                                <p>506 followers</p>
-                            </div>
-                        </div>
-                        <div class="follow-bttn-div">
-                            <button class="follow-btn">Follow <i class="fa-light fa-plus"></i></button>
-                        </div>
-                    </div>
+                        <?php endforeach; ?>
                 </div>
                 <button class="bookstore-next"><i class="fa-solid fa-chevron-right fa-lg"></i></button>
+                <?php else: ?>
+                        <p class="no-recommendations-message">No recommended bookstores to follow at the moment.</p>
+                <?php endif; ?>
             </div>
+
         </center>
     </div>
     <br><br><br>
@@ -247,6 +271,17 @@
         function navigateTo(page) {
             window.location.href = page; 
         }
+
+        document.getElementById('followButton').addEventListener('click', function() {
+            const storeId = this.getAttribute('data-store');
+            console.log(storeId);
+            fetch(`<?= ROOT ?>/user/toggleFollow/${storeId}`)
+                .then(response => response.json())
+                .then(data => {
+                  
+                });
+                window.location.reload();
+        });
     </script>
 </body>
 </html>

@@ -16,6 +16,7 @@ class BookSeller {
         'city',
         'district',
         'province',
-        'payment_method'
+        'payment_method',
+        'rating'
     ];
 }

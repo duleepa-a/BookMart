@@ -9,14 +9,23 @@ class Home extends Controller{
     public function index($a = '', $b = '' , $c = ''){
         $bookController = new Book();
         $articleController = new Articles();
+        $bookStoreModel =new BookStore();
 
         $newArrivals = $bookController->getNewArrivals();
         $bestSellers = $bookController->getBestSellers();
         $articles= $articleController->getNewArticles();
+
+        $recommendBookstores=[];
+
+        if(isset($_SESSION['user_id']) && ($_SESSION['user_role'] == 'buyer' || $_SESSION['user_role'] == 'bookSeller' )){
+
+            $recommendBookstores=$bookStoreModel->recommendBookstores($_SESSION['user_id']);
+        }
         
         $data = ['newArrivals' => $newArrivals,
                  'bestSellers' => $bestSellers,
                  'articles' => $articles,
+                 'recommendBookstores' => $recommendBookstores
                 ];
 
         if(isset($_SESSION['user_role']) &&  isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'active' ) {

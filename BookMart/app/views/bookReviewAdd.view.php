@@ -66,6 +66,7 @@
                 <input type="hidden" name="book_id" value="<?= $book_id ?>">
                 <input type="hidden" name="order_id" value="<?= $order_id ?>">
                 <input type="hidden" name="buyer_id" value="<?= $buyer_id ?>">
+                <input type="hidden" name="seller_id" value="<?= $book->seller_id ?>">
                 <button type="submit" class="review-button">Submit Review</button>
             </div>
         </form>           

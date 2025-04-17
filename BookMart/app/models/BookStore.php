@@ -23,11 +23,27 @@ class BookStore {
         'manager_phone_number',
         'manager_nic',
         'business_reg_no',
-        'status' 
+        'status',
+        'followers',
+        'rating',
+        'profile_picture',
+        'evidence_doc'
     ];
 
     public function findById($id) {
         $query = "SELECT * FROM bookstore WHERE id = :id";
         return $this->getRow($query, ['id' => $id]);
     }
+
+    public function recommendBookstores($userId) {
+        $sql = "SELECT bs.id, bs.store_name, bs.followers,bs.profile_picture,bs.user_id
+                FROM bookstore bs
+                WHERE bs.user_id NOT IN (
+                    SELECT f.bookstore_id FROM follows f WHERE f.buyer_id = :userId
+                ) AND bs.status = 'approved'
+                ORDER BY bs.followers DESC
+                LIMIT 5";
+        return $this->query($sql, [':userId' => $userId]);
+    }
+    
 }

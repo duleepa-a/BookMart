@@ -216,8 +216,8 @@ class User extends Controller {
         }
 
         public function registerBookStore() {
-            echo("registerBoookStore");
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
                 $userData = [
                     'username' => htmlspecialchars(trim($_POST['store-name'])),
                     'email' => filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL),
@@ -242,6 +242,39 @@ class User extends Controller {
                     'manager_nic' => htmlspecialchars(trim($_POST['NIC-manager'])),
                     'business_reg_no' => htmlspecialchars(trim($_POST['business-reg-NO']))
                 ];
+
+                if (isset($_FILES['evidence-docs']) && $_FILES['evidence-docs']['error'] == 0) {
+                    $uploadDir = 'C:\xampp\htdocs\BookMart\public\assets\uploads\evidence_docs';
+                    $fileTmp = $_FILES['evidence-docs']['tmp_name'];
+                    $originalName = basename($_FILES['evidence-docs']['name']);
+                    $uniqueName = uniqid() . "_" . $originalName;
+                    $destination = $uploadDir .'\\' .$uniqueName;
+                    
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0777, true);
+                    }
+
+                    $allowedExtensions = ['pdf', 'png', 'jpg', 'jpeg'];
+                    $allowedMimeTypes = ['application/pdf', 'image/png', 'image/jpeg'];
+
+                    $fileType = mime_content_type($fileTmp);
+                    $fileExt = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+
+                    if (!in_array($fileExt, $allowedExtensions) || !in_array($fileType, $allowedMimeTypes)) {
+                        echo "Invalid file type. Only PDF, PNG, JPG, and JPEG are allowed.";
+                        return;
+                    }
+            
+                    if (move_uploaded_file($fileTmp, $destination)) {
+                        $storeData['evidence_doc'] = $uniqueName; 
+                    } else {
+                        echo "Failed to upload file.";
+                        return;
+                    }
+                } else {
+                    echo "Evidence document is required.";
+                    return;
+                }
         
                 if ($this->userModel->validate($userData)) {
                    
@@ -396,6 +429,37 @@ class User extends Controller {
                         $buyer->myProfile();
                     }
                 }
+            }
+        }
+
+        public function toggleFollow($storeId) {
+            if (!isset($_SESSION['user_id'])) {
+                echo json_encode(['status' => 'unauthorized']);
+                return;
+            }
+        
+            $buyerId = $_SESSION['user_id'];
+            $followModel = new FollowModel();
+            $followRecord= $followModel->first(['buyer_id' => $buyerId, 'bookstore_id' => $storeId]);
+
+            if ($followRecord) {
+                $followModel->delete($followRecord->id);
+                $this->updateFollowerCount($storeId, -1);
+                echo json_encode(['status' => 'unfollowed']);
+            } else {
+                $followModel->insert(['buyer_id' => $buyerId, 'bookstore_id' => $storeId]);
+                $this->updateFollowerCount($storeId, 1);
+                echo json_encode(['status' => 'followed']);
+            }
+        }
+        
+        private function updateFollowerCount($storeId, $delta) {
+            $storeModel = new BookStore();
+            $store = $storeModel->first(['user_id' => $storeId]);
+        
+            if ($store) {
+                $newCount = max(0, $store->followers + $delta);
+                $storeModel->update($store->id, ['followers' => $newCount]);
             }
         }
 

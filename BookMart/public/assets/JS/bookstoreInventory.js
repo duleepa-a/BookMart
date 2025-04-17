@@ -104,31 +104,27 @@ document.querySelectorAll(".modal-overlay").forEach((overlay) => {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Get references to the search bar and table rows
     const searchBar = document.querySelector(".inventory-search-bar");
     const tableRows = document.querySelectorAll(".inventory-table tbody .book-row");
 
-    // Listen for input on the search bar
     searchBar.addEventListener("input", function () {
         const searchQuery = searchBar.value.toLowerCase();
 
-        // Loop through each row and check if it matches the search query
         tableRows.forEach(row => {
             const title = row.dataset.title.toLowerCase();
             const author = row.dataset.author.toLowerCase();
             const genre = row.dataset.genre.toLowerCase();
             const publisher = row.dataset.publisher.toLowerCase();
 
-            // Check if any of the fields match the query
             if (
                 title.includes(searchQuery) || 
                 author.includes(searchQuery) || 
                 genre.includes(searchQuery) || 
                 publisher.includes(searchQuery)
             ) {
-                row.style.display = ""; // Show matching row
+                row.style.display = ""; 
             } else {
-                row.style.display = "none"; // Hide non-matching row
+                row.style.display = "none"; 
             }
         });
     });

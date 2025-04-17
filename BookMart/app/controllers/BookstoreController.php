@@ -9,6 +9,8 @@ class BookstoreController extends Controller{
         $book = new Book();
         $advetismentsModel = new StoreAdvModel();
         $userModel = new UserModel();
+        $followModel = new FollowModel();
+        $is_followed = false;
 
         $user = $userModel->first(['ID' => $seller_id]);
         $is_store = ($user && $user->role === 'bookStore');
@@ -16,6 +18,13 @@ class BookstoreController extends Controller{
         if($is_store){
             $storeDetails =$storeModel ->first(['user_id' => $seller_id]); 
             $advetisments=$advetismentsModel->where(['store_id' => $seller_id, 'active_status' => 1]);
+            
+            if (isset($_SESSION['user_id'])) {
+                $is_followed = $followModel->first([
+                    'buyer_id' => $_SESSION['user_id'],
+                    'bookstore_id' => $storeDetails->user_id
+                ]) ? true : false;
+            }
         }
         else{
             $storeDetails = $booksellerModel->first(['user_id' => $seller_id]);
@@ -31,7 +40,8 @@ class BookstoreController extends Controller{
             'storeDetails' => $storeDetails,
             'booksByStore' => $booksByStore,
             'advetisments' => $advetisments,
-            'is_store' => $is_store
+            'is_store' => $is_store,
+            'is_followed' => $is_followed
         ];
 
         $this->view('bookstoreProfilePage',$data);
@@ -117,6 +127,7 @@ class BookstoreController extends Controller{
         $orderModel = new Order();
         $userModel = new UserModel();
         $buyerModel= new BuyerModel(); 
+        $bookModel = new BookModel();
 
         $count= $orderModel->getOrderStatusCountsBySeller($_SESSION['user_id']);
         $orders = $orderModel->where(['seller_id' => $_SESSION['user_id']]);
@@ -126,7 +137,8 @@ class BookstoreController extends Controller{
                 $user = $userModel->first(['id' => $order->buyer_id]);
                 $buyer=$buyerModel->first(['user_id'=>$order->buyer_id]);
                 $order->buyer_name = $user->username ?? 'Unknown';
-                $order->buyer_contact = $buyer->phone_number ?? 'N/A'; 
+                $order->buyer_contact = $buyer->phone_number ?? 'N/A';
+                $order->book = $bookModel->first(['id' => $order->book_id]);  
             }
         }
 
@@ -200,6 +212,18 @@ class BookstoreController extends Controller{
             }
         } else {
             echo "Invalid request method.";
+        }
+    }
+
+    public function deleteAdvertisment(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $adId = $_POST['ad_id'];
+
+            $storeAddModel = new StoreAdvModel();
+
+            $storeAddModel->delete($adId);
+
+            $this->advertisments();
         }
     }
 
@@ -297,6 +321,52 @@ class BookstoreController extends Controller{
                 $_SESSION['form_errors'] = $errors;
                 $this->myProfile(); 
             }
+        }
+    }
+
+    public function uploadProfilePicture(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) {
+            $image = $_FILES['profile_picture'];
+
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            $extension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
+
+            if (!in_array($extension, $allowedExtensions)) {
+                echo "Invalid image file type.";
+                $_SESSION['error'] ='Invalid image file type.';
+                return;
+            }
+
+            $uniqueName = uniqid('adv_', true) . '.' . $extension;
+            $uploadDir = 'C:\xampp\htdocs\BookMart\public\assets\Images\bookstore-profile-pics';
+            $uploadPath = $uploadDir . '\\' . $uniqueName;
+
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            if (!move_uploaded_file($image['tmp_name'], $uploadPath)) {
+                $_SESSION['error'] ='File upload failed';
+                echo json_encode(['status' => 'error', 'message' => 'File upload failed']);
+            }
+
+            $imagePath = $uniqueName;
+            $targetPath = '\assets\Images\bookstore-profile-pics'. '\\' . $imagePath;
+
+            $bookstoreModel = new BookStore();
+            $store=$bookstoreModel->first(['user_id' => $_SESSION['user_id']]);
+
+            $bookstoreModel->update($store->id,['profile_picture' => $imagePath]);
+            
+            $_SESSION['success'] ='profile picture uploaded successfully';
+            echo json_encode([
+                'status' => 'success',
+                'imageUrl' => ROOT  . $targetPath
+            ]);
+           
+        } else {
+            $_SESSION['error'] ='Invalid request';
+            echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
         }
     }
 

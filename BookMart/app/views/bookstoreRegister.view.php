@@ -24,7 +24,7 @@
             <button class="tab-button last-child" onclick="showTab('legal-agreements')">Legal Agreements</button>
         </nav>
 
-        <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/registerBookStore" >
+        <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/registerBookStore"  enctype="multipart/form-data">
             <div class="tab-content" id="store-details">
                 
                 <div class="form-group-row">

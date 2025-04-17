@@ -130,16 +130,22 @@
                                     <td><?= $ad->start_date ?></td>
                                     <td><?= $ad->end_date ?></td>
                                     <td>Rs. <?= number_format($ad->payment_amount, 2) ?></td>
+
                                     <!-- Active Status -->
                                     <td>
-                                        <?= $ad->active_status == 1 ? '<span style="color: green;">Active</span>' : '<span style="color: red;">Inactive</span>' ?>
+                                        <?= $ad->active_status == 1 ? '<span style="color: green; font-weight:bold;">Active</span>' : '<span style="color: grey; font-weight:bold;">Inactive</span>' ?>
                                     </td>
                                     <td>
                                     <?php if ($ad->payment_amount > 0 && $ad->active_status == 0): ?>
                                         <form method="POST" action="<?= ROOT ?>/Payment/payAd">
                                             <input type="hidden" name="ad_id" value="<?= $ad->id ?>">
                                             <input type="hidden" name="amount" value="<?= $ad->payment_amount ?>">
-                                            <button type="submit" class="pay-now-btn">Pay Now</button>
+                                            <button type="submit" class="pay-btn">Pay Now</button>
+                                        </form>
+                                    <?php elseif ($ad->status == 'rejected'): ?>
+                                        <form method="POST" action="<?= ROOT ?>/BookstoreController/deleteAdvertisment">
+                                            <input type="hidden" name="ad_id" value="<?= $ad->id ?>">
+                                            <button type="submit" class="delete-btn">Delete</button>
                                         </form>
                                     <?php else: ?>
                                         <span style="color: gray;">-</span>
@@ -158,5 +164,32 @@
             <p>&copy; 2024 BookMart, all rights reserved.</p>
     </footer> 
     <script src="<?= ROOT ?>/assets/JS/bookstoreAds.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchBar = document.querySelector(".inventory-search-bar");
+            const tableRows = document.querySelectorAll(".inventory-table tbody tr");
+
+            searchBar.addEventListener("input", function () {
+                const searchQuery = searchBar.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const cells = row.querySelectorAll("td");
+                    let matchFound = false;
+
+                    // Check relevant cells: Book Title, Customer Name, Shipping Address, Contact No, Shipped Date, Completed Date, Status
+                    const searchableColumns = [2,3,4,5,7];
+
+                    searchableColumns.forEach(index => {
+                        const cellText = cells[index]?.textContent.toLowerCase();
+                        if (cellText && cellText.includes(searchQuery)) {
+                            matchFound = true;
+                        }
+                    });
+
+                    row.style.display = matchFound ? "" : "none";
+                });
+            });
+        });
+    </script>
 </body>
 </html>
