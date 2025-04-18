@@ -9,7 +9,7 @@ class CourierAcceptedOrderDetails extends Controller{
         
         
 
-        $ordersModel = new Orders();
+        $ordersModel = new Order();
         $orders = $ordersModel->where(['order_id' => $order_id]);
         }
 
@@ -23,7 +23,7 @@ class CourierAcceptedOrderDetails extends Controller{
             $orders = new CourierOrder();
             $result = $orders->update($order_id,['status'=>'Pending'],'order_id');
 
-            $orderOne = new Orders();
+            $orderOne = new Order();
             $res = $orderOne->update($order_id,['order_status'=>'shipping'],'order_id');
 
         }

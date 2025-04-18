@@ -34,18 +34,13 @@ class Home extends Controller{
                  'advertisments' => $advertisments
                 ];
 
-
-                $ordersModel = new Orders();
+        if(isset($_SESSION['user_id']) && ($_SESSION['user_role'] == 'courier')){
+                $ordersModel = new Order();
                 $orders = $ordersModel->where(['order_status' => 'pending']);
-        
-                $courierLocation = $_SESSION['courier_location'] ?? 'Colombo, Sri Lanka'; // fallback value
-                // var_dump( $courierLocation);
-                $apiKey = 'AIzaSyCMW0Zg_K7LthAMmLiUjF_XsEaWcQOgqa0'; // Replace this with your real API key
-        
-                // Distance calculate + sort
+                $courierLocation = $_SESSION['courier_location'] ?? 'Colombo, Sri Lanka'; 
+                $apiKey = 'AIzaSyCMW0Zg_K7LthAMmLiUjF_XsEaWcQOgqa0'; 
                 $orders = $this->calculateAndSortOrdersByDistance($orders, $courierLocation, $apiKey);
-        
-                
+        }        
 
         if(isset($_SESSION['user_role']) &&  isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'active' ) {
             $userRole = $_SESSION['user_role'];

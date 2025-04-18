@@ -28,7 +28,8 @@ class Order {
         'shipped_date',
         'completed_date',
         'canceled_date',
-        'estimate_distance'
+        'estimate_distance',
+        'courier_id'
 
     ];
 

@@ -8,7 +8,7 @@ class CourierAllOrderDetails extends Controller{
         
         
 
-        $ordersModel = new Orders();
+        $ordersModel = new Order();
         $orders = $ordersModel->where(['order_id' => $order_id]);
         }
 

@@ -9,6 +9,12 @@ class Articles extends Controller {
     
         $this->view('articles', $data);
     }
+
+    public function getNewArticles() {
+        $article = new ArticleModel();
+        $article->setLimit(2);
+        return $article->findAll();
+    }
     
     public function myArticles() {
         $user_id = $_SESSION['user_id'];
