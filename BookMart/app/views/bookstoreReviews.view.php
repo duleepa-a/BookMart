@@ -136,7 +136,7 @@
         <h1 class="page-title">You Have <?= $unreadcount === 0 ? 'No' : htmlspecialchars($unreadcount) ?> New Reviews</h1>
         <?php if (!empty($reviews)): ?>
         <div class="inventory-toolbar">
-            <input type="text" placeholder="Search your book in the inventory" class="inventory-search-bar">
+            <input type="text" placeholder="Search review by book, date, content, user.. " class="inventory-search-bar">
             <div class="filter">
                 <label for="status-filter">SHOW:</label>
                 <select id="status-filter" class="status-filter">
@@ -199,6 +199,31 @@
             btn.addEventListener('click', function () {
                 const reviewId = this.getAttribute('data-review');
                 window.location.href = `<?= ROOT ?>/BookstoreController/markAsRead/${reviewId}`;
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchBar = document.querySelector(".inventory-search-bar");
+            const tableRows = document.querySelectorAll(".reviews-table tbody tr");
+
+            searchBar.addEventListener("input", function () {
+                const searchQuery = searchBar.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const cells = row.querySelectorAll("td");
+                    let matchFound = false;
+
+                    const searchableColumns = [0,1,2,3];
+
+                    searchableColumns.forEach(index => {
+                        const cellText = cells[index]?.textContent.toLowerCase();
+                        if (cellText && cellText.includes(searchQuery)) {
+                            matchFound = true;
+                        }
+                    });
+
+                    row.style.display = matchFound ? "" : "none";
+                });
             });
         });
     </script>

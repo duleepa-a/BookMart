@@ -31,7 +31,7 @@ class Admin extends Controller {
             $this->view('bookstoreDetails', ['bookstore' => $bookstore]);
         } else {
         
-            $this->view('errors/notFound');
+            $this->bookstoreView();
         }
     }
 
@@ -63,4 +63,21 @@ class Admin extends Controller {
         redirect('admin/bookstoreView');
     }
 
+    public function downloadEvidenceDoc($filename = '') {
+        $filepath = 'C:\xampp\htdocs\BookMart\public\assets\uploads\evidence_docs' .'\\' . basename($filename); 
+
+        if (file_exists($filepath)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($filepath) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($filepath));
+            readfile($filepath);
+            exit;
+        } else {
+            echo "File not found.";
+        }
+    }
 }

@@ -18,8 +18,8 @@
             <header>
                 <div class="profile-section">
                     <div class="profile-picture-wrapper">
-                        <?php if (!empty($storeDetails->profile_picture_url)): ?>
-                            <img src="<?= htmlspecialchars($storeDetails->profile_picture_url) ?>" alt="<?= htmlspecialchars($storeDetails->store_name) ?>" class="profile-picture">
+                        <?php if (!empty($storeDetails->profile_picture)): ?>
+                            <img src="<?= ROOT ?>/assets/Images/bookstore-profile-pics/<?= htmlspecialchars($storeDetails->profile_picture) ?>" alt="<?= htmlspecialchars($storeDetails->store_name) ?>" class="profile-picture">
                         <?php else: ?>
                             <div class="profile-placeholder">
                                 <?= strtoupper(substr($storeDetails->store_name, 0, 2)) ?>
@@ -30,9 +30,9 @@
                         <h1 class="store-name"><?= htmlspecialchars($storeDetails->store_name) ?> <span class="badge">Verified</span></h1>
                         <?php if($is_store):?><p class="store-tagline">Owned by <?= htmlspecialchars($storeDetails->owner_name) ?></p> <?php endif;?>
                         <div class="stats">
-                            <div class="stat"><strong>4.8</strong> Rating</div>
+                            <div class="stat"><strong> <?= ($storeDetails->rating ?? "No ratings yet")?> / 3</strong> Rating</div>
                             <?php if($is_store):?>
-                                <div class="stat"><strong>12.5k</strong> Followers</div>
+                                <div class="stat"><strong><?= $storeDetails->followers?></strong> Followers</div>
                             <?php endif;?>
                             <div class="stat"><strong><?= count($booksByStore) ?></strong> Books</div>
                         </div>
@@ -40,7 +40,14 @@
                             <div class="action-buttons">
                                 <button class="btn btn-primary" onclick="chatWithStore(<?= $storeDetails->user_id?>)"><i class="fas fa-comment"></i> Chat with Store</button>
                                 <?php if($is_store):?>
-                                    <button class="btn btn-outline"><i class="fas fa-bookmark"></i> Follow</button>
+                                    <button 
+                                        class="btn btn-outline" 
+                                        id="followButton" 
+                                        data-store="<?= $storeDetails->user_id ?>">
+                                        <?php if($is_followed):?> <i class="fa-solid fa-check"></i> 
+                                        <?php else:?> <i class="fas fa-bookmark"></i> <?php endif;?>
+                                        <?= $is_followed ? 'Following' : 'Follow' ?>
+                                    </button>
                                 <?php endif; ?>
                             </div>
                         <?php endif; ?>
@@ -158,45 +165,31 @@
     <script>
         // Carousel functionality
         document.addEventListener('DOMContentLoaded', function() {
-            // Special offers carousel
-            const prevOfferBtn = document.querySelector('.special-offers-section .prev-btn');
-            const nextOfferBtn = document.querySelector('.special-offers-section .next-btn');
-            const offersCarousel = document.getElementById('offersCarousel');
-            
-            if (offersCarousel && prevOfferBtn && nextOfferBtn) {
-                let currentPosition = 0;
-                const totalOffers = offersCarousel.children.length;
-                
-                // Hide previous button initially
-                prevOfferBtn.style.visibility = totalOffers > 1 ? 'visible' : 'hidden';
-                nextOfferBtn.style.visibility = totalOffers > 1 ? 'visible' : 'hidden';
-                
-                prevOfferBtn.addEventListener('click', function() {
-                    if (currentPosition > 0) {
-                        currentPosition--;
-                        offersCarousel.style.transform = `translateX(-${currentPosition * 100}%)`;
-                        
-                        // Show/hide navigation buttons as needed
-                        nextOfferBtn.style.visibility = 'visible';
-                        prevOfferBtn.style.visibility = currentPosition === 0 ? 'hidden' : 'visible';
-                    }
-                });
-                
-                nextOfferBtn.addEventListener('click', function() {
-                    if (currentPosition < totalOffers - 1) {
-                        currentPosition++;
-                        offersCarousel.style.transform = `translateX(-${currentPosition * 100}%)`;
-                        
-                        // Show/hide navigation buttons as needed
-                        prevOfferBtn.style.visibility = 'visible';
-                        nextOfferBtn.style.visibility = currentPosition === totalOffers - 1 ? 'hidden' : 'visible';
-                    }
-                });
-            }
-            
-            // Your existing carousel code can remain below this
             const carousels = document.querySelectorAll('.carousel-container');
-            // ... rest of your existing code
+
+            // First carousel
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const carousel1 = carousels[0];
+            console.log(carousel1);
+            let position1 = 0;
+            const cardWidth = 165; // card width + gap
+            const visibleCards = Math.floor(carousel1.offsetWidth / cardWidth);
+            const maxPosition = Math.max(0, carousel1.children.length - visibleCards);
+
+            prevBtn.addEventListener('click', function() {
+                if (position1 > 0) {
+                    position1--;
+                    carousel1.style.transform = `translateX(-${position1 * cardWidth}px)`;
+                }
+            });
+
+            nextBtn.addEventListener('click', function() {
+                if (position1 < maxPosition) {
+                    position1++;
+                    carousel1.style.transform = `translateX(-${position1 * cardWidth}px)`;
+                }
+            });
         });
 
         function chatWithStore(storeId) {
@@ -227,7 +220,25 @@
         document.querySelector('.next-btn').addEventListener('click', showNextSlide);
         document.querySelector('.prev-btn').addEventListener('click', showPrevSlide);
 
-        // Auto slide every 5 seconds
+        const isLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
+        const isStore = <?= $is_store ? 'true' : 'false' ?>;
+        
+        if(isLoggedIn && isStore){
+            document.getElementById('followButton').addEventListener('click', function() {
+                const storeId = this.getAttribute('data-store');
+                console.log(storeId);
+                fetch(`<?= ROOT ?>/user/toggleFollow/${storeId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'followed') {
+                            this.innerHTML = '<i class="fa-solid fa-check"></i> Following';
+                        } else if (data.status === 'unfollowed') {
+                            this.innerHTML = '<i class="fas fa-bookmark"></i> Follow';
+                        }
+                    });
+                    window.location.reload();
+            });
+        }
         setInterval(showNextSlide, 5000);
     </script>
 </body>

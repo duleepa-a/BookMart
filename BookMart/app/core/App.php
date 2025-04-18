@@ -12,7 +12,7 @@ class App{
             'AdminProfile' => ['index'],
             'AdminViewallusers' => ['index'],
             'AdminBookstoreRequests' => ['index'],
-            'Admin' => ['index','bookstoreView','viewBookStore','approve','reject'],
+            'Admin' => ['index','bookstoreView','viewBookStore','approve','reject','downloadEvidenceDoc'],
             'AdminViewbuyer' => ['index'],
             'AdminViewcourier' => ['index'],
             'AdminViewseller' => ['index'],
@@ -27,7 +27,7 @@ class App{
             
         ],
         'bookStore' => [
-            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','myProfile','markAsRead','requestAdvertisment','updateStoreDetails','updateOwnerDetails'],
+            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','myProfile','markAsRead','requestAdvertisment','updateStoreDetails','updateOwnerDetails','uploadProfilePicture','deleteAdvertisment'],
             'Book' => ['addBook','updateBook','deleteBook'],
             'User' => ['like','changePassword'],
             'Payment' => ['payAd','adSuccess','adCancel'],
@@ -40,14 +40,15 @@ class App{
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],
             'BookSellerSidebar' => ['index'],
             'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],
-             'User' => ['like','changePassword'],
+
+            'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
             'Payment' => ['index','checkOut','process','success','cancel','cartView'],
             'Notifications' => ['index','deleteNotification','markAsRead'],
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],
             'Buyer' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile','updateLoginDetails','updatePersonalDetails'],
-            'User' => ['like','changePassword'],
+            'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
             'Payment' => ['index','checkOut','process','success','cancel','cartView','addToCart','cartCheckout','cartSuccess','increase','decrease','deleteSelected','clear','removeBook','deleteSelected']
         ],
         'courier' => [

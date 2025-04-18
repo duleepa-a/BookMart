@@ -31,6 +31,7 @@
     <div class="container">
         <div class="box">
                     <h1>Book Stores</h1>
+                    <br>
                     <nav class="tabs">
                         <button class="tab-button active first-child" onclick="showTab('pending-stores',event)">Pending Requests</button>
                         <button class="tab-button" onclick="showTab('all-stores',event)">All Stores</button>
@@ -42,7 +43,6 @@
                     <table id="storesTable">
                         <thead>
                             <tr>
-                                <th></th>
                                 <th>Store Name</th>
                                 <th>Email</th>
                                 <th>Phone Number</th>
@@ -50,13 +50,12 @@
                                 <th>Owner Name</th>
                                 <th>Owner Email</th>
                                 <th>Date Requested</th>
-                                <th></th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($pendingStores as $store): ?>
                             <tr>
-                                <td><input type="checkbox"></td>
                                 <td><?= htmlspecialchars($store->store_name) ?></td>
                                 <td><?= htmlspecialchars($store->manager_email) ?></td>
                                 <td><?= htmlspecialchars($store->manager_phone_number) ?></td>
@@ -82,7 +81,6 @@
                     <table id="storesTable">
                         <thead>
                             <tr>
-                                <th></th>
                                 <th>Store Name</th>
                                 <th>Email</th>
                                 <th>Phone Number</th>
@@ -90,13 +88,12 @@
                                 <th>Owner Name</th>
                                 <th>Owner Email</th>
                                 <th>Date Requested</th>
-                                <th></th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($allStores as $store): ?>
                             <tr>
-                                <td><input type="checkbox"></td>
                                 <td><?= htmlspecialchars($store->store_name) ?></td>
                                 <td><?= htmlspecialchars($store->manager_email) ?></td>
                                 <td><?= htmlspecialchars($store->manager_phone_number) ?></td>
@@ -122,7 +119,6 @@
                     <table id="storesTable">
                         <thead>
                             <tr>
-                                <th></th>
                                 <th>Store Name</th>
                                 <th>Email</th>
                                 <th>Phone Number</th>
@@ -130,13 +126,12 @@
                                 <th>Owner Name</th>
                                 <th>Owner Email</th>
                                 <th>Date Requested</th>
-                                <th></th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($acceptedStores as $store): ?>
                             <tr>
-                                <td><input type="checkbox"></td>
                                 <td><?= htmlspecialchars($store->store_name) ?></td>
                                 <td><?= htmlspecialchars($store->manager_email) ?></td>
                                 <td><?= htmlspecialchars($store->manager_phone_number) ?></td>
@@ -144,7 +139,7 @@
                                 <td><?= htmlspecialchars($store->owner_name) ?></td>
                                 <td><?= htmlspecialchars($store->owner_email) ?></td>
                                 <td><?= htmlspecialchars($store->createdAt) ?></td>
-                                <td><button class="view-btn">View</button></td>
+                                <td><a href="<?= ROOT ?>/admin/viewBookStore/<?= $store->id ?>" class="view-btn">View</a></td>
                             </tr>
                             <?php endforeach; ?>
                         <?php else: ?>

@@ -115,6 +115,7 @@ body {
 
 .inventory-table {
     width: 100%;
+    font-size: 0.8rem;
     border-collapse: collapse;
     background: #fff;
     margin-top: 10px;
@@ -126,7 +127,7 @@ body {
 }
 
 .inventory-table th, .inventory-table td {
-    padding: 12px;
+    padding: 8px;
     text-align: left;
 }
 
@@ -158,6 +159,9 @@ body {
 .status.inactive { color: gray; }
 .status.out-of-stock { color: rgb(250, 74, 74); }
 
+.not-yet{
+    color: gray;
+}
 .view-button {
     padding: 5px 10px;
     background-color: #003366;
@@ -587,3 +591,31 @@ input{
 .message-text{
     color: #333;
 }
+
+.pay-btn {
+    background-color: #778ee0;
+    color: #fff;
+    border: solid 3px #1c69c7;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .pay-btn:hover {
+    background-color: #1c69c7;
+  }
+  
+  .delete-btn {
+    background-color: #e07777;
+    color: #fff;
+    border: solid 3px #c71c1c;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c71c1c;
+  }

@@ -136,7 +136,29 @@
             </div>
         </div>
     <div class="profile-container">
-    <h1>My Profile</h1>
+        <div class="profile-header">
+            <div class="profile-heading">
+               <h1 class="heading"> My Profile </h1>
+            </div>
+            <div class="profile-right">
+                <form id="profilePicForm" enctype="multipart/form-data">
+                    <label for="profile-upload" class="upload-btn">Upload</label>
+                    <input type="file" id="profile-upload" name="profile_picture" style="display: none;">
+                </form>
+
+                <?php if (!empty($store->profile_picture)): ?>
+                    <img id="profileImagePreview" 
+                        src="<?= ROOT ?>/assets/Images/bookstore-profile-pics/<?= htmlspecialchars($store->profile_picture) ?>" 
+                        alt="Profile Picture" 
+                        class="profile-image">
+                <?php else: ?>
+                    <div class="profile-placeholder">
+                        <?= strtoupper(substr($store->store_name, 0, 2)) ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
         <br>
         <nav class="tabs">
             <button class="tab-button active first-child" onclick="showTab('store-details')">Store Details</button>
@@ -376,6 +398,30 @@
         function closeAlert() {
             document.getElementById("custom-alert").style.display = "none";
         }
+        document.getElementById('profile-upload').addEventListener('change', function () {
+            const form = document.getElementById('profilePicForm');
+            const formData = new FormData(form);
+
+            fetch('<?= ROOT ?>/BookstoreController/uploadProfilePicture', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    console.log(data.imageUrl);
+                    document.getElementById('profileImagePreview').src = data.newImagePath;
+                    window.location.reload();
+                } else {
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Upload error:', error);
+                window.location.reload();
+            });
+        });
+
     </script>
     <?php if (!empty($_SESSION['error'])): ?>
         <script>

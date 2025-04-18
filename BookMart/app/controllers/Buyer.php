@@ -132,13 +132,26 @@ class Buyer extends Controller{
                 'comment' => htmlspecialchars($_POST['review_text']),
                 'rating' => isset($_POST['rating']) ? htmlspecialchars($_POST['rating']) : null,
                 'seller_rating' => isset($_POST['seller_rating']) ? htmlspecialchars($_POST['seller_rating']) : null,
-                'buyer_id' => htmlspecialchars($_POST['buyer_id'])
+                'buyer_id' => htmlspecialchars($_POST['buyer_id']),
+                'seller_id' => htmlspecialchars($_POST['seller_id'])
             ];
 
             $reviewModel = new ReviewModel();
             $orderModel = new Order();
+            $sellerModel = new BookStore();
+            $userModel = new UserModel();
+            
+            if($userModel->first(['ID' => $_POST['seller_id'] ])->role == 'bookSeller'){
+                $sellerModel = new BookSeller();
+            }
+
+            $seller=$sellerModel->first(['user_id' => $_POST['seller_id']]);
 
             $reviewModel->insert($data);
+
+            $rating= $reviewModel->getAverageRating($seller->user_id);
+            
+            $sellerModel->update($seller->id,['rating' => $rating]);
             $orderModel->update($_POST['order_id'],['order_status' => 'reviewed']);
 
             $this->reviews();

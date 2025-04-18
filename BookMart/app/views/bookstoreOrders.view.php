@@ -173,7 +173,7 @@
             </div>
             <?php if (!empty($orders)): ?>
             <div class="inventory-toolbar">
-            <input type="text" placeholder="Search your book in the inventory" class="inventory-search-bar">
+            <input type="text" placeholder="Search orders by title, customer, status..." class="inventory-search-bar">
             <div class="filter">
                 <label for="status-filter">SHOW:</label>
                 <select id="status-filter" class="status-filter">
@@ -188,10 +188,13 @@
                 <thead>
                     <tr>
                         <th><input type="checkbox" class="select-all"></th>
-                        <th>Order ID</th>
+                        <th>Book Title</th>
                         <th>Date Made</th>
                         <th>Customer Name</th>
+                        <th>Shipping Address</th>
                         <th>Customer Contact No</th>
+                        <th>Shipped Date</th>
+                        <th>Completed Date</th>
                         <th>Payment Amount</th>
                         <th>Status</th>
                     </tr>
@@ -200,10 +203,13 @@
                         <?php foreach ($orders as $order): ?>
                             <tr>
                                 <td><input type="checkbox" class="select-order"></td>
-                                <td><?= htmlspecialchars($order->order_id) ?></td>
+                                <td><?= htmlspecialchars($order->book->title) ?></td>
                                 <td><?= date('Y-m-d', strtotime($order->created_on)) ?></td>
                                 <td><?= htmlspecialchars($order->buyer_name) ?></td>
+                                <td><?= htmlspecialchars($order->shipping_address) ?></td>
                                 <td><?= htmlspecialchars($order->buyer_contact) ?></td>
+                                <td class ="<?= $order->shipped_date ? : 'not-yet'  ?>"><?= $order->shipped_date ? date('Y-m-d', strtotime($order->shipped_date)) : 'not shipped yet' ?></td>
+                                <td class ="<?= $order->completed_date ? : 'not-yet'  ?>"><?= $order->completed_date ? date('Y-m-d', strtotime($order->completed_date)) : 'not completed yet' ?></td>
                                 <td>Rs. <?= number_format($order->total_amount, 2) ?></td>
                                 <td class="status <?= strtolower($order->order_status) ?>">
                                     <?= ucfirst($order->order_status) ?>
@@ -220,5 +226,32 @@
             <p>&copy; 2024 BookMart, all rights reserved.</p>
         </footer> 
     <script src="<?= ROOT ?>/assets/JS/bookstoreHome.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchBar = document.querySelector(".inventory-search-bar");
+            const tableRows = document.querySelectorAll(".inventory-table tbody tr");
+
+            searchBar.addEventListener("input", function () {
+                const searchQuery = searchBar.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const cells = row.querySelectorAll("td");
+                    let matchFound = false;
+
+                    // Check relevant cells: Book Title, Customer Name, Shipping Address, Contact No, Shipped Date, Completed Date, Status
+                    const searchableColumns = [1, 3, 4, 5, 6, 7, 9];
+
+                    searchableColumns.forEach(index => {
+                        const cellText = cells[index]?.textContent.toLowerCase();
+                        if (cellText && cellText.includes(searchQuery)) {
+                            matchFound = true;
+                        }
+                    });
+
+                    row.style.display = matchFound ? "" : "none";
+                });
+            });
+        });
+    </script>
 </body>
 </html>
