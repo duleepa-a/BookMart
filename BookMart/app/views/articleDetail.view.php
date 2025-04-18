@@ -25,15 +25,15 @@
     <div class="background-box">
         <article class="article-full">
             <header class="article-header">
-                <h1><?= htmlspecialchars($data['articles'][0]->Title) ?></h1>
+                <h1><?= htmlspecialchars($data['articles']->Title) ?></h1>
                 <div class="article-meta">
-                    <span class="author"><?= htmlspecialchars($data['articles'][0]->Author) ?></span>
-                    <span class="date"><?= htmlspecialchars($data['articles'][0]->created_at) ?></span>
+                    <span class="author"><?= htmlspecialchars($data['articles']->Author) ?></span>
+                    <span class="date"><?= htmlspecialchars($data['articles']->created_at) ?></span>
                 </div>
             </header>
             
             <div class="article-content">
-                <?=  nl2br(htmlspecialchars($data['articles'][0]->Content))?>
+                <?=  nl2br(htmlspecialchars($data['articles']->Content))?>
             </div>
         </article>
     </div>

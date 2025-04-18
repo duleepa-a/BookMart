@@ -41,7 +41,8 @@ class App{
             'BookSellerSidebar' => ['index'],
             'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],
              'User' => ['like','changePassword'],
-            'Payment' => ['index','checkOut','process','success','cancel','cartView']
+            'Payment' => ['index','checkOut','process','success','cancel','cartView'],
+            'Notifications' => ['index','deleteNotification','markAsRead'],
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],

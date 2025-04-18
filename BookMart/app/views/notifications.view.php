@@ -24,62 +24,62 @@
     <div class="background-box">
         <h1 class="title-text">Notifications</h1>
         <br>
-        
+
         <div class="notifications-container">
-            <div class="notification-card">
-                <div class="notification-header">
-                    <h2>New Book Order Received</h2>
-                    <span class="notification-meta">Today at 10:15 AM</span>
-                </div>
-                <div class="notification-content">
-                    <p>You have received a new order for "The Great Gatsby" from a customer.</p>
-                </div>
-            </div>
+            <?php if (!empty($data['notifications'])): ?>
+                <?php foreach ($data['notifications'] as $notification): ?>
+                    <div class="notification-card" data-id="<?= htmlspecialchars($notification->id) ?>">
+                        <div class="notification-header">
+                            <h2><?= htmlspecialchars($notification->title) ?></h2>
+                            <span class="notification-meta"> | 
+                                <?= date('F d, Y', strtotime($notification->created_at)) ?>
+                            </span>
+                        </div>
+                        <div class="notification-content">
+                            <p><?= htmlspecialchars($notification->content) ?></p>
+                        </div>
+                        <div class="notification-footer">
+                            <div class="notification-actions">
 
-            <div class="notification-card">
-                <div class="notification-header">
-                    <h2>Inventory Low Alert</h2>
-                    <span class="notification-meta">Yesterday at 3:45 PM</span>
-                </div>
-                <div class="notification-content">
-                    <p>Your stock of "Harry Potter Series" is running low. Consider restocking soon.</p>
-                </div>
-            </div>
+                                <button class="delete-notification-btn" data-id="<?= htmlspecialchars($notification->id) ?>">
+                                    <i class="fa-solid fa-trash"></i> Delete
+                                </button>
 
-            <div class="notification-card">
-                <div class="notification-header">
-                    <h2>Payment Processed</h2>
-                    <span class="notification-meta">October 20, 2024 at 2:30 PM</span>
-                </div>
-                <div class="notification-content">
-                    <p>Your recent sales have been processed. Rs.1250.00 has been added to your account.</p>
-                </div>
-            </div>
+                                
+                                <button class="mark-read-btn" data-id="<?= htmlspecialchars($notification->id) ?>">
+                                    <i class="fa-solid fa-check"></i> Mark as Read
+                                </button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
 
-            <div class="notification-card">
-                <div class="notification-header">
-                    <h2>Review Submitted</h2>
-                    <span class="notification-meta">October 18, 2024 at 11:20 AM</span>
-                </div>
-                <div class="notification-content">
-                    <p>A customer has left a 5-star review for "Pride and Prejudice".</p>
-                </div>
-            </div>
+                <?php if ($data['showPageControl']): ?>
+                    <div class="controls">
+                        <?php if ($data['hasPrevious']): ?>
+                            <form method="get" style="display:inline;">
+                                <input type="hidden" name="page" value="<?= $data['page'] - 1 ?>">
+                                <button type="submit" class="view-more-button">Previous</button>
+                            </form>
+                        <?php endif; ?>
 
-            <div class="notification-card">
-                <div class="notification-header">
-                    <h2>Delivery Update</h2>
-                    <span class="notification-meta">October 15, 2024 at 9:05 AM</span>
-                </div>
-                <div class="notification-content">
-                    <p>Your bulk order of textbooks is being delivered.</p>
-                </div>
-            </div>
+                        <span class="page-number">Page <?= $data['page'] ?></span>
+
+                        <?php if ($data['hasNext']): ?>
+                            <form method="get" style="display:inline;">
+                                <input type="hidden" name="page" value="<?= $data['page'] + 1 ?>">
+                                <button type="submit" class="view-more-button">Next</button>
+                            </form>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+
+            <?php else: ?>
+                <p>No notifications found.</p>
+            <?php endif; ?>
         </div>
-
-        <div class="controls">
-            <button class="view-more-button">View More Notifications</button>
-        </div>
+        
     </div>
     </center>
 
@@ -88,6 +88,53 @@
     <!-- Footer division begin -->
     <?php include 'bookSellerFooter.view.php'; ?>
     <!-- Footer division end -->
-    <script src="<?= ROOT ?>/assets/JS/notifications.js"></script>
+
+    <script>
+    document.querySelectorAll('.delete-notification-btn').forEach(button => {
+        button.addEventListener('click', () => {
+          const id = button.dataset.id;
+          const currentPage = <?= json_encode($data['page']) ?>;
+      
+            if (id) {
+                const form = document.createElement('form');
+                form.method = 'post';
+                form.action = `<?= ROOT ?>/notifications/deleteNotification?page=${currentPage}`;
+            
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'notification_id';
+                input.value = id;
+            
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    });
+
+    document.querySelectorAll('.mark-read-btn').forEach(button => {
+        const BASE_URL = "<?= ROOT ?>";
+        button.addEventListener('click', function () {
+            console.log("Mark as read button clicked");
+            const notificationId = this.dataset.id;
+
+            fetch(`${BASE_URL}/notifications/markAsRead`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: notificationId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    this.closest('.notification-card').classList.add('read');
+                    this.remove();
+                }
+            });
+        });
+    });
+
+    </script>
 </body>
 </html>
