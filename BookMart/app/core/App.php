@@ -40,8 +40,10 @@ class App{
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],
             'BookSellerSidebar' => ['index'],
             'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],
-             'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
-            'Payment' => ['index','checkOut','process','success','cancel','cartView']
+
+            'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
+            'Payment' => ['index','checkOut','process','success','cancel','cartView'],
+            'Notifications' => ['index','deleteNotification','markAsRead'],
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],

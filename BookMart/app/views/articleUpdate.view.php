@@ -26,19 +26,19 @@
             
                 <div class="form-group">
                     <label for="title">Article Title</label>
-                    <input type="text" id="title" name="title" placeholder="Enter your article title" required value="<?= htmlspecialchars($data['articles'][0]->Title) ?>">
+                    <input type="text" id="title" name="title" placeholder="Enter your article title" required value="<?= htmlspecialchars($data['articles']->Title) ?>">
                 </div>
 
                 <div class="article-meta-inputs">
                     <div class="form-group">
                         <label for="author">Author Name</label>
-                        <input type="text" id="author" name="author" placeholder="Your Name" required value="<?= htmlspecialchars($data['articles'][0]->Author) ?>">
+                        <input type="text" id="author" name="author" placeholder="Your Name" required value="<?= htmlspecialchars($data['articles']->Author) ?>">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="content">Article Content</label>
-                    <textarea id="article-content" name="content" placeholder="Write your article here..." required><?= htmlspecialchars($data['articles'][0]->Content) ?></textarea>
+                    <textarea id="article-content" name="content" placeholder="Write your article here..." required><?= htmlspecialchars($data['articles']->Content) ?></textarea>
                 </div>
 
                 <div class="form-actions">
