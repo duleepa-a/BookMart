@@ -19,12 +19,13 @@
             <li><a href="<?= ROOT ?>/" ><i class="fa fa-home"></i> Home</a></li>
             <li><a href="<?= ROOT ?>/courierEarns" class="active"><i class="fa fa-money"></i> Earnings</a></li>
             <li><a href="<?= ROOT ?>/courierOrders"><i class="fa fa-clock"></i> Orders</a></li>
+            <li><a href="<?= ROOT ?>/courierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
             <li><a href="<?= ROOT ?>/courierProfile"><i class="fa fa-user"></i> Profile</a></li>
         </ul>   
     </div>
     
     <div class="container">
-          <h2 class="earnings-title">Earnings</h2>
+          <h1 class="earnings-title">Earnings</h1>
           <div class="earnings-summary">
               <div class="earnings-box">
                 <h2>Rs.</h2><br>

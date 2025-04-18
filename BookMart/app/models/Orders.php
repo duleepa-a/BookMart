@@ -18,13 +18,17 @@ class Order {
         'delivery_fee',
         'discount_applied',
         'total_amount',
+        'pickup_location',
         'shipping_address',
         'province',
         'district',
         'city',
+        'created_on',
         'order_date',
         'shipped_date',
-        'canceled_date'
+        'completed_date',
+        'canceled_date',
+        'estimate_distance'
 
     ];
 

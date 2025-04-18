@@ -3,7 +3,13 @@
 class CourierProfile extends Controller{
 
     public function index(){
-        $this->view('courierProfile');
+
+        $courierData = new Courier();
+        $courierD = $courierData->where(['user_id' =>  $_SESSION['user_id']]);
+        // echo '<pre>';
+        // print_r($courierD);
+        // echo '</pre>';
+        $this->view('courierProfile',  ['courierD' =>$courierD]);
     }
 
 }

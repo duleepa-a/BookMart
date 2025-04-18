@@ -28,6 +28,19 @@ class Home extends Controller{
                  'recommendBookstores' => $recommendBookstores
                 ];
 
+
+                $ordersModel = new Orders();
+                $orders = $ordersModel->where(['order_status' => 'pending']);
+        
+                $courierLocation = $_SESSION['courier_location'] ?? 'Colombo, Sri Lanka'; // fallback value
+                // var_dump( $courierLocation);
+                $apiKey = 'AIzaSyCMW0Zg_K7LthAMmLiUjF_XsEaWcQOgqa0'; // Replace this with your real API key
+        
+                // Distance calculate + sort
+                $orders = $this->calculateAndSortOrdersByDistance($orders, $courierLocation, $apiKey);
+        
+                
+
         if(isset($_SESSION['user_role']) &&  isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'active' ) {
             $userRole = $_SESSION['user_role'];
 
@@ -42,7 +55,7 @@ class Home extends Controller{
                     $this->view('bookSellerHome',$data);
                     break;
                 case 'courier':
-                    $this->view('courierHome');
+                    $this->view('courierHome',['orders'=>$orders]);
                     break;
                 case 'buyer':
                     $this->view('buyerHome',$data);
@@ -52,6 +65,36 @@ class Home extends Controller{
             }
         } else {
             $this->view('home',$data);
+        }
+    }
+
+
+    private function calculateAndSortOrdersByDistance($orders, $courierLocation, $apiKey) {
+        foreach ($orders as &$order) {
+            $pickupLocation = $order->pickup_location;
+            $distance = $this->getDistanceBetweenLocations($courierLocation, $pickupLocation, $apiKey);
+            $order->estimate_distance = round($distance / 1000, 2); // km
+        }
+
+        usort($orders, function ($a, $b) {
+            return $a->estimate_distance <=> $b->estimate_distance;
+        });
+
+        return $orders;
+        
+    }
+    
+
+    private function getDistanceBetweenLocations($origin, $destination, $apiKey) {
+        $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" . urlencode($origin) . "&destinations=" . urlencode($destination) . "&key=" . $apiKey;
+
+        $response = file_get_contents($url);
+        $data = json_decode($response, true);
+
+        if ($data['status'] === 'OK' && $data['rows'][0]['elements'][0]['status'] === 'OK') {
+            return $data['rows'][0]['elements'][0]['distance']['value']; // meters
+        } else {
+            return PHP_INT_MAX;
         }
     }
     

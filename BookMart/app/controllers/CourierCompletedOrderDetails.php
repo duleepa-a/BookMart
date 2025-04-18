@@ -1,10 +1,34 @@
 <?php
 
-class CourierOrders extends Controller{
+class CourierCompletedOrderDetails extends Controller{
 
     public function index(){
 
-    //all order view
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $order_id =$_POST['order_id'];
+        
+        
+
+        $ordersModel = new Orders();
+        $orders = $ordersModel->where(['order_id' => $order_id]);
+        }
+
+        $this->view('courierCompletedOrderDetails',['orders'=>$orders]);
+    }
+
+    public function delete() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $order_id =$_POST['order_id'];
+
+            $orders = new CourierOrder();
+            $result = $orders->delete(id: $order_id,id_column: 'order_id');
+
+        }
+        
+        // redirect('courierOrders');
+
+
+    // $this->view('courierOrders');
         $orders = new CourierOrder();
         $Order = $orders->where(['courier_id' =>  $_SESSION['user_id']],);
 
@@ -26,9 +50,7 @@ class CourierOrders extends Controller{
 
         $this->view('courierOrders',['Order'=>$Order,'acceptorders'=>$acceptorders,'pendingorders'=>$pendingorders,'completedorders'=>$completedorders]);
 
-    }
-}
 
-// echo '<pre>';
-        // print_r($all_orderID);
-        // echo '</pre>';
+    }
+
+}

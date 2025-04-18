@@ -24,6 +24,7 @@ class App{
             'AdminPendingAddView' => ['index'],
             'AdminViewContactUs' => ['index','delete','update'],
             'User' => ['changePassword'],
+            'AdminViewCourierComplains' => ['index','delete','update'],
             
         ],
         'bookStore' => [
@@ -55,9 +56,14 @@ class App{
             'CourierHome' => ['index', 'viewOrders'], 
             'CourierProfile' => ['index'],
             'CourierOrders' => ['index'],
-            'CourierOrderDetails' => ['index'],
+            'CourierOrderDetails' => ['index','create'],
             'CourierEarns' => ['index'],
-            'User' => ['like','changePassword'],
+            'CourierComplains' => ['index','create'],
+            'CourierAllOrderDetails' => ['index'],
+            'Map' =>['index'],
+            'CourierAcceptedOrderDetails' => ['index','update'],
+            'CourierPendingOrderDetails'=> ['index','update'],
+            'CourierCompletedOrderDetails'=> ['index','delete']
         ]
     ];
     

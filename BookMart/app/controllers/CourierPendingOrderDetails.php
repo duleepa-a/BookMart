@@ -1,10 +1,35 @@
 <?php
 
-class CourierOrders extends Controller{
+class CourierPendingOrderDetails extends Controller{
 
     public function index(){
 
-    //all order view
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $order_id =$_POST['order_id'];
+        
+        
+
+        $ordersModel = new Orders();
+        $orders = $ordersModel->where(['order_id' => $order_id]);
+        }
+
+        $this->view('courierPendingOrderDetails',['orders'=>$orders]);
+    }
+
+    public function update() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $order_id =$_POST['order_id'];
+
+            $orders = new CourierOrder();
+            $result = $orders->update($order_id,['status'=>'Completed'],'order_id');
+
+            $orderOne = new Orders();
+            $res = $orderOne->update($order_id,['order_status'=>'completed'],'order_id');
+
+        }
+        // $this->view('courierOrders');
+        // //redirect('courierOrder');
+
         $orders = new CourierOrder();
         $Order = $orders->where(['courier_id' =>  $_SESSION['user_id']],);
 
@@ -26,9 +51,7 @@ class CourierOrders extends Controller{
 
         $this->view('courierOrders',['Order'=>$Order,'acceptorders'=>$acceptorders,'pendingorders'=>$pendingorders,'completedorders'=>$completedorders]);
 
-    }
-}
 
-// echo '<pre>';
-        // print_r($all_orderID);
-        // echo '</pre>';
+    }
+
+}

@@ -14,113 +14,73 @@
 </head>
 <body>
 
-    <!-- navBar division begin -->
-    <?php include 'homeNavBar.view.php'; ?>        
-    <!-- navBar division end -->
-     
+    <?php include 'courierNavbar.view.php'; ?>
+    
     <div class="sidebar">
         <ul>
             <h1 class="sidebar-heading">Welcome Back Courier!</h1>
             <li><a href="<?= ROOT ?>/"  class="active"><i class="fa fa-home"></i> Home</a></li>
             <li><a href="<?= ROOT ?>/courierEarns"><i class="fa fa-money"></i> Earnings</a></li>
             <li><a href="<?= ROOT ?>/courierOrders"><i class="fa fa-clock"></i> Orders</a></li>
+            <li><a href="<?= ROOT ?>/courierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
             <li><a href="<?= ROOT ?>/courierProfile"><i class="fa fa-user"></i> Profile</a></li>
-        </ul>   
+        </ul>
     </div>
     <main>
         <section class="orders-section">
             <h2>Available Orders</h2>
             <div class="sort-by">
-                <!-- <button>Sort by</button> -->
                 <select id="sort-by" name="sort-by" class="sort-bttn">
                     <option value="" disabled selected>Sort by</option>
                     <option value="date">Date</option>
                     <option value="distance">Distance</option>
                 </select>
             </div>
+
             <div class="order-list" >
-                <div class="order-card">
-                    <h3>Order ID    : 001</h3> 
-                    <p>Pickup location:  Sarasavi Bookshop , Thibirigasyaya , Colombo 05</p>
-                    <p>Delivery location:  22/3 , D.S Fonseka Road , Thibirigasyaya , Colombo 05</p>
-                    <div class="form-group-row">
-                        <div class="form-group">
-                            <p><i><small>Deadline: 29/12/2024</small></i></p>
-                        </div>
-                        <div class="form-group">
-                            <p>Estimated Distance: 10km</p>
-                        </div>
-                        <div class="form-group">
-                            <form action="<?= ROOT ?>/courierOrderDetails">
-                            <button class="view-btn">View</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            
-                <div class="order-card">
-                    <h3>Order ID    : 002</h3>
-                    <p>Pickup location:  Nanara , Kirulapana ,Colombo 05</p>
-                    <p>Delivery location: 22/9 , wajira Road , Colombo 05</p>
-                    <div class="form-group-row">
-                        <div class="form-group">
-                            <p><i><small>Deadline: 13/12/2024</small></i></p>
-                        </div>
-                        <div class="form-group">
-                            <p>Estimated Distance: 13.5km</p>
-                        </div>
-                        <div class="form-group">
-                            <form action="<?= ROOT ?>/courierOrderDetails">
-                            <button class="view-btn">View</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                
+                <?php if(!empty($orders)): ?>
+                    <?php foreach ($orders as $orderOne ): ?>
 
-                <div class="order-card">
-                    <h3>Order ID    : 003</h3>
-                    <p>Pickup location:  Sathpiyum Prakashakayo, Nugegoda</p>
-                    <p>Delivery location:  12/1 , Galewela , Nugegoda</p>
-                    <div class="form-group-row">
+                    <div class="order-card">
+                        <h3>Order ID    : <?= $orderOne->order_id ?></h3>
+                        <p>Pickup location:  <?= $orderOne->pickup_location ?></p>
+                        <p>Delivery location:  <?= $orderOne->shipping_address ?></p>
+                        <div class="form-group-row">
                         <div class="form-group">
-                            <p><i><small>Deadline: 17/12/2024</small></i></p>
+                            <p><i><small>Deadline: <?= $orderOne->created_on ?></small></i></p>
                         </div>
                         <div class="form-group">
-                            <p>Estimated Distance: 22.3km</p>
+                            <p>Estimated Distance: <?= $orderOne->estimate_distance?> km</p> 
                         </div>
-                        <div class="form-group">
-                            <form action="<?= ROOT ?>/courierOrderDetails">
-                            <button class="view-btn">View</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="order-card">
-                    <h3>Order ID    : 004</h3>
-                    <p>Pickup location: Gayan Bookshop , kirulapana , Nugegoda</p>
-                    <p>Delivery location:  32/12 , Jaya Mawatha , Nugegoda</p>
-                    <div class="form-group-row">
                         <div class="form-group">
-                            <p><i><small>30/11/2024</small></i></p>
+                            <form id="viewDetails" method="POST"  action="<?= ROOT ?>/map/index">
+                            <input type="hidden" name="order_id" value="<?= $orderOne->order_id ?>">
+                            <button class="map-btn">Map</button>
+                            </form>
                         </div>
+
                         <div class="form-group">
-                            <p>Estimated Distance: 13.2km</p>
-                        </div>
-                        <div class="form-group">
-                            <form action="<?= ROOT ?>/courierOrderDetails">
+                            <form id="viewDetails" method="POST"  action="<?= ROOT ?>/courierOrderDetails/index">
+                            <input type="hidden" name="order_id" value="<?= $orderOne->order_id ?>">
+                            <input type="hidden" name="buyer_id" value="<?= $orderOne->buyer_id ?>">
+
                             <button class="view-btn">View</button>
                             </form>
                         </div>
+
+                        </div>
                     </div>
-                </div>
-            </div>
+
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No orders</p>
+                <?php endif; ?>
+                
+        
         </section>
     </main>
-
-    <!-- footer begin -->
-    <?php include 'footer.view.php'; ?>   
-    <!-- footer end -->
     
 
     <script src="<?= ROOT ?>/assets/JS/courierHome.js"></script>
