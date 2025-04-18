@@ -21,10 +21,9 @@
 
             <?php if(!empty($orders)): ?>
                 <?php foreach ($orders as $orderOne ): ?>
-            <?php if ($buyer && is_array($buyer)) : ?>
-                <?php foreach ($buyer as $buyerOne): ?>
+            
 
-                <form id="courierOrderDetails" action="<?= ROOT ?>/CourierOrderDetails/create" enctype="multipart/form-data" method="POST">
+                <form id="courierOrderDetails" action="<?= ROOT ?>/CourierCompletedOrderDetails/delete" enctype="multipart/form-data" method="POST">
 
                 <h3>Order ID: <input type="text" name="order_id" id="order_id" value="<?= $orderOne->order_id ?>"  readonly></h3>
         
@@ -35,10 +34,10 @@
                 <input type="text" name="shipping_address" id="shipping_address" value="<?= $orderOne->shipping_address ?>" readonly>
 
                 <label>Customer Name:</label>
-                <input type="text" id="full_name" value="<?= $buyerOne->full_name ?>" readonly>
+                <input type="text" id="full_name" value=" " readonly>
 
                 <label>Contact Number:</label>
-                <input type="text" id="phone_number" value="<?= $buyerOne->phone_number ?>" readonly>
+                <input type="text" id="phone_number" value=" " readonly>
 
                 <label>Payment Amount:</label>
                 <input type="text" id="total_amount" value="<?= $orderOne->total_amount ?>" readonly>
@@ -49,10 +48,9 @@
                 <label>Delivery Timeframe:</label>
                 <input type="text" name="timeframe" id="timeframe" value="<?= $orderOne->canceled_date ?>" readonly>
                 
-                <button type="submit" class="accept-button">Accept</button>
+                <button type="submit" class="accept-button">Delete</button>
 
-                <?php endforeach; ?>
-                <?php endif; ?>
+                
                 <?php endforeach; ?>
                 <?php else: ?>
                     <p>No orders</p>
@@ -63,28 +61,6 @@
 
 
     </main>
-
-    
-    <!-- <footer class="footer">
-        <hr>
-        <div class="footer-content">
-            <div class="footer-left">
-                <h2><b>Book<span class="highlight">Mart</span></b></h2>
-                <p><a href="#"><b>Home</b></a><b> | </b><a href="#"><b>Contact Us</b></a><b>    |   </b><a href="#"><b>About Us</b></a></p>
-                <p>&copy; 2024 BookMart, all rights reserved.</p>
-            </div>
-            <div class="footer-center">
-                <p><b><span>&#128222;</span> +1.555.555.5555</b></p>
-                <p><b><span>&#9993;</span> bookmart@gmail.com</b></p>
-            </div>
-            <div class="footer-right">
-                <h4 style="padding-left: 60px;">OUR VISION</h4>
-                <p>"To revolutionize the online book market in Sri Lanka by providing an inclusive platform <br>where bookstores, sellers, and buyers can seamlessly connect, fostering a culture of reading<br>and promoting sustainable practices through second-hand book trading."</p>
-                <p style="padding-left: 40px;"><b>BookMart &copy; 2024</b></p>
-                <br><br>
-            </div>
-        </div>
-    </footer> -->
 
     <script src="<?= ROOT ?>/assets/JS/courierOrderDetails.js"></script>
 </body>

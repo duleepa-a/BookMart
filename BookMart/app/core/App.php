@@ -24,6 +24,7 @@ class App{
             'AdminPendingAddView' => ['index'],
             'AdminViewContactUs' => ['index','delete','update'],
             'User' => ['changePassword'],
+            'AdminViewCourierComplains' => ['index','delete','update'],
             
         ],
         'bookStore' => [
@@ -40,8 +41,10 @@ class App{
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],
             'BookSellerSidebar' => ['index'],
             'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],
-             'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
-            'Payment' => ['index','checkOut','process','success','cancel','cartView']
+
+            'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
+            'Payment' => ['index','checkOut','process','success','cancel','cartView'],
+            'Notifications' => ['index','deleteNotification','markAsRead'],
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],
@@ -53,9 +56,14 @@ class App{
             'CourierHome' => ['index', 'viewOrders'], 
             'CourierProfile' => ['index'],
             'CourierOrders' => ['index'],
-            'CourierOrderDetails' => ['index'],
+            'CourierOrderDetails' => ['index','create'],
             'CourierEarns' => ['index'],
-            'User' => ['like','changePassword'],
+            'CourierComplains' => ['index','create'],
+            'CourierAllOrderDetails' => ['index'],
+            'Map' =>['index'],
+            'CourierAcceptedOrderDetails' => ['index','update'],
+            'CourierPendingOrderDetails'=> ['index','update'],
+            'CourierCompletedOrderDetails'=> ['index','delete']
         ]
     ];
     

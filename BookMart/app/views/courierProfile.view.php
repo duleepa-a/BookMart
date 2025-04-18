@@ -19,6 +19,7 @@
         <li><a href="<?= ROOT ?>/" ><i class="fa fa-home"></i> Home</a></li>
         <li><a href="<?= ROOT ?>/courierEarns"><i class="fa fa-money"></i> Earnings</a></li>
         <li><a href="<?= ROOT ?>/courierOrders"><i class="fa fa-clock"></i> Orders</a></li>
+        <li><a href="<?= ROOT ?>/courierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
         <li><a href="<?= ROOT ?>/courierProfile" class="active"><i class="fa fa-user"></i> Profile</a></li>
     </ul>   
     </div>
@@ -35,21 +36,24 @@
                     <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/registerCourier"  >
                         <div class="tab-content" id="personal-details">
                             
+                        <?php if(!empty($courierD)): ?>
+                            <?php foreach ($courierD as $courierDetail): ?>
+
                             <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="first-name">First Name:</label>
-                                    <input type="text" id="first-name" placeholder="Enter your first name" name="firstname" required>
+                                    <input type="text" id="first-name" placeholder="<?= $courierDetail->first_name ?>" name="firstname" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="last-name">Last Name:</label>
-                                    <input type="text" id="last-name" placeholder="Enter your last name" name="lastname" required>
+                                    <input type="text" id="last-name" placeholder="<?= $courierDetail->last_name ?>" name="lastname" required>
                                 </div>
                             </div>
                             
                             <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="user-name">Name with initials:</label>
-                                    <input type="text" id="user-name" name="username" placeholder="Enter your name with initials" required>
+                                    <input type="text" id="user-name" name="username" placeholder=" " required>
                                 </div>
                                 
                             </div>
@@ -57,12 +61,12 @@
                             <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="dob">Date of Birth:</label>
-                                    <input type="date" id="dob" placeholder="Enter your birthday" name="dob" required>
+                                    <input type="date" id="dob" placeholder="<?= $courierDetail->dob ?>" name="dob" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="gender">Gender:</label>
                                     <select id="gender" name="gender" required>
-                                        <option value="" disabled selected>Male / Female</option> 
+                                        <option value="" disabled selected><?= $courierDetail->gender ?></option> 
                                         <option value="male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
@@ -72,44 +76,44 @@
                             <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="nic">NIC Number:</label>
-                                    <input type="text" id="nic" placeholder="Enter  your NIC number" name="nic" required>
+                                    <input type="text" id="nic" placeholder="<?= $courierDetail->nic_number ?>" name="nic" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="license">License Number:</label>
-                                    <input type="text" id="license" name="license" placeholder="Enter your driving license number" required>
+                                    <input type="text" id="license" name="license" placeholder="<?= $courierDetail->license_number ?>" required>
                                 </div>
                             </div>
                             
                             <div class="form-group-row">
                                 <div class="form-group-small">
                                     <label class="Address" for="address">Address line 1:</label>
-                                    <input type="text" id="address" name="address" placeholder="Address line 1" required>
+                                    <input type="text" id="address" name="address" placeholder="<?= $courierDetail->address_line_1 ?>" required>
                                 </div>
                                 <div class="form-group-small">
                                     <label for="address-line-2">Address line 2:</label>
-                                    <input type="text" id="address-line-2" name="address-line-2" placeholder="Address line 2" required>
+                                    <input type="text" id="address-line-2" name="address-line-2" placeholder="<?= $courierDetail->address_line_2 ?>" required>
                                 </div>
                                 <div class="form-group-small">
                                     <label for="city">City:</label>
-                                    <input type="text" id="city" placeholder="City" name="city" required>
+                                    <input type="text" id="city" placeholder="<?= $courierDetail->city ?>" name="city" required>
                                 </div>
                             </div>
             
                             <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="phone-number">Phone Number:</label>
-                                    <input type="text" id="phone-number" name="phone-number" placeholder="Enter your mobile number" required>
+                                    <input type="text" id="phone-number" name="phone-number" placeholder="<?= $courierDetail->phone_number ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="secondary-number">Secondary Phone number (optional):</label>
-                                    <input type="text" id="secondary-number" name="secondary-number" placeholder="Secondary Mobile Number (optional)">
+                                    <input type="text" id="secondary-number" name="secondary-number" placeholder="<?= $courierDetail->secondary_phone_number ?>">
                                 </div>
                             </div>
                             
                             <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="email-address">Email Address:</label>
-                                    <input type="text" id="email-address"  name="email" placeholder="The email address of the courier" required>
+                                    <input type="text" id="email-address"  name="email" placeholder=" " required>
                                 </div>
                                 
                             </div>
@@ -127,7 +131,7 @@
                                 <div class="form-group">
                                     <label for="bank">Bank:</label>
                                     <select id="bank" name="bank" required>
-                                        <option value="" disabled selected>Choose Bank</option> 
+                                        <option value="" disabled selected><?= $courierDetail->bank ?></option> 
                                         <option value="boc">Bank of Ceylon</option>
                                         <option value="sampath">Sampath Bank</option>
                                         <option value="peoples">People's Bank</option>
@@ -142,18 +146,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="branch-name">Branch Name:</label>
-                                    <input type="text" id="branch-name" name="branch-name" placeholder="Enter branch-name" required>
+                                    <input type="text" id="branch-name" name="branch-name" placeholder="<?= $courierDetail->branch_name ?>" required>
                                 </div>
                             </div>
             
                             <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="account-number">Account Number:</label>
-                                    <input type="text" id="account-number" name="account-number" placeholder="Enter account number" required>
+                                    <input type="text" id="account-number" name="account-number" placeholder="<?= $courierDetail->account_number ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="account-name">Account Name:</label>
-                                    <input type="text" id="account-name" name="account-name" placeholder="Enter your account name" required>
+                                    <input type="text" id="account-name" name="account-name" placeholder="<?= $courierDetail->account_name ?>" required>
                                 </div>
                             </div>
             
@@ -169,7 +173,7 @@
                                 <div class="form-group">
                                     <label for="vehical-type">Vehical Type:</label>
                                     <select id="vehical-type" name="vehical-type" required>
-                                        <option value="" disabled selected>Choose type</option> 
+                                        <option value="" disabled selected><?= $courierDetail->vehicle_type ?></option> 
                                         <option value="bike">Bike</option>
                                         <option value="three-wheeler">Three-Wheeler</option>
                                         <option value="car">Car</option>
@@ -179,19 +183,19 @@
                                 <div class="form-group">
                                     <label for="vehical-model">Vehical Model:</label>
                                     <input type="text" id="vehical-model" 
-                                    name="vehical-model"  placeholder="Enter vehical model" required>
+                                    name="vehical-model"  placeholder="<?= $courierDetail->vehicle_model ?>" required>
                                 </div>
                             </div>
                 
                             <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="vehical-registration-number">Vehical Registration Number:</label>
-                                    <input type="text" id="vehical-registration-number" placeholder="Enter registration number" name="vehical-registration-number" required>
+                                    <input type="text" id="vehical-registration-number" placeholder="<?= $courierDetail->vehicle_registration_number ?>" name="vehical-registration-number" required>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="vehical-registration-document">Upload Vehical Registration Documents:</label>
-                                    <input type="file" id="vehical-registration-document" name="vehical-registration-document" >
-                                </div>
+                                    <input type="file" id="vehical-registration-document" name="vehical-registration-document" placeholder=" ">
+                                </div> -->
                             </div>
             
                             <br>
@@ -229,6 +233,10 @@
                             <button class="next-button" type="submit" >Change & Save</button>
                             <br>
                             <br>
+                            <?php endforeach; ?>
+                                <?php else: ?>
+                                    <p>No</p>
+                                <?php endif; ?>
                         </div>
                     </form>
         </div>

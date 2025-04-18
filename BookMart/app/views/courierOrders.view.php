@@ -19,12 +19,13 @@
             <li><a href="<?= ROOT ?>/" ><i class="fa fa-home"></i> Home</a></li>
             <li><a href="<?= ROOT ?>/courierEarns"><i class="fa fa-money"></i> Earnings</a></li>
             <li><a href="<?= ROOT ?>/courierOrders" class="active"><i class="fa fa-clock"></i> Orders</a></li>
+            <li><a href="<?= ROOT ?>/courierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
             <li><a href="<?= ROOT ?>/courierProfile"><i class="fa fa-user"></i> Profile</a></li>
         </ul>   
     </div>
     <div class="container">
         
-            <h1 class="mtopic">Orders</h1> <br><br>
+            <h1 class="mtopic">Orders</h1> 
             
             <br>
             <nav class="tabs">
@@ -34,77 +35,50 @@
                 <button class="tab-button last-child" onclick="showTab('completed-orders')">Completed</button>
             </nav>
     
-            <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/registerCourier"  >
+            <form id="registerForm" method="POST" class="registration-form"   >
                 <div class="tab-content" id="all-orders">
                     
                     <div class="order-list" >
+                    <?php if(!empty($Order)): ?>
+                        <?php foreach ($Order as $contactdetails): ?>
                         <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
+                        
+                                
+                            <h3>Order ID :<?= $contactdetails->order_id ?></h3>
+                            <p>Pickup location:<?= $contactdetails->pickup_location ?></p>
+                            <p>Delivery location:<?= $contactdetails->shipping_address ?></p>
                             <div class="form-group-row">
                                 <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
+                                    <p><i><small>Deadline: <?= $contactdetails->timeframe ?></small></i></p>
                                 </div>
                                 <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
+                                    <p>Estimated Distance: <?= $contactdetails->distance ?>km</p>
                                 </div>
+
                                 <div class="form-group">
+                                <form id="viewDetails" method="POST"  action="<?= ROOT ?>/map/index">
+                                <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                <button class="map-btn">Map</button>
+                                </form>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <form id="viewDetails" method="POST"  action="<?= ROOT ?>/courierAllOrderDetails/index">
+                                    <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                    <!-- <input type="hidden" name="buyer_id" value=" "> -->
+
                                     <button class="view-btn">View</button>
+                                    </form>
+
                                 </div>
                             </div>
+                            
                         </div>
-                    
-                        <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
-                                </div>
-                                <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
-                                </div>
-                                <div class="form-group">
-                                    <button class="view-btn">View</button>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
-                                </div>
-                                <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
-                                </div>
-                                <div class="form-group">
-                                    <button class="view-btn">View</button>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
-                                </div>
-                                <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
-                                </div>
-                                <div class="form-group">
-                                    <button class="view-btn">View</button>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No Orders</p>
+                        <?php endif; ?>
                     </div>
                     
 
@@ -116,73 +90,43 @@
                 <div class="tab-content" id="accepted-orders" style="display: none;">
                     
                     <div class="order-list" >
+                    <?php if(!empty($acceptorders)): ?>
+                        <?php foreach ($acceptorders as $contactdetails): ?>
                         <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
+                            <h3>Order ID :<?= $contactdetails->order_id ?></h3>
+                            <p>Pickup location:<?= $contactdetails->pickup_location ?></p>
+                            <p>Delivery location:<?= $contactdetails->shipping_address ?></p>
                             <div class="form-group-row">
                                 <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
+                                    <p><i><small>Deadline: <?= $contactdetails->timeframe ?></small></i></p>
                                 </div>
                                 <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
+                                    <p>Estimated Distance: <?= $contactdetails->distance ?>km</p>
                                 </div>
+
                                 <div class="form-group">
-                                    <button class="view-btn">View</button>
+                                <form id="viewDetails" method="POST"  action="<?= ROOT ?>/map/index">
+                                <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                <button class="map-btn">Map</button>
+                                </form>
+                                </div>
+
+                                <div class="form-group">
+                                <form id="viewDetails" method="POST"  action="<?= ROOT ?>/courierAcceptedOrderDetails/index">
+                                    <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                    <!-- <input type="hidden" name="buyer_id" value=" "> -->
+
+                                    <button type="submit" class="view-btn">View</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
+                        <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No Orders</p>
+                        <?php endif; ?>
                     
-                        <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
-                                </div>
-                                <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
-                                </div>
-                                <div class="form-group">
-                                    <button class="view-btn">View</button>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
-                                </div>
-                                <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
-                                </div>
-                                <div class="form-group">
-                                    <button class="view-btn">View</button>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
-                                </div>
-                                <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
-                                </div>
-                                <div class="form-group">
-                                    <button class="view-btn">View</button>
-                                </div>
-                            </div>
-                        </div>
+                    
                     </div>
     
                     
@@ -193,73 +137,41 @@
                 <div class="tab-content" id="pending-orders" style="display: none;">
                     
                     <div class="order-list" >
+                    <?php if(!empty($pendingorders)): ?>
+                        <?php foreach ($pendingorders as $contactdetails): ?>
                         <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
+                            <h3>Order ID :<?= $contactdetails->order_id ?></h3>
+                            <p>Pickup location:<?= $contactdetails->pickup_location ?></p>
+                            <p>Delivery location:<?= $contactdetails->shipping_address ?></p>
                             <div class="form-group-row">
                                 <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
+                                    <p><i><small>Deadline: <?= $contactdetails->timeframe ?></small></i></p>
                                 </div>
                                 <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
+                                    <p>Estimated Distance: <?= $contactdetails->distance ?>km</p>
                                 </div>
+
                                 <div class="form-group">
-                                    <button class="view-btn">View</button>
+                                <form id="viewDetails" method="POST"  action="<?= ROOT ?>/map/index">
+                                <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                <button class="map-btn">Map</button>
+                                </form>
+                                </div>
+
+                                <div class="form-group">
+                                <form id="viewDetails" method="POST"  action="<?= ROOT ?>/courierPendingOrderDetails/index">
+                                    <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                    <!-- <input type="hidden" name="buyer_id" value=" "> -->
+
+                                    <button type="submit" class="view-btn">View</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                    
-                        <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
-                                </div>
-                                <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
-                                </div>
-                                <div class="form-group">
-                                    <button class="view-btn">View</button>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
-                                </div>
-                                <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
-                                </div>
-                                <div class="form-group">
-                                    <button class="view-btn">View</button>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
-                                </div>
-                                <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
-                                </div>
-                                <div class="form-group">
-                                    <button class="view-btn">View</button>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>No Orders</p>
+                    <?php endif; ?>
                     </div>
         
                 
@@ -270,73 +182,35 @@
                 <div class="tab-content" id="completed-orders" style="display: none;">
                     
                     <div class="order-list" >
+                    <?php if(!empty($completedorders)): ?>
+                        <?php foreach ($completedorders as $contactdetails): ?>
                         <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
+                            <h3>Order ID :<?= $contactdetails->order_id ?></h3>
+                            <p>Pickup location:<?= $contactdetails->pickup_location ?></p>
+                            <p>Delivery location:<?= $contactdetails->shipping_address ?></p>
                             <div class="form-group-row">
                                 <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
+                                    <p><i><small>Deadline: <?= $contactdetails->timeframe ?></small></i></p>
                                 </div>
                                 <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
+                                    <p>Estimated Distance: <?= $contactdetails->distance ?>km</p>
                                 </div>
                                 <div class="form-group">
-                                    <button class="view-btn">View</button>
+                                <form id="viewDetails" method="POST"  action="<?= ROOT ?>/courierCompletedOrderDetails/index">
+                                    <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                    <!-- <input type="hidden" name="buyer_id" value=" "> -->
+
+                                    <button type="submit" class="view-btn">View</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     
-                        <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
-                                </div>
-                                <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
-                                </div>
-                                <div class="form-group">
-                                    <button class="view-btn">View</button>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>No Orders</p>
+                    <?php endif; ?>    
         
-                        <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
-                                </div>
-                                <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
-                                </div>
-                                <div class="form-group">
-                                    <button class="view-btn">View</button>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="order-card">
-                            <h3>Order ID</h3>
-                            <p>Pickup location:</p>
-                            <p>Delivery location:</p>
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <p><i><small>Deadline: date of the deadline</small></i></p>
-                                </div>
-                                <div class="form-group">
-                                    <p>Estimated Distance: 10km</p>
-                                </div>
-                                <div class="form-group">
-                                    <button class="view-btn">View</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
     
                     <br>
