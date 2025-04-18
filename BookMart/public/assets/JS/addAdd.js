@@ -53,33 +53,6 @@ function showTab(tabId) {
 document.getElementById('new-add').style.display = 'block';
 
 
-/*Advertisement Type*/
-function showFields(value) {
-    const imageField = document.getElementById('image-field');
-    const textField = document.getElementById('text-field');
-    const adTypeBox = document.getElementById('ad-type-box'); // Select advertisement type box
-
-    if (value === 'image') {
-        imageField.style.display = 'block';
-        textField.style.display = 'none';
-    } else if (value === 'text') {
-        imageField.style.display = 'none';
-        textField.style.display = 'block';
-    } else if (value === 'both') {
-        imageField.style.display = 'block';
-        textField.style.display = 'block';
-    }
-
-    // Adjust ad type box size
-    adTypeBox.style.width = '300px'; // Set increased width
-    adTypeBox.style.height = '40px'; // Set reduced height
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    showFields('image');
-});
-
-
 // Select elements
 const addButton = document.querySelector('.add-bttn');
 const modal = document.querySelector('#add-modal');
@@ -118,22 +91,22 @@ document.querySelector(".add-table").addEventListener("click", (e) => {
     const AddId = row.dataset.addid;
     const Advertisement_Title = row.dataset.advertisementtitle;
     const Advertisement_Description = row.dataset.advertisementdescription;
-    const Advertisement_Type = row.dataset.advertisementtype;
+    const Advertisement_Image = row.dataset.advertisementimage;
     const Price = row.dataset.price;
     const Start_date = row.dataset.startdate;
     const End_date = row.dataset.enddate;
 
-    console.log(AddId, Advertisement_Title, Advertisement_Description, Advertisement_Type, Price, Start_date, End_date)
+    console.log(AddId, Advertisement_Title, Advertisement_Description, Advertisement_Image, Price, Start_date, End_date)
     console.log(AddId);
     // Show update modal
     const updateModal = document.getElementById("update-add-modal");
     updateModal.querySelector("#update-add-id").value = AddId;
     updateModal.querySelector("#update-title").value = Advertisement_Title;
     updateModal.querySelector("#update-description").value = Advertisement_Description;
-    updateModal.querySelector("#update-type").value = Advertisement_Type;
     updateModal.querySelector("#update-price").value = Price;
     updateModal.querySelector("#update-sdate").value = Start_date;
     updateModal.querySelector("#update-edate").value = End_date;
+    updateModal.querySelector("#update-preview-image").src =  ROOT + "\\assets\\Images\\ads" + "\\" + Advertisement_Image;
     updateModal.classList.add('active');
 });
 
@@ -196,22 +169,6 @@ document.querySelector(".delete-modal").addEventListener("click", (e) => {
     
 });
 
-
-
-document.getElementById('text-input').addEventListener('input', function () {
-    const output = document.getElementById('output'); // Output container
-    const lines = this.value.split('\n'); // Split text into lines
-
-    // Clear the output container
-    output.innerHTML = '';
-
-    // Append each line as a separate paragraph
-    lines.forEach(line => {
-        const p = document.createElement('p');
-        p.textContent = line;
-        output.appendChild(p);
-    });
-});
 
 document.getElementById('start-date').addEventListener('change', function () {
     var startDate = new Date(this.value);

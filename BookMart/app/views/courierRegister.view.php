@@ -25,7 +25,7 @@
             <button class="tab-button last-child" onclick="showTab('legal-agreements')">Legal Agreements</button>
         </nav>
 
-        <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/registerCourier"  >
+        <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/registerCourier" enctype="multipart/form-data" >
             <div class="tab-content" id="personal-details">
                 
                 <div class="form-group-row">
@@ -178,8 +178,8 @@
                         <input type="text" id="account-number" name="account-number" placeholder="Enter account number" required>
                     </div>
                     <div class="form-group">
-                        <label for="account-name">Account Name:</label>
-                        <input type="text" id="account-name" name="account-name" placeholder="Enter your account name" required>
+                        <label for="account-name">Account Holder's Name:</label>
+                        <input type="text" id="account-name" name="account-name" placeholder="Enter the account holder's name" required>
                     </div>
                 </div>
 
@@ -193,8 +193,8 @@
                 
                 <div class="form-group-row">
                     <div class="form-group">
-                        <label for="vehical-type">Vehical Type:</label>
-                        <select id="vehical-type" name="vehical-type" required>
+                        <label for="vehicle-type">Vehicle Type:</label>
+                        <select id="vehicle-type" name="vehicle-type" required>
                             <option value="" disabled selected>Choose type</option> 
                             <option value="bike">Bike</option>
                             <option value="three-wheeler">Three-Wheeler</option>
@@ -203,20 +203,20 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="vehical-model">Vehical Model:</label>
-                        <input type="text" id="vehical-model" 
-                        name="vehical-model"  placeholder="Enter vehical model" required>
+                        <label for="vehicle-model">Vehicle Model:</label>
+                        <input type="text" id="vehicle-model" 
+                        name="vehicle-model"  placeholder="Enter vehicle model" required>
                     </div>
                 </div>
     
                 <div class="form-group-row">
                     <div class="form-group">
-                        <label for="vehical-registration-number">Vehical Registration Number:</label>
-                        <input type="text" id="vehical-registration-number" placeholder="Enter registration number" name="vehical-registration-number" required>
+                        <label for="vehicle-registration-number">Vehicle Registration Number:</label>
+                        <input type="text" id="vehicle-registration-number" placeholder="Enter registration number" name="vehicle-registration-number" required>
                     </div>
                     <div class="form-group">
-                        <label for="vehical-registration-document">Upload Vehical Registration Documents:</label>
-                        <input type="file" id="vehical-registration-document" name="vehical-registration-document" >
+                        <label for="vehicle-registration-document">Upload Vehicle Registration Documents:</label>
+                        <input type="file" id="vehicle-registration-document" name="vehicle-registration-document" >
                     </div>
                 </div>
 
@@ -228,10 +228,6 @@
 
             <div class="tab-content" id="legal-agreements" style="display: none;">
                 <div class="form-group-row">
-                    <!-- <div class="form-group">
-                        <label for="driver's-photo">Driver's Photo:</label>
-                        <input type="file" id="driver's-photo" name="driver's-photo" >
-                    </div> -->
                     <div class="form-group">
                         <label for="photo-of-driving-license">Photo of Driving License:</label>
                         <lable for="description">pdf file should have two pages with front and rear views</lable>
@@ -243,15 +239,6 @@
                         <input type="file" id="photo-nic" name="photo-nic" >
                     </div>
                 </div>
-
-                <!-- <div class="form-group-row">
-                    <div class="form-group">
-                        <label for="photo-of-driving-license">Photo of Driving License:</label>
-                        <lable for="description">pdf file should have two pages with front and rear views</lable>
-                        <input type="file" id="photo-of-driving-license" name="photo-of-driving-license" >
-                    </div>
-                </div> -->
-
                 <div class="form-group-row">
                     <div class="form-group checkbox-group">
                         <!-- <label for="TermsAndConditions" id="terms">Terms and Conditions:</label> <br> -->

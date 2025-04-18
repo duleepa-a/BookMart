@@ -30,65 +30,59 @@
     </div>
     
     <div class="container"> 
-    <div id="add-modal"class="modal hidden">
-        <div class="modal-overlay"></div>
-            <div class="modal-content">
+        <div id="add-modal"class="modal hidden">
+            <div class="modal-overlay"></div>
+                <div class="modal-content">
                 <form class="add-form" method="POST" action="<?= ROOT ?>/AdminAdvertisment/addAdvertisement" enctype="multipart/form-data">
-                        <h2 class="full-width">Add Advertisement</h2><br>
+                    <h2>Add Advertisement</h2>
 
-                        <!--add advertisement content-->
-                        <div class="form-group title-group">
-                            <label for="title">Advertisemant Title  :</label>
-                            <input type="text" id="title" name="Advertisement_Title" placeholder="Enter Advertisemant Title" required>
+                    <div class="form-row">
+                        <div class="form-item">
+                            <label for="title">Advertisement Title:</label>
+                            <input type="text" class="input-advertisments" id="title" name="Advertisement_Title" placeholder="Enter Advertisement Title" required>
                         </div>
-
-                        <div class="form-group desc-group">
+                        <div class="form-item">
+                            <label for="price">Price:</label>
+                            <input type="number" class="input-advertisments" id="price" name="Price" placeholder="Enter Price" required>
+                        </div>
+                    </div>
+                          
+                    <div class="form-row">
+                        <div class="form-item full-width">
                             <label for="description">Description:</label>
-                            <input type="text" id="description" name="Advertisement_Description" placeholder="Enter Description" required>
+                            <input type="text" class="input-advertisments" id="description" name="Advertisement_Description" placeholder="Enter Description" required>
                         </div>
+                    </div>
                     
-                        <div class="form-group type-group">
-                            <label for="type">Advertisement Type:</label>
-                            <select id="ad-type-box" onchange="showFields(this.value)" required>
-                            <option value="image">Image only</option>
-                                <option value="text">Text only</option>
-                                <option value="both">Both</option>
-                            </select>
+                    <div class="form-row">
+                        <div class="form-item">
+                            <label for="cover_image">Upload Media Section:</label>
+                            <input type="file" class="input-advertisments" id="cover_image" name="cover_image" accept="image/*">
                         </div>
-
-                        <div id="media-fields" class="form-group">
-                            <label for="Media">Upload Media Section:</label>
-
-                            <!-- Default: Image only -->
-                            <div id="image-field">
-                                <label for="cover_image">Choose File:</label>
-                                <input type="file" id="cover_image" name="cover_image" accept="image/*">
+                        <div class="form-item">
+                            <label>Recommended image sizes:</label>
+                            <small style="color: #666; width:100%"> 1200 × 350 / 1600 × 350 / 1920 × 350 pixels (w × h)</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row ">
+                            <div class="form-item">
+                                <label class="date-label">Start Date</label>
+                                <input type="datetime-local" id="start-date" name="Start_date" class="input-advertisments">
                             </div>
-                            <div id="text-field" style="display: none;">
-                                <label for="text-content">Type Text Here:</label>
-                                <input type="text" id="text-content" name="text_content" placeholder="Type Text Here">
+                            <div class="form-item">
+                                <label class="date-label">End Date</label>
+                                <input type="datetime-local" id="end-date" name="End_date" class="input-advertisments">
                             </div>
-                        </div>
-
-                        <div class="form-group price-group">
-                            <label for="title">Price:</label>
-                            <input type="number" id="price" name="Price" placeholder="Enter Price" required>
-                        </div>
-                        
-                        <div class="form-group Schedule-group">
-                            <label for="Schedule">Schedule Advertisement:</label>
-                            Start Date <input type="datetime-local" id="start-date" name="Start_date">
-                            End Date <input type="datetime-local" id="end-date" name="End_date" class="end-class">
-                        </div><br>
-
-                        <!-- Modal Actions -->
-                        <div class="modal-actions">
-                            <button type="submit">Add</button>
-                            <button type="button" class="close-modal">Cancel</button>
-                        </div>
-                
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="submit">Add</button>
+                        <button type="button" class="cancel close-modal">Cancel</button>
+                    </div>
                 </form>
-            </div>
+
+                </div>
         </div>                  
         
         <div class="box"> 
@@ -115,9 +109,9 @@
                             <thead>
                                 <tr>
                                     <th></th>
+                                    <th>Image</th>
                                     <th>Advertisement Title</th>
                                     <th>Advertisement Description</th>
-                        
                                     <th>Price</th>
                                     <th>Submitted On</th>
                                     <th>Start Date & Time</th>
@@ -130,14 +124,20 @@
                                         data-addid="<?= $ad->id ?>" 
                                         data-advertisementtitle="<?= htmlspecialchars($ad->Advertisement_Title) ?>"
                                         data-advertisementdescription="<?= htmlspecialchars($ad->Advertisement_Description) ?>" 
-                                        data-advertisementtype="<?= htmlspecialchars($ad->Advertisement_Type) ?>" 
+                                        data-advertisementimage="<?= htmlspecialchars($ad->cover_image) ?>" 
                                         data-price="<?= htmlspecialchars($ad->Price) ?>" 
                                         data-submittedon="<?= htmlspecialchars($ad->Submitted_On) ?>" 
                                         data-startdate="<?= htmlspecialchars($ad-> Start_date) ?>" 
                                         data-enddate="<?= htmlspecialchars($ad->End_date) ?>" 
                                         >
                                         <td><input type="checkbox"></td>
-
+                                        <td>
+                                            <?php if (!empty($ad->cover_image)): ?>
+                                                <img src="<?= ROOT ?>\assets\Images\ads\<?= $ad->cover_image ?>" alt="Ad Image" style="width: 100px; height: auto; object-fit: cover;">
+                                            <?php else: ?>
+                                                No image
+                                            <?php endif; ?>
+                                        </td>
                                         <td><?= htmlspecialchars($ad->Advertisement_Title) ?></td>
                                         <td><?= htmlspecialchars($ad-> Advertisement_Description) ?></td>
                                     
@@ -167,31 +167,37 @@
                         <h2 class="full-width">Update Addvertisement</h2>
                         <!-- Fields for the update form -->
                         <input type="hidden" id="update-add-id" name="add_id">
-                        <div class="form-group title-group">
-                            <label for="update-title">Advertisement_Title:</label>
-                            <input type="text" id="update-title" name="Advertisement_Title" required>
+                        <div class="form-row">
+                            <div class="form-item ">
+                                <label for="update-title">Advertisement_Title:</label>
+                                <input type="text" id="update-title" name="Advertisement_Title" required>
+                            </div>
+                            <div class="form-item ">
+                                    <label for="update-price">Price:</label>
+                                    <input type="number" id="update-price" name="Price" required>
+                            </div>
                         </div>
-                        <div class="form-group desc-group">
-                            <label for="update-description">Description:</label>
-                            <input type="text" id="update-description" name="Advertisement_Description" required>
+                        <div class="form-row ">
+                            <div class="form-item full-width">
+                                <label for="update-description">Description:</label>
+                                <input type="text" id="update-description" name="Advertisement_Description" required>
+                            </div>
                         </div>
-                        <div class="form-group type-group">
-                            <label for="update-type" id="update-type" name="Advertisement_Type" required>Advertisement Type:</label>
-                            <select id="book_condition" name="book_condition" required>
-                                <option value="image">Image only</option>
-                                <option value="text">Text only</option>
-                                <option value="both">Both</option>
-                            </select>
+                        <div class="form-row ">
+                                <div class="form-item">
+                                    <label for="Start_date">Start Date:</label>  <input type="datetime-local" id="update-sdate" name="Start_date" required>
+                                </div>
+                                <div class="form-item">
+                                    <label for="End_date">End Date:</label>  <input type="datetime-local" id="update-edate" name="End_date" required>
+                                </div>
                         </div>
-
-                        <div class="form-group price-group">
-                            <label for="update-price">Price:</label>
-                            <input type="number" id="update-price" name="Price" required>
-                        </div>
-                        <div class="form-group Schedule-group">
-                            <label for="Schedule">Schedule Advertisement:</label>
-                            Start Date  <input type="datetime-local" id="update-sdate" name="Start_date" required>
-                            End Date  <input type="datetime-local" id="update-edate" name="End_date" required>
+                        <div class="form-row">
+                            <div class="form-item full-width">
+                                <div id="update-preview-wrapper">
+                                    <label><strong>Current Image Preview:</strong></label>
+                                    <img id="update-preview-image" src="" alt="Advertisement Image">
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="modal-actions">
@@ -334,7 +340,9 @@
 
         </div>
     </div>
-
+    <script>
+        const ROOT = "<?= ROOT ?>";
+    </script>
     <script src="<?= ROOT ?>/assets/JS/addAdd.js"></script>
 
 </body>

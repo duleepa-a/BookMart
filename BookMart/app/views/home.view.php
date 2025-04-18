@@ -17,9 +17,12 @@
     <div class="large-container"> 
     <div class="slider-container">
         <div class="slider">
-            <img src="<?= ROOT ?>/assets/Images/ad banner 3.jpg" alt="Ad Banner 3" class="slider-image"/>
-            <img src="<?= ROOT ?>/assets/Images/ad banner 2.jpg" alt="Ad Banner 2" class="slider-image"/>
-            <img src="<?= ROOT ?>/assets/Images/ad banner 1.png" alt="Ad Banner 1" class="slider-image"/>
+            <img src="<?= ROOT ?>/assets/Images/ads/ad banner 3.jpg" alt="Ad Banner 3" class="slider-image"/>
+            <?php if(isset($advertisments) && !empty($advertisments) ) :?>
+                <?php foreach($advertisments as $ad):?>
+                    <img src="<?= ROOT ?>/assets/Images/ads/<?= htmlspecialchars($ad->cover_image)?>" alt="<?= htmlspecialchars($ad->Advertisement_Description)?>" class="slider-image"/>
+                <?php endforeach;?>
+            <?php endif;?>
         </div>
         <button class="slider-prev"><i class="fa-solid fa-chevron-left fa-3x"></i></button>
         <button class="slider-next"><i class="fa-solid fa-chevron-right fa-3x"></i></button>

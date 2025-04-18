@@ -25,5 +25,8 @@ class Courier {
         'vehicle_type',
         'vehicle_model',
         'vehicle_registration_number',
+        'vehicle_registration_document',
+        'photo_of_driving_license',
+        'photo_nic'
     ];
 }

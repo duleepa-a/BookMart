@@ -12,7 +12,7 @@ class App{
             'AdminProfile' => ['index'],
             'AdminViewallusers' => ['index'],
             'AdminBookstoreRequests' => ['index'],
-            'Admin' => ['index','bookstoreView','viewBookStore','approve','reject','downloadEvidenceDoc'],
+            'Admin' => ['index','bookstoreView','viewBookStore','approve','reject','downloadEvidenceDoc','downloadCourierDoc','viewCourier'],
             'AdminViewbuyer' => ['index'],
             'AdminViewcourier' => ['index'],
             'AdminViewseller' => ['index'],
@@ -27,7 +27,7 @@ class App{
             
         ],
         'bookStore' => [
-            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','myProfile','markAsRead','requestAdvertisment','updateStoreDetails','updateOwnerDetails','uploadProfilePicture','deleteAdvertisment'],
+            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','myProfile','markAsRead','requestAdvertisment','updateStoreDetails','updateOwnerDetails','uploadProfilePicture','deleteAdvertisment','updateBankDetails' ,'coupons'],
             'Book' => ['addBook','updateBook','deleteBook'],
             'User' => ['like','changePassword'],
             'Payment' => ['payAd','adSuccess','adCancel'],

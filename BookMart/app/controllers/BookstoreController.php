@@ -324,6 +324,52 @@ class BookstoreController extends Controller{
         }
     }
 
+    public function updateBankDetails(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $bank = $_POST['bank'] ?? '';
+            $branchName = $_POST['branch-name'] ?? '';
+            $accountNumber = $_POST['account-number'] ?? '';
+            $accountName = $_POST['account-name'] ?? '';
+
+            $errors = [];
+
+            if (empty($bank)) $errors['bank'] = "Bank is required.";
+            if (empty($branchName)) $errors['branch-name'] = "Branch name is required.";
+            if (!preg_match('/^\d{6,20}$/', $accountNumber)) $errors['account-number'] = "Invalid account number.";
+            if (empty($accountName)) $errors['account-name'] = "Account holder name is required.";
+
+            if (empty($errors)) {
+                $storeModel = new BookStore();
+                $userId = $_SESSION['user_id'] ?? null;
+
+                if ($userId) {
+                    $store = $storeModel->first(['user_id' => $userId]);
+
+                    if ($store) {
+                        $storeModel->update($store->id, [
+                            'bank' => $bank,
+                            'branch_name' => $branchName,
+                            'account_number' => $accountNumber,
+                            'account_name' => $accountName,
+                        ]);
+
+                        $this->myProfile(); 
+                    } else {
+                        $_SESSION['error'] = "Store not found.";
+                        redirect('login');
+                    }
+                } else {
+                    $_SESSION['error'] = "You must be logged in.";
+                    redirect('login');
+                }
+            } else {
+                $_SESSION['form_errors'] = $errors;
+                $this->myProfile(); 
+            }
+        }
+    }
+
+
     public function uploadProfilePicture(){
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) {
             $image = $_FILES['profile_picture'];
@@ -368,6 +414,35 @@ class BookstoreController extends Controller{
             $_SESSION['error'] ='Invalid request';
             echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
         }
+    }
+
+    public function coupons(){
+
+        $coupons = [
+            (object)[
+                'id' => 1,
+                'code' => 'BCSD',
+                'discount' => 15.0,
+                'start_date' => '2025-04-18 20:46:00',
+                'end_date' => '2025-05-18 20:46:00'
+            ],
+            (object)[
+                'id' => 2,
+                'code' => 'WELCOME',
+                'discount' => 10.0,
+                'start_date' => '2025-04-20 00:00:00',
+                'end_date' => '2025-06-01 23:59:59'
+            ],
+            (object)[
+                'id' => 3,
+                'code' => 'BOOKMART50',
+                'discount' => 50.0,
+                'start_date' => '2025-04-25 12:00:00',
+                'end_date' => '2025-04-30 23:59:59'
+            ]
+        ];
+
+        $this->view('bookstoreCoupons',['coupons' => $coupons]);
     }
 
 }

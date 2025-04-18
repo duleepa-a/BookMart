@@ -22,6 +22,7 @@
             <li><a href="<?= ROOT ?>/BookstoreController/orders" class="active"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/getReviews"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/advertisments"><i class="fa-solid fa-up-right-from-square"></i>Ads & Offers</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/coupons"><i class="fa-solid fa-ticket"></i>Coupons</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/myProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
         </ul>   
     </div>
@@ -192,7 +193,7 @@
                         <th>Date Made</th>
                         <th>Customer Name</th>
                         <th>Shipping Address</th>
-                        <th>Customer Contact No</th>
+                        <th>Contact No</th>
                         <th>Shipped Date</th>
                         <th>Completed Date</th>
                         <th>Payment Amount</th>

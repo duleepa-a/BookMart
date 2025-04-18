@@ -35,6 +35,18 @@ class Admin extends Controller {
         }
     }
 
+    public function viewCourier($id) {
+        
+        $courierModel = new Courier();
+        $courier = $courierModel->first(["user_id" => $id]);
+    
+        if ($courier) {
+            $this->view('courierDetails', ['courier' => $courier]);
+        } else {
+        
+            $this->bookstoreView();
+        }
+    }
     
     public function approve() {
         $id = $_POST['id'];
@@ -65,6 +77,24 @@ class Admin extends Controller {
 
     public function downloadEvidenceDoc($filename = '') {
         $filepath = 'C:\xampp\htdocs\BookMart\public\assets\uploads\evidence_docs' .'\\' . basename($filename); 
+
+        if (file_exists($filepath)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($filepath) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($filepath));
+            readfile($filepath);
+            exit;
+        } else {
+            echo "File not found.";
+        }
+    }
+
+    public function downloadCourierDoc($filename = '') {
+        $filepath = 'C:\xampp\htdocs\BookMart\public\assets\uploads\courier_docs' .'\\' . basename($filename); 
 
         if (file_exists($filepath)) {
             header('Content-Description: File Transfer');

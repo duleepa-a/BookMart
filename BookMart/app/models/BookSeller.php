@@ -17,6 +17,10 @@ class BookSeller {
         'district',
         'province',
         'payment_method',
+        'bank',
+        'branch_name',
+        'account_number',
+        'account_name',
         'rating'
     ];
 }

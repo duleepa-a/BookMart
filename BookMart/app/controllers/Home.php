@@ -10,12 +10,17 @@ class Home extends Controller{
         $bookController = new Book();
         $articleController = new Articles();
         $bookStoreModel =new BookStore();
+        $adModel = new AdvModel();
 
         $newArrivals = $bookController->getNewArrivals();
         $bestSellers = $bookController->getBestSellers();
         $articles= $articleController->getNewArticles();
 
         $recommendBookstores=[];
+        $advertisments=[];
+
+        $advertisments = $adModel->findAll();
+
 
         if(isset($_SESSION['user_id']) && ($_SESSION['user_role'] == 'buyer' || $_SESSION['user_role'] == 'bookSeller' )){
 
@@ -25,7 +30,8 @@ class Home extends Controller{
         $data = ['newArrivals' => $newArrivals,
                  'bestSellers' => $bestSellers,
                  'articles' => $articles,
-                 'recommendBookstores' => $recommendBookstores
+                 'recommendBookstores' => $recommendBookstores,
+                 'advertisments' => $advertisments
                 ];
 
         if(isset($_SESSION['user_role']) &&  isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'active' ) {

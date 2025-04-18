@@ -129,6 +129,29 @@
                 </div>
             </div>
         </div>
+        <div class="card">
+            <div class="card-header">
+                Bank Details
+            </div>
+            <div class="card-body info-grid">
+                <div class="info-item">
+                    <div class="info-label">Bank</div>
+                    <div class="info-value"><?= htmlspecialchars($bookstore->bank) ?></div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Branch Name</div>
+                    <div class="info-value"><?= htmlspecialchars($bookstore->branch_name) ?></div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Account Holder's Name</div>
+                    <div class="info-value"><?= htmlspecialchars($bookstore->account_name) ?></div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Account Number</div>
+                    <div class="info-value"><?= htmlspecialchars($bookstore->account_number) ?></div>
+                </div>
+            </div>
+        </div>
         
         <div class="card">
             <div class="card-header">

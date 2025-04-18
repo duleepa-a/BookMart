@@ -42,10 +42,8 @@ class AdminAdvertisment extends Controller{
 
     public function addAdvertisement(){
         $advModel = new AdvModel();
-        echo("addAdvertisement");
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            echo("addAdvertisement POST in");
 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $advData = [
                 'Advertisement_Title' => htmlspecialchars(trim($_POST['Advertisement_Title'])),
                 'Advertisement_Description' => htmlspecialchars(trim($_POST['Advertisement_Description'])),
@@ -70,7 +68,7 @@ class AdminAdvertisment extends Controller{
                     }
                     if (!is_dir($uploadDir)) {
                         echo "Directory does not exist. Creating: $uploadDir<br>";
-                        mkdir($uploadDir, 0777, true); // Creates directory if missing
+                        mkdir($uploadDir, 0777, true); 
                     }
                     if (!is_writable($uploadDir)) {
                         echo "Directory is not writable: $uploadDir<br>";
@@ -79,32 +77,21 @@ class AdminAdvertisment extends Controller{
                         $advData['cover_image'] = $filename;
                     } else {
                         echo "Error uploading cover image!";
-                        // $this->view('addBook', $bookData);
                         return;
                     }
                 } else {
                     echo "Invalid file type!";
-                    // $this->view('addBook', $bookData);
                     return;
                 }
             }
-           
-
-            // Validate and save the book data
-            // if ($bookModel->validate($bookData)) {
-                echo("Validation passed");
                 if ($advModel->insert($advData)) {
                     redirect('adminAdvertisment');
                 } else {
                     echo "Something went wrong!";
                 }
-            // } else {
-            //     echo("Validation failed");
-                // $this->view('addBook', $bookData);
-            // }
         } else {
             echo("addAdvertisement GET request");
-            $this->view('addAdvertisement');
+            $this->view('adminAdvertisment');
         }
     }
 

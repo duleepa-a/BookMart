@@ -24,6 +24,7 @@
             <li><a href="<?= ROOT ?>/BookstoreController/orders"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/getReviews"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/advertisments"><i class="fa-solid fa-up-right-from-square"></i>Ads & Offers</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/coupons"><i class="fa-solid fa-ticket"></i>Coupons</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/myProfile" class="active"><i class="fa-regular fa-user"></i>Profile</a></li>
         </ul>   
     </div>
@@ -163,6 +164,7 @@
         <nav class="tabs">
             <button class="tab-button active first-child" onclick="showTab('store-details')">Store Details</button>
             <button class="tab-button" onclick="showTab('owner-details')">Owner Details</button>
+            <button class="tab-button" onclick="showTab('bank-details')">Bank Details</button>
             <button class="tab-button last-child" onclick="showTab('password-change')">Password change</button>
         </nav>
 
@@ -310,6 +312,47 @@
                 <br>    
             </div>
         </form>
+        <form id="bankDetailsForm" method="POST" class="registration-form" action="<?= ROOT ?>/BookstoreController/updateBankDetails">
+            <div class="tab-content" id="bank-details" style="display: none;">
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="bank">Bank:</label>
+                        <select id="bank" name="bank" required>
+                            <option value="" disabled <?= empty($store->bank) ? 'selected' : '' ?>>Choose Bank</option> 
+                            <option value="boc" <?= ($store->bank ?? '') === 'boc' ? 'selected' : '' ?>>Bank of Ceylon</option>
+                            <option value="sampath" <?= ($store->bank ?? '') === 'sampath' ? 'selected' : '' ?>>Sampath Bank</option>
+                            <option value="peoples" <?= ($store->bank ?? '') === 'peoples' ? 'selected' : '' ?>>People's Bank</option>
+                            <option value="hnb" <?= ($store->bank ?? '') === 'hnb' ? 'selected' : '' ?>>Hatton National Bank</option>
+                            <option value="nsb" <?= ($store->bank ?? '') === 'nsb' ? 'selected' : '' ?>>National Savings Bank</option>
+                            <option value="seylan" <?= ($store->bank ?? '') === 'seylan' ? 'selected' : '' ?>>Seylan Bank</option>
+                            <option value="dfcc" <?= ($store->bank ?? '') === 'dfcc' ? 'selected' : '' ?>>DFCC Bank</option>
+                            <option value="pan-asia" <?= ($store->bank ?? '') === 'pan-asia' ? 'selected' : '' ?>>Pan Asia Bank</option>
+                            <option value="nation-trust" <?= ($store->bank ?? '') === 'nation-trust' ? 'selected' : '' ?>>Nations Trust Bank</option>
+                            <option value="commercial-bank" <?= ($store->bank ?? '') === 'commercial-bank' ? 'selected' : '' ?>>Commercial Bank of Ceylon</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="branch-name">Branch Name:</label>
+                        <input type="text" id="branch-name" name="branch-name" placeholder="Enter branch name" value="<?= $store->branch_name ?? ''; ?>" required>
+                    </div>
+                </div>
+
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="account-number">Account Number:</label>
+                        <input type="text" id="account-number" name="account-number" placeholder="Enter account number" value="<?= $store->account_number ?? ''; ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="account-name">Account Holder's Name:</label>
+                        <input type="text" id="account-name" name="account-name" placeholder="Enter the account holder's name" value="<?= $store->account_name ?? ''; ?>" required>
+                    </div>
+                </div>
+
+                <button class="next-button" type="submit">Change & Save</button>
+                <br><br>
+            </div>
+        </form>
+
         <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/changePassword">
             <div class="tab-content" id="password-change" style="display: none;">
                 <div class="form-group-row">

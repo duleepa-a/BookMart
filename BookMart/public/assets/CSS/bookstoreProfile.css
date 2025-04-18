@@ -283,7 +283,17 @@ input{
     border: 1px solid #000000;
     font-size: 16px;
 }
-
+.form-group select {
+    display: block;
+    margin-bottom: 10px;
+    width: 540px;
+    padding: 10px;
+    border: 1px solid #000000;
+    font-size: 16px;
+    color: #ACA3A3;
+    font-weight: bold;
+    margin: auto;
+}
 .form-group input[type="file"] {
     width: 100%;
     padding: 10px;

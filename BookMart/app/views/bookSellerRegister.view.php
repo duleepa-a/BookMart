@@ -150,14 +150,38 @@
 
 
             <div class="tab-content" id="payment-details" style="display: none;">
+            <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="bank">Bank:</label>
+                        <select id="bank" name="bank" required>
+                            <option value="" disabled selected>Choose Bank</option> 
+                            <option value="boc">Bank of Ceylon</option>
+                            <option value="sampath">Sampath Bank</option>
+                            <option value="peoples">People's Bank</option>
+                            <option value="hnb">Hatton National Bank</option>
+                            <option value="nsb">National Savings Bank</option>
+                            <option value="seylan">Seylan Bank</option>
+                            <option value="dfcc">DFCC Bank</option>
+                            <option value="pan-asia">Pan Asia Bank</option>
+                            <option value="nation-trust">Nations Trust Bank</option>
+                            <option value="commercial-bank">Commercial Bank of Ceylon</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="branch-name">Branch Name:</label>
+                        <input type="text" id="branch-name" name="branch-name" placeholder="Enter branch-name" required>
+                    </div>
+                </div>
+
                 <div class="form-group-row">
                     <div class="form-group">
-                        <label for="payment-method">Payment Method:</label>
-                        <input type="text" id="payement-method" placeholder="Select your payment method" name="payment-method" >
+                        <label for="account-number">Account Number:</label>
+                        <input type="text" id="account-number" name="account-number" placeholder="Enter account number" required>
                     </div>
                     <div class="form-group">
+                        <label for="account-name">Account Holder's Name:</label>
+                        <input type="text" id="account-name" name="account-name" placeholder="Enter the account holder's name" required>
                     </div>
-                    
                 </div>
                 <div class="form-group-row">
                     <div class="form-group checkbox-group">
@@ -171,15 +195,13 @@
                         <label for="privacy"> I agree to the <a href="<?= ROOT ?>/privacyPolicy">Privacy Policy</a> detailing how my data will be collected, used, shared, and protected, including my rights regarding my data.</label>
                         
                     </div>
-                    
                 </div>
                 <button class="next-button" type="submit" >Register</button>
-                <br>
-                <br>
+                <br><br><br>
             </div>
         </form>
-        </div>
     </div>
+    <br><br>
     <script src="<?= ROOT ?>/assets/JS/buyerRegisterPage.js"></script>
 </body>
 </html>

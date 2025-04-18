@@ -86,7 +86,10 @@ class User extends Controller {
                     'city' => htmlspecialchars(trim($_POST['city'])),
                     'district' => htmlspecialchars(trim($_POST['district'])),
                     'province' => htmlspecialchars(trim($_POST['province'])),
-                    'payment_method' => htmlspecialchars(trim($_POST['payment-method'])) 
+                    'bank' => htmlspecialchars(trim($_POST['bank'])),
+                    'branch_name' => htmlspecialchars(trim($_POST['branch-name'])),
+                    'account_number' => htmlspecialchars(trim($_POST['account-number'])),
+                    'account_name' => htmlspecialchars(trim($_POST['account-name'])), 
                 ];
         
               
@@ -132,7 +135,10 @@ class User extends Controller {
                     'city' => htmlspecialchars(trim($_POST['city'])),
                     'district' => htmlspecialchars(trim($_POST['district'])),
                     'province' => htmlspecialchars(trim($_POST['province'])),
-                    'payment_method' => htmlspecialchars(trim($_POST['payment-method'])) // optional
+                    'bank' => htmlspecialchars(trim($_POST['bank'])),
+                    'branch_name' => htmlspecialchars(trim($_POST['branch-name'])),
+                    'account_number' => htmlspecialchars(trim($_POST['account-number'])),
+                    'account_name' => htmlspecialchars(trim($_POST['account-name'])),
                 ];
         
               
@@ -160,10 +166,7 @@ class User extends Controller {
         }
 
         public function registerCourier() {
-            echo("registerCourier");
-        
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                echo("registerCourier post in");
         
                 $userData = [
                     'username' => htmlspecialchars(trim($_POST['username'])),
@@ -188,32 +191,56 @@ class User extends Controller {
                     'branch_name' => htmlspecialchars(trim($_POST['branch-name'])),
                     'account_number' => htmlspecialchars(trim($_POST['account-number'])),
                     'account_name' => htmlspecialchars(trim($_POST['account-name'])),
-                    'vehicle_type' => htmlspecialchars(trim($_POST['vehical-type'])),
-                    'vehicle_model' => htmlspecialchars(trim($_POST['vehical-model'])),
-                    'vehicle_registration_number' => htmlspecialchars(trim($_POST['vehical-registration-number'])),
+                    'vehicle_type' => htmlspecialchars(trim($_POST['vehicle-type'])),
+                    'vehicle_model' => htmlspecialchars(trim($_POST['vehicle-model'])),
+                    'vehicle_registration_number' => htmlspecialchars(trim($_POST['vehicle-registration-number']))
                 ];
         
-            
+                $uploadDir = 'C:\xampp\htdocs\BookMart\public\assets\uploads\courier_docs';
+                if (!file_exists($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+        
+                $uploads = [
+                    'vehicle-registration-document' => 'vehicle_registration_document',
+                    'photo-of-driving-license' => 'photo_of_driving_license',
+                    'photo-nic' => 'photo_nic'
+                ];
+        
+                foreach ($uploads as $inputName => $fieldName) {
+                    if (isset($_FILES[$inputName]) && $_FILES[$inputName]['error'] === UPLOAD_ERR_OK) {
+                        $tmpName = $_FILES[$inputName]['tmp_name'];
+                        $originalName = basename($_FILES[$inputName]['name']);
+                        $newName = uniqid() . '_' . $originalName;
+                        $targetPath = $uploadDir .'\\'.$newName;
+        
+                        if (move_uploaded_file($tmpName, $targetPath)) {
+                            $courierData[$fieldName] = $newName;
+                        } else {
+                            $courierData[$fieldName] = null;
+                            echo "Failed to upload $inputName";
+                        }
+                    } else {
+                        $courierData[$fieldName] = null;
+                    }
+                }
+        
                 if ($this->userModel->validate($userData)) {
-                    echo("validate done");
-            
                     $userData['password'] = password_hash($userData['password'], PASSWORD_DEFAULT);
         
                     if ($this->userModel->registerCourier($userData, $courierData)) {
-                        echo "Registration successful!";
                         redirect('login');
                     } else {
-                        echo "Something went wrong!";
+                        echo "Something went wrong during registration!";
                     }
                 } else {
-                    echo("validate not done");
                     $this->view('courierRegister', $userData);
                 }
+        
             } else {
-                echo("registerCourier else");
                 $this->view('courierRegister');
             }
-        }
+        }        
 
         public function registerBookStore() {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {

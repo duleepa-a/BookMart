@@ -21,6 +21,7 @@
         <nav class="tabs">
             <button class="tab-button active first-child" onclick="showTab('store-details')">Store Details</button>
             <button class="tab-button" onclick="showTab('owner-details')">Owner Details</button>
+            <button class="tab-button" onclick="showTab('bank-details')">Bank Details</button>
             <button class="tab-button last-child" onclick="showTab('legal-agreements')">Legal Agreements</button>
         </nav>
 
@@ -173,6 +174,48 @@
                 </div>
                 <button class="next-button" onclick="showTab('legal-agreements')" type="button" >Next</button>
                 <br><br><br>
+            </div>
+
+            <div class="tab-content" id="bank-details" style="display: none;">
+                
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="bank">Bank:</label>
+                        <select id="bank" name="bank" required>
+                            <option value="" disabled selected>Choose Bank</option> 
+                            <option value="boc">Bank of Ceylon</option>
+                            <option value="sampath">Sampath Bank</option>
+                            <option value="peoples">People's Bank</option>
+                            <option value="hnb">Hatton National Bank</option>
+                            <option value="nsb">National Savings Bank</option>
+                            <option value="seylan">Seylan Bank</option>
+                            <option value="dfcc">DFCC Bank</option>
+                            <option value="pan-asia">Pan Asia Bank</option>
+                            <option value="nation-trust">Nations Trust Bank</option>
+                            <option value="commercial-bank">Commercial Bank of Ceylon</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="branch-name">Branch Name:</label>
+                        <input type="text" id="branch-name" name="branch-name" placeholder="Enter branch-name" required>
+                    </div>
+                </div>
+
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="account-number">Account Number:</label>
+                        <input type="text" id="account-number" name="account-number" placeholder="Enter account number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="account-name">Account Holder's Name:</label>
+                        <input type="text" id="account-name" name="account-name" placeholder="Enter the account holder's name" required>
+                    </div>
+                </div>
+
+                <br>
+                <button class="next-button" onclick="showTab('vehical-details')" type="button">Next</button>
+                <br><br><br>
+
             </div>
 
             <div class="tab-content" id="legal-agreements" style="display: none;">

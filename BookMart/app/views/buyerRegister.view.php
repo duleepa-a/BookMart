@@ -22,7 +22,7 @@
         <nav class="tabs">
             <button class="tab-button active first-child" onclick="showTab('login-credentials')">Login Credentials</button>
             <button class="tab-button" onclick="showTab('personal-details')">Personal Details</button>
-            <button class="tab-button last-child" onclick="showTab('payment-details')">Payment Details</button>
+            <button class="tab-button last-child" onclick="showTab('payment-details')">Terms and Conditions</button>
         </nav>
 
         <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/registerBuyer" >
@@ -152,18 +152,7 @@
 
 
             <div class="tab-content" id="payment-details" style="display: none;">
-                <div class="form-group-row">
-                    <div class="form-group">
-                        <label for="payment-method">Payment Method:</label>
-                        <input type="text" id="payement-method" placeholder="Select your payment method" name="payment-method" >
-                    </div>
-                    <div class="form-group">
-                        <!-- <label for="evidence-docs">Add your card details:</label>
-                        <button class="form-bttn" type="button">Add</button>
-                        <span style="color: #ACA3A3; margin-left: 5px;">(optional)</span>  -->
-                    </div>
-                    
-                </div>
+                <br>
                 <div class="form-group-row">
                     <div class="form-group checkbox-group">
                         <!-- <label for="TermsAndConditions" id="terms">Terms and Conditions:</label> <br> -->
