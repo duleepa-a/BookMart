@@ -37,7 +37,15 @@ class Home extends Controller{
         if(isset($_SESSION['user_id']) && ($_SESSION['user_role'] == 'courier')){
                 $ordersModel = new Order();
                 $orders = $ordersModel->where(['order_status' => 'pending']);
-                $courierLocation = $_SESSION['courier_location'] ?? 'Colombo, Sri Lanka'; 
+                $courierModel = new Courier();
+                $courierData = $courierModel->where(['user_id' => $_SESSION['user_id']]);
+
+                if (!empty($courierData)) {
+                    $courier = $courierData[0];
+                    $courierLocation = $courier->address_line_1 . ', ' . $courier->address_line_2 . ', ' . $courier->city;
+                } else {
+                    $courierLocation = 'Colombo, Sri Lanka'; // fallback
+                } 
                 $apiKey = 'AIzaSyCMW0Zg_K7LthAMmLiUjF_XsEaWcQOgqa0'; 
                 $orders = $this->calculateAndSortOrdersByDistance($orders, $courierLocation, $apiKey);
         }        
