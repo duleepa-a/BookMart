@@ -50,7 +50,7 @@ class Articles extends Controller {
     }
 
     public function create() {
-        $this->view('articleCreation');
+        $this->view('articleUpdate');
     }
 
     public function update($article_id) {
