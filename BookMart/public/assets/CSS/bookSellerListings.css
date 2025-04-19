@@ -27,7 +27,7 @@ body{
     padding: 10px 50px;
     position: sticky;
     top: 65px;
-    z-index: 1000;
+    z-index: 900;
 }
 
 .controls button, .controls input {

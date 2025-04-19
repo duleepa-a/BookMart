@@ -55,7 +55,13 @@
                             <p><?= substr(htmlspecialchars($article->Content), 0, 200) ?>...</p>
                         </div>
                         <div class="article-footer">
-                            <p></p>
+                            <?php if (($_SESSION['user_role'] == 'bookSeller') && ($data['selectedTab'] == 'myArticles')): ?>
+                                <a href="<?= ROOT ?>/articles/update/<?= htmlspecialchars($article->ID) ?>" class="read-more">
+                                Update</i>
+                            </a>
+                            <?php else: ?>
+                                <p></p>
+                            <?php endif; ?>
                             <a href="<?= ROOT ?>/articles/detail/<?= htmlspecialchars($article->ID) ?>" class="read-more">
                                 Read More <i class="fa-solid fa-arrow-right"></i>
                             </a>
