@@ -23,7 +23,22 @@
     <br><br>
     <center>
     <div class="background-box">
-        <h1 class="title-text">Latest Articles</h1>
+        <h1 class="title-text">Articles</h1>
+
+        <?php if ($_SESSION['user_role'] == 'bookSeller'): ?>
+
+            <div class="articles-tabs">
+                <form method="get" style="display:inline;">
+                    <input type="hidden" name="view" value="latest">
+                    <button type="submit" class="articles-tab <?= ($data['selectedTab'] == 'latest') ? 'selected' : '' ?>">Latest Articles</button>
+                </form>
+                <form method="get" style="display:inline;">
+                    <input type="hidden" name="view" value="myArticles">
+                    <button type="submit" class="articles-tab <?= ($data['selectedTab'] == 'myArticles') ? 'selected' : '' ?>">My Articles</button>
+                </form>
+            </div>
+
+        <?php endif; ?>
 
         <div class="articles-container">
             <?php if (!empty($data['articles'])): ?>
@@ -52,6 +67,7 @@
                         <?php if ($data['hasPrevious']): ?>
                             <form method="get" style="display:inline;">
                                 <input type="hidden" name="page" value="<?= $data['page'] - 1 ?>">
+                                <input type="hidden" name="view" value="<?= $data['selectedTab'] ?>">
                                 <button type="submit" class="view-more-button">Previous</button>
                             </form>
                         <?php endif; ?>
@@ -61,6 +77,7 @@
                         <?php if ($data['hasNext']): ?>
                             <form method="get" style="display:inline;">
                                 <input type="hidden" name="page" value="<?= $data['page'] + 1 ?>">
+                                <input type="hidden" name="view" value="<?= $data['selectedTab'] ?>">
                                 <button type="submit" class="view-more-button">Next</button>
                             </form>
                         <?php endif; ?>

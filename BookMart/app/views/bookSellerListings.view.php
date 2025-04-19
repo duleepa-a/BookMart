@@ -32,7 +32,7 @@
             <button>Search</button>
         </div>                      <!-- First row division end -->
 
-        <div class="controls">
+        <div class="controls" style="background-color:white">
             <button class="select-all-button">Select All</button>
             <button class="edit-button" disabled>Edit</button>
             <button class="auction-button" disabled>Create Auction</button>
