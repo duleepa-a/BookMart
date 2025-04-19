@@ -59,6 +59,7 @@ class Articles extends Controller {
     
     public function addArticle() {
         $articleModel = new ArticleModel();
+        $notificationModel = new NotificationModel();
         
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
