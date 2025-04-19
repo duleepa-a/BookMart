@@ -2,16 +2,31 @@
 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 ?>
 
+<?php if ($_SESSION['user_role'] == 'bookSeller'): ?>
 <div class="sidebar">
         <ul>
             <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button></li>
+            <li><button class="add-book-bttn" onClick="location.href='<?= ROOT ?>/articles/create';"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Create Article</button></li>
             <li><a href="<?= ROOT ?>/bookSellerListings" class="<?= strpos($currentPath, '/bookSellerListings') !== false ? 'active' : '' ?>" class="active" ><i class="fa-solid fa-book"></i>My Listings</a></li>
             <li><a href="<?= ROOT ?>/auctions" class="<?= strpos($currentPath, '/auctions') !== false ? 'active' : '' ?>"><i class="fa-solid fa-chart-column"></i>Auctions</a></li>
             <li><a href="<?= ROOT ?>/articles" class="<?= strpos($currentPath, '/articles') !== false && strpos($currentPath, '/myArticles') === false ? 'active' : '' ?>"><i class="fa-solid fa-cart-plus"></i>Articles</a></li>
-            <li><a href="<?= ROOT ?>/articles/myArticles" class="<?= strpos($currentPath, '/articles/myArticles') !== false ? 'active' : '' ?>"><i class="fa-solid fa-comment-dots"></i>My Articles</a></li>
             <li><a href="<?= ROOT ?>/bookSellerProfile" class="<?= strpos($currentPath, '/bookSellerProfile') !== false ? 'active' : '' ?>"><i class="fa-regular fa-user"></i>Profile</a></li>
         </ul>   
 </div>
+<?php elseif ($_SESSION['user_role'] == 'buyer'): ?>
+    <div class="sidebar">
+        <ul>
+            <li><a href="<?= ROOT ?>/bookSellerListings" class="<?= strpos($currentPath, '/bookSellerListings') !== false ? 'active' : '' ?>" class="active" ><i class="fa-solid fa-book"></i>My Listings</a></li>
+            <li><a href="<?= ROOT ?>/auctions" class="<?= strpos($currentPath, '/auctions') !== false ? 'active' : '' ?>"><i class="fa-solid fa-chart-column"></i>Auctions</a></li>
+            <li><a href="<?= ROOT ?>/articles" class="<?= strpos($currentPath, '/articles') !== false && strpos($currentPath, '/myArticles') === false ? 'active' : '' ?>"><i class="fa-solid fa-cart-plus"></i>Articles</a></li>
+            <li><a href="<?= ROOT ?>/bookSellerProfile" class="<?= strpos($currentPath, '/bookSellerProfile') !== false ? 'active' : '' ?>"><i class="fa-regular fa-user"></i>Profile</a></li>
+        </ul>   
+    </div>
+<?php elseif ($_SESSION['user_role'] == 'admin'): ?>
+
+<?php elseif ($_SESSION['user_role'] == 'bookStore'): ?>
+
+<?php endif; ?>
 
 <div class="container"> 
     <div id="add-book-modal"class="modal hidden">

@@ -22,6 +22,36 @@ body {
     color: #BE5715;
 }
 
+.articles-tabs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.articles-tab {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+}
+
+.articles-tab:hover {
+    background-color: #e2e2e2;
+}
+
+.articles-tab.selected {
+    background-color: #007BFF;
+    color: white;
+    border-color: #007BFF;
+}
+
 .articles-container {
     display: flex;
     flex-direction: column;
