@@ -13,7 +13,16 @@ class CourierCompletedOrderDetails extends Controller{
         $orders = $ordersModel->where(['order_id' => $order_id]);
         }
 
-        $this->view('courierCompletedOrderDetails',['orders'=>$orders]);
+        //**** */
+        if (!empty($orders)) {
+            $courier = $orders[0];
+            $buyer_id = $courier->buyer_id ;
+        }
+
+        $buyerModel = new BuyerModel();
+        $buyer = $buyerModel->where(['id' => $buyer_id]);
+
+        $this->view('courierCompletedOrderDetails',['orders'=>$orders,'buyer'=>$buyer]);
     }
 
     public function delete() {

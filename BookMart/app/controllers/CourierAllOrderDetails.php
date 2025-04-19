@@ -12,15 +12,16 @@ class CourierAllOrderDetails extends Controller{
         $orders = $ordersModel->where(['order_id' => $order_id]);
         }
 
-        // if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        //     $buyer_id =$_POST['buyer_id'];
+        //**** */
+        if (!empty($orders)) {
+            $courier = $orders[0];
+            $buyer_id = $courier->buyer_id ;
+        }
 
-        // $buyerModel = new BuyerModel();
-        // $buyer = $buyerModel->where(['id' => $buyer_id]);
+        $buyerModel = new BuyerModel();
+        $buyer = $buyerModel->where(['id' => $buyer_id]);
 
-        // }
-
-        $this->view('courierAllOrderDetails',['orders'=>$orders]);
+        $this->view('courierAllOrderDetails',['orders'=>$orders,'buyer'=>$buyer]);
     }
 
 }

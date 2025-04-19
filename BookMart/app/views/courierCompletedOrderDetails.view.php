@@ -21,6 +21,8 @@
 
             <?php if(!empty($orders)): ?>
                 <?php foreach ($orders as $orderOne ): ?>
+                    <?php if ($buyer && is_array($buyer)) : ?>
+                        <?php foreach ($buyer as $buyerOne): ?>
             
 
                 <form id="courierOrderDetails" action="<?= ROOT ?>/CourierCompletedOrderDetails/delete" enctype="multipart/form-data" method="POST">
@@ -34,10 +36,10 @@
                 <input type="text" name="shipping_address" id="shipping_address" value="<?= $orderOne->shipping_address ?>" readonly>
 
                 <label>Customer Name:</label>
-                <input type="text" id="full_name" value=" " readonly>
+                <input type="text" id="full_name" value="<?= $buyerOne->full_name ?> " readonly>
 
                 <label>Contact Number:</label>
-                <input type="text" id="phone_number" value=" " readonly>
+                <input type="text" id="phone_number" value="<?= $buyerOne->phone_number ?> " readonly>
 
                 <label>Payment Amount:</label>
                 <input type="text" id="total_amount" value="<?= $orderOne->total_amount ?>" readonly>
@@ -50,7 +52,8 @@
                 
                 <button type="submit" class="accept-button">Delete</button>
 
-                
+                <?php endforeach; ?>
+                <?php endif; ?>
                 <?php endforeach; ?>
                 <?php else: ?>
                     <p>No orders</p>
