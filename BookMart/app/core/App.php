@@ -28,7 +28,7 @@ class App{
             
         ],
         'bookStore' => [
-            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','myProfile','markAsRead','requestAdvertisment','updateStoreDetails','updateOwnerDetails','uploadProfilePicture','deleteAdvertisment','updateBankDetails' ,'coupons'],
+            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','orderView','confirmPickup','myProfile','markAsRead','addReply','requestAdvertisment','updateStoreDetails','updateOwnerDetails','uploadProfilePicture','deleteAdvertisment','updateBankDetails' ,'coupons'],
             'Book' => ['addBook','updateBook','deleteBook'],
             'User' => ['like','changePassword'],
             'Payment' => ['payAd','adSuccess','adCancel'],
@@ -53,17 +53,11 @@ class App{
             'Payment' => ['index','checkOut','process','success','cancel','cartView','addToCart','cartCheckout','cartSuccess','increase','decrease','deleteSelected','clear','removeBook','deleteSelected']
         ],
         'courier' => [
-            'CourierHome' => ['index', 'viewOrders'], 
             'CourierProfile' => ['index'],
-            'CourierOrders' => ['index'],
-            'CourierOrderDetails' => ['index','create'],
+            'CourierOrderDetails' => ['index','create','update','delete','OrderPage'],
             'CourierEarns' => ['index'],
             'CourierComplains' => ['index','create'],
-            'CourierAllOrderDetails' => ['index'],
             'Map' =>['index'],
-            'CourierAcceptedOrderDetails' => ['index','update'],
-            'CourierPendingOrderDetails'=> ['index','update'],
-            'CourierCompletedOrderDetails'=> ['index','delete']
         ]
     ];
     

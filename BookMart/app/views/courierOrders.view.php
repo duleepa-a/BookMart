@@ -12,73 +12,72 @@
     <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <?php include 'courierNavbar.view.php'; ?> 
+    <?php include 'homeNavBar.view.php'; ?>
     <div class="sidebar">
         <ul>
             <h1 class="sidebar-heading">Welcome Back Courier!</h1>
             <li><a href="<?= ROOT ?>/" ><i class="fa fa-home"></i> Home</a></li>
             <li><a href="<?= ROOT ?>/courierEarns"><i class="fa fa-money"></i> Earnings</a></li>
-            <li><a href="<?= ROOT ?>/courierOrders" class="active"><i class="fa fa-clock"></i> Orders</a></li>
-            <li><a href="<?= ROOT ?>/courierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
+            <li><a href="<?= ROOT ?>/CourierOrderDetails/OrderPage" class="active"><i class="fa fa-clock"></i> My Orders</a></li>
+            <li><a href="<?= ROOT ?>/courierComplains"><i class="fa-solid fa-circle-exclamation"></i> Complains</a></li>
             <li><a href="<?= ROOT ?>/courierProfile"><i class="fa fa-user"></i> Profile</a></li>
         </ul>   
     </div>
     <div class="container">
         
-            <h1 class="mtopic">Orders</h1> 
+            <h1 class="mtopic">My Orders</h1> 
             
             <br>
             <nav class="tabs">
                 <button class="tab-button active first-child" onclick="showTab('all-orders')">All</button>
                 <button class="tab-button" onclick="showTab('accepted-orders')">Accepted</button>
-                <button class="tab-button" onclick="showTab('pending-orders')">Pending</button>
+                <button class="tab-button" onclick="showTab('pending-orders')">Received From the bookstore</button>
                 <button class="tab-button last-child" onclick="showTab('completed-orders')">Completed</button>
             </nav>
     
-            <form id="registerForm" method="POST" class="registration-form"   >
                 <div class="tab-content" id="all-orders">
                     
                     <div class="order-list" >
-                    <?php if(!empty($Order)): ?>
-                        <?php foreach ($Order as $contactdetails): ?>
-                        <div class="order-card">
-                        
-                                
-                            <h3>Order ID :<?= $contactdetails->order_id ?></h3>
-                            <p>Pickup location:<?= $contactdetails->pickup_location ?></p>
-                            <p>Delivery location:<?= $contactdetails->shipping_address ?></p>
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <p><i><small>Deadline: <?= $contactdetails->timeframe ?></small></i></p>
-                                </div>
-                                <div class="form-group">
-                                    <p>Estimated Distance: <?= $contactdetails->distance ?>km</p>
-                                </div>
-
-                                <div class="form-group">
-                                <form id="viewDetails" method="POST"  action="<?= ROOT ?>/map/index">
-                                <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
-                                <button class="map-btn">Map</button>
-                                </form>
-                                </div>
-
-                                <div class="form-group">
-
-                                    <form id="viewDetails" method="POST"  action="<?= ROOT ?>/courierAllOrderDetails/index">
-                                    <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
-                                    <!-- <input type="hidden" name="buyer_id" value=" "> -->
-
-                                    <button class="view-btn">View</button>
-                                    </form>
-
-                                </div>
-                            </div>
+                        <?php if(!empty($Order)): ?>
+                            <?php foreach ($Order as $contactdetails): ?>
+                            <div class="order-card">
                             
-                        </div>
-                        <?php endforeach; ?>
-                        <?php else: ?>
-                            <p>No Orders</p>
-                        <?php endif; ?>
+                                    
+                                <h3>Order ID :<?= $contactdetails->order_id ?></h3>
+                                <p>Pickup location:<?= $contactdetails->pickup_location ?></p>
+                                <p>Delivery location:<?= $contactdetails->shipping_address ?></p>
+                                <div class="form-group-row">
+                                    <div class="form-group">
+                                        <p><i><small>Deadline: <?= $contactdetails->timeframe ?></small></i></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <p>Estimated Distance: <?= $contactdetails->distance ?>km</p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <form id="viewDetails" method="POST"  action="<?= ROOT ?>/map/index">
+                                        <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                        <button class="map-btn" type="submit">Map</button>
+                                    </form>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <form id="viewDetails" method="POST"  action="<?= ROOT ?>/CourierOrderDetails/">
+                                            <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                            <button class="view-btn" type="submit">View</button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <?php endforeach; ?>
+                            <?php else: ?>
+                            <div class="message-div">
+                                <p>No Orders</p>
+                            </div>
+                            <?php endif; ?>
                     </div>
                     
 
@@ -106,24 +105,24 @@
 
                                 <div class="form-group">
                                 <form id="viewDetails" method="POST"  action="<?= ROOT ?>/map/index">
-                                <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
-                                <button class="map-btn">Map</button>
+                                    <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                    <button class="map-btn" type="submit">Map</button>
                                 </form>
                                 </div>
 
                                 <div class="form-group">
-                                <form id="viewDetails" method="POST"  action="<?= ROOT ?>/courierAcceptedOrderDetails/index">
-                                    <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
-                                    <!-- <input type="hidden" name="buyer_id" value=" "> -->
-
-                                    <button type="submit" class="view-btn">View</button>
+                                    <form id="viewDetails" method="POST"  action="<?= ROOT ?>/CourierOrderDetails/">
+                                                <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                                <button class="view-btn" type="submit">View</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                         <?php endforeach; ?>
                         <?php else: ?>
+                        <div class="message-div">
                             <p>No Orders</p>
+                        </div>
                         <?php endif; ?>
                     
                     
@@ -153,24 +152,24 @@
 
                                 <div class="form-group">
                                 <form id="viewDetails" method="POST"  action="<?= ROOT ?>/map/index">
-                                <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
-                                <button class="map-btn">Map</button>
+                                    <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                    <button class="map-btn" type="submit">Map</button>
                                 </form>
                                 </div>
 
                                 <div class="form-group">
-                                <form id="viewDetails" method="POST"  action="<?= ROOT ?>/courierPendingOrderDetails/index">
-                                    <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
-                                    <!-- <input type="hidden" name="buyer_id" value=" "> -->
-
-                                    <button type="submit" class="view-btn">View</button>
-                                    </form>
+                                        <form id="viewDetails" method="POST"  action="<?= ROOT ?>/CourierOrderDetails/">
+                                            <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                            <button class="view-btn" type="submit">View</button>
+                                        </form>
                                 </div>
                             </div>
                         </div>
                         <?php endforeach; ?>
                     <?php else: ?>
+                    <div class="message-div">
                         <p>No Orders</p>
+                    </div>
                     <?php endif; ?>
                     </div>
         
@@ -196,27 +195,25 @@
                                     <p>Estimated Distance: <?= $contactdetails->distance ?>km</p>
                                 </div>
                                 <div class="form-group">
-                                <form id="viewDetails" method="POST"  action="<?= ROOT ?>/courierCompletedOrderDetails/index">
-                                    <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
-                                    <!-- <input type="hidden" name="buyer_id" value=" "> -->
-
-                                    <button type="submit" class="view-btn">View</button>
-                                    </form>
+                                        <form id="viewDetails" method="POST"  action="<?= ROOT ?>/CourierOrderDetails/">
+                                            <input type="hidden" name="order_id" value="<?= $contactdetails->order_id ?>">
+                                            <button class="view-btn" type="submit">View</button>
+                                        </form>
                                 </div>
                             </div>
                         </div>
                     
                         <?php endforeach; ?>
                     <?php else: ?>
+                    <div class="message-div">
                         <p>No Orders</p>
-                    <?php endif; ?>    
-        
                     </div>
-    
+                    <?php endif; ?>    
+                    </div>
                     <br>
                     <br>
                 </div>
-            </form>
+   
     </div>
 
 

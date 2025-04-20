@@ -333,6 +333,11 @@ button.prev:hover, button.next:hover {
     border-bottom: 1px solid #f7f2f2;
     padding: 15px;
   }
+
+  .reply{
+    background-color: #fbfbfb;
+    padding-left: 100px;
+  }
   
   /* Card header with username and date */
   .card-header {

@@ -12,15 +12,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <?php include 'courierNavbar.view.php'; ?> 
+    <?php include 'homeNavBar.view.php'; ?>
     <div class="sidebar">
     <ul>
         <h1 class="sidebar-heading">Welcome Back Courier!</h1>
         <li><a href="<?= ROOT ?>/" ><i class="fa fa-home"></i> Home</a></li>
         <li><a href="<?= ROOT ?>/courierEarns"><i class="fa fa-money"></i> Earnings</a></li>
-        <li><a href="<?= ROOT ?>/courierOrders"><i class="fa fa-clock"></i> Orders</a></li>
-        <li><a href="<?= ROOT ?>/courierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
-        <li><a href="<?= ROOT ?>/courierProfile" class="active"><i class="fa fa-user"></i> Profile</a></li>
+        <li><a href="<?= ROOT ?>/CourierOrderDetails/OrderPage"><i class="fa fa-clock"></i> My Orders</a></li>
+        <li><a href="<?= ROOT ?>/courierComplains"><i class="fa-solid fa-circle-exclamation"></i> Complains</a></li>
+        <li><a href="<?= ROOT ?>/CourierOrderDetails/OrderPage" class="active"><i class="fa fa-user"></i> Profile</a></li>
     </ul>   
     </div>
     <div class="container">

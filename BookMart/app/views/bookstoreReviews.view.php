@@ -171,7 +171,11 @@
                             <?php endfor; ?>
                         </td>
                         <td>
-                            <button class="reply-btn" data-user="<?= $review->buyer_id ?>">Reply</button>
+                        <?php if(empty($review->reply)): ?>
+                            <button class="reply-btn" data-review-id="<?= $review->id ?>"">Reply</button>
+                        <?php else:?>
+                            Reply : <?= htmlspecialchars($review->reply) ?>
+                        <?php endif; ?>
                             <?php if ($review->is_read == 0 ): ?><button class="read-btn" data-review="<?= $review->id ?>">Mark as Read</button><?php endif; ?>
                         </td>
                     </tr>
@@ -185,17 +189,34 @@
         </div>
             <?php endif; ?>
     </div>
+    <div id="reply-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <form class="add-book-form" method="POST" action="<?= ROOT ?>/BookstoreController/addReply" enctype="multipart/form-data">
+                <h2 class="full-width">Add Reply</h2>
+                <input type="hidden" id="replyReviewId" name="review_id"/>
+                <!-- Advertisement Title -->
+                <div class="form-row full-width">
+                    <div class="form-group">
+                        <div>
+                            <label for="ad_title">Reply:</label>
+                            <textarea id="reply" name="reply" rows="6" required></textarea>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Actions -->
+                <div class="modal-actions">
+                    <button type="submit">Post Reply</button>
+                    <button type="button" class="close-modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <footer class="small-footer">
             <p>&copy; 2024 BookMart, all rights reserved.</p>
     </footer> 
     <script src="<?= ROOT ?>/assets/JS/bookstoreHome.js"></script>
     <script>
-        document.querySelectorAll('.reply-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                const userId = this.getAttribute('data-user');
-                window.location.href = `<?= ROOT ?>/chat/chatbox/${userId}`;
-            });
-        });
         document.querySelectorAll('.read-btn').forEach(btn => {
             btn.addEventListener('click', function () {
                 const reviewId = this.getAttribute('data-review');
@@ -227,6 +248,39 @@
                 });
             });
         });
+
+        const replyButton = document.querySelector('.reply-btn');
+        const replymodal = document.getElementById('reply-modal');
+
+        // Show modal
+        replyButton.addEventListener('click', () => {
+            replymodal.classList.add('active');
+            const reviewId = event.target.dataset.reviewId;
+            console.log("Review ID:", reviewId);
+            document.getElementById('replyReviewId').value = reviewId;
+
+        });
+
+        replymodal.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                modal.classList.remove('active');
+            }
+        });;
+        document.querySelectorAll(".close-modal").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                btn.closest(".modal").classList.remove('active');
+            });
+        });
+
+        document.querySelectorAll(".modal-overlay").forEach((overlay) => {
+            overlay.addEventListener("click", () => {
+                overlay.closest(".modal").classList.remove('active');
+            });
+        });
+
+
+
     </script>
 </body>
 </html>

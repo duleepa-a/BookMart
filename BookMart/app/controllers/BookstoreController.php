@@ -96,6 +96,19 @@ class BookstoreController extends Controller{
         $this->getReviews();
     }
 
+    public function addReply(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $reviewModel = new ReviewModel();
+            
+            $reply = $_POST['reply'];
+            $reviewid = $_POST['review_id'];
+            
+            $reviewModel->update($reviewid,['reply' => $reply]);
+
+            $this->getReviews();
+        }
+    }
+
     public function Analytics(){
         $this->view('bookstoreAnalytics');
     }
@@ -144,7 +157,66 @@ class BookstoreController extends Controller{
 
         $this->view('bookstoreOrders', ['orders' => $orders , 'count' => $count]);
     }
+
+    public function orderView($orderId){
+
+        $orderModel = new Order();
+        $buyerModel = new BuyerModel();
+        $courierModel = new Courier();
+        $bookModel = new  BookModel();
+
+        $order = $orderModel->first(['order_id' => $orderId]);
+        $buyer = $buyerModel->first(['user_id' => $order->buyer_id]);
+        $courier = $courierModel->first(['user_id' => $order->courier_id]);
+        $book = $bookModel->first(['id' => $order->book_id]);
+
+        $data =[
+               'order' => $order,
+               'book' => $book,
+               'buyer' => $buyer,
+               'courier' => $courier 
+        ];
+
+        $this->view('bookstoreOrderView',$data);        
+    }
     
+    public function confirmPickup(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents("php://input"), true);
+
+            $orderId = $data['order_id'] ?? null;
+            $pickupCode = trim($data['pickup_code'] ?? '');
+
+            if (!$orderId || !$pickupCode) {
+                echo json_encode(['success' => false, 'message' => 'Missing order ID or pickup code.']);
+                return;
+            }
+
+            $orderModel = new Order();
+            $order = $orderModel->first(['order_id' => $orderId]);
+
+            if (!$order) {
+                echo json_encode(['success' => false, 'message' => 'Order not found.']);
+                return;
+            }
+
+            if ($order->pinCode != $pickupCode) {
+                echo json_encode(['success' => false, 'message' => 'Incorrect pickup code.'.$order->pinCode]);
+                return;
+            }
+
+            $orderModel->update($orderId, [
+                'order_status' => 'shipping',
+                'shipped_date' => date('Y-m-d H:i:s')
+            ]);
+
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
+        }
+    }
+
+
     public function myProfile(){
         $storeModel = new BookStore;
         $userModel = new UserModel();

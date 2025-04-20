@@ -37,9 +37,14 @@ class Home extends Controller{
         if(isset($_SESSION['user_id']) && ($_SESSION['user_role'] == 'courier')){
                 $ordersModel = new Order();
                 $orders = $ordersModel->where(['order_status' => 'pending']);
+
+                $filteredOrders = array_filter($orders, function($order) {
+                    return is_null($order->courier_id);
+                });        
+
                 $courierLocation = $_SESSION['courier_location'] ?? 'Colombo, Sri Lanka'; 
                 $apiKey = 'AIzaSyCMW0Zg_K7LthAMmLiUjF_XsEaWcQOgqa0'; 
-                $orders = $this->calculateAndSortOrdersByDistance($orders, $courierLocation, $apiKey);
+                $orders = $this->calculateAndSortOrdersByDistance($filteredOrders, $courierLocation, $apiKey);
         }        
 
         if(isset($_SESSION['user_role']) &&  isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'active' ) {
@@ -56,7 +61,7 @@ class Home extends Controller{
                     $this->view('bookSellerHome',$data);
                     break;
                 case 'courier':
-                    $this->view('courierHome',['orders'=>$orders]);
+                    $this->view('courierHome',['orders'=> $orders]);
                     break;
                 case 'buyer':
                     $this->view('buyerHome',$data);
@@ -93,7 +98,7 @@ class Home extends Controller{
         $data = json_decode($response, true);
 
         if ($data['status'] === 'OK' && $data['rows'][0]['elements'][0]['status'] === 'OK') {
-            return $data['rows'][0]['elements'][0]['distance']['value']; // meters
+            return $data['rows'][0]['elements'][0]['distance']['value'];
         } else {
             return PHP_INT_MAX;
         }

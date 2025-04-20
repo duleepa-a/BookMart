@@ -14,15 +14,15 @@
 </head>
 <body>
 
-    <?php include 'courierNavbar.view.php'; ?>
+    <?php include 'homeNavBar.view.php'; ?>
     
     <div class="sidebar">
         <ul>
             <h1 class="sidebar-heading">Welcome Back Courier!</h1>
             <li><a href="<?= ROOT ?>/"  class="active"><i class="fa fa-home"></i> Home</a></li>
             <li><a href="<?= ROOT ?>/courierEarns"><i class="fa fa-money"></i> Earnings</a></li>
-            <li><a href="<?= ROOT ?>/courierOrders"><i class="fa fa-clock"></i> Orders</a></li>
-            <li><a href="<?= ROOT ?>/courierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
+            <li><a href="<?= ROOT ?>/CourierOrderDetails/OrderPage"><i class="fa fa-clock"></i> My Orders</a></li>
+            <li><a href="<?= ROOT ?>/courierComplains"><i class="fa-solid fa-circle-exclamation"></i> Complains</a></li>
             <li><a href="<?= ROOT ?>/courierProfile"><i class="fa fa-user"></i> Profile</a></li>
         </ul>
     </div>
@@ -43,7 +43,7 @@
                     <?php foreach ($orders as $orderOne ): ?>
 
                     <div class="order-card">
-                        <h3>Order ID    : <?= $orderOne->order_id ?></h3>
+                        <h3>Order ID    : <?= $orderOne->order_id?></h3>
                         <p>Pickup location:  <?= $orderOne->pickup_location ?></p>
                         <p>Delivery location:  <?= $orderOne->shipping_address ?></p>
                         <div class="form-group-row">

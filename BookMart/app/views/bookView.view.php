@@ -127,6 +127,16 @@
                             <span class="like-count"><?= htmlspecialchars($review->likes) ?></span>
                         </div>
                     </div>
+                    <?php if(!empty($review->reply)): ?>
+                        <div class="card reply">
+                            <div class="card-header">
+                                <span class="user-name"><?= htmlspecialchars($seller->username) ?></span>
+                            </div>
+                            <div class="card-content">
+                                <p><?= nl2br(htmlspecialchars($review->reply)) ?></p>
+                            </div>
+                        </div>
+                    <?php endif;?>
                 <?php endforeach; ?>
             <?php else: ?>
             <div class="message-div">

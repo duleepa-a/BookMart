@@ -202,7 +202,8 @@
                 </thead>
                 <tbody>
                         <?php foreach ($orders as $order): ?>
-                            <tr>
+                            <tr class="order-row" data-orderid="<?= $order->order_id ?>"
+                            >
                                 <td><input type="checkbox" class="select-order"></td>
                                 <td><?= htmlspecialchars($order->book->title) ?></td>
                                 <td><?= date('Y-m-d', strtotime($order->created_on)) ?></td>
@@ -252,6 +253,13 @@
                     row.style.display = matchFound ? "" : "none";
                 });
             });
+        });
+
+        document.querySelector(".inventory-table").addEventListener("click", (e) => {
+            const row = e.target.closest(".order-row");
+            const orderId = row.dataset.orderid;
+
+            window.location.href = '<?=ROOT?>/BookstoreController/orderView/' + orderId; 
         });
     </script>
 </body>

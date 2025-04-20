@@ -516,6 +516,10 @@ body {
     box-sizing: border-box;
   }
 
+  textarea{
+    width: 100%;
+  }
+
   .add-book-form .full-width {
     grid-column: span 3; /* Spans across both columns */
   }
@@ -529,6 +533,7 @@ input{
   .add-book-form textarea:focus{
     border-color: #BE5715;
 }
+
 .small-footer{
     margin-left: 15%;
     padding: 20px;
