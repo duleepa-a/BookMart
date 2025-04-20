@@ -37,6 +37,9 @@
                         </div>
                         <div class="notification-content">
                             <p><?= htmlspecialchars($notification->content) ?></p>
+                            <?php if(!empty($notification->link)): ?>
+                                <a href="<?= ROOT ?><?= htmlspecialchars($notification->link) ?>">View in page</a>
+                            <?php endif; ?>
                         </div>
                         <div class="notification-footer">
                             <div class="notification-actions">

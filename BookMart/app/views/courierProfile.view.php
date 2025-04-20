@@ -20,7 +20,7 @@
         <li><a href="<?= ROOT ?>/courierEarns"><i class="fa fa-money"></i> Earnings</a></li>
         <li><a href="<?= ROOT ?>/CourierOrderDetails/OrderPage"><i class="fa fa-clock"></i> My Orders</a></li>
         <li><a href="<?= ROOT ?>/courierComplains"><i class="fa-solid fa-circle-exclamation"></i> Complains</a></li>
-        <li><a href="<?= ROOT ?>/CourierOrderDetails/OrderPage" class="active"><i class="fa fa-user"></i> Profile</a></li>
+        <li><a href="<?= ROOT ?>/courierProfile" class="active"><i class="fa fa-user"></i> Profile</a></li>
     </ul>   
     </div>
     <div class="container">
@@ -38,6 +38,8 @@
                             
                         <?php if(!empty($courierD)): ?>
                             <?php foreach ($courierD as $courierDetail): ?>
+                                <?php if(!empty($courier)): ?>
+                                    <?php foreach ($courier as $courierD): ?>
 
                             <div class="form-group-row">
                                 <div class="form-group">
@@ -113,7 +115,7 @@
                             <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="email-address">Email Address:</label>
-                                    <input type="text" id="email-address"  name="email" placeholder=" " required>
+                                    <input type="text" id="email-address"  name="email" placeholder="<?= $courierD->email ?> " required>
                                 </div>
                                 
                             </div>
@@ -233,6 +235,8 @@
                             <button class="next-button" type="submit" >Change & Save</button>
                             <br>
                             <br>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
                             <?php endforeach; ?>
                                 <?php else: ?>
                                     <p>No</p>

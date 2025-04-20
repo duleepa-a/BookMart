@@ -3,9 +3,27 @@
 class Articles extends Controller {
 
     public function index() {
+
+        $user_id = $_SESSION['user_id'];
+
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
-        $data = $this->getSlicedArticles(null, $page);
+        $view = isset($_GET['view']) ? $_GET['view'] : 'latest';
+        $validViews = ['latest', 'myArticles'];
+        if (! in_array($view, $validViews)) {
+            $view = 'latest';
+        }
+
+        switch ($view) {
+            case 'myArticles':
+                $data = $this->getSlicedArticles($user_id, $page, $view);
+                break;
+    
+            case 'latest':
+            default:
+                $data = $this->getSlicedArticles(null, $page, $view);
+                break;
+        }
     
         $this->view('articles', $data);
     }
@@ -14,15 +32,6 @@ class Articles extends Controller {
         $article = new ArticleModel();
         $article->setLimit(2);
         return $article->findAll();
-    }
-    
-    public function myArticles() {
-        $user_id = $_SESSION['user_id'];
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        
-        $data = $this->getSlicedArticles($user_id, $page);
-
-        $this->view('myArticles', $data);
     }
 
     public function detail($article_id) {
@@ -41,7 +50,7 @@ class Articles extends Controller {
     }
 
     public function create() {
-        $this->view('articleCreation');
+        $this->view('articleUpdate');
     }
 
     public function update($article_id) {
@@ -59,6 +68,7 @@ class Articles extends Controller {
     
     public function addArticle() {
         $articleModel = new ArticleModel();
+        $notificationModel = new NotificationModel();
         
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
@@ -108,7 +118,7 @@ class Articles extends Controller {
         redirect('articles/myArticles');
     }
 
-    public function getSlicedArticles($user_id = null, $page) {
+    public function getSlicedArticles($user_id = null, $page, $view) {
 
         $articleModel = new ArticleModel();
         
@@ -127,6 +137,7 @@ class Articles extends Controller {
                 'hasNext' => false,
                 'hasPrevious' => false,
                 'showPageControl' => false,
+                'selectedTab' => $view,
             ];
         } 
         else {
@@ -140,6 +151,7 @@ class Articles extends Controller {
                 'hasNext' => $hasNext,
                 'hasPrevious' => $page > 1,
                 'showPageControl' => count($articles) > $perPage,
+                'selectedTab' => $view,
             ];
         }
 

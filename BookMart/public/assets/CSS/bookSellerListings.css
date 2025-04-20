@@ -24,7 +24,10 @@ body{
     margin-bottom: 20px;
     display: flex; 
     justify-content: space-between;
-    padding: 0px 50px;
+    padding: 10px 50px;
+    position: sticky;
+    top: 65px;
+    z-index: 900;
 }
 
 .controls button, .controls input {

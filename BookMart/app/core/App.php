@@ -38,7 +38,7 @@ class App{
             'BookSellerSales' => ['index'], 
             'BookSellerListings' => ['index', 'addBook', 'updateBook', 'deleteBook'], 
             'BookSellerProfile' => ['index'],
-            'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],
+            'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle'],
             'BookSellerSidebar' => ['index'],
             'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],
 
