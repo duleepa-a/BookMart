@@ -101,7 +101,6 @@ class AdminAdvertisment extends Controller{
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $AddId = $_POST['add_id'];
 
-            // Prepare book data for update
             $advData = [
                 'Advertisement_Title' => htmlspecialchars(trim($_POST['Advertisement_Title'])),
                 'Advertisement_Description' => htmlspecialchars(trim($_POST['Advertisement_Description'])),
@@ -111,10 +110,6 @@ class AdminAdvertisment extends Controller{
                 'End_date' => filter_var(trim($_POST['End_date'])),
             ];
 
-            show($advData);
-
-            show($AddId);
-            // Update the book record in the database
             if (!($advModel->update($AddId, $advData))) {
                 redirect('adminAdvertisment');
             } else {

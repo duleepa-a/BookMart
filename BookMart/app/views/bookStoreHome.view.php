@@ -14,38 +14,52 @@
     <!-- navBar division begin -->
     <?php include 'homeNavBar.view.php'; ?>        
     <!-- navBar division end -->
+    <div class="sidebar">
+        <ul>
+            <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button></li>
+            <li><a href="<?= ROOT ?>/" class="active" ><i class="fa-solid fa-house"></i>Dashboard</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/inventory"><i class="fa-solid fa-book"></i>My Inventory</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/Analytics"><i class="fa-solid fa-chart-column"></i>Analytics</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/orders"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/getReviews"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/advertisments"><i class="fa-solid fa-up-right-from-square"></i>Ads & Offers</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/coupons"><i class="fa-solid fa-ticket"></i>Coupons</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/payRolls" ><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/myProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
+        </ul>   
+    </div>
     <div class="large-container">
         <div class="container"> 
             <div class="card-container">
-            <div class="card">
-                <i class="fa-solid fa-dollar-sign card-icon"></i>
-                <div class="card-content">
-                    <div class="card-title">Net Revenue</div>
-                    <div class="card-value">Rs.50K</div>
+                <div class="card">
+                    <i class="fa-solid fa-dollar-sign card-icon"></i>
+                    <div class="card-content">
+                        <div class="card-title">Net Revenue</div>
+                        <div class="card-value">Rs.50K</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="fa-solid fa-cart-shopping card-icon"></i>
+                    <div class="card-content">
+                        <div class="card-title">Orders</div>
+                        <div class="card-value">40K</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="fa-solid fa-user card-icon"></i>
+                    <div class="card-content">
+                        <div class="card-title">Followers</div>
+                        <div class="card-value">342</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="fa-solid fa-book card-icon"></i>
+                    <div class="card-content">
+                        <div class="card-title">Inventory</div>
+                        <div class="card-value">127</div>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <i class="fa-solid fa-cart-shopping card-icon"></i>
-                <div class="card-content">
-                    <div class="card-title">Orders</div>
-                    <div class="card-value">40K</div>
-                </div>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-user card-icon"></i>
-                <div class="card-content">
-                    <div class="card-title">Customers</div>
-                    <div class="card-value">342</div>
-                </div>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-book card-icon"></i>
-                <div class="card-content">
-                    <div class="card-title">Inventory</div>
-                    <div class="card-value">127</div>
-                </div>
-            </div>
-        </div>
             <br><br>
             <div class="hero-section">
                 <div class="hero left">
@@ -58,7 +72,7 @@
                         </svg>
                         <div class="center-text">
                             <p class="percentage">92%</p>
-                            <p class="label">Customer Satisfaction</p>
+                            <p class="label">Customer Ratings</p>
                         </div>
                         </div>
                         <div class="info-section">
@@ -72,77 +86,77 @@
                     </div>
                 </div>
                 <div class="hero right">
-                <svg viewBox="0 0 800 250" xmlns="http://www.w3.org/2000/svg">
-                <!-- Title -->
-                <text x="400" y="30" text-anchor="middle" class="chart-title">Book Sales by Category</text>
+                    <svg viewBox="0 0 800 250" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Title -->
+                        <text x="400" y="30" text-anchor="middle" class="chart-title">Book Sales by Category</text>
 
-                <!-- Grid lines -->
-                <g transform="translate(60, 45)">
-                    <!-- Horizontal grid lines -->
-                    <line x1="0" y1="0" x2="600" y2="0" class="grid-line" />
-                    <line x1="0" y1="35" x2="600" y2="35" class="grid-line" />
-                    <line x1="0" y1="70" x2="600" y2="70" class="grid-line" />
-                    <line x1="0" y1="105" x2="600" y2="105" class="grid-line" />
-                    <line x1="0" y1="140" x2="600" y2="140" class="grid-line" />
-                    <line x1="0" y1="175" x2="600" y2="175" class="grid-line" />
-                </g>
+                        <!-- Grid lines -->
+                        <g transform="translate(60, 45)">
+                            <!-- Horizontal grid lines -->
+                            <line x1="0" y1="0" x2="600" y2="0" class="grid-line" />
+                            <line x1="0" y1="35" x2="600" y2="35" class="grid-line" />
+                            <line x1="0" y1="70" x2="600" y2="70" class="grid-line" />
+                            <line x1="0" y1="105" x2="600" y2="105" class="grid-line" />
+                            <line x1="0" y1="140" x2="600" y2="140" class="grid-line" />
+                            <line x1="0" y1="175" x2="600" y2="175" class="grid-line" />
+                        </g>
 
-                <!-- Bars -->
-                <g transform="translate(60, 220)">
-                    <!-- Fiction -->
-                    <rect class="bar" x="40" width="80" y="-150" height="0" fill="#FF6384">
-                        <animate attributeName="height" from="0" to="150" dur="0.8s" fill="freeze" />
-                    </rect>
-                    
-                    <!-- Non-Fiction -->
-                    <rect class="bar" x="160" width="80" y="-120" height="0" fill="#36A2EB">
-                        <animate attributeName="height" from="0" to="120" dur="0.8s" fill="freeze" />
-                    </rect>
-                    
-                    <!-- Children's -->
-                    <rect class="bar" x="280" width="80" y="-135" height="0" fill="#FFCE56">
-                        <animate attributeName="height" from="0" to="135" dur="0.8s" fill="freeze" />
-                    </rect>
-                    
-                    <!-- Science -->
-                    <rect class="bar" x="400" width="80" y="-105" height="0" fill="#4BC0C0">
-                        <animate attributeName="height" from="0" to="105" dur="0.8s" fill="freeze" />
-                    </rect>
-                    
-                    <!-- History -->
-                    <rect class="bar" x="520" width="80" y="-127" height="0" fill="#9966FF">
-                        <animate attributeName="height" from="0" to="127" dur="0.8s" fill="freeze" />
-                    </rect>
-                </g>
+                        <!-- Bars -->
+                        <g transform="translate(60, 220)">
+                            <!-- Fiction -->
+                            <rect class="bar" x="40" width="80" y="-150" height="0" fill="#FF6384">
+                                <animate attributeName="height" from="0" to="150" dur="0.8s" fill="freeze" />
+                            </rect>
+                            
+                            <!-- Non-Fiction -->
+                            <rect class="bar" x="160" width="80" y="-120" height="0" fill="#36A2EB">
+                                <animate attributeName="height" from="0" to="120" dur="0.8s" fill="freeze" />
+                            </rect>
+                            
+                            <!-- Children's -->
+                            <rect class="bar" x="280" width="80" y="-135" height="0" fill="#FFCE56">
+                                <animate attributeName="height" from="0" to="135" dur="0.8s" fill="freeze" />
+                            </rect>
+                            
+                            <!-- Science -->
+                            <rect class="bar" x="400" width="80" y="-105" height="0" fill="#4BC0C0">
+                                <animate attributeName="height" from="0" to="105" dur="0.8s" fill="freeze" />
+                            </rect>
+                            
+                            <!-- History -->
+                            <rect class="bar" x="520" width="80" y="-127" height="0" fill="#9966FF">
+                                <animate attributeName="height" from="0" to="127" dur="0.8s" fill="freeze" />
+                            </rect>
+                        </g>
 
-                <!-- Value labels -->
-                <g transform="translate(60, 220)">
-                    <text x="80" y="-155" text-anchor="middle" class="value-label">250</text>
-                    <text x="200" y="-125" text-anchor="middle" class="value-label">180</text>
-                    <text x="320" y="-140" text-anchor="middle" class="value-label">220</text>
-                    <text x="440" y="-110" text-anchor="middle" class="value-label">150</text>
-                    <text x="560" y="-132" text-anchor="middle" class="value-label">200</text>
-                </g>
+                        <!-- Value labels -->
+                        <g transform="translate(60, 220)">
+                            <text x="80" y="-155" text-anchor="middle" class="value-label">250</text>
+                            <text x="200" y="-125" text-anchor="middle" class="value-label">180</text>
+                            <text x="320" y="-140" text-anchor="middle" class="value-label">220</text>
+                            <text x="440" y="-110" text-anchor="middle" class="value-label">150</text>
+                            <text x="560" y="-132" text-anchor="middle" class="value-label">200</text>
+                        </g>
 
-                <!-- X-axis labels -->
-                <g transform="translate(60, 235)">
-                    <text x="80" y="0" text-anchor="middle" class="axis-label">Fiction</text>
-                    <text x="200" y="0" text-anchor="middle" class="axis-label">Non-Fiction</text>
-                    <text x="320" y="0" text-anchor="middle" class="axis-label">Children's</text>
-                    <text x="440" y="0" text-anchor="middle" class="axis-label">Science</text>
-                    <text x="560" y="0" text-anchor="middle" class="axis-label">History</text>
-                </g>
+                        <!-- X-axis labels -->
+                        <g transform="translate(60, 235)">
+                            <text x="80" y="0" text-anchor="middle" class="axis-label">Fiction</text>
+                            <text x="200" y="0" text-anchor="middle" class="axis-label">Non-Fiction</text>
+                            <text x="320" y="0" text-anchor="middle" class="axis-label">Children's</text>
+                            <text x="440" y="0" text-anchor="middle" class="axis-label">Science</text>
+                            <text x="560" y="0" text-anchor="middle" class="axis-label">History</text>
+                        </g>
 
-                <!-- Y-axis labels -->
-                <g transform="translate(50, 220)">
-                    <text x="0" y="-175" text-anchor="end" class="axis-label">300</text>
-                    <text x="0" y="-140" text-anchor="end" class="axis-label">240</text>
-                    <text x="0" y="-105" text-anchor="end" class="axis-label">180</text>
-                    <text x="0" y="-70" text-anchor="end" class="axis-label">120</text>
-                    <text x="0" y="-35" text-anchor="end" class="axis-label">60</text>
-                    <text x="0" y="0" text-anchor="end" class="axis-label">0</text>
-                </g>
-            </svg>
+                        <!-- Y-axis labels -->
+                        <g transform="translate(50, 220)">
+                            <text x="0" y="-175" text-anchor="end" class="axis-label">300</text>
+                            <text x="0" y="-140" text-anchor="end" class="axis-label">240</text>
+                            <text x="0" y="-105" text-anchor="end" class="axis-label">180</text>
+                            <text x="0" y="-70" text-anchor="end" class="axis-label">120</text>
+                            <text x="0" y="-35" text-anchor="end" class="axis-label">60</text>
+                            <text x="0" y="0" text-anchor="end" class="axis-label">0</text>
+                        </g>
+                    </svg>
                 </div> 
             </div>
             <br><br>
@@ -152,59 +166,33 @@
                     <a href="<?= ROOT ?>/BookstoreController/inventory" class="inventory-bttn">Go to Inventory</a>
                 </div>
                 <table class="low-stock-table">
-                <thead>
-                    <tr>
-                        <th>Book ID</th>
-                        <th>Date Added</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>ISBN</th>
-                        <th>Stock Count</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>#BK5625</td>
-                        <td>29 April 2024</td>
-                        <td>The Great Gatsby</td>
-                        <td>F. Scott Fitzgerald</td>
-                        <td>9780743273565</td>
-                        <td><span class="status-label status-bad">11</span></td>
-                    </tr>
-                    <tr>
-                        <td>#BK9652</td>
-                        <td>25 April 2024</td>
-                        <td>1984</td>
-                        <td>George Orwell</td>
-                        <td>9780451524935</td>
-                        <td><span class="status-label status-critical">5</span></td>
-                    </tr>
-                    <tr>
-                        <td>#BK5984</td>
-                        <td>25 April 2024</td>
-                        <td>To Kill a Mockingbird</td>
-                        <td>Harper Lee</td>
-                        <td>9780061120084</td>
-                        <td><span class="status-label status-bad">18</span></td>
-                    </tr>
-                    <tr>
-                        <td>#BK3625</td>
-                        <td>21 April 2024</td>
-                        <td>Pride and Prejudice</td>
-                        <td>Jane Austen</td>
-                        <td>9781503290563</td>
-                        <td><span class="status-label status-critical">5</span></td>
-                    </tr>
-                    <tr>
-                        <td>#BK8652</td>
-                        <td>18 April 2024</td>
-                        <td>The Catcher in the Rye</td>
-                        <td>J.D. Salinger</td>
-                        <td>9780316769488</td>
-                        <td><span class="status-label status-critical">4</span></td>
-                    </tr>
-                </tbody>
-            </table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Genre</th>
+                            <th>ISBN</th>
+                            <th>Date Added</th>
+                            <th>Stock Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($lowStockBooks as $book): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($book->title) ?></td>
+                                <td><?= htmlspecialchars($book->author) ?></td>
+                                <td><?= htmlspecialchars($book->genre) ?></td>
+                                <td><?= htmlspecialchars($book->ISBN) ?></td>
+                                <td><?= date('d F Y', strtotime($book->created_at)) ?></td>
+                                <td>
+                                    <span class="status-label <?= $book->quantity < 10 ? 'status-critical' : 'status-bad' ?>">
+                                        <?= htmlspecialchars($book->quantity) ?>
+                                    </span>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
 
             </div>
             <br><br>
@@ -213,38 +201,40 @@
                     <h2 class="inventory-heading">Inventory Count</h2>
                 </div>
                 <div class="inventory-item">
-                <div class="inventory-card">
-                    <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
-                    <p>Fiction</p>
-                    <span>10</span>
-                </div>
-                <div class="inventory-card">
-                    <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
-                    <p>History</p>
-                    <span>50</span>
-                </div>
-                <div class="inventory-card">
-                <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
-                    <p>Romance</p>
-                    <span>40</span>
-                </div>
-                <div class="inventory-card">
-                <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
-                    <p>Novel</p>
-                    <span>20</span>
-                </div>
-                <div class="inventory-card">
-                <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
-                    <p>Sci-Fi</p>
-                    <span>30</span>
+                        <div class="inventory-card">
+                            <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
+                            <p>Fiction</p>
+                            <span>10</span>
+                        </div>
+                        <div class="inventory-card">
+                            <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
+                            <p>History</p>
+                            <span>50</span>
+                        </div>
+                        <div class="inventory-card">
+                        <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
+                            <p>Romance</p>
+                            <span>40</span>
+                        </div>
+                        <div class="inventory-card">
+                        <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
+                            <p>Novel</p>
+                            <span>20</span>
+                        </div>
+                        <div class="inventory-card">
+                        <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
+                            <p>Sci-Fi</p>
+                            <span>30</span>
+                        </div>
                 </div>
             </div>
-            </div>
+            <br><br>
+            <!-- footer begin -->
+                <?php include 'smallFooter.view.php'; ?>   
+            <!-- footer end -->
         </div>
-        <br><br><br>
-         <!-- footer begin -->
-         <?php include 'footer.view.php'; ?>   
-        <!-- footer end -->
+        <br>
+         
     </div>
     </body>
     <script src="<?= ROOT ?>/assets/JS/bookstoreHome.js"></script>

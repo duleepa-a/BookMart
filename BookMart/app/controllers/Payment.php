@@ -10,10 +10,27 @@ class Payment extends Controller{
     public function checkOut($bookId, $qty) {
 
         $bookModel = new BookModel();
-        $buyerModel = new BuyerModel(); 
+        $buyerModel = new BuyerModel();
+        $sellerModel = new BookSeller();
+        $bookstoreModel = new BookStore(); 
+        $userModel = new UserModel(); 
     
         $book = $bookModel->first(['id' => $bookId]);
-        $buyer = $buyerModel->first(['user_id' => $_SESSION['user_id']]);
+        $buyerId= $_SESSION['user_id'];
+
+        if($userModel->getRole($buyerId) == 'buyer'){
+            $buyer = $buyerModel->first(['user_id' => $buyerId]);
+        }
+        else{
+            $buyer = $sellerModel->first(['user_id' => $buyerId]);
+        }
+
+        if($userModel->getRole($book->seller_id) == 'bookStore'){
+            $seller = $bookstoreModel->first(['user_id' => $book->seller_id]);
+        }
+        else{
+            $seller =  $sellerModel->first(['user_id' => $book->seller_id]);
+        }
     
         
         $discount = ($book->discount / 100) * $book->price;
@@ -35,8 +52,10 @@ class Payment extends Controller{
             'buyer_id' => $_SESSION['user_id'],
             'quantity' => $qty,
             'discount' => $book->discount,
+            'item_discount' => $discount,
             'discounted_Price' => $discountedPrice,
             'street_address'=> $buyer->street_address,
+            'pickup_location' => $seller->street_address,
             'city'=>$buyer->city,
             'province'=>$buyer->province,
             'district'=>$buyer->district,
@@ -84,9 +103,10 @@ class Payment extends Controller{
             'payment_status' => 'successful',
             'quanitity' => $orderdetails['quantity'],
             'delivery_fee' => $orderdetails['deliveryFee'],
-            'discount_applied' => $orderdetails['discount'],
+            'discount_applied' => $orderdetails['item_discount'],
             'total_amount' => $totalPrice + $orderdetails['deliveryFee'],
             'shipping_address' => $orderdetails['street_address'],
+            'pickup_location' => $orderdetails['pickup_location'],
             'province' => $orderdetails['province'],
             'district' => $orderdetails['district'],
             'city' => $orderdetails['city'],
@@ -258,14 +278,29 @@ class Payment extends Controller{
         $bookModel = new BookModel();
         $orderModel = new Order();
         $paymentModel = new PaymentInfo();
-    
-        $buyer = $buyerModel->first(['user_id' => $buyerId]);
+        $sellerModel = new BookSeller();
+        $bookstoreModel = new BookStore(); 
+        $userModel = new UserModel(); 
+        
+        if($userModel->getRole($buyerId) == 'buyer'){
+            $buyer = $buyerModel->first(['user_id' => $buyerId]);
+        }
+        else{
+            $buyer = $sellerModel->first(['user_id' => $buyerId]);
+        }
     
         foreach ($cart as $item) {
             $bookId = $item['book_id'];
             $book = $bookModel->first(['id' => $bookId]);
     
             if (!$book) continue;
+
+            if($userModel->getRole($book->seller_id) == 'bookStore'){
+                $seller = $bookstoreModel->first(['user_id' => $book->seller_id]);
+            }
+            else{
+                $seller =  $sellerModel->first(['user_id' => $book->seller_id]);
+            }
     
             $discountedPrice = $item['price'];
             $quantity = $item['quantity'];
@@ -286,9 +321,10 @@ class Payment extends Controller{
                 'payment_status' => 'successful',
                 'quanitity' => $quantity,
                 'delivery_fee' => $deliveryFee,
-                'discount_applied' => $item['discount'],
+                'discount_applied' => $item['original_price'] - $item['price'],
                 'total_amount' => $totalAmount + $deliveryFee,
                 'shipping_address' => $buyer->street_address,
+                'pickup_location' => $seller->street_address,
                 'province' => $buyer->province,
                 'district' => $buyer->district,
                 'city' => $buyer->city,
@@ -346,29 +382,29 @@ class Payment extends Controller{
     }
 
     public function adSuccess(){
-    $adId = $_GET['ad_id'] ?? null;
-    $amount = $_GET['amount'] ?? null;
+        $adId = $_GET['ad_id'] ?? null;
+        $amount = $_GET['amount'] ?? null;
 
-    if ($adId) {
-        $advModel = new StoreAdvModel();
-        $paymentModel = new PaymentInfo();
-        
-        $advModel->update($adId, ['active_status' => 1]);
+        if ($adId) {
+            $advModel = new StoreAdvModel();
+            $paymentModel = new PaymentInfo();
+            
+            $advModel->update($adId, ['active_status' => 1]);
 
 
-        $paymentData = [
-            'ad_id' => $adId,
-            'payment_amount' => $amount,
-            'type' => 'advertisment'
-        ];
+            $paymentData = [
+                'ad_id' => $adId,
+                'payment_amount' => $amount,
+                'type' => 'advertisment'
+            ];
 
-        $payment = $paymentModel->insert($paymentData);
-        
-        $this->view('paymentSuccess',['payment' => $payment]);
-    } else {
-        echo "Invalid ad reference.";
+            $payment = $paymentModel->insert($paymentData);
+            
+            $this->view('paymentSuccess',['payment' => $payment]);
+        } else {
+            echo "Invalid ad reference.";
+        }
     }
-}
 
 
     public function payAd(){
@@ -424,6 +460,5 @@ class Payment extends Controller{
             echo "Failed to create Stripe session for advertisement.";
         }
     }
-
 
 }

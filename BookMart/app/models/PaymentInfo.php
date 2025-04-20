@@ -12,7 +12,8 @@ class PaymentInfo {
         'transaction_id',
         'payment_amount',
         'payment_gateway',
-        'payment_date'
+        'payment_date',
+        'type'
     ];
 
     public function __construct() {

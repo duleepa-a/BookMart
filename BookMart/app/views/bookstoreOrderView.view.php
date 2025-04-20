@@ -103,16 +103,16 @@
                                 </td>
                             </tr>
                             <tr>
-                            <?php if ($order->discount_applied > 0) {
-                                    $book->price = $book->price - ($book->price * $order->discount_applied /100);
-                                }
+                            <?php
+                                    $order->price = ($order->total_amount - $order->delivery_fee)/$order->quanitity + $order->discount_applied;
+                        
                             ?>
                                 <td>Item Price</td>
-                                <td>Rs. <?= number_format($book->price, 2) ?></td>
+                                <td>Rs. <?= number_format($order->price, 2) ?> </td>
                             </tr>
                             <tr>
-                                <td>Discount</td>
-                                <td><?= $order->discount_applied ?? 0.0 ?>%</td>
+                                <td>Discount applied for order</td>
+                                <td>- Rs.<?= $order->discount_applied * $order->quanitity ?? 0.0 ?></td>
                             </tr>
                             <tr>
                                 <td>Delivery Fee</td>

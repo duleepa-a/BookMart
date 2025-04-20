@@ -49,18 +49,24 @@ class Home extends Controller{
                     $courier = $courierData[0];
                     $courierLocation = $courier->address_line_1 . ', ' . $courier->address_line_2 . ', ' . $courier->city;
                 } else {
-                    $courierLocation = 'Colombo, Sri Lanka'; // fallback
+                    $courierLocation = 'Colombo, Sri Lanka'; 
                 } 
                 $apiKey = 'AIzaSyCMW0Zg_K7LthAMmLiUjF_XsEaWcQOgqa0'; 
                 $orders = $this->calculateAndSortOrdersByDistance($filteredOrders, $courierLocation, $apiKey);
-        }        
+        }  
+        
+        if(isset($_SESSION['user_id']) && ($_SESSION['user_role'] == 'bookStore')){
+                $bookStoreModel = new BookStore();
+
+                $storeData = $bookStoreModel->getHomeData($_SESSION['user_id']);
+        }
 
         if(isset($_SESSION['user_role']) &&  isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'active' ) {
             $userRole = $_SESSION['user_role'];
 
             switch($userRole) {
                 case 'bookStore':
-                    $this->view('bookStoreHome');
+                    $this->view('bookStoreHome',$storeData);
                     break;
                 case 'admin':
                     $this->view('adminHome');

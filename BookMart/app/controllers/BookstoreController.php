@@ -523,4 +523,14 @@ class BookstoreController extends Controller{
         $this->view('bookstoreCoupons',['coupons' => $coupons]);
     }
 
+    public function payRolls(){
+        $payrollModel = new Payroll();
+
+        $payrolls = $payrollModel->where(['payee_id' => $_SESSION['user_id'] , 
+                                           'settlement_status' => 'paid'	
+                                        ]);
+
+        $this->view('bookstorePayrolls',[ 'payrolls' => $payrolls ]);
+    }
+
 }

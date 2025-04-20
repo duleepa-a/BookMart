@@ -6,6 +6,7 @@ class UserModel {
     protected $table = 'user';
 
     protected $allowedColumns = [
+        'ID',
         'username',
         'password',
         'email',
@@ -21,6 +22,10 @@ class UserModel {
     public function findUserByUsernameOrEmail($usernameOrEmail) {
         $query = "SELECT * FROM user WHERE username = :usernameOrEmail OR email = :usernameOrEmail";
         return $this->getRow($query, ['usernameOrEmail' => $usernameOrEmail]);
+    }
+
+    public function getRole($ID){
+        return $this->first(['ID' => $ID])->role; 
     }
 
     public function registerBuyer($userData, $buyerData) {

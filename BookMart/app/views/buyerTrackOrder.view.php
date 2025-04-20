@@ -163,10 +163,13 @@
                 <p><?= $order->shipping_address ?></p>
                 <p><?= $order->city ?>, <?= $order->district ?>, <?= $order->province ?></p>
             </div>
-
             <div class="order-summary">
                 <h3>Order Summary</h3>
                 <div class="summary-details">
+                    <div class="summary-row">
+                        <span>Price</span>
+                        <span>Rs. <?= number_format(($order->total_amount - $order->delivery_fee)/$order->quanitity + $order->discount_applied, 2) ?></span>
+                    </div>
                     <div class="summary-row">
                         <span>Quantity</span>
                         <span><?= $order->quanitity ?></span>
@@ -178,7 +181,7 @@
                     <?php if($order->discount_applied > 0): ?>
                     <div class="summary-row discount">
                         <span>Discount</span>
-                        <span>- Rs. <?= number_format($order->discount_applied, 2) ?></span>
+                        <span>- Rs. <?= number_format($order->discount_applied * $order->quanitity, 2) ?></span>
                     </div>
                     <?php endif; ?>
                     <div class="summary-row total">

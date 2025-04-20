@@ -17,12 +17,14 @@
     <div class="sidebar">
         <ul>
             <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button></li>
+            <li><a href="<?= ROOT ?>/"><i class="fa-solid fa-house"></i>Dashboard</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/inventory" class="active" ><i class="fa-solid fa-book"></i>My Inventory</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/Analytics"><i class="fa-solid fa-chart-column"></i>Analytics</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/orders"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/getReviews"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/advertisments"><i class="fa-solid fa-up-right-from-square"></i>Ads & Offers</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/coupons"><i class="fa-solid fa-ticket"></i>Coupons</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/payRolls" ><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/myProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
         </ul>   
     </div>
@@ -194,8 +196,9 @@
                             <td><?= htmlspecialchars($book->book_condition ?? 'N/A') ?></td>
                             <td>Rs. <?= htmlspecialchars($book->price) ?></td>
                             <td><?= htmlspecialchars($book->quantity ?? '0') ?></td>
-                            <td class="status <?= (isset($book->quantity) && $book->quantity > 0) ? 'active' : 'out-of-stock' ?>">
-                                <?= (isset($book->quantity) && $book->quantity > 0) ? 'Available' : 'Out of Stock' ?>
+                            <td>
+                              <span class="tag <?= (isset($book->quantity) && $book->quantity > 0) ? 'tag-green' : 'tag-red' ?>">  
+                                <?= (isset($book->quantity) && $book->quantity > 0) ? 'Available' : 'Out of Stock' ?> <span>
                             </td>
                         </tr>
                     <?php endforeach; ?>

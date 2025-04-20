@@ -50,4 +50,17 @@ class BookStore {
         return $this->query($sql, [':userId' => $userId]);
     }
     
+    public function getHomeData($user_id){
+        $store = $this->first(['user_id' =>  $user_id]);   
+        
+        $sql = "SELECT * FROM book WHERE seller_id =:user_id AND quantity <= 20;";
+
+        $lowStockbooks = $this->query($sql,[':user_id' => $user_id]);
+
+        $data = [
+            'lowStockBooks' => $lowStockbooks
+        ];
+
+        return $data;
+    }
 }

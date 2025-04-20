@@ -17,12 +17,14 @@
     <div class="sidebar">
         <ul>
             <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Post Ads & offers</button></li>
+            <li><a href="<?= ROOT ?>/"><i class="fa-solid fa-house"></i>Dashboard</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/inventory" ><i class="fa-solid fa-book"></i>My Inventory</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/Analytics"><i class="fa-solid fa-chart-column"></i>Analytics</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/orders"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/getReviews"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/advertisments" class="active"><i class="fa-solid fa-up-right-from-square"></i>Ads & Offers</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/coupons"><i class="fa-solid fa-ticket"></i>Coupons</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/payRolls" ><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
             <li><a href="<?= ROOT ?>/BookstoreController/myProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
         </ul>   
     </div>
@@ -113,9 +115,9 @@
                                     <td><input type="checkbox" class="select-order"></td>
 
                                     <!-- Image Preview -->
-                                    <td>
+                                    <td class="td-image">
                                         <?php if (!empty($ad->image_path)): ?>
-                                            <img src="<?= ROOT ?>\assets\Images\store_advertisments\<?= $ad->image_path ?>" alt="Ad Image" style="width: 100px; height: auto; object-fit: cover;">
+                                            <img src="<?= ROOT ?>\assets\Images\store_advertisments\<?= $ad->image_path ?>" alt="Ad Image" style="width: auto; height: 50px; object-fit: cover;">
                                         <?php else: ?>
                                             No image
                                         <?php endif; ?>
@@ -124,8 +126,14 @@
                                     <td><?= htmlspecialchars($ad->title) ?></td>
 
                                     <!-- Status with styling -->
-                                    <td class="status <?= strtolower($ad->status) ?>">
-                                        <?= ucfirst($ad->status) ?>
+                                    <td>
+                                        <?php if($ad->status = 'approved'){
+                                            $class = 'tag-green';
+                                        }else{
+                                            $class = 'tag-red';
+                                        }
+                                        ?>
+                                       <span class="tag <?= $class?>"> <?= ucfirst($ad->status) ?> </span>
                                     </td>
 
                                     <td><?= $ad->start_date ?></td>
@@ -134,7 +142,7 @@
 
                                     <!-- Active Status -->
                                     <td>
-                                        <?= $ad->active_status == 1 ? '<span style="color: green; font-weight:bold;">Active</span>' : '<span style="color: grey; font-weight:bold;">Inactive</span>' ?>
+                                        <?= $ad->active_status == 1 ? '<span class="tag tag-green">Active</span>' : '<span class="tag tag-grey">Inactive</span>' ?>
                                     </td>
                                     <td>
                                     <?php if ($ad->payment_amount > 0 && $ad->active_status == 0): ?>
@@ -149,7 +157,7 @@
                                             <button type="submit" class="delete-btn">Delete</button>
                                         </form>
                                     <?php else: ?>
-                                        <span style="color: gray;">-</span>
+                                        <span class="tag tag-grey">-</span>
                                     <?php endif; ?>
                                 </td>
                                 </tr>
