@@ -140,11 +140,11 @@
 
         <div class="dashboard">
             <div class="chart-container">
-                <h2>Sales by Genre</h2>
+                <h2 class="table-heading">Sales by Genre</h2>
                 <canvas id="genreChart"></canvas>
             </div>
             <div class="chart-container">
-                <h2>Monthly Sales</h2>
+                <h2 class="table-heading">Monthly Sales</h2>
                 <canvas id="salesChart"></canvas>
             </div>
         </div>
@@ -161,7 +161,6 @@
                     </tr>
                 </thead>
                 <tbody id="topBooksBody">
-                    <!-- Books will be dynamically added here -->
                 </tbody>
             </table>
         </div>

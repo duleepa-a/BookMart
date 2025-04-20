@@ -74,7 +74,7 @@ body {
   }
 
 .sidebar-heading{
-    color: #BE5715;
+    color: #02224E;;
     margin: 30px;
     margin-bottom: 70px;
 }
@@ -130,7 +130,9 @@ body {
 }
 
 .heading{
-    margin-bottom: 40px;
+    color: #02224E;
+    margin-top: 10px;
+    margin-bottom: 30px;
     margin-left: 20px;
 }
 

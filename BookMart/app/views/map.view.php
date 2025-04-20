@@ -11,7 +11,7 @@
     let locationData = JSON.parse('<?= $locationData ?>');
 
     let distanceToPickup = locationData.distanceToPickup;
-let distanceToDelivery = locationData.distanceToDelivery;
+    let distanceToDelivery = locationData.distanceToDelivery;
 
 
     function initMap() {
@@ -94,10 +94,11 @@ let distanceToDelivery = locationData.distanceToDelivery;
     
     <div id="map" style="height: 600px; width: 80%; margin: auto;"></div>
 
-    <!-- <div id="distance-info" style="text-align:center; font-size:18px; margin-top:20px;">
-        <p>"📦 Distance to Pickup: <span id="pickup-distance">Km</span></p>
-        <p>🚚 Distance to Delivery: <span id="delivery-distance">Km</span></p>
-        
-    </div> -->
+        <div id="distance-info" style="text-align:center; font-size:18px; margin-top:20px;">
+            <p>"📦 Distance to Pickup: <span id="pickup-distance">Km</span></p>
+            <p>🚚 Distance to Delivery: <span id="delivery-distance">Km</span></p>
+            
+        </div>
+    </div>
 </body>
 </html>

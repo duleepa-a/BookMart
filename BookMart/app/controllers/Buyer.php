@@ -77,8 +77,23 @@ class Buyer extends Controller{
     
 
     public function trackOrder($orderId){
-        $this->view('buyerTrackOrder');
+        $orderModel = new Order();
+        $courierModel = new Courier();
+        $userModel =  new UserModel();
+
+        $order = $orderModel->first(['order_id' => $orderId]);
+        $courier = "";
+        $order->seller_username = $userModel->first(['ID' => $order->seller_id])->username;
+
+        if($order->courier_id){
+            $courier = $courierModel->first(['user_id' => $order->courier_id]);
+        }
+
+        $this->view('buyerTrackOrder',[ 'order' => $order,
+                                        'courier' => $courier
+                                      ]);
     }
+
     public function myProfile(){
         $buyerModel = new BuyerModel;
         $userModel = new UserModel();

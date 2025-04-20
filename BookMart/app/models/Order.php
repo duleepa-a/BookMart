@@ -25,6 +25,7 @@ class Order {
         'city',
         'created_on',
         'order_date',
+        'pinCode',
         'shipped_date',
         'completed_date',
         'canceled_date',
