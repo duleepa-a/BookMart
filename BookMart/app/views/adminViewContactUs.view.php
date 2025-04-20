@@ -13,7 +13,7 @@
 </head>
 <body>
     <!-- navBar division begin -->
-<?php include 'adminNavBar.view.php'; ?>
+    <?php include 'secondaryNavBar.view.php'; ?>
     <!-- navBar division end -->
     <div class="sidebar">
         <ul>
@@ -23,7 +23,8 @@
             <li><a href="<?= ROOT ?>/admin/bookstoreView"><i class="fa-solid fa-store"></i>Shops</a></li>
             <li><a href="<?= ROOT ?>/adminSearchorders"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
             <li><a href="<?= ROOT ?>/adminSearchbooks"><i class="fa-solid fa-book"></i>Books</a></li>
-            <li><a href="<?= ROOT ?>/adminViewContactUs" class="active"><i class="fa-solid fa-envelope"></i>Complaints</a></li>
+            <li><a href="<?= ROOT ?>/adminViewContactUs" class="active"><i class="fa-solid fa-envelope"></i>Inquiries</a></li>
+            <li><a href="<?= ROOT ?>/adminViewCourierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
             <li><a href="<?= ROOT ?>/adminAdvertisment"><i class="fa-solid fa-up-right-from-square"></i>Ads</a></li>
             <li><a href="<?= ROOT ?>/adminProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
         </ul>   
@@ -33,135 +34,86 @@
         <h1 class="mtopic">Contact Us Forms</h1> <br><br>
         
             
-            <br>
-            <nav class="tabs">
-                <button class="tab-button active first-child" onclick="showTab('new-details')">New Forms</button>
-                <button class="tab-button" onclick="showTab('bank-details')">Viewed</button>
-            </nav>
-    
-            <!-- <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/registerCourier"  > -->
-                <div class="tab-content" id="new-details">
-                    
-                    
-                          <div class="table-wrapper">
-                          <?php if(!empty($contactform)): ?>
-                            <table>
-                              <thead>
-                                <tr>
-                                  <th>ID</th>
-                                  <th>Name</th>
-                                  <th>E-mail</th>
-                                  <th>Message</th>
-                                  <th>Action</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                  <?php foreach ($contactform as $contactdetails): ?>
-                                <tr>
-                                  <td><?= $contactdetails->id ?></td>
-                                  <td><?= $contactdetails->name ?></td>
-                                  <td><?= $contactdetails->email ?></td>
-                                  <td><?= $contactdetails->message ?></td>
-                                  <td>
-                                  <form action="<?= ROOT ?>/adminViewContactUs/update" method="POST">
-                                    <input type="hidden" name="contactform_id" value="<?= $contactdetails->id ?>"> 
-                                    <button type="submit" class="view-btn">Mark As Read</button>
-                                    </form>
-                                  </td>
-                                </tr>
-                                    <?php endforeach; ?>
-                                  <?php else: ?>
-                                    <p>No submited forms</p>
-                                  <?php endif; ?>
-                                <!-- <tr>
-                                  <td>002</td>
-                                  <td>Kasun</td>
-                                  <td>Kasun@gmail.com</td>
-                                  <td>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</td>
-                                  <td><button class="view-btn">View</button></td>
-                                </tr>
-                                <tr>
-                                    <td>002</td>
-                                    <td>Kasun</td>
-                                    <td>Kasun@gmail.com</td>
-                                    <td>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</td>
-                                    <td><button class="view-btn">View</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>002</td>
-                                    <td>Kasun</td>
-                                    <td>Kasun@gmail.com</td>
-                                    <td>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</td>
-                                    <td><button class="view-btn">View</button></td>
-                                  </tr> -->
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                    
-                    
-
-    
-    
-                <div class="tab-content" id="bank-details" style="display: none;">
-                        <div class="table-wrapper">
-                        <?php if(!empty($markedcontact)): ?>
-                          <table>
-                            <thead>
-                              <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>E-mail</th>
-                                <th>Message</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                                  <?php foreach ($markedcontact as $contactdetails): ?>
-                                <tr>
-                                  <td><?= $contactdetails->id ?></td>
-                                  <td><?= $contactdetails->name ?></td>
-                                  <td><?= $contactdetails->email ?></td>
-                                  <td><?= $contactdetails->message ?></td>
-                                  <td>
-                                    <form action="<?= ROOT ?>/adminViewContactUs/delete" method="POST">
-                                    <input type="hidden" name="contactform_id" value="<?= $contactdetails->id ?>"> 
-                                    <button type="submit" class="view-btn">Delete</button>
-                                    </form>
-                                  </td>
-                                </tr>
-                                    <?php endforeach; ?>
-                                  <?php else: ?>
-                                    <!-- <p>No submited forms</p> -->
-                                  <?php endif; ?>
-
-                              <!-- <tr>
-                                <td>002</td>
-                                <td>Kasun</td>
-                                <td>Kasun@gmail.com</td>
-                                <td>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</td>
-                                <td><button class="view-btn">Delete</button></td>
-                              </tr>
-                              <tr>
-                                  <td>002</td>
-                                  <td>Kasun</td>
-                                  <td>Kasun@gmail.com</td>
-                                  <td>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</td>
-                                  <td><button class="view-btn">Delete</button></td>
-                                </tr>
-                                <tr>
-                                  <td>002</td>
-                                  <td>Kasun</td>
-                                  <td>Kasun@gmail.com</td>
-                                  <td>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</td>
-                                  <td><button class="view-btn">Delete</button></td>
-                                </tr> -->
-                            </tbody>
-                          </table>
-                        </div>
-                      
-                    </main>
-                </div>
+    <br>
+    <nav class="tabs">
+        <button class="tab-button active first-child" onclick="showTab('new-details')">New Forms</button>
+        <button class="tab-button" onclick="showTab('bank-details')">Viewed</button>
+    </nav>
+    <div class="tab-content" id="new-details">
+      <?php if(!empty($contactform)): ?>
+        <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Message</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($contactform as $contactdetails): ?>
+                  <tr>
+                    <td><?= $contactdetails->id ?></td>
+                    <td><?= $contactdetails->name ?></td>
+                    <td><?= $contactdetails->email ?></td>
+                    <td><?= $contactdetails->message ?></td>
+                    <td>
+                    <form action="<?= ROOT ?>/adminViewContactUs/update" method="POST">
+                      <input type="hidden" name="contactform_id" value="<?= $contactdetails->id ?>"> 
+                      <button type="submit" class="view-btn">Mark As Read</button>
+                      </form>
+                    </td>
+                  </tr>
+                      <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+            <?php else: ?>
+                    <div class="message-div">
+                      <p>No Complains</p>
+                    </div>
+            <?php endif; ?>
+        </div>
+        <div class="tab-content" id="bank-details" style="display: none;">
+          <?php if(!empty($markedcontact)): ?>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Message</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                      <?php foreach ($markedcontact as $contactdetails): ?>
+                    <tr>
+                      <td><?= $contactdetails->id ?></td>
+                      <td><?= $contactdetails->name ?></td>
+                      <td><?= $contactdetails->email ?></td>
+                      <td><?= $contactdetails->message ?></td>
+                      <td>
+                        <form action="<?= ROOT ?>/adminViewContactUs/delete" method="POST">
+                        <input type="hidden" name="contactform_id" value="<?= $contactdetails->id ?>"> 
+                        <button type="submit" class="view-btn">Delete</button>
+                        </form>
+                      </td>
+                    </tr>
+                        <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+            <?php else: ?>
+                    <div class="message-div">
+                      <p>No Complains</p>
+                    </div>
+            <?php endif; ?>
+        </div>
+    </main>
                     
 
    

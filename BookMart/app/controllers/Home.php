@@ -84,10 +84,15 @@ class Home extends Controller{
 
 
     private function calculateAndSortOrdersByDistance($orders, $courierLocation, $apiKey) {
+        $orderModel = new Order();
+
         foreach ($orders as &$order) {
             $pickupLocation = $order->pickup_location;
             $distance = $this->getDistanceBetweenLocations($courierLocation, $pickupLocation, $apiKey);
-            $order->estimate_distance = round($distance / 1000, 2); // km
+            if($order->estimate_distance != $distance){
+                $order->estimate_distance = round($distance / 1000, 2); 
+                $orderModel ->update($order->order_id,["estimate_distance" => round($distance / 1000, 2)]);
+            }
         }
 
         usort($orders, function ($a, $b) {

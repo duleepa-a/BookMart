@@ -63,10 +63,12 @@ body {
 }
 
 .inventory-title {
-    text-align: center;
-    font-size: 2.5em;
-    color: #BE5715;
-    margin-bottom: 40px;
+    text-align: left;
+    font-size: 2rem;
+    color: #02224E;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    margin-left: 10px;
 }
 
 .inventory-toolbar {
@@ -162,6 +164,47 @@ body {
 .not-yet{
     color: gray;
 }
+
+.tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 2px;
+  }
+  
+  .tag-red{
+    background-color: #fce7ef;
+    color: #d6387a;
+  }
+  
+  .tag-purple {
+    background-color: #f6e7fd;
+    color: #9b41c1;
+  }
+
+  .tag-blue {
+    background-color: #e7f1fd;
+    color: #2779bd;
+  }
+  
+  .tag-green {
+    background-color: #e7faf7;
+    color: #39a193;
+  }
+  
+  .tag-yellow {
+    background-color: #fff7e7;
+    color: #e2a227;
+  }
+  
+  .tag-orange {
+    background-color: #fff0e7;
+    color: #e27b27;
+  }
+
 .view-button {
     padding: 5px 10px;
     background-color: #003366;
@@ -240,7 +283,7 @@ body {
   }
 
   .accepted{
-    color:#3688fa;
+    color:#e27b27;
   }
   .pending{
     color : #e5b266;

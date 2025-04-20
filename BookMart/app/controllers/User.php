@@ -28,12 +28,16 @@ class User extends Controller {
                     if (session_status() == PHP_SESSION_NONE) {
                         session_start();
                     }
-                    
-
+                
                     $_SESSION['user_id'] = $user->ID;   
                     $_SESSION['username'] = $user->username; 
                     $_SESSION['user_role'] = $user->role;
                     $_SESSION['user_status'] = $user->active_status;
+
+                    if($_SESSION['user_role'] == 'buyer'){
+                        $buyerModel = new BuyerModel();
+                        $_SESSION['full_name'] = $buyerModel->first(['user_id' => $user->ID])->full_name;
+                    }
     
                     if($_SESSION['user_status'] === 'active'){
                         redirect('Home');

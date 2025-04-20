@@ -142,9 +142,10 @@
                         <?php if($order->order_status == "pending" && empty($order->courier_id)) :?>
                                 <form action="<?= ROOT ?>/CourierOrderDetails/create" method="POST">
                                     <input type="hidden" name="order_id" value="<?= $order->order_id ?>">
-                                    <input type="hidden" name="pickup_location" value="<?= $order->order_id ?>">
-                                    <input type="hidden" name="shipping_address" value="<?= $order->order_id ?>">
-                                    <input type="hidden" name="distance" value="<?= $order->estimated_distance ?>">
+                                    <input type="hidden" name="pickup_location" value="<?= $order->pickup_location ?>">
+                                    <input type="hidden" name="shipping_address" value="<?= $order->shipping_address ?>">
+                                    <input type="hidden" name="distance" value="<?= $order->estimate_distance ?>">
+                                    <input type ="hidden" name="timeframe" value="<?= $order->created_on?>">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fas fa-check-circle me-2"></i>Accept Order
                                     </button>

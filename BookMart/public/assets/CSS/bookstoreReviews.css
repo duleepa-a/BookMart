@@ -110,9 +110,11 @@ body {
 }
 
 .page-title {
-    text-align: center;
-    color: #BE5715;
+    color: #02224E;
     margin-bottom: 20px;
+    margin-top: 20px;
+    display:flex;
+    justify-content: space-between;
   }
   
   .reviews-table {

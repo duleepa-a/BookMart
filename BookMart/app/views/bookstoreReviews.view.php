@@ -134,7 +134,10 @@
                 </form>
             </div>
         </div>
-        <h1 class="page-title">You Have <?= $unreadcount === 0 ? 'No' : htmlspecialchars($unreadcount) ?> New Reviews</h1>
+        <div class="page-title">
+            <h1>Reviews</h1>
+            <p><?= $unreadcount === 0 ? 'No' : htmlspecialchars($unreadcount) ?> New Reviews</p>
+        </div>
         <?php if (!empty($reviews)): ?>
         <div class="inventory-toolbar">
             <input type="text" placeholder="Search review by book, date, content, user.. " class="inventory-search-bar">

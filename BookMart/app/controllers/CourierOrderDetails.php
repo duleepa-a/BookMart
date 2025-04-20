@@ -68,6 +68,7 @@ class CourierOrderDetails extends Controller{
                 'pickup_location' => $_POST['pickup_location'],
                 'shipping_address' => $_POST['shipping_address'],
                 'distance' =>$_POST['distance'],
+                'timeframe' =>$_POST['timeframe'],
             ]; 
         }
 

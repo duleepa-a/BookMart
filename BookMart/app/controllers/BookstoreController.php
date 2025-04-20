@@ -193,6 +193,7 @@ class BookstoreController extends Controller{
             }
 
             $orderModel = new Order();
+            $courierOrderModel = new CourierOrder();
             $order = $orderModel->first(['order_id' => $orderId]);
 
             if (!$order) {
@@ -201,9 +202,14 @@ class BookstoreController extends Controller{
             }
 
             if ($order->pinCode != $pickupCode) {
-                echo json_encode(['success' => false, 'message' => 'Incorrect pickup code.'.$order->pinCode]);
+                echo json_encode(['success' => false, 'message' => 'Incorrect pickup code.']);
                 return;
             }
+
+            $courierDetails = $courierOrderModel->first([ 'order_id' => $orderId ,  
+                                        'courier_id' => $order->courier_id
+                                    ]);
+            $courierOrderModel->update($courierDetails->id,['status' => 'Pending']);
 
             $orderModel->update($orderId, [
                 'order_status' => 'shipping',

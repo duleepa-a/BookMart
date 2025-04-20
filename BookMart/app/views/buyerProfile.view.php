@@ -15,7 +15,7 @@
     <?php include 'secondaryNavBar.view.php'; ?>        
     <!-- navBar division end -->
         <div class="sidebar">
-            <h3 class="sidebar-heading">Welcome back,<br>Duleepa Edirisinghe</h3>
+            <h3 class="sidebar-heading">Welcome back,<br><?= $_SESSION['full_name'] ?? 'User' ?></h3>
             <ul>
                 <li><a href="<?= ROOT ?>/buyer/orders" ><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
                 <li><a href="<?= ROOT ?>/buyer/reviews"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>

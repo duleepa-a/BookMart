@@ -75,7 +75,7 @@ body {
   }
 
 .sidebar-heading{
-    color: #BE5715;
+    color: #02224E;
     margin: 30px;
     margin-bottom: 70px;
 }
@@ -411,8 +411,8 @@ flex: 1;
 
   .profile-container h1{
     margin-right: 78%;
-    margin-top: 20px;
-    color: #BE5715;
+    margin-top: 30px;
+    color: #02224E;
 }
 
 .small-footer{

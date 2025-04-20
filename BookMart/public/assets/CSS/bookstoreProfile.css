@@ -208,7 +208,7 @@ body {
   .profile-container h1{
     margin-right: 78%;
     margin-top: 20px;
-    color: #BE5715;
+    color: #02224E;
 }
 
 .tabs {
@@ -770,11 +770,10 @@ input{
 .profile-heading {
     white-space: nowrap;
     font-weight: 600;
-    color: #BE5715;
+    color: #02224E;
 }
 
   .profile-right {
-
     display: flex;
     align-items: center;
     gap: 15px;

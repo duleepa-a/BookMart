@@ -40,44 +40,55 @@
             <div class="order-list" >
                 
                 <?php if(!empty($orders)): ?>
-                    <?php foreach ($orders as $orderOne ): ?>
-
-                    <div class="order-card">
-                        <h3>Order ID    : <?= $orderOne->order_id?></h3>
-                        <p>Pickup location:  <?= $orderOne->pickup_location ?></p>
-                        <p>Delivery location:  <?= $orderOne->shipping_address ?></p>
-                        <div class="form-group-row">
-                        <div class="form-group">
-                            <p><i><small>Deadline: <?= $orderOne->created_on ?></small></i></p>
+                    <?php foreach ($orders as $orderOne): ?>
+                        <div class="order-card">
+                            <div class="order-header">
+                                <h3>Order #<?= $orderOne->order_id ?></h3>
+                                <span class="deadline">Placed Date: <?= $orderOne->created_on ?></span>
+                            </div>
+                            
+                            <div class="order-locations">
+                                <div class="location">
+                                    <span class="location-label">Pickup:</span>
+                                    <span class="location-address"><?= $orderOne->pickup_location ?></span>
+                                </div>
+                                <div class="location">
+                                    <span class="location-label">Delivery:</span>
+                                    <span class="location-address"><?= $orderOne->shipping_address ?></span>
+                                </div>
+                            </div>
+                            
+                            <div class="order-details">
+                                <div class="distance-info">
+                                    <span class="distance-value"><?= $orderOne->estimate_distance?> km</span>
+                                    <span class="distance-label">Estimated Distance</span>
+                                </div>
+                            </div>
+                            
+                            <div class="order-actions">
+                                <form method="POST" action="<?= ROOT ?>/map/index" class="action-form">
+                                    <input type="hidden" name="order_id" value="<?= $orderOne->order_id ?>">
+                                    <button type="submit" class="action-btn map-btn">
+                                        <i class="fa fa-map-marker"></i> View Map
+                                    </button>
+                                </form>
+                                
+                                <form method="POST" action="<?= ROOT ?>/courierOrderDetails/index" class="action-form">
+                                    <input type="hidden" name="order_id" value="<?= $orderOne->order_id ?>">
+                                    <input type="hidden" name="buyer_id" value="<?= $orderOne->buyer_id ?>">
+                                    <button type="submit" class="action-btn details-btn">
+                                        <i class="fa fa-eye"></i> View Details
+                                    </button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <p>Estimated Distance: <?= $orderOne->estimate_distance?> km</p> 
-                        </div>
-
-                        <div class="form-group">
-                            <form id="viewDetails" method="POST"  action="<?= ROOT ?>/map/index">
-                            <input type="hidden" name="order_id" value="<?= $orderOne->order_id ?>">
-                            <button class="map-btn">Map</button>
-                            </form>
-                        </div>
-
-                        <div class="form-group">
-                            <form id="viewDetails" method="POST"  action="<?= ROOT ?>/courierOrderDetails/index">
-                            <input type="hidden" name="order_id" value="<?= $orderOne->order_id ?>">
-                            <input type="hidden" name="buyer_id" value="<?= $orderOne->buyer_id ?>">
-
-                            <button class="view-btn">View</button>
-                            </form>
-                        </div>
-
-                        </div>
-                    </div>
-
                     <?php endforeach; ?>
                 <?php else: ?>
+                <div class="message-div">
                     <p>No orders</p>
+                </div>
                 <?php endif; ?>
-                
+            </div>
         
         </section>
     </main>

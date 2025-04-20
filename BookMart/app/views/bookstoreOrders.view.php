@@ -141,7 +141,7 @@
                     </div>
                     <div class="stat-content">
                     <h3 class="accepted"><?= htmlspecialchars($count['shipping']) ?></h3>
-                    <p>Accepted Orders</p>
+                    <p>Shipping Orders</p>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -213,8 +213,31 @@
                                 <td class ="<?= $order->shipped_date ? : 'not-yet'  ?>"><?= $order->shipped_date ? date('Y-m-d', strtotime($order->shipped_date)) : 'not shipped yet' ?></td>
                                 <td class ="<?= $order->completed_date ? : 'not-yet'  ?>"><?= $order->completed_date ? date('Y-m-d', strtotime($order->completed_date)) : 'not completed yet' ?></td>
                                 <td>Rs. <?= number_format($order->total_amount, 2) ?></td>
-                                <td class="status <?= strtolower($order->order_status) ?>">
-                                    <?= ucfirst($order->order_status) ?>
+                                <?php if($order->order_status == 'pending' && !empty($order->courier_id)){
+                                        $order->order_status = "courier assigned";
+                                    }
+                                    switch($order->order_status){
+                                        case 'pending' :
+                                            $order->class = "tag-yellow";
+                                            break;
+                                        case 'shipping' :
+                                            $order->class = "tag-orange";
+                                            break;
+                                        case 'cancelled' :
+                                            $order->class = "tag-red";
+                                        case 'courier assigned' :
+                                            $order->class = "tag-blue";
+                                            break;
+                                        case 'completed' :
+                                            $order-> class = "tag-green";
+                                            break;
+                                        default :
+                                            $order->class = "tag-yellow";
+                                            break;
+                                    }
+                                    ?>
+                                <td>
+                                    <span class="tag <?= $order->class?>"><?= ($order->order_status) ?></span>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
