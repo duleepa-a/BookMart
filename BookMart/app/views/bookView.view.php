@@ -80,13 +80,17 @@
                       </ul>
                   </div>
                   <div class="product-actions">
-                        <div class="quantity-selector">
-                            <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
-                              <span class="quantity" id="quantity">1</span>
-                            <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
-                        </div>
-                      <button class="buy-now-btn" onclick="buyNow()">Buy now</button>
-                      <button class="add-to-cart-btn" onclick="addToCart()">Add to cart</button>
+                    <?php if($book->quantity > 0): ?>
+                            <div class="quantity-selector">
+                                <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                                <span class="quantity" id="quantity">1</span>
+                                <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                            </div>
+                        <button class="buy-now-btn" onclick="buyNow()">Buy now</button>
+                        <button class="add-to-cart-btn" onclick="addToCart()">Add to cart</button>
+                    <?php else: ?>
+                        <p> Out of stock</p>
+                    <?php endif;?>
                   </div>
               </div>
           </div>

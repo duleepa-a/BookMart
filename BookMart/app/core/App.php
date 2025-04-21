@@ -12,7 +12,7 @@ class App{
             'AdminProfile' => ['index'],
             'AdminViewallusers' => ['index'],
             'AdminBookstoreRequests' => ['index'],
-            'Admin' => ['index','bookstoreView','viewBookStore','approve','reject','downloadEvidenceDoc','downloadCourierDoc','viewCourier'],
+            'Admin' => ['index','bookstoreView','viewBookStore','approve','reject','downloadEvidenceDoc','downloadCourierDoc','viewCourier','payRolls','markAsResolve','addRefund',],
             'AdminViewbuyer' => ['index'],
             'AdminViewcourier' => ['index'],
             'AdminViewseller' => ['index'],
@@ -28,7 +28,7 @@ class App{
             
         ],
         'bookStore' => [
-            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','orderView','confirmPickup','myProfile','markAsRead','addReply','requestAdvertisment','updateStoreDetails','updateOwnerDetails','uploadProfilePicture','deleteAdvertisment','updateBankDetails' ,'coupons'],
+            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','orderView','confirmPickup','myProfile','markAsRead','addReply','requestAdvertisment','updateStoreDetails','updateOwnerDetails','uploadProfilePicture','deleteAdvertisment','updateBankDetails' ,'coupons','payRolls'],
             'Book' => ['addBook','updateBook','deleteBook'],
             'User' => ['like','changePassword'],
             'Payment' => ['payAd','adSuccess','adCancel'],

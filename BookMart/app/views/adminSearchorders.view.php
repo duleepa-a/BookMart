@@ -23,6 +23,7 @@
             <li><a href="<?= ROOT ?>/adminSearchbooks"><i class="fa-solid fa-book"></i>Books</a></li>
             <li><a href="<?= ROOT ?>/adminViewContactUs"><i class="fa-solid fa-envelope"></i>Inquiries</a></li>
             <li><a href="<?= ROOT ?>/adminViewCourierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
+            <li><a href="<?= ROOT ?>/admin/payRolls" ><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
             <li><a href="<?= ROOT ?>/adminAdvertisment"><i class="fa-solid fa-up-right-from-square"></i>Ads</a></li>
             <li><a href="<?= ROOT ?>/adminProfile" ><i class="fa-regular fa-user"></i>Profile</a></li>
         </ul>   

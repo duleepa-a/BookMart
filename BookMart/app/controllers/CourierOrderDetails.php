@@ -94,6 +94,7 @@ class CourierOrderDetails extends Controller{
     public function update() {
         $orderModel = new Order();
         $courierOrdersModel = new CourierOrder();
+        $payRoll = new Payroll();
         
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $order_id =$_POST['order_id'];
@@ -101,8 +102,11 @@ class CourierOrderDetails extends Controller{
             $courierOrder_id = $courierOrdersModel->first(['order_id' => $order_id])->id;
 
             $courierOrdersModel->update($courierOrder_id,['status'=>'Completed']);
-            $orderModel->update($order_id,['order_status'=>'completed']);
-
+            $orderModel->update($order_id,['order_status'=>'completed',
+                                            'completed_date' => date('Y-m-d H:i:s')
+                                          ]);
+            $payRoll->addPayRoll($order_id);
+            
         }
 
         $Order = $courierOrdersModel->where(['courier_id' =>  $_SESSION['user_id']],);

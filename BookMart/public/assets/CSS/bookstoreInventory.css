@@ -130,7 +130,12 @@ body {
 
 .inventory-table th, .inventory-table td {
     padding: 8px;
-    text-align: left;
+    text-align: center;
+}
+
+.td-image{
+  margin:0;
+  padding: 0;
 }
 
 .inventory-table tbody tr:hover {
@@ -205,6 +210,10 @@ body {
     color: #e27b27;
   }
 
+  .tag-grey {
+    background-color: #f2f2f2;
+    color: #888888;
+  }
 .view-button {
     padding: 5px 10px;
     background-color: #003366;

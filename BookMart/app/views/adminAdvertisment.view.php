@@ -13,7 +13,7 @@
 <body>
     
     <!-- navBar division begin -->
-    <?php include 'adminNavBar.view.php';?>
+    <?php include 'secondaryNavBar.view.php';?>
     <!-- navBar division end -->
     <div class="sidebar">
         <ul>
@@ -25,6 +25,7 @@
             <li><a href="<?= ROOT ?>/adminSearchbooks"><i class="fa-solid fa-book"></i>Books</a></li>
             <li><a href="<?= ROOT ?>/adminViewContactUs"><i class="fa-solid fa-envelope"></i>Inquiries</a></li>
             <li><a href="<?= ROOT ?>/adminViewCourierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
+            <li><a href="<?= ROOT ?>/admin/payRolls" ><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
             <li><a href="<?= ROOT ?>/adminAdvertisment" class="active"><i class="fa-solid fa-up-right-from-square"></i>Ads</a></li>
             <li><a href="<?= ROOT ?>/adminProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
         </ul>   
@@ -132,7 +133,7 @@
                                         data-enddate="<?= htmlspecialchars($ad->End_date) ?>" 
                                         >
                                         <td><input type="checkbox"></td>
-                                        <td>
+                                        <td >
                                             <?php if (!empty($ad->cover_image)): ?>
                                                 <img src="<?= ROOT ?>\assets\Images\ads\<?= $ad->cover_image ?>" alt="Ad Image" style="width: 100px; height: auto; object-fit: cover;">
                                             <?php else: ?>
@@ -274,7 +275,9 @@
                             </tbody>
                         </table>
                     <?php else: ?>
+                    <div class="no-add-message">
                         <p>No pending advertisements available at the moment.</p>
+                    </div>
                     <?php endif; ?>
                 </div>
 
@@ -313,8 +316,8 @@
                                         <td><?= htmlspecialchars($ad->store_name ?? 'N/A') ?></td>
                                         <td><?= date('Y/m/d', strtotime($ad->start_date)) ?> - <?= date('Y/m/d', strtotime($ad->end_date)) ?></td>
                                         <td><?= number_format($ad->payment_amount, 2) ?></td>
-                                        <td style="color: <?= $ad->active_status ? 'green' : 'red' ?>;">
-                                            <?= $ad->active_status? 'Paid' : 'Unpaid' ?>
+                                        <td>
+                                           <span class="tag <?= $ad->active_status? 'tag-green' : 'tag-red' ?>"> <?= $ad->active_status? 'Paid' : 'Unpaid' ?> </span>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -322,7 +325,9 @@
                         </table>
                     </div>
                 <?php else: ?>
-                    <p>No approved advertisements available at the moment.</p>
+                    <div class="no-add-message">
+                        <p>No pending advertisements available at the moment.</p>
+                    </div>
                 <?php endif; ?>
 
                 <br><br><br>
