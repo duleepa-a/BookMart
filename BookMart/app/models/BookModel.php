@@ -1,5 +1,4 @@
 <?php
-require 'Order.php';
 
 class BookModel {
 
