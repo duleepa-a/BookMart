@@ -7,10 +7,11 @@ class CouponModel {
 
     protected $allowedColumns = [
         'coupon_id',
-        'coupon_name',
+        'coupon_code',
         'store_id',
         'discount_percentage',
         'start_time',
         'end_time',
+        'is_active'
     ];
 }
