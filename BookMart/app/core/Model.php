@@ -3,7 +3,7 @@
 Trait Model{
 
     use Database;
-    protected $limit = 50;
+    protected $limit = 10;
     protected $offset ='0';
     protected $order_column = "id";
     protected $order_type = "desc";
@@ -11,6 +11,10 @@ Trait Model{
 
     public function setLimit($limit) {
         $this->limit = $limit;
+    }
+
+    public function setOffset($offset) {
+        $this->offset = $offset;
     }
 
     public function first($data,$data_not = []){
@@ -128,4 +132,26 @@ Trait Model{
         $this->query($query,$data);
         
     }   
+
+    public function count($data = [], $data_not = []) {
+        $keys = array_keys($data);
+        $keys_not = array_keys($data_not);
+        $query = "SELECT COUNT(*) as total FROM $this->table WHERE ";
+    
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " && ";
+        }
+    
+        foreach ($keys_not as $key) {
+            $query .= $key . "!=:" . $key . " && ";
+        }
+    
+        $query = trim($query, " && ");
+    
+        $data = array_merge($data, $data_not);
+        $result = $this->query($query, $data);
+    
+        return $result ? $result[0]->total : 0;
+    }
+    
 }

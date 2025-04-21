@@ -83,6 +83,9 @@
                 <button id="logoutButton" class="navbar-links-select">Log Out</button>
             <?php endif; ?>
         </div>
+        <div class="hamburger" onclick="toggleHamburger()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
      
     </div> 
     <!--navBar division end -->
@@ -134,6 +137,11 @@
         });
         });
     }
+    function toggleHamburger() {
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.classList.toggle('show');
+    }
+
 </script>
 <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/navBar.css">
 

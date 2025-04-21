@@ -76,7 +76,12 @@
                 </form>
             </div>
         </div>
-        <h1 class="inventory-title">Coupons</h1>
+        <div class="inventory-title ">
+                <div class="Heading">
+                    <h1>Discount Coupons</h1>
+                    <span class="sub-heading">Generate and manage discount codes to boost sales.</span>
+                </div>
+            </div>
         <?php if (!empty($coupons)) : ?>
         <div class="inventory-toolbar">
             <input type="text" placeholder="Search your book in the inventory" class="inventory-search-bar">
@@ -89,7 +94,6 @@
             <table class="inventory-table">
                 <thead>
                     <tr>
-                        <th><input type="checkbox"></th>
                         <th>Coupon Code</th>
                         <th>Discount %</th>
                         <th>Start Date</th>
@@ -105,7 +109,6 @@
                             data-startdate="<?= htmlspecialchars($coupon->start_date) ?>" 
                             data-enddate="<?= htmlspecialchars($coupon->end_date ?? '') ?>" 
                             >
-                            <td><input type="checkbox"></td>
                             <td><?= htmlspecialchars($coupon->code) ?></td>
                             <td><?= htmlspecialchars($coupon->discount) ?></td>
                             <td><?= date('Y-m-d', strtotime($coupon->start_date))?></td>

@@ -81,8 +81,11 @@
         <div class="box"> 
              <div class="page-title">
                 <h1 class="inventory-title">Pay Rolls</h1><br>
-
              </div>
+             <nav class="tabs">
+                <button class="tab-button active first-child" onclick="showTab('new-add')">Payrolls</button>
+                <button class="tab-button" onclick="showTab('refund-req')">Refund Requests</button>
+            </nav>
             <div class="tab-content" id="new-add" >
             
                     <div class="add-toolbar">
@@ -153,6 +156,91 @@
                         </div>
                     <?php endif; ?>
 
+            </div>
+            <div class="tab-content" id="refund-req" style="display:none;">
+            
+                    <div class="add-toolbar">
+                        <input type="text" placeholder="Search payroll" class="add-search-bar">
+                        <button class="sort-button">Sort by <i class="fa-solid fa-sort-down "></i></button>
+                    </div>
+                
+                    <!-- Retrieve Advertisements -->
+                    <?php if (!empty($refundRequests)) : ?>
+                        <table class="add-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Buyer ID</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Reason</th>
+                                    <th>Evidence</th>
+                                    <th>Bank</th>
+                                    <th>Branch</th>
+                                    <th>Account No</th>
+                                    <th>Account Name</th>
+                                    <th>Status</th>
+                                    <th>Requested At</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($refundRequests as $refund) : ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($refund->order_id) ?></td>
+                                        <td><?= htmlspecialchars($refund->buyer_id) ?></td>
+                                        <td><?= htmlspecialchars($refund->email) ?></td>
+                                        <td><?= htmlspecialchars($refund->phone ?? '-') ?></td>
+                                        <td><?= htmlspecialchars($refund->reason) ?></td>
+                                        <td>
+                                            <?php if (!empty($refund->evidence)) : ?>
+                                                <a href="<?= ROOT ?>/admin/downloadRefundEvdience/<?= urlencode($refund->evidence) ?>"  style="text-decoration: none;" class="resolve-btn" >View</a>
+                                            <?php else : ?>
+                                                <span class="tag tag-grey">No File</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><?= htmlspecialchars($refund->bank_name) ?></td>
+                                        <td><?= htmlspecialchars($refund->branch_name) ?></td>
+                                        <td><?= htmlspecialchars($refund->account_number) ?></td>
+                                        <td><?= htmlspecialchars($refund->account_name) ?></td>
+                                        <td>
+                                            <?php if ($refund->status == 'pending') : ?>
+                                                <span class="tag tag-grey">Pending</span>
+                                            <?php elseif ($refund->status == 'approved') : ?>
+                                                <span class="tag tag-green">Approved</span>
+                                            <?php else : ?>
+                                                <span class="tag tag-red">Rejected</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><?= htmlspecialchars($refund->created_at) ?></td>
+                                        <td>
+                                            <?php if ($refund->status == 'pending') : ?>
+                                                <form method="post" action="<?= ROOT ?>/admin/updateRefundStatus" >
+                                                    <input type="hidden" name="id" value="<?= $refund->id ?>">
+                                                    <input type="hidden" name="action" value="approved">
+                                                    <button type="submit" class="resolve-btn">Approve</button>
+                                                </form>
+                                                <form method="post" action="<?= ROOT ?>/admin/updateRefundStatus">
+                                                    <input type="hidden" name="id" value="<?= $refund->id ?>">
+                                                    <input type="hidden" name="action" value="rejected">
+                                                    <button type="submit" class="reject-btn">Reject</button>
+                                                </form>
+                                            <?php endif; ?>
+                                            <form method="post" action="<?= ROOT ?>/admin/deleteRefundRequest">
+                                                <input type="hidden" name="id" value="<?= $refund->id ?>">
+                                                <button type="submit" class="delete-btn">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+
+                    <?php else : ?>
+                        <div class="no-add-message">
+                            <p>No refund requests found.</p>
+                        </div>
+                    <?php endif; ?>
             </div>
 
         

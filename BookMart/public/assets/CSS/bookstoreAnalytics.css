@@ -89,13 +89,6 @@ body {
 }
 
 
-.inventory-title {
-    text-align: center;
-    font-size: 2.5em;
-    color: #BE5715;
-    margin-bottom: 40px;
-}
-
 .inventory-toolbar {
     display: flex;
     gap: 10px;
@@ -427,12 +420,25 @@ canvas {
     }
 }
 
-.heading{
-    color: #02224E;
+
+.page-title {
     text-align: left;
-    margin-bottom: 40px;
-    margin-right: 10px;
+    font-size: 1rem;
+    color: #02224E;
     margin-top: 20px;
+    margin-bottom: 40px;
+    margin-left: 10px;
+}
+
+
+.title-heading{
+  display: block;
+}
+
+.sub-heading{
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: #8690a3;
 }
 
 

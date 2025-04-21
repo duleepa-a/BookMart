@@ -227,7 +227,7 @@
                     <div class="form-group">
                         <label for="evidence-docs">Upload evidence documents:</label>
                         <input type="file" id="evidence-docs" name="evidence-docs" >
-                      </div>
+                    </div>
                 </div>
                 <div class="form-group-row">
                     <div class="form-group checkbox-group">

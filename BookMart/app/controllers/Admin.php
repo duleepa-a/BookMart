@@ -76,11 +76,16 @@ class Admin extends Controller {
     }
 
     public function payRolls(){
+        $refundModel = new RefundRequest();
         $payrollModel = new payRoll();
         
         $payrolls = $payrollModel->findall();
-        
-        $this->view('adminPayRoll',[ 'payrolls' => $payrolls ]);
+        $refunds = $refundModel->findAll();
+
+        $this->view('adminPayRoll',[ 
+                                        'payrolls' => $payrolls,
+                                        'refundRequests'  => $refunds
+                                   ]);
     }
 
     public function markAsResolve($id){
@@ -159,6 +164,31 @@ class Admin extends Controller {
         $this->payRolls();
     }
 
+    public function updateRefundStatus(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $reqId = htmlspecialchars(trim($_POST['id']));
+            $status = htmlspecialchars(trim($_POST['action']));
+
+            $refundModel = new RefundRequest();
+
+            $refundModel->update($reqId,[ 'status' => $status ]);
+            
+            $this->payRolls();
+            
+        }
+    }
+
+    public function deleteRefundRequest(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $reqId = htmlspecialchars(trim($_POST['id']));
+
+            $refundModel = new RefundRequest();
+
+            $refundModel->delete($reqId);   
+            $this->payRolls();
+        }
+    }
+
     public function downloadEvidenceDoc($filename = '') {
         $filepath = 'C:\xampp\htdocs\BookMart\public\assets\uploads\evidence_docs' .'\\' . basename($filename); 
 
@@ -194,4 +224,23 @@ class Admin extends Controller {
             echo "File not found.";
         }
     }
+
+    public function downloadRefundEvdience($filename = '') {
+        $filepath = 'C:\xampp\htdocs\BookMart\public\assets\uploads\refunds' .'\\' . basename($filename); 
+
+        if (file_exists($filepath)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($filepath) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($filepath));
+            readfile($filepath);
+            exit;
+        } else {
+            echo "File not found.";
+        }
+    }
+
 }

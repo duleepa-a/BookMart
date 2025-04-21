@@ -2,7 +2,12 @@
         <div class="footer-content">
             <div class="footer-left">
                 <h2><b>Book<span class="highlight">Mart</span></b></h2>
-                <p><a href="<?= ROOT ?>/home"><b>Home</b></a><b> | </b><a href="<?= ROOT ?>/contactUs"><b>Contact Us</b></a><b>    |   </b><a href="<?= ROOT ?>/AboutUs"><b>About Us</b></a></p>
+                <p><a href="<?= ROOT ?>/home"><b>Home</b></a><b> | 
+            <?php if(isset($_SESSION['user_role']) && ($_SESSION['user_role']  == 'buyer' || $_SESSION['user_role']  == 'bookSeller' )) :?> 
+                </b><a href="<?= ROOT ?>/Buyer/refundRequest"><b>Refund request</b></a><b> | 
+            <?php endif;?>
+                </b><a href="<?= ROOT ?>/contactUs"><b>Contact Us</b></a><b>    |   
+                </b><a href="<?= ROOT ?>/AboutUs"><b>About Us</b></a></p>
                 <p>&copy; 2024 BookMart, all rights reserved.</p>
             </div>
             <div class="footer-center">

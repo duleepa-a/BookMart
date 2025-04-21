@@ -136,10 +136,63 @@
                 </form>
             </div>
         </div>
-        <h1 class="inventory-title">Pay Rolls</h1>
+        <div class="inventory-title ">
+            <div class="Heading">
+                <h1>Payroll History</h1>
+                <span class="sub-heading">Review completed payments and settlement details.</span>
+            </div>
+        </div>
         <?php if (!empty($payrolls)): ?>
             <div class="inventory-toolbar">
                 <input type="text" placeholder="Search payrolls" class="inventory-search-bar">
+                <div class="pagination">
+                    <!-- Previous Arrow -->
+                    <div class="pagination-item pagination-arrow <?= $currentPage <= 1 ? 'disabled' : '' ?>">
+                        <?php if ($currentPage > 1): ?>
+                            <a href="?page=<?= $currentPage - 1 ?>">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                            </a>
+                        <?php else: ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Page Numbers -->
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <?php if ($i == 1 || $i == $totalPages || abs($i - $currentPage) <= 1): ?>
+                            <div class="pagination-item pagination-number <?= $currentPage == $i ? 'active' : '' ?>">
+                                <a href="?page=<?= $i ?>" style="color: inherit; text-decoration: none; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                    <?= $i ?>
+                                </a>
+                            </div>
+                        <?php elseif ($i == 2 && $currentPage > 3 || $i == $totalPages - 1 && $currentPage < $totalPages - 2): ?>
+                            <div class="pagination-item pagination-dots">...</div>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+
+                    <!-- Next Arrow -->
+                    <div class="pagination-item pagination-arrow <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
+                        <?php if ($currentPage < $totalPages): ?>
+                            <a href="?page=<?= $currentPage + 1 ?>">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </a>
+                        <?php else: ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
             <table class="inventory-table">
                 <thead>

@@ -466,9 +466,10 @@ body {
 .review-button {
   display: inline-flex;
   align-items: center;
+  cursor: pointer;
   justify-content: center;
   padding: 12px 25px;
-  background-color: var(--primary-color);
+  background-color: #BE5715;
   color: white;
   border: none;
   border-radius: var(--border-radius);
@@ -480,7 +481,7 @@ body {
 }
 
 .review-button:hover {
-  background-color: #3a5fc9;
+  background-color: #793409;
   transform: translateY(-2px);
 }
 

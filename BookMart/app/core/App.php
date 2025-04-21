@@ -12,7 +12,7 @@ class App{
             'AdminProfile' => ['index'],
             'AdminViewallusers' => ['index'],
             'AdminBookstoreRequests' => ['index'],
-            'Admin' => ['index','bookstoreView','viewBookStore','approve','reject','downloadEvidenceDoc','downloadCourierDoc','viewCourier','payRolls','markAsResolve','addRefund',],
+            'Admin' => ['index','bookstoreView','viewBookStore','approve','reject','downloadEvidenceDoc','downloadCourierDoc','viewCourier','payRolls','markAsResolve','addRefund','updateRefundStatus','deleteRefundRequest' ,'downloadRefundEvdience'],
             'AdminViewbuyer' => ['index'],
             'AdminViewcourier' => ['index'],
             'AdminViewseller' => ['index'],
@@ -41,14 +41,14 @@ class App{
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle'],
             'BookSellerSidebar' => ['index'],
             'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],
-
+            'Buyer' => ['refundRequest','addRefundRequest'],
             'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
             'Payment' => ['index','checkOut','process','success','cancel','cartView'],
             'Notifications' => ['index','deleteNotification','markAsRead'],
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],
-            'Buyer' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile','updateLoginDetails','updatePersonalDetails'],
+            'Buyer' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile','updateLoginDetails','updatePersonalDetails','refundRequest','addRefundRequest'],
             'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
             'Payment' => ['index','checkOut','process','success','cancel','cartView','addToCart','cartCheckout','cartSuccess','increase','decrease','deleteSelected','clear','removeBook','deleteSelected']
         ],

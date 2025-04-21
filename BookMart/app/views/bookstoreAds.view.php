@@ -79,26 +79,78 @@
             
         
     </div>
-            <h1 class="inventory-title">Advertisments & Offers </h1>
-            <br>
-            <?php if (!empty($advertisments)): ?>
-            <div class="tab-content" id="Advertisments">
+            <div class="inventory-title ">
+                <div class="Heading">
+                    <h1>Promotions & Advertisements</h1>
+                    <span class="sub-heading">Create and manage ads to attract more book buyers.</span>
+                </div>
+            </div>
                 <div class="inventory-toolbar">
                     <input type="text" placeholder="Search advertisements" class="inventory-search-bar">
                     <div class="filter">
                         <label for="status-filter">SHOW:</label>
                         <select id="status-filter" class="status-filter">
-                            <option value="all">All</option>
-                            <option value="pending">Pending</option>
-                            <option value="approved">Approved</option>
-                            <option value="rejected">Rejected</option>
+                            <option value="all" <?= $filterStatus === 'all' ? 'selected' : '' ?>>All</option>
+                            <option value="pending" <?= $filterStatus === 'pending' ? 'selected' : '' ?>>Pending</option>
+                            <option value="approved" <?= $filterStatus === 'approved' ? 'selected' : '' ?>>Approved</option>
+                            <option value="rejected" <?= $filterStatus === 'rejected' ? 'selected' : '' ?>>Rejected</option>
                         </select>
                     </div>
+
+                    <div class="pagination">
+                        <!-- Previous Arrow -->
+                        <div class="pagination-item pagination-arrow <?= $currentPage <= 1 ? 'disabled' : '' ?>">
+                            <?php if ($currentPage > 1): ?>
+                                <a href="?page=<?= $currentPage - 1 ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
+                                </a>
+                            <?php else: ?>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Page Numbers -->
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <?php if ($i == 1 || $i == $totalPages || abs($i - $currentPage) <= 1): ?>
+                                <div class="pagination-item pagination-number <?= $currentPage == $i ? 'active' : '' ?>">
+                                    <a href="?page=<?= $i ?>" style="color: inherit; text-decoration: none; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                        <?= $i ?>
+                                    </a>
+                                </div>
+                            <?php elseif ($i == 2 && $currentPage > 3 || $i == $totalPages - 1 && $currentPage < $totalPages - 2): ?>
+                                <div class="pagination-item pagination-dots">...</div>
+                            <?php endif; ?>
+                        <?php endfor; ?>
+
+                        <!-- Next Arrow -->
+                        <div class="pagination-item pagination-arrow <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
+                            <?php if ($currentPage < $totalPages): ?>
+                                <a href="?page=<?= $currentPage + 1 ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                </a>
+                            <?php else: ?>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
                 </div>
+                <?php if (!empty($advertisments)): ?>
                 <table class="inventory-table">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" class="select-all"></th>
                             <th>Image</th>
                             <th>Title</th>
                             <th>Status</th>
@@ -112,7 +164,6 @@
                     <tbody>
                             <?php foreach ($advertisments as $ad): ?>
                                 <tr>
-                                    <td><input type="checkbox" class="select-order"></td>
 
                                     <!-- Image Preview -->
                                     <td class="td-image">
@@ -156,6 +207,8 @@
                                             <input type="hidden" name="ad_id" value="<?= $ad->id ?>">
                                             <button type="submit" class="delete-btn">Delete</button>
                                         </form>
+                                    <?php elseif ($ad->payment_amount > 0 && $ad->active_status == 1): ?>
+                                        <span class="tag tag-green">Paid</span>
                                     <?php else: ?>
                                         <span class="tag tag-grey">-</span>
                                     <?php endif; ?>
@@ -164,7 +217,6 @@
                             <?php endforeach; ?>
                     </tbody>
             </table>
-            </div> 
             <?php else: ?>
                             <div class="message-div">No advertisements found.</div>
             <?php endif; ?>
@@ -198,7 +250,16 @@
                     row.style.display = matchFound ? "" : "none";
                 });
             });
-        });
+
+            const statusFilter = document.getElementById('status-filter');
+            statusFilter.addEventListener('change', () => {
+                const selectedStatus = statusFilter.value;
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('status', selectedStatus);
+                urlParams.set('page', 1); // reset to first page on filter change
+                window.location.search = urlParams.toString();
+            });
+            });
     </script>
 </body>
 </html>

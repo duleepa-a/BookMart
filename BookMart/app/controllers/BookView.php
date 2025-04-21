@@ -9,13 +9,14 @@ class BookView extends Controller{
         $reviewLikeModel = new ReviewLike();
         $bookController = new Book();
         $book = $bookModel->first(['id' => $id]);
-        $recom = $bookModel->findAll();
         $reviews =$bookController->getReviews($id);
 
        
 
         $sellerm = new UserModel;
         $seller= $sellerm->first(['id' => $book->seller_id]);
+
+        $recommededBooks = $bookModel->recommendBooks($id);
         
         if (!empty($reviews)) {
             foreach ($reviews as &$review) {
@@ -37,7 +38,7 @@ class BookView extends Controller{
         [
             'book' => $book,
             'seller' => $seller,
-            'recommended'=>$recom,
+            'recommended'=>$recommededBooks,
             'reviews' => $reviews ,
         ]; 
 

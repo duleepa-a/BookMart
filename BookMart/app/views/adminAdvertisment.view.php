@@ -232,8 +232,9 @@
 
             <!--Pending Advertisement-->
             <div class="tab-content" id="pending-add">
-                <input type="text" class="search" placeholder="Search">
-                <br><br>
+                <div class="add-toolbar"> 
+                    <input type="text" class="search" placeholder="Search">
+                </div>
                 <div style="overflow-x: auto;">
                     <?php if (!empty($pendingStoreAds)): ?>
                         <table class="advertisement-table">
@@ -294,9 +295,9 @@
 
             <!--Approved Advertisement-->
             <div class="tab-content" id="approved-add">
-                <input type="text" class="search" placeholder="Search">
-                <br><br>
-
+                <div class="add-toolbar"> 
+                    <input type="text" class="search" placeholder="Search">
+                </div>
                 <?php if (!empty($approvedAds)): ?>
                     <div class="table-wrapper">
                         <table class="advertisement-table">

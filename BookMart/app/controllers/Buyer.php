@@ -319,5 +319,83 @@ class Buyer extends Controller{
         $this->myProfile();
     }
     
+    public function refundRequest(){
+        $this->view('requestRefund');
+    }
+
+    public function addRefundRequest(){
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $refundModel = new RefundRequest();
+            $ordersModel = new Order();
+
+            $refundData = [
+                'order_id' => htmlspecialchars(trim($_POST['order_number'])),
+                'buyer_id' => $_SESSION['user_id'],
+                'email' => filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL),
+                'phone' => isset($_POST['phone']) ? htmlspecialchars(trim($_POST['phone'])) : null,
+                'reason' => htmlspecialchars(trim($_POST['reason'])),
+                'bank_name' => htmlspecialchars(trim($_POST['bank_name'])),
+                'branch_name' => htmlspecialchars(trim($_POST['branch_name'])),
+                'account_number' => htmlspecialchars(trim($_POST['account_number'])),
+                'account_name' => htmlspecialchars(trim($_POST['account_holder'])),
+            ];
+
+            $order = $ordersModel->first(["order_id" => $refundData['order_id']]);
+
+            if(!$order){ 
+                $_SESSION['error'] =  "Invalid Order ID.";
+                $this->refundRequest();
+                return;
+
+            }
+
+            if($order->buyer_id != $_SESSION['user_id']){ 
+                $_SESSION['error'] =  "This order is not placed by you";
+                $this->refundRequest();
+                return;
+            }
+
+          
+            $uploadDir = 'C:\xampp\htdocs\BookMart\public\assets\uploads\refunds';
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            if (isset($_FILES['evidence']) && $_FILES['evidence']['error'] === UPLOAD_ERR_OK) {
+                $tmpName = $_FILES['evidence']['tmp_name'];
+                $originalName = basename($_FILES['evidence']['name']);
+                $newName = uniqid() . '_' . $originalName;
+                $targetPath = $uploadDir . '\\' . $newName;
+
+                if (move_uploaded_file($tmpName, $targetPath)) {
+                    $refundData['evidence'] = $newName;
+                } else {
+                    $refundData['evidence'] = null;
+                    $_SESSION['error'] =  "Failed to upload evidence file.";
+                    $this->refundRequest(); 
+                    return;
+                }   
+            } else {
+                $refundData['evidence'] = null;
+            }
+
+            if ($refundModel->insert($refundData)) {
+
+                $_SESSION['success'] = 'Refund request successfully submitted';
+                $this->refundRequest();
+                return;
+            } else {
+
+                $_SESSION['error'] = 'Failed to submit refund request.';
+                return;
+            }
+        } else {
+
+                $_SESSION['error'] = 'Error in the server';
+                $this->refundRequest(); 
+                return;
+        }
+    }
+
 
 }

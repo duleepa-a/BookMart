@@ -138,7 +138,12 @@
             </div>
         </div>
 
-        <h1 class="heading">Bookstore Analytics Dashboard</h1>
+        <div class="page-title ">
+            <div class="Heading">
+                <h1>Store Performance Insights</h1>
+                <span class="sub-heading">Track sales trends, customer interactions, and growth metrics.</span>
+            </div>
+        </div>
 
         <div class="dashboard">
             <div class="chart-container">

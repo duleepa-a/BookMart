@@ -258,15 +258,15 @@ body {
 .review-button {
   padding: 10px 60px;
   font-size: 14px;
-  color: #ff6f00;
-  border: 1px solid #ff6f00;
+  color: #BE5715;
+  border: 1px solid #BE5715;
   background-color: transparent;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .review-button:hover {
-  background-color: #ff6f00;
+  background-color: #BE5715;
   color: #fff;
 }
 

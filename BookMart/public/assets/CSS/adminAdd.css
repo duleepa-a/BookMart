@@ -20,7 +20,7 @@ body {
 }
 
 .box {
-    width: 95%;
+    width: 98%;
     background-color: #ffffff;
     padding: 2%;
     border-radius: 10px;
@@ -83,13 +83,28 @@ body {
     margin-top: 50px;
 }
 
+.view-btn {
+    text-decoration: none;
+    background-color: #ffffff;
+    color: #034db3;
+    border: 1px solid #034db3;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.view-btn:hover {
+    background-color: #034db3;
+    color: #ffffff;
+}
+
+
 
 /*tabs*/
 
 .tabs {
     display: flex;
     width: 100%;
-    margin-bottom: 20px;
     text-align: left;
     align-items:flex-start;
 }
@@ -137,9 +152,7 @@ body {
 /*add advertisement button*/
 
 .add-bttn {
-    margin-top: 43px;
     margin-left: 4px;
-    margin-bottom: 50px;
     display: flex;
     align-items: center;
     padding: 20px 30px;
@@ -166,7 +179,7 @@ body {
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-top: 0%;
+    margin-top: 20px;
 }
 
 /*add search bar*/
@@ -481,11 +494,42 @@ body {
     border: solid 3px #1c69c7;
     padding: 8px 15px;
     border-radius: 5px;
+    width:100px;
     cursor: pointer;
   }
   
   .resolve-btn:hover {
     background-color: #1c69c7;
+  }
+
+  .reject-btn {
+    background-color: #e07777;
+    color: #fff;
+    border: solid 3px #c71c1c;
+    padding: 8px 15px;
+    border-radius: 5px;
+    width:100px;
+    margin-top: 5px;
+    cursor: pointer;
+  }
+  
+  .reject-btn:hover {
+    background-color: #c71c1c;
+  }
+
+  .delete-btn {
+    margin-top: 5px;
+    background-color: #ececec;
+    color: #a4a4a4;
+    border: solid 3px #bec2c6;
+    padding: 8px 15px;
+    border-radius: 5px;
+    width:100px;
+    cursor: pointer;
+  }
+  
+  .delete-btn:hover {
+    background-color: #161b21;
   }
 
   

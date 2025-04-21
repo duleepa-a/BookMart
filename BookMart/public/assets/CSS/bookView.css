@@ -36,40 +36,6 @@ body{
     border-radius: 2px; /* Slightly round the edges of the line */
 }
 
-.book-cards {
-    display: flex;
-    overflow: hidden;
-    width: 100%;
-    height: 50%;
-}
-
-.book-card {
-    background-color: #ffffff;
-    margin: 0 15px;
-    text-align: center;
-    /* box-shadow: ; */
-    /* box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1); */
-    transition: transform 0.2s;
-    position: relative;
-}
-.book-card p{
-    font-size: 1rem;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.book-card:hover{
-    cursor: pointer;
-    transform: scale(1.02);
-}
-
-.book-card img {
-    width: 150px;
-    height: 200px;
-    object-fit: cover;
-    margin-bottom: 10px;
-}
-
 .discount {
     position: absolute;
     top: 10px;
@@ -203,7 +169,26 @@ button.prev:hover, button.next:hover {
     align-items: center;
     gap: 30px;
   }
+
+  .out-of-stock {
+    width: 100%;
+    margin: auto;
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid #ff5a5a;
+    border-radius: 4px;
+    padding: 8px 12px;
+    display: inline-block;
+    text-align: center;
+  }
   
+  .out-of-stock p {
+    color: #d32f2f;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
   
   .quantity-selector {
     display: flex;
@@ -500,57 +485,62 @@ button.prev:hover, button.next:hover {
 
 
 .carousel {
-    width: 95%;
+    width: 90%;
     margin: auto;
-    margin-bottom: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
-.book-cards-recommended {
+.book-cards {
     display: flex;
     overflow: hidden;
     width: 100%;
     height: 50%;
+    padding: 10px 0;
+    gap: 20px;
 }
 
 .book-card {
-    background-color: #ffffff;
-    margin: 0 15px;
-    width: 150px;
+    background-color: #ffffff00;
+    margin: 0;
+    width: 160px;
+    height: auto;
     text-align: center;
-    /* box-shadow: ; */
-    /* box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1); */
-    transition: transform 0.2s;
+    transition: transform 0.3s ease;
     position: relative;
+    flex-shrink: 0;
+    border-radius: 0;
 }
 
-.book-card-link{
+.book-card-link {
     text-decoration: none;
-    color: #000000;
+    color: #333333;
+    display: block;
 }
 
-.book-card p{
-    font-size: 1rem;
-    padding-left: 10px;
-    padding-right: 10px;
+.book-card p {
+    font-size: 0.95rem;
+    padding: 0 10px;
+    margin: 8px 0;
+    line-height: 1.3;
+    overflow: hidden;
 }
 
-.book-card:hover{
-    cursor: pointer;
-}
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
 
+.book-card:hover .book-image img {
+    transform: scale(1.1);
+}
 .book-card img {
-    width: 150px;
-    height: 200px;
+    width:160px;
+    height: 250px;
     object-fit: cover;
     margin-bottom: 10px;
-}
-
-.book-card img:hover{
-    cursor: pointer;
-    transform: scale(1.02);
 }
 
 
@@ -558,34 +548,28 @@ button.prev:hover, button.next:hover {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: rgb(200, 0, 0);
+    background-color: #e63946;
     color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
+    padding: 4px 8px;
+    border-radius: 4px;
     font-size: 12px;
+    font-weight: 500;
 }
 
 .bookcard-price {
-    color: #514646;
-    font-weight: light;
-    margin-top: 10px;
+    color: #2b2b2b;
+    font-weight: 500;
+    margin: 5px 0 10px;
+    font-size: 1rem;
 }
 
 .bookcard-old-price {
     text-decoration: line-through;
-    color: rgb(126, 0, 0);
+    color: #b02929;
+    margin-right: 5px;
+    font-size: 0.7rem;
 }
 
-button.prev, button.next {
-    color: #002b54;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-}
-
-button.prev:hover, button.next:hover {
-    color: #34495e;
-}
 
 .heading{
     margin-left:5.5%;

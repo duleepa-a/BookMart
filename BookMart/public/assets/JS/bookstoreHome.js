@@ -3,7 +3,7 @@ const addBookButton = document.querySelector('.add-book-bttn');
 const modal = document.querySelector('.modal');
 const closeModalButton = document.querySelector('.close-modal');
 
-console.log(addBookButton);
+
 
 // Show modal
 addBookButton.addEventListener('click', () => {
@@ -14,6 +14,8 @@ addBookButton.addEventListener('click', () => {
 closeModalButton.addEventListener('click', () => {
     modal.classList.remove('active');
 });
+
+console.log(addBookButton);
 
 // Close modal when clicking on the overlay
 modal.addEventListener('click', (e) => {

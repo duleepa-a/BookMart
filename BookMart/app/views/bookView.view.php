@@ -79,8 +79,8 @@
                           <li><strong>ISBN</strong>: <?= $book->ISBN; ?></li>
                       </ul>
                   </div>
+                  <?php if($book->quantity > 0): ?>
                   <div class="product-actions">
-                    <?php if($book->quantity > 0): ?>
                             <div class="quantity-selector">
                                 <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
                                 <span class="quantity" id="quantity">1</span>
@@ -88,10 +88,12 @@
                             </div>
                         <button class="buy-now-btn" onclick="buyNow()">Buy now</button>
                         <button class="add-to-cart-btn" onclick="addToCart()">Add to cart</button>
-                    <?php else: ?>
-                        <p> Out of stock</p>
-                    <?php endif;?>
                   </div>
+                  <?php else: ?>
+                    <div class="out-of-stock">
+                        <p> Out of stock</p>
+                    </div>
+                  <?php endif;?>
               </div>
           </div>
       </div>
@@ -158,7 +160,6 @@
     
     <h2 class="heading">Recommend for you</h2>
     <div class="carousel">
-                <button class="prev"><i class="fa-solid fa-chevron-left fa-lg"></i></button>
                 <div class="book-cards">
                     <?php if (isset($recommended) && !empty($recommended)): ?>
                         <?php foreach ($recommended as $recbook): ?>
@@ -182,11 +183,12 @@
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <p>No new arrivals at the moment.</p>
+                    <div class="message-div">
+                        <p>No recommendations at the moment.</p>
+                    </div>
                     <?php endif; ?>
                 </div>
-                <button class="next"><i class="fa-solid fa-chevron-right fa-lg"></i></button>
-  </div>
+    </div>
 
     <!-- footer begin -->
     <?php include 'footer.view.php'; ?>   

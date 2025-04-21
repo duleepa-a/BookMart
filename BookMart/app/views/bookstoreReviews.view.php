@@ -137,21 +137,73 @@
             </div>
         </div>
         <div class="page-title">
-            <h1>Reviews</h1>
+            <div class="Heading">
+                <h1>Customer Reviews</h1>
+                <span class="sub-heading">See what readers are saying and respond to their feedback.</span>
+            </div>
             <p><?= $unreadcount === 0 ? 'No' : htmlspecialchars($unreadcount) ?> New Reviews</p>
         </div>
-        <?php if (!empty($reviews)): ?>
+    
         <div class="inventory-toolbar">
             <input type="text" placeholder="Search review by book, date, content, user.. " class="inventory-search-bar">
             <div class="filter">
                 <label for="status-filter">SHOW:</label>
                 <select id="status-filter" class="status-filter">
-                <option value="all">All</option>
-                <option value="unread">New</option>
-                <option value="read">Read</option>
+                    <option value="all" <?= $filterStatus === 'all' ? 'selected' : '' ?>>All</option>
+                    <option value="unread" <?= $filterStatus === 'unread' ? 'selected' : '' ?>>unread</option>
+                    <option value="read" <?= $filterStatus === 'read' ? 'selected' : '' ?>>read</option>
                 </select>
+                </div>
+            <div class="pagination">
+                <!-- Previous Arrow -->
+                <div class="pagination-item pagination-arrow <?= $currentPage <= 1 ? 'disabled' : '' ?>">
+                    <?php if ($currentPage > 1): ?>
+                        <a href="?page=<?= $currentPage - 1 ?>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </a>
+                    <?php else: ?>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Page Numbers -->
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <?php if ($i == 1 || $i == $totalPages || abs($i - $currentPage) <= 1): ?>
+                        <div class="pagination-item pagination-number <?= $currentPage == $i ? 'active' : '' ?>">
+                            <a href="?page=<?= $i ?>" style="color: inherit; text-decoration: none; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                <?= $i ?>
+                            </a>
+                        </div>
+                    <?php elseif ($i == 2 && $currentPage > 3 || $i == $totalPages - 1 && $currentPage < $totalPages - 2): ?>
+                        <div class="pagination-item pagination-dots">...</div>
+                    <?php endif; ?>
+                <?php endfor; ?>
+
+                <!-- Next Arrow -->
+                <div class="pagination-item pagination-arrow <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
+                    <?php if ($currentPage < $totalPages): ?>
+                        <a href="?page=<?= $currentPage + 1 ?>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </a>
+                    <?php else: ?>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
+        <?php if (!empty($reviews)): ?>
         <table class="reviews-table">
             <thead>
                 <tr>
@@ -177,7 +229,7 @@
                         </td>
                         <td>
                         <?php if(empty($review->reply)): ?>
-                            <button class="reply-btn" data-review-id="<?= $review->id ?>"">Reply</button>
+                            <button class="reply-btn" data-review-id="<?= $review->id ?>">Reply</button>
                         <?php else:?>
                             Reply : <?= htmlspecialchars($review->reply) ?>
                         <?php endif; ?>
@@ -258,19 +310,25 @@
         const replymodal = document.getElementById('reply-modal');
 
         // Show modal
-        replyButton.addEventListener('click', () => {
-            replymodal.classList.add('active');
-            const reviewId = event.target.dataset.reviewId;
-            console.log("Review ID:", reviewId);
-            document.getElementById('replyReviewId').value = reviewId;
+        if(replyButton){
+            replyButton.addEventListener('click', () => {
+                replymodal.classList.add('active');
+                const reviewId = event.target.dataset.reviewId;
+                console.log("Review ID:", reviewId);
+                document.getElementById('replyReviewId').value = reviewId;
 
-        });
+            });
+        }
 
-        replymodal.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal-overlay')) {
-                modal.classList.remove('active');
-            }
-        });;
+    
+        if(replymodal){
+            replymodal.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal-overlay')) {
+                    modal.classList.remove('active');
+                }
+            });
+        }
+
         document.querySelectorAll(".close-modal").forEach((btn) => {
             btn.addEventListener("click", (e) => {
                 e.preventDefault();
@@ -282,6 +340,15 @@
             overlay.addEventListener("click", () => {
                 overlay.closest(".modal").classList.remove('active');
             });
+        });
+
+        const statusFilter = document.getElementById('status-filter');
+        statusFilter.addEventListener('change', () => {
+            const selectedStatus = statusFilter.value;
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('status', selectedStatus);
+            urlParams.set('page', 1); // reset to first page on filter change
+            window.location.search = urlParams.toString();
         });
 
 
