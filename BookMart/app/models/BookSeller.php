@@ -21,6 +21,7 @@ class BookSeller {
         'branch_name',
         'account_number',
         'account_name',
-        'rating'
+        'rating',
+        'profile_picture'
     ];
 }
