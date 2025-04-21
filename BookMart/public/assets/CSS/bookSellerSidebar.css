@@ -45,6 +45,18 @@
     font-weight: 600;
 }
 
+@media (max-width: 768px) {
+    .search-field {
+      width: 100%;
+    }
+}
+
+.sidebar-heading{
+    color: #02224E;
+    margin: 30px;
+    margin-bottom: 70px;
+}
+
 .add-book-bttn {
     margin-top: 20px;
     margin-left: 15px;

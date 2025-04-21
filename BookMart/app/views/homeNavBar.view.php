@@ -55,7 +55,7 @@
                     <a href="" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
                 <?php elseif ($_SESSION['user_role'] == 'bookSeller'): ?>
                     <!-- Links for bookseller -->
-                    <a href="./bookSellerProfile" class="navbar-links">Profile</a>
+                    <a href="./bookSellerController/myProfile" class="navbar-links">Profile</a>
                     <a href="./bookSellerListings" class="navbar-links">Listings</a>
                     <a href="./bookSellerSales" class="navbar-links">Sales</a>
                     <a href="./articles" class="navbar-links">Articles</a>

@@ -37,7 +37,7 @@ class App{
             'BookSellerHome' => ['index','storePage', 'viewSales'],
             'BookSellerSales' => ['index'], 
             'BookSellerListings' => ['index', 'addBook', 'updateBook', 'deleteBook'], 
-            'BookSellerProfile' => ['index'],
+            'BookSellerController' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile','updateLoginDetails','updatePersonalDetails', 'updateBankDetails', 'uploadProfilePicture'],
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle'],
             'BookSellerSidebar' => ['index'],
             'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],

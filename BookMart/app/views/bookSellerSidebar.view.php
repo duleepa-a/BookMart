@@ -4,28 +4,53 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 <?php if ($_SESSION['user_role'] == 'bookSeller'): ?>
 <div class="sidebar">
+    <h3 class="sidebar-heading">Welcome back,<br><?= $_SESSION['full_name'] ?? 'User' ?></h3>
+    <ul>
+        <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button></li>
+        <li><button class="add-book-bttn" onClick="location.href='<?= ROOT ?>/articles/create';"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Create Article</button></li>
+        <li><a href="<?= ROOT ?>/bookSellerListings" class="<?= strpos($currentPath, '/bookSellerListings') !== false ? 'active' : '' ?>" class="active" ><i class="fa-solid fa-book"></i>My Listings</a></li>
+        <li><a href="<?= ROOT ?>/auctions" class="<?= strpos($currentPath, '/auctions') !== false ? 'active' : '' ?>"><i class="fa-solid fa-chart-column"></i>Auctions</a></li>
+        <li><a href="<?= ROOT ?>/articles" class="<?= strpos($currentPath, '/articles') !== false && strpos($currentPath, '/myArticles') === false ? 'active' : '' ?>"><i class="fa-solid fa-cart-plus"></i>Articles</a></li>
+        <li><a href="<?= ROOT ?>/bookSellerController/myProfile" class="<?= strpos($currentPath, '/bookSellerController/myProfile') !== false ? 'active' : '' ?>"><i class="fa-regular fa-user"></i>Profile</a></li>
+    </ul>   
+</div>
+<?php elseif ($_SESSION['user_role'] == 'buyer'): ?>
+    <div class="sidebar">
+        <h3 class="sidebar-heading">Welcome back,<br><?= $_SESSION['full_name'] ?? 'User' ?></h3>
         <ul>
-            <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button></li>
+            <li><button class="add-book-bttn" onClick="location.href='<?= ROOT ?>/articles/create';"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Create Article</button></li>
+            <li><a href="<?= ROOT ?>/auctions" class="<?= strpos($currentPath, '/auctions') !== false ? 'active' : '' ?>"><i class="fa-solid fa-chart-column"></i>Auctions</a></li>
+            <li><a href="<?= ROOT ?>/articles" class="<?= strpos($currentPath, '/articles') !== false && strpos($currentPath, '/myArticles') === false ? 'active' : '' ?>"><i class="fa-solid fa-cart-plus"></i>Articles</a></li>
+            <li><a href="<?= ROOT ?>/buyer/myProfile" class="<?= strpos($currentPath, '/buyer/myProfile') !== false ? 'active' : '' ?>"><i class="fa-regular fa-user"></i>Profile</a></li>
+        </ul>   
+    </div>
+<?php elseif ($_SESSION['user_role'] == 'admin'): ?>
+    <div class="sidebar">
+        <h3 class="sidebar-heading">Welcome back,<br><?= $_SESSION['full_name'] ?? 'User' ?></h3>
+        <ul>
             <li><button class="add-book-bttn" onClick="location.href='<?= ROOT ?>/articles/create';"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Create Article</button></li>
             <li><a href="<?= ROOT ?>/bookSellerListings" class="<?= strpos($currentPath, '/bookSellerListings') !== false ? 'active' : '' ?>" class="active" ><i class="fa-solid fa-book"></i>My Listings</a></li>
             <li><a href="<?= ROOT ?>/auctions" class="<?= strpos($currentPath, '/auctions') !== false ? 'active' : '' ?>"><i class="fa-solid fa-chart-column"></i>Auctions</a></li>
             <li><a href="<?= ROOT ?>/articles" class="<?= strpos($currentPath, '/articles') !== false && strpos($currentPath, '/myArticles') === false ? 'active' : '' ?>"><i class="fa-solid fa-cart-plus"></i>Articles</a></li>
             <li><a href="<?= ROOT ?>/bookSellerProfile" class="<?= strpos($currentPath, '/bookSellerProfile') !== false ? 'active' : '' ?>"><i class="fa-regular fa-user"></i>Profile</a></li>
         </ul>   
-</div>
-<?php elseif ($_SESSION['user_role'] == 'buyer'): ?>
+    </div>
+<?php elseif ($_SESSION['user_role'] == 'bookStore'): ?>
     <div class="sidebar">
+        <h3 class="sidebar-heading">Welcome back,<br><?= $_SESSION['full_name'] ?? 'User' ?></h3>
         <ul>
-            <li><a href="<?= ROOT ?>/bookSellerListings" class="<?= strpos($currentPath, '/bookSellerListings') !== false ? 'active' : '' ?>" class="active" ><i class="fa-solid fa-book"></i>My Listings</a></li>
-            <li><a href="<?= ROOT ?>/auctions" class="<?= strpos($currentPath, '/auctions') !== false ? 'active' : '' ?>"><i class="fa-solid fa-chart-column"></i>Auctions</a></li>
-            <li><a href="<?= ROOT ?>/articles" class="<?= strpos($currentPath, '/articles') !== false && strpos($currentPath, '/myArticles') === false ? 'active' : '' ?>"><i class="fa-solid fa-cart-plus"></i>Articles</a></li>
-            <li><a href="<?= ROOT ?>/bookSellerProfile" class="<?= strpos($currentPath, '/bookSellerProfile') !== false ? 'active' : '' ?>"><i class="fa-regular fa-user"></i>Profile</a></li>
+            <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button></li>
+            <li><a href="<?= ROOT ?>/"><i class="fa-solid fa-house"></i>Dashboard</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/inventory" class="<?= strpos($currentPath, '/BookstoreController/inventory') !== false ? 'active' : '' ?>" class="active" ><i class="fa-solid fa-book"></i>My Inventory</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/Analytics" class="<?= strpos($currentPath, '/BookstoreController/Analytics') !== false ? 'active' : '' ?>"><i class="fa-solid fa-chart-column"></i>Analytics</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/orders" class="<?= strpos($currentPath, '/BookstoreController/orders') !== false ? 'active' : '' ?>"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/getReviews" class="<?= strpos($currentPath, '/BookstoreController/getReviews') !== false ? 'active' : '' ?>"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/advertisments" class="<?= strpos($currentPath, '/BookstoreController/advertisments') !== false ? 'active' : '' ?>"><i class="fa-solid fa-up-right-from-square"></i>Ads & Offers</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/coupons" class="<?= strpos($currentPath, '/BookstoreController/coupons') !== false ? 'active' : '' ?>"><i class="fa-solid fa-ticket"></i>Coupons</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/payRolls" class="<?= strpos($currentPath, '/BookstoreController/payRolls') !== false ? 'active' : '' ?>"><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
+            <li><a href="<?= ROOT ?>/BookstoreController/myProfile" class="<?= strpos($currentPath, '/BookstoreController/myProfile') !== false ? 'active' : '' ?>"><i class="fa-regular fa-user"></i>Profile</a></li>
         </ul>   
     </div>
-<?php elseif ($_SESSION['user_role'] == 'admin'): ?>
-
-<?php elseif ($_SESSION['user_role'] == 'bookStore'): ?>
-
 <?php endif; ?>
 
 <div class="container"> 
