@@ -28,7 +28,7 @@ class App{
             
         ],
         'bookStore' => [
-            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','orderView','confirmPickup','myProfile','markAsRead','addReply','requestAdvertisment','updateStoreDetails','updateOwnerDetails','uploadProfilePicture','deleteAdvertisment','updateBankDetails' ,'coupons','payRolls'],
+            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','orderView','confirmPickup','myProfile','markAsRead','addReply','requestAdvertisment','updateStoreDetails','updateOwnerDetails','uploadProfilePicture','deleteAdvertisment','updateBankDetails' ,'coupons','payRolls', 'addCoupon', 'updateCoupon'],
             'Book' => ['addBook','updateBook','deleteBook'],
             'User' => ['like','changePassword'],
             'Payment' => ['payAd','adSuccess','adCancel'],
@@ -37,7 +37,7 @@ class App{
             'BookSellerHome' => ['index','storePage', 'viewSales'],
             'BookSellerSales' => ['index'], 
             'BookSellerListings' => ['index', 'addBook', 'updateBook', 'deleteBook'], 
-            'BookSellerProfile' => ['index'],
+            'BookSellerController' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile','updateLoginDetails','updatePersonalDetails', 'updateBankDetails', 'uploadProfilePicture'],
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle'],
             'BookSellerSidebar' => ['index'],
             'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],

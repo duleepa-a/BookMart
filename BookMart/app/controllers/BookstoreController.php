@@ -580,35 +580,6 @@ class BookstoreController extends Controller{
         }
     }
 
-    public function coupons(){
-
-        $coupons = [
-            (object)[
-                'id' => 1,
-                'code' => 'BCSD',
-                'discount' => 15.0,
-                'start_date' => '2025-04-18 20:46:00',
-                'end_date' => '2025-05-18 20:46:00'
-            ],
-            (object)[
-                'id' => 2,
-                'code' => 'WELCOME',
-                'discount' => 10.0,
-                'start_date' => '2025-04-20 00:00:00',
-                'end_date' => '2025-06-01 23:59:59'
-            ],
-            (object)[
-                'id' => 3,
-                'code' => 'BOOKMART50',
-                'discount' => 50.0,
-                'start_date' => '2025-04-25 12:00:00',
-                'end_date' => '2025-04-30 23:59:59'
-            ]
-        ];
-
-        $this->view('bookstoreCoupons',['coupons' => $coupons]);
-    }
-
     public function payRolls(){
         $payrollModel = new Payroll();
 
@@ -640,5 +611,72 @@ class BookstoreController extends Controller{
         ]);
     }
 
+    public function coupons(){
+        $couponModel = new CouponModel();
+
+        $coupons = $couponModel->where(['store_id' => $_SESSION['user_id']]);
+
+
+        $this->view('bookstoreCoupons',['coupons' => $coupons]);
+    }
+
+    public function addCoupon() {
+        $couponModel = new CouponModel();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $couponCode = $_POST['coupon_code'];
+            $discount = $_POST['discount'];
+            $startDate = $_POST['start_date'];
+            $endDate = empty($_POST['end_date']) ? null : $_POST['end_date'];
+
+            $data = [
+                'coupon_code' => $couponCode,
+                'discount_percentage' => $discount,
+                'start_time' => $startDate,
+                'end_time' => $endDate,
+                'store_id' => $_SESSION['user_id'],
+                'is_active' => 1
+            ];
+
+            if ($couponModel->insert($data)) {
+                redirect('BookstoreController/coupons');
+            } else {
+                echo "Failed to add coupon.";
+            }
+        } else {
+            echo "Invalid request method.";
+        }
+    }
+
+    public function updateCoupon() {
+        $couponModel = new CouponModel();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['coupon_id'];
+            $couponCode = $_POST['coupon_code'];
+            $discount = $_POST['discount'];
+            $startDate = $_POST['start_date'];
+            $endDate = empty($_POST['end_date']) ? null : $_POST['end_date'];
+            $storeId = $_SESSION['user_id'];
+        
+        if ($couponModel->first(['id' => $id, 'store_id' => $storeId])) {
+            $data = [
+                'coupon_code' => $couponCode,
+                'discount_percentage' => $discount,
+                'start_time' => $startDate,
+                'end_time' => $endDate,
+            ];
+            $couponModel->update($id, $data);
+
+            redirect('BookstoreController/coupons');
+ 
+        }
+        else {
+            echo "Coupon not found or you do not have permission to update it.";
+        }
+        } else {
+            echo "Invalid request method.";
+        }
+    }
 
 }

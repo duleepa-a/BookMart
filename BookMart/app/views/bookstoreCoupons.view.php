@@ -35,7 +35,6 @@
                 <form class="add-adv-form" method="POST" action="<?= ROOT ?>/BookstoreController/addCoupon">
                     <h2 class="full-width">Add Coupon</h2>
 
-                    <!-- Advertisement Title -->
                     <div class="form-row">
                         <div class="form-group">
                             <div>
@@ -43,24 +42,21 @@
                                 <input type="text" id="coupon_code" name="coupon_code" required>
                             </div>
                         </div>
-                            <!-- Ad Image -->
                         <div class="form-group">
                             <div>
                             <label for="discount">Discount (%):</label>
-                            <input type="number" id="discount" name="discount" step="0.01" min="0" max="100">
+                            <input type="number" id="discount" name="discount" step="0.01" min="0" max="100" required>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">    
-                        <!-- Start Date -->
                             <div>
                                 <label for="start_date">Start Date:</label>
-                                <input type="date" id="start_date" name="start_date">
+                                <input type="date" id="start_date" name="start_date" value="<?= date('Y-m-d') ?>" min="<?= date('Y-m-d') ?>">
                             </div>
                         </div>
-                        <!-- End Date -->
                         <div class="form-group">
                             <div>
                                 <label for="end_date">End Date:</label>
@@ -68,7 +64,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Modal Actions -->
                     <div class="modal-actions">
                         <button type="submit">Add Coupon</button>
                         <button type="button" class="close-modal">Cancel</button>
@@ -84,7 +79,7 @@
             </div>
         <?php if (!empty($coupons)) : ?>
         <div class="inventory-toolbar">
-            <input type="text" placeholder="Search your book in the inventory" class="inventory-search-bar">
+            <input type="text" placeholder="Search for a coupon" class="inventory-search-bar">
             <button class="sort-button">Sort by <i class="fa-solid fa-sort-down "></i></button>
         </div>
         <div class="action-buttons" style="display:none;">
@@ -96,23 +91,27 @@
                     <tr>
                         <th>Coupon Code</th>
                         <th>Discount %</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($coupons as $coupon) : ?>
                         <tr class="book-row" 
                             data-couponid="<?= $coupon->id ?>" 
-                            data-code="<?= htmlspecialchars($coupon->code) ?>"
-                            data-discount="<?= htmlspecialchars($coupon->discount) ?>" 
-                            data-startdate="<?= htmlspecialchars($coupon->start_date) ?>" 
-                            data-enddate="<?= htmlspecialchars($coupon->end_date ?? '') ?>" 
+                            data-code="<?= htmlspecialchars($coupon->coupon_code) ?>"
+                            data-discount="<?= htmlspecialchars($coupon->discount_percentage) ?>" 
+                            data-startdate="<?= htmlspecialchars($coupon->start_time) ?>" 
+                            data-enddate="<?= htmlspecialchars($coupon->end_time ?? '') ?>" 
+                            data-isactive="<?= htmlspecialchars($coupon->is_active) ?>" 
                             >
-                            <td><?= htmlspecialchars($coupon->code) ?></td>
-                            <td><?= htmlspecialchars($coupon->discount) ?></td>
-                            <td><?= date('Y-m-d', strtotime($coupon->start_date))?></td>
-                            <td><?= htmlspecialchars($coupon->end_date ) ?></td>
+                            <td><input type="checkbox"></td>
+                            <td><?= htmlspecialchars($coupon->coupon_code) ?></td>
+                            <td><?= htmlspecialchars($coupon->discount_percentage) ?></td>
+                            <td><?= htmlspecialchars($coupon->start_time)?></td>
+                            <td><?= htmlspecialchars($coupon->end_time ) ?></td>
+                            <td><?= (htmlspecialchars($coupon->is_active )) ? "Active" : "Inactive" ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -127,7 +126,7 @@
             <div class="modal-content">
                 <form class="add-adv-form" method="POST" action="<?= ROOT ?>/BookstoreController/updateCoupon">
                     <h2 class="full-width">Update Coupon</h2>
-                    <input type="hidden" id="update-coupon-id" name="coupon_id">
+                    <input type="hidden" id="update-coupon-id" name="coupon_id" value="<?= htmlspecialchars($coupon->id) ?>">
                     <div class="form-row">
                         <div class="form-group">
                             <div>

@@ -2,6 +2,7 @@
 
 require 'BookstoreController.php';
 require 'Buyer.php';
+require 'BookSellerController.php';
 
 class User extends Controller {
     
@@ -417,6 +418,7 @@ class User extends Controller {
 
                 $bookstore = new BookstoreController();
                 $buyer = new Buyer();
+                $bookSeller = new BookSellerController();
 
                 $userRole = $_SESSION['user_role'];
 
@@ -427,6 +429,9 @@ class User extends Controller {
                     }
                     else if($userRole == 'buyer'){
                         $buyer->myProfile();
+                    }
+                    else if($userRole == 'bookSeller'){
+                        $bookSeller->myProfile();
                     }
                 }
 
@@ -450,6 +455,9 @@ class User extends Controller {
                     else if($userRole == 'buyer'){
                         $buyer->myProfile();
                     }
+                    else if($userRole == 'bookSeller'){
+                        $bookSeller->myProfile();
+                    }
                     
                 } else {
                     $_SESSION['error'] = "Current password is incorrect.";
@@ -458,6 +466,9 @@ class User extends Controller {
                     }
                     else if($userRole == 'buyer'){
                         $buyer->myProfile();
+                    }
+                    else if($userRole == 'bookSeller'){
+                        $bookSeller->myProfile();
                     }
                 }
             }

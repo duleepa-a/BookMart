@@ -30,15 +30,19 @@ document.querySelector(".inventory-table").addEventListener("click", (e) => {
     const discount = row.dataset.discount;
     const Start_date = row.dataset.startdate;
     const End_date = row.dataset.enddate;
+
+    let start_date = new Date(Start_date);
+    let end_date = new Date(End_date);
     
     console.log(couponId);
     const updateModal = document.getElementById("update-book-modal");
     updateModal.querySelector("#update-coupon-id").value = couponId;
-    updateModal.querySelector("#update-start-date").value = Start_date;
-    updateModal.querySelector("#update-end-date").value = End_date;
+    updateModal.querySelector("#update-start-date").value = start_date;
+    updateModal.querySelector("#update-end-date").value = end_date
     updateModal.querySelector("#update-coupon-code").value = code;
     updateModal.querySelector("#update-discount").value = discount;
     updateModal.classList.add('active');
+
 });
 
 
@@ -94,3 +98,12 @@ document.querySelector(".delete-modal").addEventListener("click", (e) => {
     deleteModal.classList.add('active');
     
 });
+
+function formatDatetime(mysqlDatetime) {
+    if (!mysqlDatetime || mysqlDatetime === "0000-00-00 00:00:00") return "";
+    const [datePart, timePart] = mysqlDatetime.split(" ");
+    const [year, month, day] = datePart.split("-");
+    const [hours, minutes, seconds] = timePart.slice(0, 8).split(":");
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
+
