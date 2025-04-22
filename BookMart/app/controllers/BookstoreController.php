@@ -205,6 +205,7 @@ class BookstoreController extends Controller{
         $orderModel = new Order();
         $userModel = new UserModel();
         $buyerModel = new BuyerModel();
+        $bookSellerModel = new BookSeller();
         $bookModel = new BookModel();
     
         $orderModel->setLimit($limit);
@@ -224,7 +225,12 @@ class BookstoreController extends Controller{
         if ($allOrders) {
             foreach ($allOrders as $order) {
                 $user = $userModel->first(['id' => $order->buyer_id]);
-                $buyer = $buyerModel->first(['user_id' => $order->buyer_id]);
+                if($userModel->getRole($order->buyer_id) == 'buyer'){
+                    $buyer = $buyerModel->first(['user_id' => $order->buyer_id]);
+                }
+                else{
+                    $buyer = $bookSellerModel->first(['user_id' => $order->buyer_id]);
+                }
                 $order->buyer_name = $user->username ?? 'Unknown';
                 $order->buyer_contact = $buyer->phone_number ?? 'N/A';
                 $order->book = $bookModel->first(['id' => $order->book_id]);
@@ -248,11 +254,18 @@ class BookstoreController extends Controller{
 
         $orderModel = new Order();
         $buyerModel = new BuyerModel();
+        $userModel = new UserModel();
+        $bookSellerModel = new BookSeller();
         $courierModel = new Courier();
         $bookModel = new  BookModel();
 
         $order = $orderModel->first(['order_id' => $orderId]);
-        $buyer = $buyerModel->first(['user_id' => $order->buyer_id]);
+        if($userModel->getRole($order->buyer_id) == 'buyer'){
+            $buyer = $buyerModel->first(['user_id' => $order->buyer_id]);
+        }
+        else{
+            $buyer = $bookSellerModel->first(['user_id' => $order->buyer_id]);
+        }
         $courier = $courierModel->first(['user_id' => $order->courier_id]);
         $book = $bookModel->first(['id' => $order->book_id]);
 
@@ -686,6 +699,7 @@ class BookstoreController extends Controller{
             $id = $_POST['coupon_id'];
             $couponCode = $_POST['coupon_code'];
             $is_active = $_POST['is_active'];
+            $storeId = $_SESSION['user_id'];
         
         if ($couponModel->first(['id' => $id, 'store_id' => $storeId])) {
             $data = [
