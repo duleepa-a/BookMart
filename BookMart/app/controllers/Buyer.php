@@ -174,7 +174,6 @@ class Buyer extends Controller{
     }   
 
     public function reviews() {
-        $buyerModel = new BuyerModel();
         $buyerId = $_SESSION['user_id'];
     
         $orderModel = new Order();
