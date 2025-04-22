@@ -28,7 +28,7 @@ class App{
             
         ],
         'bookStore' => [
-            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','orderView','confirmPickup','myProfile','markAsRead','addReply','requestAdvertisment','updateStoreDetails','updateOwnerDetails','uploadProfilePicture','deleteAdvertisment','updateBankDetails' ,'coupons','payRolls', 'addCoupon', 'updateCoupon'],
+            'BookstoreController' => ['getReviews', 'Analytics','inventory','advertisments','orders','orderView','confirmPickup','myProfile','markAsRead','addReply','requestAdvertisment','updateStoreDetails','updateOwnerDetails','uploadProfilePicture','deleteAdvertisment','updateBankDetails' ,'coupons','payRolls', 'addCoupon', 'updateCoupon', 'deleteCoupon'],
             'Book' => ['addBook','updateBook','deleteBook'],
             'User' => ['like','changePassword'],
             'Payment' => ['payAd','adSuccess','adCancel'],
