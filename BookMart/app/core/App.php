@@ -58,6 +58,7 @@ class App{
             'CourierEarns' => ['index'],
             'CourierComplains' => ['index','create'],
             'Map' =>['index'],
+            'BookstoreController' => ['payRolls']
         ]
     ];
     

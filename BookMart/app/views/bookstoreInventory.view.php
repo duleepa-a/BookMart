@@ -14,20 +14,9 @@
     <!-- navBar division begin -->
     <?php include 'secondaryNavBar.view.php'; ?>        
     <!-- navBar division end -->
-    <div class="sidebar">
-        <ul>
-            <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button></li>
-            <li><a href="<?= ROOT ?>/"><i class="fa-solid fa-house"></i>Dashboard</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/inventory" class="active" ><i class="fa-solid fa-book"></i>My Inventory</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/Analytics"><i class="fa-solid fa-chart-column"></i>Analytics</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/orders"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/getReviews"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/advertisments"><i class="fa-solid fa-up-right-from-square"></i>Ads & Offers</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/coupons"><i class="fa-solid fa-ticket"></i>Coupons</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/payRolls" ><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/myProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
-        </ul>   
-    </div>
+     <!-- sideBar division begin -->
+     <?php include 'commonSidebar.view.php'; ?>        
+    <!-- sideBar division end -->
     <div class="container"> 
         <div id="add-book-modal"class="modal hidden">
             <div class="modal-overlay"></div>
@@ -145,14 +134,13 @@
         <div class="inventory-toolbar">
             <input type="text" placeholder="Search your book in the inventory" class="inventory-search-bar">
             <div class="filter">
-                <label for="status-filter">SHOW:</label>
-                <select id="status-filter" class="status-filter">
-                    <option value="all">All</option>
-                    <option value="pending">Pending</option>
-                    <option value="approved">Approved</option>
-                    <option value="rejected">Rejected</option>
-                </select>
-            </div>
+                    <label for="status-filter">SHOW:</label>
+                    <select id="status-filter" class="status-filter">
+                        <option value="all" <?= $filterStatus === 'all' ? 'selected' : '' ?>>All</option>
+                        <option value="available" <?= $filterStatus === 'available' ? 'selected' : '' ?>>In Stock</option>
+                        <option value="out of stock" <?= $filterStatus === 'out of stock' ? 'selected' : '' ?>>Out Of Stock</option>
+                    </select>
+                </div>
             <div class="pagination">
                 <!-- Previous Arrow -->
                 <div class="pagination-item pagination-arrow <?= $currentPage <= 1 ? 'disabled' : '' ?>">
@@ -259,7 +247,7 @@
                             <td><?= htmlspecialchars($book->quantity ?? '0') ?></td>
                             <td>
                               <span class="tag <?= (isset($book->quantity) && $book->quantity > 0) ? 'tag-green' : 'tag-red' ?>">  
-                                <?= (isset($book->quantity) && $book->quantity > 0) ? 'Available' : 'Out of Stock' ?> <span>
+                                <?= (isset($book->quantity) && $book->quantity > 0) ? 'In Stock' : 'Out of Stock' ?> <span>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -377,5 +365,15 @@
      <?php include 'smallFooter.view.php'; ?>   
     <!-- footer end -->     
     <script src="<?= ROOT ?>/assets/JS/bookstoreInventory.js"></script>
+    <script>
+         const statusFilter = document.getElementById('status-filter');
+        statusFilter.addEventListener('change', () => {
+            const selectedStatus = statusFilter.value;
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('status', selectedStatus);
+            urlParams.set('page', 1); // reset to first page on filter change
+            window.location.search = urlParams.toString();
+        });
+    </script>
 </body>
 </html>

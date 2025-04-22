@@ -211,6 +211,7 @@
     <script src="<?= ROOT ?>/assets/JS/bookView.js"></script>
     <script>
         const isLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
+        const isAvailable = <?= isset($book->status) && $book->status == 'available' ? 'true' : 'false' ?>;
 
         function showAlert(message) {
             const alertBox = document.getElementById("custom-alert");
@@ -269,6 +270,10 @@
                 showAlert("Please log in to buy this item.");
                 return;
             }
+            if (!isAvailable) {
+                showAlert("This Item is not Available at the moment.");
+                return;
+            }
             let quantity = document.getElementById("quantity").innerText;
             let productId = <?php echo $book->id; ?>; 
             
@@ -277,6 +282,10 @@
         function addToCart() {
             if (!isLoggedIn) {
                 showAlert("Please log in to add this item to the cart.");
+                return;
+            }
+            if (!isAvailable) {
+                showAlert("This Item is not Available at the moment.");
                 return;
             }
             let quantity = document.getElementById("quantity").innerText;

@@ -145,15 +145,27 @@ class BookstoreController extends Controller{
         $bookModel->setLimit($itemsPerPage);
         $bookModel->setOffset($offset);
 
-        $totalbooks = $bookModel->count(['seller_id' => $bookstoreId]);
+        $filterStatus = isset($_GET['status']) ? $_GET['status'] : 'all';
+        $baseConditions = ['seller_id' => $bookstoreId ,'status' => 'available'];
+        $notConditions = [];
+
+        if($filterStatus == 'out of stock'){
+            $baseConditions['quantity'] = 0 ;
+        }
+        else if($filterStatus == 'available'){
+            $notConditions['quantity'] = 0;
+        }
+
+        $totalbooks = $bookModel->count($baseConditions,$notConditions);
         $totalPages = ceil($totalbooks/$itemsPerPage);
 
-        $books = $bookModel->where(['seller_id' => $bookstoreId]);
+        $books = $bookModel->where($baseConditions,$notConditions);
 
         $data = [
                     'inventory' => $books,
                     'currentPage' => $currentPage,
                     'totalPages' => $totalPages,
+                    'filterStatus' => $filterStatus
                 ];
                 
         $this->view('bookstoreInventory',$data);

@@ -12,22 +12,15 @@
 </head>
 <body>
     <!-- navBar division begin -->
-    <?php include 'secondaryNavBar.view.php'; ?>        
+    <?php if($_SESSION['user_role'] != 'courier') :?>
+        <?php include 'secondaryNavBar.view.php'; ?>
+    <?php else :?>
+        <?php include 'homeNavBar.view.php'; ?>
+    <?php endif?>
     <!-- navBar division end -->
-    <div class="sidebar">
-        <ul>
-            <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button></li>
-            <li><a href="<?= ROOT ?>/"><i class="fa-solid fa-house"></i>Dashboard</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/inventory"  ><i class="fa-solid fa-book"></i>My Inventory</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/Analytics"><i class="fa-solid fa-chart-column"></i>Analytics</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/orders"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/getReviews"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/advertisments"><i class="fa-solid fa-up-right-from-square"></i>Ads & Offers</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/coupons"><i class="fa-solid fa-ticket"></i>Coupons</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/payRolls" class="active"><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/myProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
-        </ul>   
-    </div>
+    <!-- sideBar division begin --> 
+    <?php include 'commonSidebar.view.php'; ?>   
+    <!-- sideBar division end -->
     <div class="container"> 
         <div id="add-book-modal"class="modal hidden">
             <div class="modal-overlay"></div>

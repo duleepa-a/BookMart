@@ -68,13 +68,6 @@
                     <a href="" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
                 <?php elseif ($_SESSION['user_role'] == 'courier'): ?>
                     <!-- Links for courier -->
-                    <select id="orders" name="orders" class="navbar-links-select" >
-                        <option value="" disabled selected>Orders</option>
-                        <option value="all"><a href="<?= ROOT ?>/courierOrders">All Orders</a></option>
-                        <option value="accepted">Accepted Orders</option>
-                        <option value="pending">Pending Orders</option>
-                        <option value="completed">Completed Orders</option>
-                    </select>
                     <a href="<?= ROOT ?>/CourierProfile" class="navbar-links">My Profile</a>
                     <a href="<?= ROOT ?>/Login" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
                 <?php endif; ?>

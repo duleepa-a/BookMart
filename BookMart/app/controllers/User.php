@@ -504,6 +504,5 @@ class User extends Controller {
                 $storeModel->update($store->id, ['followers' => $newCount]);
             }
         }
-
         
     }
