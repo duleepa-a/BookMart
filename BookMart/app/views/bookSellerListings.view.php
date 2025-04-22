@@ -22,7 +22,7 @@
     <!-- navBar division end -->
     
     <center>
-    <div>    <!-- inner background box begin -->        
+    <div class="container">    <!-- inner background box begin -->        
         <h1 class="title-text">My Listings</h1>
 
         <br><br>

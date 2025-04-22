@@ -21,7 +21,7 @@
     <!-- Sidebar division end -->
     
     <center>
-    <div class="background-box">
+    <div class="container">
         <h1 class="title-text">Notifications</h1>
         <br>
 
