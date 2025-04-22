@@ -54,13 +54,13 @@
                         <div class="form-group">    
                             <div>
                                 <label for="start_date">Start Date:</label>
-                                <input type="date" id="start_date" name="start_date" value="<?= date('Y-m-d') ?>" min="<?= date('Y-m-d') ?>">
+                                <input type="datetime-local" id="start_date" name="start_date" value="<?= date('Y-m-d\TH:i:s', strtotime(date('Y-m-d H:i:s'))) ?>" min="<?= date('Y-m-d\TH:i:s', strtotime(date('Y-m-d H:i:s'))) ?>">
                             </div>
                         </div>
                         <div class="form-group">
                             <div>
                                 <label for="end_date">End Date:</label>
-                                <input type="date" id="end_date" name="end_date">
+                                <input type="datetime-local" id="end_date" name="end_date">
                             </div>
                         </div>
                     </div>
