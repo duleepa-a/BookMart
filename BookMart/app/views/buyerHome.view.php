@@ -63,7 +63,7 @@
                     <?php endif; ?>
                 </div>
                 <button class="next"><i class="fa-solid fa-chevron-right fa-lg"></i></button>
-            </div>
+        </div>
             <br>
             <br>   
             <div class="paragraph-section section">

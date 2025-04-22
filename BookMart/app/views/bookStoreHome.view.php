@@ -249,7 +249,7 @@
         }
 
         // Initialize with sample data
-        setPercentage(<?= ($summary->rating)?>, <?= $summary->reviews_count?>);
+        setPercentage(<?= ($summary->rating / 3 * 100)?>, <?= $summary->reviews_count?>);
     </script>
 </body>
 </html>

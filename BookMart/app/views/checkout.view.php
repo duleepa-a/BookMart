@@ -28,7 +28,6 @@
 
                 <div class="book-item">
                     <div class="book-image">
-                        <!-- Add actual book image -->
                         <img src="<?= ROOT ?>/assets/Images/book cover images/<?= $book->cover_image; ?>" alt="<?= $book->title ?>" class="book-img" >
                     </div>
                     <div class="book-info">
@@ -68,9 +67,16 @@
                 <div class="section-title">Order Summary</div>
 
                 <div class="promo-box">
-                    <input type="text" class="promo-input" placeholder="Enter Store/BookMart Code">
-                    <button class="promo-btn">APPLY</button>
+                    <input type="text" class="promo-input" id="couponCode" placeholder="Enter Store/BookMart Code">
+                    <button class="promo-btn" onclick="handleCoupon() ">APPLY</button>
                 </div>
+
+                <?php if (!empty($couponMessage)): ?>
+                    <p style="color: <?= (strpos($couponMessage, 'applied') !== false) ? 'green' : 'red' ?>; margin-top: 5px; margin-bottom: 10px;">
+                        <?= $couponMessage ?>
+                    </p>
+                <?php endif; ?>
+
 
                 <div class="summary-row">
                     <span>Items Total (<?= $quantity ?> items)</span>
@@ -121,6 +127,20 @@
         })
         .catch(error => console.error("Fetch error:", error));
     });
+
+
+    function handleCoupon() {
+        const code = document.getElementById("couponCode").value.trim();
+
+        if (!code) {
+            document.getElementById("couponMessage").textContent = "Please enter a coupon code.";
+            return;
+        }
+
+        const url = new URL(window.location.href);
+        url.searchParams.set("coupon", code);
+        window.location.href = url.toString();
+    }
 
     </script>
 

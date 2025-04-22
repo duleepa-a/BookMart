@@ -108,16 +108,25 @@
     <!-- footer end -->
     <script src="script.js"></script>
     <script>
-      function showAlert(message) {
-          const alertBox = document.getElementById("custom-alert");
-          const alertMsg = document.getElementById("alert-message");
-          alertMsg.textContent = message;
-          alertBox.style.display = "flex";
+      function showAlert(message, type = "error") {
+            const alertBox = document.getElementById("custom-alert");
+            const alertMsg = document.getElementById("alert-message");
+            const alertMsgbox = document.getElementsByClassName("error")[0];
 
-          setTimeout(() => {
-              closeAlert();
-          }, 4000);
-      }
+            // Change alert style based on the type
+            if (type === "success") {
+                alertBox.style.backgroundColor = "#4CAF50";  // green
+            }
+
+            alertMsg.textContent = message;
+            alertBox.style.display = "flex";
+
+            console.log(alertMsg.textContent);
+
+            setTimeout(() => {
+                closeAlert();
+            }, 4000);
+        }
 
       function closeAlert() {
           document.getElementById("custom-alert").style.display = "none";

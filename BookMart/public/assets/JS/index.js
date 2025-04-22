@@ -64,41 +64,6 @@ bookPrevButton.addEventListener('click', () => {
     }
 });
 
-//carousel for bookstores
-const bookstorePrevButton = document.querySelector('.bookstore-prev');
-const bookstoreNextButton = document.querySelector('.bookstore-next');
-const bookstoreCards = document.querySelector('.bookstore-cards');
-
-let bookstoreScrollAmount = 0;
-
-bookstoreNextButton.addEventListener('click', () => {
-    const maxScrollLeft = bookstoreCards.scrollWidth - bookstoreCards.clientWidth; 
-    if (bookstoreScrollAmount < maxScrollLeft) { 
-        bookstoreScrollAmount += 300;
-        if (bookstoreScrollAmount > maxScrollLeft) { 
-            bookstoreScrollAmount = maxScrollLeft;
-        }
-        bookstoreCards.scrollTo({
-            top: 0,
-            left: bookstoreScrollAmount,
-            behavior: 'smooth'
-        });
-    }
-});
-
-bookstorePrevButton.addEventListener('click', () => {
-    if (bookstoreScrollAmount > 0) {
-        bookstoreScrollAmount -= 300;
-        if (bookstoreScrollAmount < 0) { 
-            bookstoreScrollAmount = 0;
-        }
-        bookstoreCards.scrollTo({
-            top: 0,
-            left: bookstoreScrollAmount,
-            behavior: 'smooth'
-        });
-    }
-});
 
 var PrevButtonClass = '.prev-fiction';
 var NextButtonClass = '.next-fiction';
@@ -175,39 +140,45 @@ function showTab(tabId) {
 
 
 document.getElementById('fiction').style.display = 'block';
+updateSelectors('fiction');
 
 
-document.getElementById('logoutButton').addEventListener('click', function() {
-    
-    fetch('http://localhost/BookMart/public/user/logout', { 
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
+
+const bookstorePrevButton = document.querySelector('.bookstore-prev');
+const bookstoreNextButton = document.querySelector('.bookstore-next');
+const bookstoreCards = document.querySelector('.bookstore-cards');
+
+let bookstoreScrollAmount = 0;
+
+if(bookstoreNextButton){
+    bookstoreNextButton.addEventListener('click', () => {
+        const maxScrollLeft = bookstoreCards.scrollWidth - bookstoreCards.clientWidth; 
+        if (bookstoreScrollAmount < maxScrollLeft) { 
+            bookstoreScrollAmount += 300;
+            if (bookstoreScrollAmount > maxScrollLeft) { 
+                bookstoreScrollAmount = maxScrollLeft;
+            }
+            bookstoreCards.scrollTo({
+                top: 0,
+                left: bookstoreScrollAmount,
+                behavior: 'smooth'
+            });
         }
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json(); 
-            throw new Error('Logout failed.');
-        }
-    })
-    .then(data => {
-        console.log(data); 
-        if (data.status === 'success') {
-            window.location.href = 'http://localhost/BookMart/public/'; 
-        } else {
-            alert('Error: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error during logout:', error);
-        alert('Logout failed. Please try again.');
     });
-});
+}
 
-
-
-
-//carousel for best sellers
-
-// Carousel for the New Arrivals
+if(bookstorePrevButton){
+    bookstorePrevButton.addEventListener('click', () => {
+        if (bookstoreScrollAmount > 0) {
+            bookstoreScrollAmount -= 300;
+            if (bookstoreScrollAmount < 0) { 
+                bookstoreScrollAmount = 0;
+            }
+            bookstoreCards.scrollTo({
+                top: 0,
+                left: bookstoreScrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    });
+}

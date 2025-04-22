@@ -53,7 +53,7 @@ class BookStore {
     public function getHomeData($user_id){
         $store = $this->first(['user_id' =>  $user_id]);   
         
-        $lowStockSql = "SELECT * FROM book WHERE seller_id =:user_id AND quantity <= 20 AND status = 'available';";
+        $lowStockSql = "SELECT * FROM book WHERE seller_id =:user_id AND quantity <= 20 AND status = 'available' ORDER BY quantity ASC;";
         $lowStockbooks = $this->query($lowStockSql,[':user_id' => $user_id]);
 
         $summarySql = "

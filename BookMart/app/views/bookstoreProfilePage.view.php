@@ -90,22 +90,36 @@
                         Featured Books
                     </div>
                     <div class="carousel">
-                        <div class="carousel-container">
-                            <?php foreach ($booksByStore as $book): ?>
-                                <div class="book-card">
-                                    <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($book->cover_image) ?>" alt="Book Cover" class="book-cover">
-                                    <div class="book-info">
-                                        <h3 class="book-title"><?= htmlspecialchars($book->title) ?></h3>
-                                        <p class="book-author">by <?= htmlspecialchars($book->author) ?></p>
-                                        <p class="book-price">Rs. <?= number_format($book->price, 2) ?></p>
+                        <button class="prev"><i class="fa-solid fa-chevron-left fa-lg"></i></button>
+                        <div class="book-cards">
+                            <?php if (isset($booksByStore) && !empty($booksByStore)): ?>
+                                <?php foreach ($booksByStore as $book): ?>
+                                    <div class="book-card">
+                                        <?php if ($book->discount != 0 ) : ?>
+                                            <div class="discount"><?= htmlspecialchars($book->discount) ?>%</div>
+                                        <?php endif; ?>
+                                        <a href="<?= ROOT ?>/BookView/index/<?= $book->id ?>" class="book-card-link">
+                                        <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($book->cover_image) ?>" alt="<?= htmlspecialchars($book->title) ?>">
+                                        <p><?= htmlspecialchars($book->title) ?></p>
+                                        <p class="price">
+                                            <?php if ($book->discount != 0 ): ?>
+                                                <span class="old-price">Rs. <?= htmlspecialchars($book->price) ?></span><br>
+                                                Rs. <?= htmlspecialchars($book->price - ($book->price)*($book->discount)/100) ?>
+                                            <?php else: ?>
+                                                Rs. <?= htmlspecialchars($book->price) ?>
+                                            <?php endif; ?>
+                                        </p>
+                                        <br>
+                                        </a>
                                     </div>
-                                </div>
-                            <?php endforeach; ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                            <div class="message-div">
+                                <p>This bookstore hasn't featured any books yet. Check back soon for updates!</p>
+                            </div>
+                            <?php endif; ?>
                         </div>
-                        <div class="carousel-nav">
-                            <button class="carousel-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
-                            <button class="carousel-btn" id="next-btn"><i class="fas fa-chevron-right"></i></button>
-                        </div>
+                        <button class="next"><i class="fa-solid fa-chevron-right fa-lg"></i></button>
                     </div>
                 </div>
                 <?php if($is_store):?>
@@ -163,35 +177,6 @@
 
 
     <script>
-        // Carousel functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const carousels = document.querySelectorAll('.carousel-container');
-
-            // First carousel
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const carousel1 = carousels[0];
-            console.log(carousel1);
-            let position1 = 0;
-            const cardWidth = 165; // card width + gap
-            const visibleCards = Math.floor(carousel1.offsetWidth / cardWidth);
-            const maxPosition = Math.max(0, carousel1.children.length - visibleCards);
-
-            prevBtn.addEventListener('click', function() {
-                if (position1 > 0) {
-                    position1--;
-                    carousel1.style.transform = `translateX(-${position1 * cardWidth}px)`;
-                }
-            });
-
-            nextBtn.addEventListener('click', function() {
-                if (position1 < maxPosition) {
-                    position1++;
-                    carousel1.style.transform = `translateX(-${position1 * cardWidth}px)`;
-                }
-            });
-        });
-
         function chatWithStore(storeId) {
             console.log(storeId);
             window.location.href = "<?= ROOT ?>/Chat/chatbox/" + storeId ;
@@ -240,6 +225,42 @@
             });
         }
         setInterval(showNextSlide, 5000);
+
+        const bookPrevButton = document.querySelector('.prev');
+        const bookNextButton = document.querySelector('.next');
+        const bookCards = document.querySelector('.book-cards');
+
+        let bookScrollAmount = 0;
+
+        bookNextButton.addEventListener('click', () => {
+            const maxScrollLeft = bookCards.scrollWidth - bookCards.clientWidth; 
+            if (bookScrollAmount < maxScrollLeft) { 
+                bookScrollAmount += 300;
+                if (bookScrollAmount > maxScrollLeft) { 
+                    bookScrollAmount = maxScrollLeft;
+                }
+                bookCards.scrollTo({
+                    top: 0,
+                    left: bookScrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+        });
+
+        bookPrevButton.addEventListener('click', () => {
+            if (bookScrollAmount > 0) {
+                bookScrollAmount -= 300;
+                if (bookScrollAmount < 0) { 
+                    bookScrollAmount = 0;
+                }
+                bookCards.scrollTo({
+                    top: 0,
+                    left: bookScrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+        });
+
     </script>
 </body>
 </html>

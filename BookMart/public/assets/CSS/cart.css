@@ -102,6 +102,10 @@ body {
     border-radius: 4px;
     transition: background-color 0.2s ease;
   }
+
+  input[type="checkbox"]{
+    accent-color: #ff6f61;
+  }
   
   .quantity input[type="button"]:hover {
     background-color: #e0e0e0;

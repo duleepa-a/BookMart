@@ -14,6 +14,7 @@ class Payment extends Controller{
         $sellerModel = new BookSeller();
         $bookstoreModel = new BookStore(); 
         $userModel = new UserModel(); 
+        $couponModel = new CouponModel();
     
         $book = $bookModel->first(['id' => $bookId]);
         $buyerId= $_SESSION['user_id'];
@@ -31,7 +32,21 @@ class Payment extends Controller{
         else{
             $seller =  $sellerModel->first(['user_id' => $book->seller_id]);
         }
-    
+
+        $couponMessage="";
+
+        if (isset($_GET['coupon'])) {
+            $code = trim($_GET['coupon']);
+            $coupon = $couponModel->getCouponValid($code,$book->seller_id);
+        
+            if ($coupon) {
+                $book->discount = $coupon->discount_percentage;
+                $couponMessage = "Coupon applied! {$book->discount}% discount.";
+            } else {
+                $couponMessage = "Invalid or expired coupon.";
+            }
+        }
+        
         
         $discount = ($book->discount / 100) * $book->price;
         $discountedPrice = $book->price - $discount;
@@ -43,6 +58,7 @@ class Payment extends Controller{
             'quantity' => $qty,
             'discount' => $discount,
             'discountedPrice' => $discountedPrice,
+            'couponMessage' => $couponMessage,
             'totalPrice' => $totalPrice,
             'deliveryFee' => 250,
         ];
@@ -126,8 +142,7 @@ class Payment extends Controller{
     }
     
     public function cancel() {
-        echo "<h2>Payment Canceled</h2>";
-        echo "<p>Your payment was not completed. Please try again.</p>";
+       $this->view('paymentCancel');
     }
     public function process() {
         $secretKey = 'sk_test_51QwNzUFwD7Ut7Vs9FPBW5K38e9dwzqBJs8FvydvTKar0oCVaHKBiogjJxJsUdvs39C5WuDU05Xk8wuWE42pCgaRg002dFEvGvW'; //Stripe Secret Key
@@ -436,7 +451,7 @@ class Payment extends Controller{
             'line_items' => $lineItems,
             'mode' => 'payment',
             'success_url' => ROOT . "/payment/adSuccess?ad_id=$adId&amount=$amount",
-            'cancel_url' => ROOT . "/payment/adCancel?ad_id=$adId",
+            'cancel_url' => ROOT . "/payment/cancel",
         ];
 
         $ch = curl_init('https://api.stripe.com/v1/checkout/sessions');

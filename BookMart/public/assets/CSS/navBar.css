@@ -157,7 +157,6 @@
         display: flex;
         flex-direction: column;
         cursor: pointer;
-        margin-left: auto;
         padding: 10px;
     }
 
@@ -201,6 +200,7 @@
     .search-bar-div {
         max-width:100px ;
         padding: 0 10px;
+        margin-left: 50px;
     }
 
     .search-form {
