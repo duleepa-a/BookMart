@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Create Article - BookMart</title>
-        <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/articleCreation.css">
+        <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/articleUpdate.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,39 +19,42 @@
         <?php include 'bookSellerSidebar.view.php'; ?>
         <!-- Sidebar division end -->
 
-        <div class="create-article-container">
-            <form class="article-form" id=<?= isset($data['articles']) ? "articleUpdateForm" : "articleCreationForm"?> action=<?= isset($data['articles']) ? ROOT . "/articles/updateArticle" : ROOT . "/articles/addArticle" ?> method="POST">
+        <div class="container">
+            <div class="create-article-container">
+                <h1 class="title-text"><?= isset($data['articles']) ? "Update Article" : "Create Article"?></h1>
+                </br>
+                <form class="article-form" id=<?= isset($data['articles']) ? "articleUpdateForm" : "articleCreationForm"?> action=<?= isset($data['articles']) ? ROOT . "/articles/updateArticle" : ROOT . "/articles/addArticle" ?> method="POST">
 
-                <?php if (isset($data['articles'])): ?>
-                    <input type="hidden" name="article_id" value="<?= htmlspecialchars($data['article_id']) ?>">
-                <?php endif; ?>
+                    <?php if (isset($data['articles'])): ?>
+                        <input type="hidden" name="article_id" value="<?= htmlspecialchars($data['article_id']) ?>">
+                    <?php endif; ?>
 
-                    <div class="form-group">
-                        <label for="title">Article Title</label>
-                        <input type="text" id="title" name="title" placeholder="Enter your article title" required value="<?= isset(($data['articles'])) ? htmlspecialchars($data['articles']->Title) : '' ?>">
-                    </div>
-
-                    <div class="article-meta-inputs">
                         <div class="form-group">
-                            <label for="author">Author Name</label>
-                            <input type="text" id="author" name="author" placeholder="Your Name" required value="<?= isset(($data['articles'])) ? htmlspecialchars($data['articles']->Author) : '' ?>">
+                            <label for="title">Article Title</label>
+                            <input type="text" id="title" name="title" placeholder="Enter your article title" required value="<?= isset(($data['articles'])) ? htmlspecialchars($data['articles']->Title) : '' ?>">
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="content">Article Content</label>
-                        <textarea id="article-content" name="content" placeholder="Write your article here..." required><?= isset(($data['articles'])) ? htmlspecialchars($data['articles']->Content) : '' ?></textarea>
-                    </div>
+                        <div class="article-meta-inputs">
+                            <div class="form-group">
+                                <label for="author">Author Name</label>
+                                <input type="text" id="author" name="author" placeholder="Your Name" required value="<?= isset(($data['articles'])) ? htmlspecialchars($data['articles']->Author) : '' ?>">
+                            </div>
+                        </div>
 
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-save"><?= isset($data['articles']) ? "Update Article" : "Create Article" ?></button>
-                        <?php if (isset($data['articles'])): ?>
-                        <button type="button" id="delete-article-trigger" class="btn btn-delete">Delete Article</button>
-                        <?php endif; ?>
-                    </div>
-            </form>
+                        <div class="form-group">
+                            <label for="content">Article Content</label>
+                            <textarea id="article-content" name="content" placeholder="Write your article here..." required><?= isset(($data['articles'])) ? htmlspecialchars($data['articles']->Content) : '' ?></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-save"><?= isset($data['articles']) ? "Update Article" : "Create Article" ?></button>
+                            <?php if (isset($data['articles'])): ?>
+                            <button type="button" id="delete-article-trigger" class="btn btn-delete">Delete Article</button>
+                            <?php endif; ?>
+                        </div>
+                </form>
+            </div>
         </div>
-
         <div class="modal" id="delete-article-modal">
             <div class="modal-overlay"></div>
             <div class="modal-content">

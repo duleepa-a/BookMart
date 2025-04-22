@@ -53,7 +53,6 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     </div>
 <?php endif; ?>
 
-<div class="container"> 
     <div id="add-book-modal"class="modal hidden">
     <div class="modal-overlay"></div>
         <div class="modal-content">

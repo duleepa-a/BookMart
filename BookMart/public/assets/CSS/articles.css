@@ -8,6 +8,13 @@ body {
     background-color: #F1F1F1;
 }
 
+.container{
+    margin-left: 15%;
+    padding: 20px;
+    padding-top: 80px;
+    position: relative;
+}
+
 .background-box {
     padding: 20px;
     width:90%;

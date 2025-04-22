@@ -19,84 +19,81 @@
     <!-- navBar division begin -->
     <?php include 'bookSellerSidebar.view.php'; ?>
     <!-- navBar division end -->
-     
-    <br><br>
-    <center>
-    <div class="background-box">
-        <h1 class="title-text">Articles</h1>
 
-        <?php if ($_SESSION['user_role'] == 'bookSeller'): ?>
+    <div class="container">
+            <h1 class="title-text">Articles</h1>
 
-            <div class="articles-tabs">
-                <form method="get" style="display:inline;">
-                    <input type="hidden" name="view" value="latest">
-                    <button type="submit" class="articles-tab <?= ($data['selectedTab'] == 'latest') ? 'selected' : '' ?>">Latest Articles</button>
-                </form>
-                <form method="get" style="display:inline;">
-                    <input type="hidden" name="view" value="myArticles">
-                    <button type="submit" class="articles-tab <?= ($data['selectedTab'] == 'myArticles') ? 'selected' : '' ?>">My Articles</button>
-                </form>
-            </div>
+            <?php if ($_SESSION['user_role'] == 'bookSeller'): ?>
 
-        <?php endif; ?>
+                <div class="articles-tabs">
+                    <form method="get" style="display:inline;">
+                        <input type="hidden" name="view" value="latest">
+                        <button type="submit" class="articles-tab <?= ($data['selectedTab'] == 'latest') ? 'selected' : '' ?>">Latest Articles</button>
+                    </form>
+                    <form method="get" style="display:inline;">
+                        <input type="hidden" name="view" value="myArticles">
+                        <button type="submit" class="articles-tab <?= ($data['selectedTab'] == 'myArticles') ? 'selected' : '' ?>">My Articles</button>
+                    </form>
+                </div>
 
-        <div class="articles-container">
-            <?php if (!empty($data['articles'])): ?>
-                <?php foreach ($data['articles'] as $article): ?>
-                    <div class="article-card">
-                        <div class="article-header">
-                            <h2><?= htmlspecialchars($article->Title) ?></h2>
-                            <span class="article-meta">
-                                By <?= htmlspecialchars($article->Author) ?> | 
-                                <?= date('F d, Y', strtotime($article->created_at)) ?>
-                            </span>
-                        </div>
-                        <div class="article-content">
-                            <p><?= substr(htmlspecialchars($article->Content), 0, 200) ?>...</p>
-                        </div>
-                        <div class="article-footer">
-                            <?php if (($_SESSION['user_role'] == 'bookSeller') && ($data['selectedTab'] == 'myArticles')): ?>
-                                <a href="<?= ROOT ?>/articles/update/<?= htmlspecialchars($article->ID) ?>" class="read-more">
-                                Update</i>
-                            </a>
-                            <?php else: ?>
-                                <p></p>
-                            <?php endif; ?>
-                            <a href="<?= ROOT ?>/articles/detail/<?= htmlspecialchars($article->ID) ?>" class="read-more">
-                                Read More <i class="fa-solid fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-                <?php if ($data['showPageControl']): ?>
-                    <div class="controls">
-                        <?php if ($data['hasPrevious']): ?>
-                            <form method="get" style="display:inline;">
-                                <input type="hidden" name="page" value="<?= $data['page'] - 1 ?>">
-                                <input type="hidden" name="view" value="<?= $data['selectedTab'] ?>">
-                                <button type="submit" class="view-more-button">Previous</button>
-                            </form>
-                        <?php endif; ?>
-
-                        <span class="page-number">Page <?= $data['page'] ?></span>
-
-                        <?php if ($data['hasNext']): ?>
-                            <form method="get" style="display:inline;">
-                                <input type="hidden" name="page" value="<?= $data['page'] + 1 ?>">
-                                <input type="hidden" name="view" value="<?= $data['selectedTab'] ?>">
-                                <button type="submit" class="view-more-button">Next</button>
-                            </form>
-                        <?php endif; ?>
-                    </div>
-                <?php endif; ?>
-
-            <?php else: ?>
-                <p>No articles found.</p>
             <?php endif; ?>
-        </div>
-        
+
+            <div class="articles-container">
+                <?php if (!empty($data['articles'])): ?>
+                    <?php foreach ($data['articles'] as $article): ?>
+                        <div class="article-card">
+                            <div class="article-header">
+                                <h2><?= htmlspecialchars($article->Title) ?></h2>
+                                <span class="article-meta">
+                                    By <?= htmlspecialchars($article->Author) ?> | 
+                                    <?= date('F d, Y', strtotime($article->created_at)) ?>
+                                </span>
+                            </div>
+                            <div class="article-content">
+                                <p><?= substr(htmlspecialchars($article->Content), 0, 200) ?>...</p>
+                            </div>
+                            <div class="article-footer">
+                                <?php if (($_SESSION['user_role'] == 'bookSeller') && ($data['selectedTab'] == 'myArticles')): ?>
+                                    <a href="<?= ROOT ?>/articles/update/<?= htmlspecialchars($article->ID) ?>" class="read-more">
+                                    Update</i>
+                                </a>
+                                <?php else: ?>
+                                    <p></p>
+                                <?php endif; ?>
+                                <a href="<?= ROOT ?>/articles/detail/<?= htmlspecialchars($article->ID) ?>" class="read-more">
+                                    Read More <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                    <?php if ($data['showPageControl']): ?>
+                        <div class="controls">
+                            <?php if ($data['hasPrevious']): ?>
+                                <form method="get" style="display:inline;">
+                                    <input type="hidden" name="page" value="<?= $data['page'] - 1 ?>">
+                                    <input type="hidden" name="view" value="<?= $data['selectedTab'] ?>">
+                                    <button type="submit" class="view-more-button">Previous</button>
+                                </form>
+                            <?php endif; ?>
+
+                            <span class="page-number">Page <?= $data['page'] ?></span>
+
+                            <?php if ($data['hasNext']): ?>
+                                <form method="get" style="display:inline;">
+                                    <input type="hidden" name="page" value="<?= $data['page'] + 1 ?>">
+                                    <input type="hidden" name="view" value="<?= $data['selectedTab'] ?>">
+                                    <button type="submit" class="view-more-button">Next</button>
+                                </form>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+
+                <?php else: ?>
+                    <p>No articles found.</p>
+                <?php endif; ?>
+            </div>
     </div>
-    </center>
+
 
     <br><br>
 
