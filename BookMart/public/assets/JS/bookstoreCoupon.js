@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.querySelector(".delete-modal").addEventListener("click", (e) => {
     
-    const bookId = document.getElementById("update-book-id").value;
+    const bookId = document.getElementById("update-coupon-id").value;
     const updateModal = document.getElementById("update-book-modal");
     console.log(updateModal)
     updateModal.classList.remove('active');

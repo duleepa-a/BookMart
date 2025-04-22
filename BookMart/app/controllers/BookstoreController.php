@@ -692,4 +692,51 @@ class BookstoreController extends Controller{
         }
     }
 
+    public function updateCouponStatus() {
+        $couponModel = new CouponModel();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['coupon_id'];
+            $couponCode = $_POST['coupon_code'];
+            $is_active = $_POST['is_active'];
+        
+        if ($couponModel->first(['id' => $id, 'store_id' => $storeId])) {
+            $data = [
+                'is_active' => $is_active,
+            ];
+            $couponModel->update($id, $data);
+
+            redirect('BookstoreController/coupons');
+ 
+        }
+        else {
+            echo "Coupon not found or you do not have permission to update it.";
+            redirect('BookstoreController/coupons');
+        }
+        } else {
+            echo "Invalid request method.";
+        }
+    }
+
+    public function deleteCoupon() {
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['coupon_id'];
+            $storeId = $_SESSION['user_id'];
+
+            $couponModel = new CouponModel();
+            if ($couponModel->first(['id' => $id, 'store_id' => $storeId])) { 
+                $couponModel->delete($id);
+
+                redirect('BookstoreController/coupons');
+            }
+            else {
+                echo "Coupon not found or you do not have permission to delete it.";
+                redirect('BookstoreController/coupons');
+            }
+        }
+        else {
+            echo "Invalid request method.";
+        }
+    }
 }
