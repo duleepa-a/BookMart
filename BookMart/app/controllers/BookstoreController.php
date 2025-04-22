@@ -699,6 +699,7 @@ class BookstoreController extends Controller{
             $id = $_POST['coupon_id'];
             $couponCode = $_POST['coupon_code'];
             $is_active = $_POST['is_active'];
+            $storeId = $_SESSION['user_id'];
         
         if ($couponModel->first(['id' => $id, 'store_id' => $storeId])) {
             $data = [
