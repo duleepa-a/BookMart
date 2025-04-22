@@ -22,59 +22,62 @@
     
     <br>
     <center>
-    <div class="background-box">
-        <article class="article-full">
-            <header class="article-header">
-                <h1><?= htmlspecialchars($data['articles']->Title) ?></h1>
-                <div class="article-meta">
-                    <span class="author"><?= htmlspecialchars($data['articles']->Author) ?></span>
-                    <span class="date"><?= htmlspecialchars($data['articles']->created_at) ?></span>
+    <div class="container">
+        <div class="background-box">
+            <article class="article-full">
+                <header class="article-header">
+                    <h1><?= htmlspecialchars($data['articles']->Title) ?></h1>
+                    <div class="article-meta">
+                        <span class="author"><?= htmlspecialchars($data['articles']->Author) ?></span>
+                        <span class="date"><?= htmlspecialchars($data['articles']->created_at) ?></span>
+                    </div>
+                </header>
+                
+                <div class="article-content">
+                    <?=  nl2br(htmlspecialchars($data['articles']->Content))?>
                 </div>
-            </header>
-            
-            <div class="article-content">
-                <?=  nl2br(htmlspecialchars($data['articles']->Content))?>
+            </article>
+        </div>
+    
+    
+
+        <section class="recommended-section">
+            <h2 class="recommended-heading">Recommended Articles</h2>
+            <div class="recommended-container">
+
+                <?php if (!empty($data['articles'])): ?>
+                    <?php $counter = 0; ?>
+                    <?php foreach ($data['recomended'] as $article): ?>
+                        <?php if ($counter == 2) break; ?>
+                        <div class="article-card">
+                            <div class="article-header">
+                                <h2><?= htmlspecialchars($article->Title) ?></h2>
+                                <span class="article-meta">
+                                    By <?= htmlspecialchars($article->Author) ?> | 
+                                    <?= date('F d, Y', strtotime($article->created_at)) ?>
+                                </span>
+                            </div>
+                            <div class="article-content">
+                                <p><?= substr(htmlspecialchars($article->Content), 0, 200) ?>...</p>
+                            </div>
+                            <div class="article-footer">
+                                <p></p>
+                                <a href="<?= ROOT ?>/articles/detail/<?= htmlspecialchars($article->ID) ?>" class="read-more">
+                                    Read More <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <br>
+                        <?php $counter++; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No articles found.</p>
+                <?php endif; ?>
+
             </div>
-        </article>
+        </section>
     </div>
     </center>
-
-    <section class="recommended-section">
-        <h2 class="recommended-heading">Recommended Articles</h2>
-        <div class="recommended-container">
-
-        <?php if (!empty($data['articles'])): ?>
-            <?php $counter = 0; ?>
-            <?php foreach ($data['recomended'] as $article): ?>
-                <?php if ($counter == 2) break; ?>
-                <div class="article-card">
-                    <div class="article-header">
-                        <h2><?= htmlspecialchars($article->Title) ?></h2>
-                        <span class="article-meta">
-                            By <?= htmlspecialchars($article->Author) ?> | 
-                            <?= date('F d, Y', strtotime($article->created_at)) ?>
-                        </span>
-                    </div>
-                    <div class="article-content">
-                        <p><?= substr(htmlspecialchars($article->Content), 0, 200) ?>...</p>
-                    </div>
-                    <div class="article-footer">
-                        <p></p>
-                        <a href="<?= ROOT ?>/articles/detail/<?= htmlspecialchars($article->ID) ?>" class="read-more">
-                            Read More <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-                <br>
-                <?php $counter++; ?>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>No articles found.</p>
-        <?php endif; ?>
-
-        </div>
-    </section>
-
     <br><br>
 
     <!-- Footer division begin -->

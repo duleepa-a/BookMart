@@ -34,7 +34,7 @@
 
                 <?php if (!empty($bookSeller->profile_picture)): ?>
                     <img id="profileImagePreview" 
-                        src="<?= ROOT ?>/assets/Images/bookSeller-profile-pics/<?= htmlspecialchars($bookSeller->profile_picture) ?>" 
+                        src="<?= ROOT ?>/assets/Images/bookstore-profile-pics/<?= htmlspecialchars($bookSeller->profile_picture) ?>" 
                         alt="Profile Picture" 
                         class="profile-image">
                 <?php else: ?>

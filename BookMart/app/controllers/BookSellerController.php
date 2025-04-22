@@ -304,7 +304,7 @@ class BookSellerController extends Controller{
             }
 
             $uniqueName = uniqid('adv_', true) . '.' . $extension;
-            $uploadDir = 'C:\xampp\htdocs\BookMart\public\assets\Images\bookSeller-profile-pics';
+            $uploadDir = 'C:\xampp\htdocs\BookMart\public\assets\Images\bookstore-profile-pics';
             $uploadPath = $uploadDir . '\\' . $uniqueName;
 
             if (!is_dir($uploadDir)) {
@@ -317,7 +317,7 @@ class BookSellerController extends Controller{
             }
 
             $imagePath = $uniqueName;
-            $targetPath = '\assets\Images\bookSeller-profile-pics'. '\\' . $imagePath;
+            $targetPath = '\assets\Images\bookstore-profile-pics'. '\\' . $imagePath;
 
             $bookSellerModel = new BookSeller();
             $seller=$bookSellerModel->first(['user_id' => $_SESSION['user_id']]);

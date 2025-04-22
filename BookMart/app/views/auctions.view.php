@@ -20,91 +20,91 @@
     <!-- navBar division end -->
     
     <center>
-    <div class="background-box">
-        <h1 class="title-text">Auctions</h1>
+    <div class="container">
+            <h1 class="title-text">Auctions</h1>
 
-        <div class="auction-tabs">
-            <form method="get" style="display:inline;">
-                <input type="hidden" name="view" value="latest">
-                <button type="submit" class="auction-tab <?= ($data['selectedTab'] == 'latest') ? 'selected' : '' ?>">Latest Auctions</button>
-            </form>
-            <form method="get" style="display:inline;">
-                <input type="hidden" name="view" value="myAuctions">
-                <button type="submit" class="auction-tab <?= ($data['selectedTab'] == 'myAuctions') ? 'selected' : '' ?>">My Auctions</button>
-            </form>
-            <form method="get" style="display:inline;">
-                <input type="hidden" name="view" value="participating">
-                <button type="submit" class="auction-tab <?= ($data['selectedTab'] == 'participating') ? 'selected' : '' ?>">Participating Auctions</button>
-            </form>
-        </div>
+            <div class="auction-tabs">
+                <form method="get" style="display:inline;">
+                    <input type="hidden" name="view" value="latest">
+                    <button type="submit" class="auction-tab <?= ($data['selectedTab'] == 'latest') ? 'selected' : '' ?>">Latest Auctions</button>
+                </form>
+                <form method="get" style="display:inline;">
+                    <input type="hidden" name="view" value="myAuctions">
+                    <button type="submit" class="auction-tab <?= ($data['selectedTab'] == 'myAuctions') ? 'selected' : '' ?>">My Auctions</button>
+                </form>
+                <form method="get" style="display:inline;">
+                    <input type="hidden" name="view" value="participating">
+                    <button type="submit" class="auction-tab <?= ($data['selectedTab'] == 'participating') ? 'selected' : '' ?>">Participating Auctions</button>
+                </form>
+            </div>
 
-        <div class="auctions-container">
-            <?php if (!empty($data['auctions'])): ?>
-                <?php foreach ($data['auctions'] as $auction): ?>
-                    <div class="auction-card">
-                        <div class="book-image">
-                            <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($auction->image) ?>" alt="<?= htmlspecialchars($auction->title) ?>" />
-                            <?php if ($auction->buy_now_price): ?>
-                                <div class="buy-now-badge">Buy Now Available</div>
+            <div class="auctions-container">
+                <?php if (!empty($data['auctions'])): ?>
+                    <?php foreach ($data['auctions'] as $auction): ?>
+                        <div class="auction-card">
+                            <div class="book-image">
+                                <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($auction->image) ?>" alt="<?= htmlspecialchars($auction->title) ?>" />
+                                <?php if ($auction->buy_now_price): ?>
+                                    <div class="buy-now-badge">Buy Now Available</div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="card-content">
+                                <div class="book-details">
+                                    <h2 class="book-title"><?= htmlspecialchars($auction->title) ?></h2>
+                                    <p class="book-author">by <?= htmlspecialchars($auction->author) ?></p>
+                                    <p class="seller-name">Listed by <span><?= htmlspecialchars($auction->seller_name) ?></span></p>
+                                </div>
+                                <div class="auction-details">
+                                    <div class="price-info">
+                                        <div class="current-bid">
+                                            <span class="label">Current Bid</span>
+                                            <span class="value">Rs. <?= number_format($auction->current_price, 2) ?></span>
+                                        </div>
+                                        <?php if ($auction->buy_now_price): ?>
+                                            <div class="buy-now-price">
+                                                <span class="label">Buy Now</span>
+                                                <span class="value">Rs. <?= number_format($auction->buy_now_price, 2) ?></span>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="time-remaining">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span>Ends: <?= date('F d, Y - H:i', strtotime($auction->end_time)) ?></span>
+                                    </div>
+                                </div>
+                                <div class="auction-footer">
+                                    <a href="<?= ROOT ?>/auctions/details/<?= htmlspecialchars($auction->id) ?>" class="view-auction-btn">
+                                        View Auction <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                    <?php if ($data['showPageControl']): ?>
+                        <div class="controls">
+                            <?php if ($data['hasPrevious']): ?>
+                                <form method="get" style="display:inline;">
+                                    <input type="hidden" name="page" value="<?= $data['page'] - 1 ?>">
+                                    <input type="hidden" name="view" value="<?= $data['selectedTab'] ?>">
+                                    <button type="submit" class="view-more-button">Previous</button>
+                                </form>
+                            <?php endif; ?>
+
+                            <span class="page-number">Page <?= $data['page'] ?></span>
+
+                            <?php if ($data['hasNext']): ?>
+                                <form method="get" style="display:inline;">
+                                    <input type="hidden" name="page" value="<?= $data['page'] + 1 ?>">
+                                    <input type="hidden" name="view" value="<?= $data['selectedTab'] ?>">
+                                    <button type="submit" class="view-more-button">Next</button>
+                                </form>
                             <?php endif; ?>
                         </div>
-                        <div class="card-content">
-                            <div class="book-details">
-                                <h2 class="book-title"><?= htmlspecialchars($auction->title) ?></h2>
-                                <p class="book-author">by <?= htmlspecialchars($auction->author) ?></p>
-                                <p class="seller-name">Listed by <span><?= htmlspecialchars($auction->seller_name) ?></span></p>
-                            </div>
-                            <div class="auction-details">
-                                <div class="price-info">
-                                    <div class="current-bid">
-                                        <span class="label">Current Bid</span>
-                                        <span class="value">Rs. <?= number_format($auction->current_price, 2) ?></span>
-                                    </div>
-                                    <?php if ($auction->buy_now_price): ?>
-                                        <div class="buy-now-price">
-                                            <span class="label">Buy Now</span>
-                                            <span class="value">Rs. <?= number_format($auction->buy_now_price, 2) ?></span>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="time-remaining">
-                                    <i class="fa-regular fa-clock"></i>
-                                    <span>Ends: <?= date('F d, Y - H:i', strtotime($auction->end_time)) ?></span>
-                                </div>
-                            </div>
-                            <div class="auction-footer">
-                                <a href="<?= ROOT ?>/auctions/details/<?= htmlspecialchars($auction->id) ?>" class="view-auction-btn">
-                                    View Auction <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-                <?php if ($data['showPageControl']): ?>
-                    <div class="controls">
-                        <?php if ($data['hasPrevious']): ?>
-                            <form method="get" style="display:inline;">
-                                <input type="hidden" name="page" value="<?= $data['page'] - 1 ?>">
-                                <input type="hidden" name="view" value="<?= $data['selectedTab'] ?>">
-                                <button type="submit" class="view-more-button">Previous</button>
-                            </form>
-                        <?php endif; ?>
-
-                        <span class="page-number">Page <?= $data['page'] ?></span>
-
-                        <?php if ($data['hasNext']): ?>
-                            <form method="get" style="display:inline;">
-                                <input type="hidden" name="page" value="<?= $data['page'] + 1 ?>">
-                                <input type="hidden" name="view" value="<?= $data['selectedTab'] ?>">
-                                <button type="submit" class="view-more-button">Next</button>
-                            </form>
-                        <?php endif; ?>
-                    </div>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <p>No auctions found.</p>
                 <?php endif; ?>
-            <?php else: ?>
-                <p>No auctions found.</p>
-            <?php endif; ?>
-        </div>
+            </div>
     </div>
     </center>
 
