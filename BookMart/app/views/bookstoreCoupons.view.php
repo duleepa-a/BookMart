@@ -89,6 +89,7 @@
             <table class="inventory-table">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Coupon Code</th>
                         <th>Discount %</th>
                         <th>Start Time</th>
@@ -110,8 +111,8 @@
                             <td><?= htmlspecialchars($coupon->coupon_code) ?></td>
                             <td><?= htmlspecialchars($coupon->discount_percentage) ?></td>
                             <td><?= htmlspecialchars($coupon->start_time)?></td>
-                            <td><?= htmlspecialchars($coupon->end_time ) ?></td>
-                            <td><?= (htmlspecialchars($coupon->is_active )) ? "Active" : "Inactive" ?></td>
+                            <td><?= isset($coupon->end_time) ? htmlspecialchars($coupon->end_time ) : "-" ?></td>
+                            <td style="color:<?= ($coupon->is_active) ? "green" : "red"?>"><?= (htmlspecialchars($coupon->is_active )) ? "Active" : "Inactive" ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -126,7 +127,7 @@
             <div class="modal-content">
                 <form class="add-adv-form" method="POST" action="<?= ROOT ?>/BookstoreController/updateCoupon">
                     <h2 class="full-width">Update Coupon</h2>
-                    <input type="hidden" id="update-coupon-id" name="coupon_id" value="<?= htmlspecialchars($coupon->id) ?>">
+                    <input type="hidden" id="update-coupon-id" name="coupon_id">
                     <div class="form-row">
                         <div class="form-group">
                             <div>
@@ -172,7 +173,7 @@
                     <h2 class="full-width">Delete Coupon</h2>
                     <p>Are you sure you want to delete this coupon?</p>
                     <p id="delete-book-details"></p> 
-                    <input type="hidden" id="delete-book-id" name="book_id">
+                    <input type="hidden" id="delete-book-id" name="coupon_id">
                     <div class="modal-actions">
                         <button type="submit" class="delete-modal">Delete</button>
                         <button type="button" class="close-modal">Cancel</button>
