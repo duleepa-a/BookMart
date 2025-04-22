@@ -14,20 +14,9 @@
     <!-- navBar division begin -->
     <?php include 'homeNavBar.view.php'; ?>        
     <!-- navBar division end -->
-    <div class="sidebar">
-        <ul>
-            <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button></li>
-            <li><a href="<?= ROOT ?>/" class="active" ><i class="fa-solid fa-house"></i>Dashboard</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/inventory"><i class="fa-solid fa-book"></i>My Inventory</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/Analytics"><i class="fa-solid fa-chart-column"></i>Analytics</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/orders"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/getReviews"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/advertisments"><i class="fa-solid fa-up-right-from-square"></i>Ads & Offers</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/coupons"><i class="fa-solid fa-ticket"></i>Coupons</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/payRolls" ><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
-            <li><a href="<?= ROOT ?>/BookstoreController/myProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
-        </ul>   
-    </div>
+     <!-- sideBar division begin -->
+     <?php include 'commonSidebar.view.php'; ?>        
+    <!-- sideBar division end -->
     <div class="large-container">
         <div class="container"> 
             <div class="card-container">
@@ -35,28 +24,28 @@
                     <i class="fa-solid fa-dollar-sign card-icon"></i>
                     <div class="card-content">
                         <div class="card-title">Net Revenue</div>
-                        <div class="card-value">Rs.50K</div>
+                        <div class="card-value">Rs <?= $summary->revenue ?? 0.0 ?></div>
                     </div>
                 </div>
                 <div class="card">
                     <i class="fa-solid fa-cart-shopping card-icon"></i>
                     <div class="card-content">
                         <div class="card-title">Orders</div>
-                        <div class="card-value">40K</div>
+                        <div class="card-value"><?= $summary->orders_count ?></div>
                     </div>
                 </div>
                 <div class="card">
                     <i class="fa-solid fa-user card-icon"></i>
                     <div class="card-content">
                         <div class="card-title">Followers</div>
-                        <div class="card-value">342</div>
+                        <div class="card-value"><?= $summary->followers_count ?></div>
                     </div>
                 </div>
                 <div class="card">
                     <i class="fa-solid fa-book card-icon"></i>
                     <div class="card-content">
                         <div class="card-title">Inventory</div>
-                        <div class="card-value">127</div>
+                        <div class="card-value"><?= $summary->inventory_count ?></div>
                     </div>
                 </div>
             </div>
@@ -65,23 +54,18 @@
                 <div class="hero left">
                     <div class="chart-section">
                         <div class="chart-container">
-                        <div class="tooltip top">Click to see monthly breakdown</div>
                         <svg width="200" height="200" viewBox="0 0 200 200">
                             <circle class="circle-bg" cx="100" cy="100" r="90"/>
                             <circle class="circle" cx="100" cy="100" r="90"/>
                         </svg>
                         <div class="center-text">
-                            <p class="percentage">92%</p>
+                            <p class="percentage"><?= ($summary->rating)?></p>
                             <p class="label">Customer Ratings</p>
                         </div>
                         </div>
                         <div class="info-section">
                         <p class="reviews-count">Based on</p>
-                        <p class="reviews-count" style="font-weight: bold; font-size: 16px;">1,248 reviews</p>
-                        <p class="monthly-trend">
-                            <span class="trend-arrow">↗</span>
-                            <span>+2.3% this month</span>
-                        </p>
+                        <p class="reviews-count" style="font-weight: bold; font-size: 16px;"> reviews</p>
                         </div>
                     </div>
                 </div>
@@ -165,6 +149,7 @@
                     <h2 class="low-stock-heading">Books low on stock</h2>
                     <a href="<?= ROOT ?>/BookstoreController/inventory" class="inventory-bttn">Go to Inventory</a>
                 </div>
+                <?php if(!empty($lowStockBooks)):?>
                 <table class="low-stock-table">
                     <thead>
                         <tr>
@@ -193,6 +178,11 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php else :?>
+                    <div class="message-div">
+                        <p>Great news! All your books are well-stocked at the moment.</p>
+                    </div>
+                <?php endif;?>
 
             </div>
             <br><br>
@@ -239,7 +229,7 @@
     </body>
     <script src="<?= ROOT ?>/assets/JS/bookstoreHome.js"></script>
     <script>
-        function setPercentage(percent, totalReviews, monthlyChange) {
+        function setPercentage(percent, totalReviews) {
         const circle = document.querySelector('.circle');
         const circumference = 2 * Math.PI * 90;
         
@@ -256,38 +246,10 @@
         document.querySelector('.reviews-count:last-of-type').textContent = 
             `${totalReviews.toLocaleString()} reviews`;
         
-        // Update monthly trend
-        const trendElement = document.querySelector('.monthly-trend');
-        const arrow = monthlyChange >= 0 ? '↗' : '↘';
-        const color = monthlyChange >= 0 ? '#48bb78' : '#f56565';
-        trendElement.innerHTML = `
-            <span class="trend-arrow">${arrow}</span>
-            <span>${monthlyChange >= 0 ? '+' : ''}${monthlyChange}% this month</span>
-        `;
-        trendElement.style.color = color;
         }
 
-        // Add interactivity
-        const chartContainer = document.querySelector('.chart-container');
-        const tooltip = document.querySelector('.tooltip');
-        const circle = document.querySelector('.circle');
-
-        // Show tooltip on hover
-        chartContainer.addEventListener('mouseenter', () => {
-        circle.classList.add('pulse');
-        });
-
-        chartContainer.addEventListener('mouseleave', () => {
-        circle.classList.remove('pulse');
-        });
-
-        // Click interaction
-        chartContainer.addEventListener('click', () => {
-        alert('Monthly Breakdown:\nJan: 90%\nFeb: 91%\nMar: 92%\nApr: 92%');
-        });
-
         // Initialize with sample data
-        setPercentage(92, 1248, 2.3);
+        setPercentage(<?= ($summary->rating)?>, <?= $summary->reviews_count?>);
     </script>
 </body>
 </html>

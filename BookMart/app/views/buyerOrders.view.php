@@ -14,14 +14,9 @@
     <!-- navBar division begin -->
     <?php include 'secondaryNavBar.view.php'; ?>        
     <!-- navBar division end -->
-    <div class="sidebar">
-        <h3 class="sidebar-heading">Welcome back,<br><?= $_SESSION['full_name'] ?? 'User' ?></h3>
-        <ul>
-            <li><a href="<?= ROOT ?>/buyer/orders" class="active"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
-            <li><a href="<?= ROOT ?>/buyer/reviews"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
-            <li><a href="<?= ROOT ?>/buyer/myProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
-        </ul>   
-    </div>
+   <!-- navBar sideBar begin -->
+   <?php include 'commonSidebar.view.php'; ?>
+    <!-- navBar sideBar end -->
     <div class="container">
         <h1 class="heading">My Orders</h1>
         <nav class="tabs">

@@ -34,12 +34,12 @@ class BookStore {
         'evidence_doc'
     ];
 
-    public function findById($id) {
+    public function findById($id){
         $query = "SELECT * FROM bookstore WHERE id = :id";
         return $this->getRow($query, ['id' => $id]);
     }
 
-    public function recommendBookstores($userId) {
+    public function recommendBookstores($userId){
         $sql = "SELECT bs.id, bs.store_name, bs.followers,bs.profile_picture,bs.user_id
                 FROM bookstore bs
                 WHERE bs.user_id NOT IN (
@@ -53,12 +53,30 @@ class BookStore {
     public function getHomeData($user_id){
         $store = $this->first(['user_id' =>  $user_id]);   
         
-        $sql = "SELECT * FROM book WHERE seller_id =:user_id AND quantity <= 20;";
+        $lowStockSql = "SELECT * FROM book WHERE seller_id =:user_id AND quantity <= 20 AND status = 'available';";
+        $lowStockbooks = $this->query($lowStockSql,[':user_id' => $user_id]);
 
-        $lowStockbooks = $this->query($sql,[':user_id' => $user_id]);
+        $summarySql = "
+                            SELECT
+                                (SELECT SUM(net_amount) FROM payroll WHERE payee_id = :id) AS revenue,
+                                (SELECT COUNT(*) FROM book WHERE seller_id = :id) AS inventory_count,
+                                (SELECT COUNT(*) FROM follows WHERE bookstore_id = :id) AS followers_count,
+                                (SELECT COUNT(*) FROM review WHERE seller_id = :id) AS reviews_count,
+                                (SELECT COUNT(*) FROM orders WHERE seller_id = :id) AS orders_count;
+                        ";
+        $summary = $this->query($summarySql, [':id' =>$user_id]);
+        
+        if(!$store->rating){
+            $query = "SELECT AVG(seller_rating) as avg_rating FROM review WHERE seller_id = :id";
+            $summary[0]->rating = $this->query($query,[ ':id' => $user_id])[0]->avg_rating;
+        }
+        else{
+            $summary[0]->rating = $store->rating;
+        }
 
         $data = [
-            'lowStockBooks' => $lowStockbooks
+            'lowStockBooks' => $lowStockbooks,
+            'summary' => $summary[0]
         ];
 
         return $data;

@@ -21,11 +21,12 @@ class BookModel {
         'book_condition',
         'language',
         'description',
-        'created_at'
+        'created_at',
+        'status'
     ];
 
     public function searchBooks($keyword) {
-        $query = "SELECT * FROM book WHERE title LIKE :keyword OR author LIKE :keyword";
+        $query = "SELECT * FROM book WHERE (title LIKE :keyword OR author LIKE :keyword) AND status = 'available'";
         $data = [':keyword' => '%' . $keyword . '%'];
     
         return $this->query($query, $data);
@@ -41,7 +42,8 @@ class BookModel {
     
         $recommended = $this->where(
                                     [
-                                        'genre' => $currentBook->genre
+                                        'genre' => $currentBook->genre,
+                                        'status' => 'available'
                                     ],
                                     [
                                         'id' => $currentBook->id
@@ -60,7 +62,8 @@ class BookModel {
             $this->limit = max(0,7 - count($recommended));
             $moreFromSeller = $this->where(
                 [
-                    'seller_id' => $currentBook->seller_id
+                    'seller_id' => $currentBook->seller_id,
+                    'status' => 'available'
                 ],
                 [
                     'id' => $currentBook->id
@@ -86,9 +89,11 @@ class BookModel {
             foreach ($topSelling as $order) {
                 if (count($recommended) >= 7) break;
                 if (!in_array($order->book_id, $recommendedIds)) {
-                    $book = $this->first(['id' => $order->book_id]);
-                    $recommended[] = $book;
-                    $recommendedIds[] = $book->id;
+                    $book = $this->first(['id' => $order->book_id , 'status' => 'available']);
+                    if($book){
+                        $recommended[] = $book;
+                        $recommendedIds[] = $book->id;
+                    }
                 }
             }
         }

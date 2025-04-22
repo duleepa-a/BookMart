@@ -8,55 +8,6 @@ body{
     background-color: #F1F1F1;
 }
 
-
-.sidebar {
-  width: 15%;
-  height: 100vh;
-  background-color: #f6f8fc;
-  position: fixed;
-  top: 9%;
-  left: 0;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.001);
-}
-
-.sidebar ul {
-  margin-top: 20px;
-  list-style-type: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  margin-right: 10px;
-}
-
-.sidebar ul li a {
-  display: block;
-  padding: 10px;
-  font-size: 16px;
-  color: #000;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-}
-
-.sidebar ul li a i {
-  margin-left: 20px;
-  margin-right: 15px;
-}
-
-.sidebar ul li a:hover{
-  background-color: #eaeaea;
-  color: #333;
-}
-
-.sidebar ul li a.active {
-  background-color: #f4e2d7;
-  color: #BE5715;
-  font-weight: 600;
-}
-
-
 .add-book-bttn {
   margin-top: 20px;
   margin-left: 15px;
@@ -560,6 +511,18 @@ p {
   .trend-arrow {
     font-size: 16px;
   }
+
+  
+.message-div{
+  height:50vh;
+  text-align: center;
+  align-content: center;
+  width: 100%;
+}
+
+.message-div p{
+  color: #333;
+}
 
 .grid-line { stroke: #e0e0e0; stroke-width: 1; }
 .axis-label { font-size: 12px; font-family: Arial; }

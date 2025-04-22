@@ -27,13 +27,13 @@ class Book extends Controller{
 
     public function getNewArrivals() {
         $bookModel = new BookModel();
-        return $bookModel->findAll(); 
+        return $bookModel->where(['status' => 'available']); 
     }
 
     public function getBestSellers() {
         $bookModel = new BookModel();
         $bookModel->setLimit(50);
-        $books= $bookModel->findAll();
+        $books= $bookModel->where(['status' => 'available']);
 
         $groupedBooks = [];
 
@@ -55,7 +55,7 @@ class Book extends Controller{
 
     public function getBooksByGenre($genre) {
         $bookModel = new BookModel();
-        return $bookModel->where(['genre' => $genre]);
+        return $bookModel->where(['genre' => $genre , 'status' => 'available']);
     }
 
     public function getReviews($id){
@@ -211,7 +211,7 @@ class Book extends Controller{
         $id = $_POST['book_id'];
         
         show($id);
-        $bookModel->delete($id);
+        $bookModel->update($id,['status' => 'removed']);
         redirect('BookstoreController/inventory');
         
     }
