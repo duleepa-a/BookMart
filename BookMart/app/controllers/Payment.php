@@ -51,7 +51,9 @@ class Payment extends Controller{
         $discount = ($book->discount / 100) * $book->price;
         $discountedPrice = $book->price - $discount;
         $totalPrice = $discountedPrice * $qty;
-        
+
+        $book->seller_name = $userModel->first(['id' => $book->seller_id])->username;
+
         $data = [
             'book' => $book,
             'buyer' => $buyer,
@@ -191,6 +193,11 @@ class Payment extends Controller{
         $bookModel = new BookModel();
         $book = $bookModel->first(['id' => $bookId]);
 
+        $sellerm = new UserModel;
+        $seller= $sellerm->first(['id' => $book->seller_id]);
+
+        $book->seller_name = $seller->username;
+
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
         }
@@ -211,6 +218,7 @@ class Payment extends Controller{
                     'quantity' => $quantity,
                     'max_quantity'=>$book->quantity,
                     'cover_image' => $book->cover_image,
+                    'seller_username' => $book->seller_name
                 ];
             }
         }

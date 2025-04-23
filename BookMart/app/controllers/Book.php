@@ -1,5 +1,6 @@
 <?php
 
+
 class Book extends Controller{
 
     public function index(){
@@ -66,7 +67,6 @@ class Book extends Controller{
 
     public function addBook(){
         $bookModel = new BookModel();
-        $bookstore = new BookstoreController();
         echo("addBook");
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo("addBook POST in");
