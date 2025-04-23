@@ -33,7 +33,7 @@
                     <button class="tab-button" onclick="showTab('vehical-details')">Vehical Details</button>
                     <button class="tab-button last-child" onclick="showTab('change-password')">Change Password</button>
                 </nav>
-                    <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/registerCourier"  >
+                <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/courierProfile/updatePersonalDetails"  >
                         <div class="tab-content" id="personal-details">
                             
                         <?php if(!empty($courierD)): ?>
@@ -52,13 +52,13 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group-row">
+                            <!-- <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="user-name">Name with initials:</label>
                                     <input type="text" id="user-name" name="username" placeholder=" " required>
                                 </div>
                                 
-                            </div>
+                            </div> -->
             
                             <div class="form-group-row">
                                 <div class="form-group">
@@ -125,8 +125,9 @@
                             <br><br><br><br>
                         
                         </div>
-            
-            
+                    </form>
+
+                    <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/courierProfile/updateBankDetails"  >
                         <div class="tab-content" id="bank-details" style="display: none;">
                             
                             <div class="form-group-row">
@@ -168,7 +169,9 @@
                             <br><br><br><br>
             
                         </div>
-            
+                        </form>
+
+                        <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/courierProfile/updateVehicalDetails"  >
                         <div class="tab-content" id="vehical-details" style="display: none;">
                             
                             <div class="form-group-row">
@@ -205,6 +208,8 @@
                             <br><br><br><br>
             
                         </div>
+                        </form>
+                        
             
                         <div class="tab-content" id="change-password" style="display: none;">
                             

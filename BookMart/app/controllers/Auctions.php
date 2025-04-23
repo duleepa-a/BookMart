@@ -107,13 +107,13 @@ class Auctions extends Controller {
             
             // Get form data
             $auctionData = [
-                'book_id' => htmlspecialchars(trim($_POST['book_id'])),
+                'book_id' => trim($_POST['book_id']),
                 'seller_id' => $_SESSION['user_id'],
                 'starting_price' => filter_var(trim($_POST['starting_price']), FILTER_VALIDATE_FLOAT),
                 'current_price' => filter_var(trim($_POST['starting_price']), FILTER_VALIDATE_FLOAT),
                 'buy_now_price' => !empty(filter_var(trim($_POST['buy_now_price']))) ? filter_var(trim($_POST['buy_now_price']), FILTER_VALIDATE_FLOAT) : null,
-                'start_time' => htmlspecialchars(trim($_POST['start_time'])),
-                'end_time' => htmlspecialchars(trim($_POST['end_time'])),
+                'start_time' => trim($_POST['start_time']),
+                'end_time' => trim($_POST['end_time']),
             ];
             
             // Create auction
@@ -131,7 +131,7 @@ class Auctions extends Controller {
             
             // Get form data
             $auctionData = [
-                'id' => htmlspecialchars(trim($_POST['auction_id'])),
+                'id' => trim($_POST['auction_id']),
                 'current_price' => filter_var(trim($_POST['bid-amount']), FILTER_VALIDATE_FLOAT),
                 'previous_bid' => filter_var(trim($_POST['previous_bid']), FILTER_VALIDATE_FLOAT),
                 'current_bidder_id' => $_SESSION['user_id'],
@@ -143,9 +143,9 @@ class Auctions extends Controller {
             $auction = new AuctionModel();
             $auction->updateAuction($auctionData);
             
-            redirect('auctions/details/' . htmlspecialchars(trim($_POST['auction_id'])));
+            redirect('auctions/details/' . trim($_POST['auction_id']));
         } else {
-            redirect('auctions/details/' . htmlspecialchars(trim($_POST['auction_id'])));
+            redirect('auctions/details/' . trim($_POST['auction_id']));
         }
     }
 
@@ -153,8 +153,8 @@ class Auctions extends Controller {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             $auctionData = [
-                'id' => htmlspecialchars(trim($_POST['auction_id'])),
-                'book_id' => htmlspecialchars(trim($_POST['book_id'])),
+                'id' => trim($_POST['auction_id']),
+                'book_id' => trim($_POST['book_id']),
                 'current_price' => filter_var(trim($_POST['current_price']), FILTER_VALIDATE_FLOAT),
                 'previous_bid' => filter_var(trim($_POST['previous_bid']), FILTER_VALIDATE_FLOAT),
                 'current_bidder_id' => $_SESSION['user_id'],
@@ -170,9 +170,9 @@ class Auctions extends Controller {
             $auction = new AuctionModel();
             $auction->updateAuction($auctionData);
             
-            redirect('auctions/details/' . htmlspecialchars(trim($_POST['auction_id'])));
+            redirect('auctions/details/' . trim($_POST['auction_id']));
         } else {
-            redirect('auctions/details/' . htmlspecialchars(trim($_POST['auction_id'])));
+            redirect('auctions/details/' . trim($_POST['auction_id']));
         }
     }
 
@@ -180,24 +180,24 @@ class Auctions extends Controller {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             $auctionData = [
-                'id' => htmlspecialchars(trim($_POST['auction_id'])),
-                'winner_user_id' => htmlspecialchars(trim($_POST['current_bidder_id'])),
+                'id' => trim($_POST['auction_id']),
+                'winner_user_id' => trim($_POST['current_bidder_id']),
                 'is_closed' => 1,
             ];
             
             $auction = new AuctionModel();
             $auction->updateAuction($auctionData);
             
-            redirect('auctions/details/' . htmlspecialchars(trim($_POST['auction_id'])));
+            redirect('auctions/details/' . trim($_POST['auction_id']));
         } else {
-            redirect('auctions/details/' . htmlspecialchars(trim($_POST['auction_id'])));
+            redirect('auctions/details/' . trim($_POST['auction_id']));
         }
     }
 
     public function cancelAuction() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $auctionId = htmlspecialchars(trim($_POST['auction_id']));
-            $bookId = htmlspecialchars(trim($_POST['book_id']));
+            $auctionId = trim($_POST['auction_id']);
+            $bookId = trim($_POST['book_id']);
     
             $auction = new AuctionModel();
             $result = $auction->deleteAuction($auctionId);
@@ -217,7 +217,7 @@ class Auctions extends Controller {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $auctionData = [
-                'id' => htmlspecialchars(trim($_POST['auction_id'])),
+                'id' => trim($_POST['auction_id']),
                 'current_price' => filter_var(trim($_POST['previous_bid']), FILTER_VALIDATE_FLOAT),
                 'previous_bid' => filter_var(trim($_POST['previous_bid']), FILTER_VALIDATE_FLOAT),
                 'current_bidder_id' => null,
@@ -226,13 +226,13 @@ class Auctions extends Controller {
     
             $auction = new AuctionModel();
             $result = $auction->updateAuction($auctionData);
-            $is_closed = htmlspecialchars(trim($_POST['is_closed']));
+            $is_closed = trim($_POST['is_closed']);
     
             if ($is_closed == 1) {
                 redirect('auctions');
             }
             else {
-                redirect('auctions/details/' . htmlspecialchars(trim($_POST['auction_id'])));
+                redirect('auctions/details/' . trim($_POST['auction_id']));
             }
         } 
         else {

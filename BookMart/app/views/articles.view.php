@@ -89,7 +89,10 @@
                     <?php endif; ?>
 
                 <?php else: ?>
-                    <p>No articles found.</p>
+                    <center>
+                        <p>No articles found.</p>
+                    </center>
+
                 <?php endif; ?>
             </div>
     

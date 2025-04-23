@@ -73,9 +73,9 @@ class Articles extends Controller {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
                 'user_id' => $_SESSION['user_id'],
-                'title' => htmlspecialchars(trim($_POST['title'])),
-                'author' => htmlspecialchars(trim($_POST['author'])),
-                'content' => htmlspecialchars(trim($_POST['content'])),
+                'title' => trim($_POST['title']),
+                'author' => trim($_POST['author']),
+                'content' => trim($_POST['content']),
                 'created_at' => date('Y-m-d H:i:s'),
             ];
             
@@ -94,14 +94,14 @@ class Articles extends Controller {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $article_id = $_POST['article_id'];
             $articleData = [
-                'title' => htmlspecialchars(trim($_POST['title'])),
-                'author' => htmlspecialchars(trim($_POST['author'])),
-                'content' => htmlspecialchars(trim($_POST['content'])),
+                'title' => trim($_POST['title']),
+                'author' => trim($_POST['author']),
+                'content' => trim($_POST['content']),
                 'created_at' => date('Y-m-d H:i:s'),
             ];
             
             if (!($articleModel->update($article_id, $articleData))) {
-                redirect('articles/myArticles');
+                redirect('articles?view=myArticles');
             } else {
                 echo "Something went wrong while updating!";
             }
