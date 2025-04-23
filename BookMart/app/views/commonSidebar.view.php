@@ -294,7 +294,7 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
                     <!-- Modal Actions -->
                     <div class="modal-actions">
-                        <button type="submit">Add</button>
+                        <button type="submit" class="add-button">Add</button>
                         <button type="button" class="close-modal">Cancel</button>
                     </div>
                 </form>
