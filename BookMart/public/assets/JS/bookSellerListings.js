@@ -1,28 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const editButton = document.querySelector('.edit-button');
-    const deleteButton = document.querySelector('.delete-button');
-    const auctionButton = document.querySelector('.auction-button');
     const updateModal = document.getElementById('update-book-modal');
     const deleteModal = document.getElementById('delete-book-modal');
     const auctionModal = document.getElementById('create-auction-modal');
     const closeModalButtons = document.querySelectorAll('.close-modal');
-    const selectAllButton = document.querySelector('.select-all-button');
-    const selectAllCheckbox = document.querySelector('.select-all-checkbox');
-    const bookCheckboxes = document.querySelectorAll('.book-checkbox');
     
-    let selectedBooks = new Set();
-
-    function updateButtonStates() {
-        const selectedArray = Array.from(selectedBooks);
-        const selectedCount = selectedArray.length;
-
-        const allAvailable = selectedArray.every(bookRow => bookRow.dataset.status === 'available');
-
-        editButton.disabled = !(selectedCount === 1 && allAvailable);
-        auctionButton.disabled = !(selectedCount === 1 && allAvailable);
-        deleteButton.disabled = !(selectedCount > 0 && allAvailable);
-    }
-
     function populateUpdateModal(bookRow) {
         const modalForm = updateModal.querySelector('.update-book-form');
         const bookData = bookRow.dataset;
@@ -42,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (select) select.value = bookData[field] || '';
         });
     }
-
+    
     function populateAuctionModal(bookRow) {
         const modalForm = auctionModal.querySelector('.create-auction-form');
         const bookData = bookRow.dataset;
@@ -59,127 +40,17 @@ document.addEventListener('DOMContentLoaded', function() {
         else {
             coverImg.src = '/images/default-book-cover.jpg';
         }
-
+    
         document.getElementById('starting-price').value = bookData.price || '0.01';
         document.getElementById('buy-now-price').min = bookData.price || '0.01';
         
         setMinDateTime();
-
+    
         document.getElementById('starting-price').addEventListener('change', function() {
             document.getElementById('buy-now-price').min = this.value;
         });
-
     }
-
-    // Handle individual checkbox changes
-    bookCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const bookRow = this.closest('.book-row');
-            
-            if (this.checked) {
-                selectedBooks.add(bookRow);
-            } else {
-                selectedBooks.delete(bookRow);
-            }
-            
-            selectAllCheckbox.checked = selectedBooks.size === bookCheckboxes.length;
-            updateButtonStates();
-        });
-    });
-
-    // Handle select all checkbox
-    selectAllCheckbox.addEventListener('change', function() {
-        bookCheckboxes.forEach(checkbox => {
-            checkbox.checked = this.checked;
-            const bookRow = checkbox.closest('.book-row');
-            
-            if (this.checked) {
-                selectedBooks.add(bookRow);
-            } else {
-                selectedBooks.delete(bookRow);
-            }
-        });
-        
-        updateButtonStates();
-    });
-
-    // Handle select all button
-    selectAllButton.addEventListener('click', function() {
-        selectAllCheckbox.checked = !selectAllCheckbox.checked;
-        selectAllCheckbox.dispatchEvent(new Event('change'));
-    });
-
-    // Handle edit button click
-    editButton.addEventListener('click', function() {
-        if (selectedBooks.size !== 1) return;
-        
-        const selectedRow = selectedBooks.values().next().value;
-        populateUpdateModal(selectedRow);
-        updateModal.classList.add('active');
-    });
-
-    // Handle delete button click
-    deleteButton.addEventListener('click', function() {
-        if (selectedBooks.size === 0) return;
-        
-        const booksToDeleteList = deleteModal.querySelector('#books-to-delete-list');
-        const deleteBookIds = deleteModal.querySelector('#delete-book-ids');
-        
-        // Clear previous list
-        booksToDeleteList.innerHTML = '';
-        
-        // Get all selected books
-        const selectedBooksArray = Array.from(selectedBooks);
-        
-        // Process each selected book
-        selectedBooksArray.forEach(bookRow => {
-            const title = bookRow.dataset.title;
-            const bookId = bookRow.dataset.book_id;
-            
-            // Create confirmation message for each book
-            const bookItem = document.createElement('div');
-            bookItem.className = 'book-to-delete';
-            bookItem.textContent = title;
-            booksToDeleteList.appendChild(bookItem);
-            
-            // Add book ID to the list
-            if (deleteBookIds.value) {
-                deleteBookIds.value += ',' + bookId;
-            } else {
-                deleteBookIds.value = bookId;
-            }
-        });
-        
-        // Show delete modal
-        deleteModal.classList.add('active');
-    });
-
-    // Handle auction button click
-    auctionButton.addEventListener('click', function() {
-        if (selectedBooks.size !== 1) return;
-        
-        const selectedRow = selectedBooks.values().next().value;
-        populateAuctionModal(selectedRow);
-        auctionModal.classList.add('active');
-    });
     
-    // Handle modal closes
-    closeModalButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const modal = this.closest('.modal');
-            modal.classList.remove('active');
-        });
-    });
-
-    // Close modals when clicking overlay
-    document.querySelectorAll('.modal').forEach(modal => {
-        modal.addEventListener('click', function(e) {
-            if (e.target.classList.contains('modal-overlay')) {
-                this.classList.remove('active');
-            }
-        });
-    });
-
     function setMinDateTime() {
         const now = new Date();
         // Format: YYYY-MM-DDThh:mm
@@ -211,6 +82,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const formattedEndDateTime = `${endYear}-${endMonth}-${endDay}T${endHours}:${endMinutes}`;
         document.getElementById('end-time').value = formattedEndDateTime;
     }
+
+    // Handle modal closes
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            modal.classList.remove('active');
+        });
+    });
+
+    // Close modals when clicking overlay
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                this.classList.remove('active');
+            }
+        });
+    });
     
     // Update end time minimum when start time changes
     document.getElementById('start-time').addEventListener('change', function() {
@@ -222,4 +110,73 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Event delegation for handling row clicks (similar to bookstoreInventory.js)
+    document.querySelector(".inventory-table").addEventListener("click", (e) => {
+        // Check if the clicked element is within a row
+        const row = e.target.closest(".book-row");
+        if (!row) return;
+        
+        // Only proceed if the book status is 'available'
+        if (row.dataset.status !== 'available') return;
+        
+        // Populate and show update modal
+        populateUpdateModal(row);
+        updateModal.classList.add('active');
+    });
+
+    // Add delete button functionality similar to bookstoreInventory.js
+    document.querySelector(".delete-modal").addEventListener("click", (e) => {
+        const bookId = document.getElementById("update-book-id").value;
+        updateModal.classList.remove('active');
+        
+        const deleteModal = document.getElementById("delete-book-modal");
+        deleteModal.querySelector("#delete-book-ids").value = bookId;
+        
+        // Get book title for confirmation message
+        const bookTitle = document.getElementById("update-title").value;
+        const booksToDeleteList = document.getElementById("books-to-delete-list");
+        booksToDeleteList.innerHTML = `<div class="book-to-delete">${bookTitle}</div>`;
+        
+        deleteModal.classList.add('active');
+    });
+
+    document.querySelector(".create-auction-modal").addEventListener("click", (e) => {
+        const bookId = document.getElementById("update-book-id").value;
+        const row = document.querySelector(`.book-row[data-book_id="${bookId}"]`);
+        if (!row) return;
+        
+        // Only proceed if the book status is 'available'
+        if (row.dataset.status !== 'available') return;
+        updateModal.classList.remove('active');
+        
+        populateAuctionModal(row);
+        auctionModal.classList.add('active');
+    });
+
+    // Add search functionality
+    const searchBar = document.querySelector(".search-bar");
+    if (searchBar) {
+        searchBar.addEventListener("input", function() {
+            const searchQuery = searchBar.value.toLowerCase();
+            const tableRows = document.querySelectorAll(".inventory-table tbody .book-row");
+
+            tableRows.forEach(row => {
+                const title = row.dataset.title.toLowerCase();
+                const author = row.dataset.author.toLowerCase();
+                const genre = row.dataset.genre.toLowerCase();
+                const publisher = row.dataset.publisher.toLowerCase();
+
+                if (
+                    title.includes(searchQuery) || 
+                    author.includes(searchQuery) || 
+                    genre.includes(searchQuery) || 
+                    publisher.includes(searchQuery)
+                ) {
+                    row.style.display = ""; 
+                } else {
+                    row.style.display = "none"; 
+                }
+            });
+        });
+    }
 });
