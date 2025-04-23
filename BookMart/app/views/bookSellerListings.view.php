@@ -31,15 +31,6 @@
             <button>Search</button>
         </div>                      <!-- First row division end -->
 
-        <div class="controls" style="background-color:white">
-            <button class="select-all-button">Select All</button>
-            <button class="edit-button" disabled>Edit</button>
-            <button class="auction-button" disabled>Create Auction</button>
-            <button class="delete-button" disabled>Delete</button>
-            <button>Filter</button>
-            <button>Sort</button>
-        </div>                      <!-- Button row division end -->
-
         <?php if (!empty($inventory)) : ?>
             <table class="inventory-table">
                 <thead>
@@ -178,9 +169,9 @@
                         <textarea id="update-description" name="description" rows="4" required></textarea>
                     </div>
                     <div class="modal-actions">
-                        <button type="button" class="create-auction-modal">Create Auction</button>
-                        <button type="button" class="delete-modal">Delete</button>
-                        <button type="submit" class="update-button">Update</button>
+                        <button type="button" id="auction-create-btn" class="create-auction-modal">Create Auction</button>
+                        <button type="button" id="delete-btn" class="delete-modal">Delete</button>
+                        <button type="submit" id="update-btn" class="update-button">Update</button>
                         <button type="button" class="close-modal">Cancel</button>
                     </div>
                 </form>
@@ -195,7 +186,7 @@
                     <input type="hidden" id="delete-book-ids" name="book_id">
                     
                     <div class="delete-confirmation-message">
-                        <p>Are you sure you want to delete the following books?</p>
+                        <p>Are you sure you want to delete the following book?</p>
                         <div id="books-to-delete-list"></div>
                     </div>
 

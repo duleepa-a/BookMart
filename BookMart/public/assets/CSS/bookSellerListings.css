@@ -25,12 +25,12 @@ body{
     display: flex; 
     justify-content: space-between;
     padding: 10px 50px;
-    position: sticky;
+    position: static;
     top: 65px;
     z-index: 900;
 }
 
-.controls button, .controls input {
+.controls input {
     padding: 10px 20px;
     height: 40px;
     width: 150px;
@@ -168,7 +168,7 @@ body{
     font-weight: 700;
 }
 
-.modal-actions button[type="submit"] {
+.modal-actions button.update-button, .modal-actions button.create-auction-modal, .modal-actions button.create-auction-button {
     border:solid 3px #02224E;
     background-color: #02224e00;
     color: #02224E;
@@ -180,14 +180,14 @@ body{
     color: #000000;
 }
 
-.modal-actions button.delete-modal {
+.modal-actions button.delete-modal, .modal-actions button.delete-confirm-button {
     background-color: #c2413800;
     border:solid 3px #ff0000;
     color: #ff0000;
 }
 
 
-.modal-actions button[type="submit"]:hover {
+.modal-actions button.update-button:hover, .modal-actions button.create-auction-modal:hover, .modal-actions button.create-auction-button:hover {
     border:solid 3px #02224E;
     background-color: #02224e;
     color: #ffffff;
@@ -199,7 +199,7 @@ body{
     color: #ffffff;
 }
 
-.modal-actions button.delete-modal:hover {
+.modal-actions button.delete-modal:hover, .modal-actions button.delete-confirm-button:hover {
     background-color: #ff0000;
     border:solid 3px #ff0000;
     color: #ffffff;
