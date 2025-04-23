@@ -189,10 +189,8 @@ class BookSellerListings extends Controller{
 
     public function getBooksByBookSeller($id) {
         $bookModel = new BookModel();
-        $query = "SELECT b.*, l.status
-                  FROM book b
-                  JOIN listings l ON b.id = l.book_id
-                  WHERE b.seller_id = :id";
-        return $bookModel->query($query, ['id' => $id]) ?? null;
+
+        return $bookModel->where(['seller_id' => $id]) ?? null;
+
     }
 }

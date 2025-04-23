@@ -96,7 +96,7 @@
     font-weight: 700;
 }
 
-.modal-actions button[type="submit"] {
+.modal-actions button.add-button {
     border:solid 3px #02224E;
     background-color: #02224e00;
     color: #02224E;
@@ -115,7 +115,7 @@
 }
 
 
-.modal-actions button[type="submit"]:hover {
+.modal-actions button.add-button:hover {
     border:solid 3px #02224E;
     background-color: #02224e;
     color: #ffffff;
