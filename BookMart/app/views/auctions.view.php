@@ -16,10 +16,9 @@
     <!-- navBar division end -->
 
     <!-- navBar division begin -->
-    <?php include 'bookSellerSidebar.view.php'; ?>
+    <?php include 'commonSidebar.view.php'; ?>
     <!-- navBar division end -->
     
-    <center>
     <div class="container">
             <h1 class="title-text">Auctions</h1>
 
@@ -102,16 +101,16 @@
                         </div>
                     <?php endif; ?>
                 <?php else: ?>
-                    <p>No auctions found.</p>
+                    <center>
+                        <p>No auctions found.</p>
+                    </center>
                 <?php endif; ?>
             </div>
+
+        <!-- Footer division begin -->
+        <?php include 'smallFooter.view.php'; ?>
+        <!-- Footer division end -->
+
     </div>
-    </center>
-
-    <br><br>
-
-    <!-- Footer division begin -->
-    <?php include 'bookSellerFooter.view.php'; ?>
-    <!-- Footer division end -->
 </body>
 </html>

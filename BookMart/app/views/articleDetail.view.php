@@ -17,11 +17,9 @@
     <!-- navBar division end -->
 
     <!-- navBar division begin -->
-    <?php include 'bookSellerSidebar.view.php'; ?>
+    <?php include 'commonSidebar.view.php'; ?>
     <!-- navBar division end -->
     
-    <br>
-    <center>
     <div class="container">
         <div class="background-box">
             <article class="article-full">
@@ -76,13 +74,13 @@
 
             </div>
         </section>
-    </div>
-    </center>
-    <br><br>
 
-    <!-- Footer division begin -->
-    <?php include 'bookSellerFooter.view.php'; ?>
-    <!-- Footer division end -->
+        <!-- Footer division begin -->
+        <?php include 'smallFooter.view.php'; ?>
+        <!-- Footer division end -->
+
+    </div>
+
     <script src="<?= ROOT ?>/assets/JS/bookSellerlistings.js"></script>
 </body>
 </html>

@@ -47,6 +47,7 @@ body{
     border-collapse: collapse;
     background: #fff;
     margin-top: 10px;
+    font-size: 0.8rem;
 }
 
 .inventory-table thead tr {
