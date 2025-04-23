@@ -145,7 +145,7 @@ class Payment extends Controller{
        $this->view('paymentCancel');
     }
     public function process() {
-        $secretKey = 'sk_test_51QwNzUFwD7Ut7Vs9FPBW5K38e9dwzqBJs8FvydvTKar0oCVaHKBiogjJxJsUdvs39C5WuDU05Xk8wuWE42pCgaRg002dFEvGvW'; //Stripe Secret Key
+        $secretKey = STRIPE_SECRET_KEY; //Stripe Secret Key
         header('Content-Type: application/json');
 
         $input = json_decode(file_get_contents('php://input'), true);
@@ -227,7 +227,7 @@ class Payment extends Controller{
     }
 
     public function cartCheckout() {
-        $secretKey = 'sk_test_51QwNzUFwD7Ut7Vs9FPBW5K38e9dwzqBJs8FvydvTKar0oCVaHKBiogjJxJsUdvs39C5WuDU05Xk8wuWE42pCgaRg002dFEvGvW';
+        $secretKey = STRIPE_SECRET_KEY;
         $cart = $_SESSION['cart'] ?? [];
     
         if (empty($cart)) {
@@ -430,7 +430,7 @@ class Payment extends Controller{
 
         $adId = $_POST['ad_id'];
         $amount = floatval($_POST['amount']);
-        $secretKey = 'sk_test_51QwNzUFwD7Ut7Vs9FPBW5K38e9dwzqBJs8FvydvTKar0oCVaHKBiogjJxJsUdvs39C5WuDU05Xk8wuWE42pCgaRg002dFEvGvW';
+        $secretKey = STRIPE_SECRET_KEY;
 
         if ($amount <= 0) {
             echo "Invalid payment amount.";
