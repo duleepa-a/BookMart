@@ -4,97 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/adminsearch.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!--bell icon-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>Search Orders</title>
 </head>
 <body>
-<!-- navBar division begin -->
-<?php include 'adminNavBar.view.php'; ?>
-<div class="sidebar">
-        <ul>
-            <h1 class="sidebar-heading">Hi Admin!</h1>
-            <li><a href="<?= ROOT ?>/"><i class="fa-solid fa-house"></i>Dashboard</a></li>
-            <li><a href="<?= ROOT ?>/adminViewallusers"  ><i class="fa-solid fa-users"></i>Users</a></li>
-            <li><a href="<?= ROOT ?>/admin/bookstoreView"><i class="fa-solid fa-store"></i>Shops</a></li>
-            <li><a href="<?= ROOT ?>/adminSearchorders" class="active" ><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
-            <li><a href="<?= ROOT ?>/adminSearchbooks"><i class="fa-solid fa-book"></i>Books</a></li>
-            <li><a href="<?= ROOT ?>/adminViewContactUs"><i class="fa-solid fa-envelope"></i>Inquiries</a></li>
-            <li><a href="<?= ROOT ?>/adminViewCourierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
-            <li><a href="<?= ROOT ?>/admin/payRolls" ><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
-            <li><a href="<?= ROOT ?>/adminAdvertisment"><i class="fa-solid fa-up-right-from-square"></i>Ads</a></li>
-            <li><a href="<?= ROOT ?>/adminProfile" ><i class="fa-regular fa-user"></i>Profile</a></li>
-        </ul>   
-    </div>
+    
+    <!-- navBar division begin -->
+    <?php include 'adminNavBar.view.php'; ?>
     <!-- navBar division end -->
+
+    <!-- sideBar division begin -->
+    <?php include 'adminSideBar.view.php';?>
+    <!-- sideBar division end -->
 
     <div class="container">
         <div class="box">
-            <div class="search-row">
-                <h2>Search Orders</h2>
-                    <input type="text" class="search-input" placeholder="Search Order by ID, Customer name..." id="searchInput">
-                    <select class="sort-by">
+            <form action="<?= ROOT ?>/adminSearchorders" method="GET">
+                <div class="search-row">
+                    <h2>Search Orders</h2>
+                    <div class="search-container">
+                        <input type="text" name="search" placeholder="Search by title, author, or ISBN" value="<?= htmlspecialchars($searchQuery) ?>">
+                        <button type="submit">
+                            <i class="fa fa-search"></i> 
+                        </button>
+                    </div>
+                    <select class="sort-by" name="sort">
                         <option value="">Sort by</option>
-                        <option value="id">Order ID</option>
-                        <option value="name">Book Title</option>
-                        <option value="customer">Customer Name</option>
-                        <option value="store">Book store/Seller</option>
+                        <option value="title" <?= isset($_GET['sort']) && $_GET['sort'] == 'title' ? 'selected' : '' ?>>Book Title</option>
+                        <option value="name" <?= isset($_GET['sort']) && $_GET['sort'] == 'name' ? 'selected' : '' ?>>Customer Name</option>
+                        <option value="store" <?= isset($_GET['sort']) && $_GET['sort'] == 'store' ? 'selected' : '' ?>>Book store/Seller</option>
+                        <option value="status" <?= isset($_GET['sort']) && $_GET['sort'] == 'status' ? 'selected' : '' ?>>Order_status</option>
                     </select>
-            </div>
+                    <?php if (isset($_GET['page'])): ?>
+                        <input type="hidden" name="page" value="<?= (int)$_GET['page'] ?>">
+                    <?php endif; ?>
+                </div>
+            </form>
 
             <div class="table-container">
+            <?php if (!empty($order) && is_array($order)) : ?>
                 <table class="table">
-                    <thead>
+                <thead>
                         <tr>
-                            <th>Order ID</th>
                             <th>Book Title</th>
                             <th>Customer Name</th>
                             <th>Book store/Seller</th>
                             <th>Date Placed</th>
                             <th>Payment Amount</th>
-                            <th>Quantity</th>
-                            <th>Status</th>
+                            <th>Quanitity</th>
+                            <th>Order_status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        // Example array of orders fetched from your database
-                        $orders = [
-                            ['order_id' => '001', 'book_title' => 'The Great Gatsby', 'customer_name' => 'John Doe', 'store' => 'BookStore1', 'date_placed' => '2024-10-01', 'payment' => '$20.99', 'quantity' => 2, 'status' => 'Shipped'],
-                            ['order_id' => '002', 'book_title' => 'To Kill a Mockingbird', 'customer_name' => 'Jane Smith', 'store' => 'BookStore2', 'date_placed' => '2024-10-03', 'payment' => '$15.99', 'quantity' => 1, 'status' => 'Processing'],
-                            ['order_id' => '003', 'book_title' => '1984', 'customer_name' => 'Alice Johnson', 'store' => 'BookStore1', 'date_placed' => '2024-10-05', 'payment' => '$18.99', 'quantity' => 3, 'status' => 'Delivered'],
-                            // Add more orders here
-                        ];
+                        <?php foreach ($order as $order) : ?>
+                            <tr class="order-row" 
+                                data-orderid="<?= $order->order_id ?>" 
+                                data-booktitle="<?= htmlspecialchars($order->title) ?>"
+                                data-customer="<?= htmlspecialchars($order->full_name) ?>"
+                                data-bookshop="<?= htmlspecialchars($order->publisher) ?>"
+                                data-bookprice="<?= htmlspecialchars($order->price) ?>"
+                                data-bookquantity="<?= htmlspecialchars($order->quanitity) ?>"
+                                onclick="window.location.href='<?= ROOT ?>/adminOrderView?order_id=<?= $order->order_id ?>'">
 
-                        // Loop through each order and create a row
-                        foreach ($orders as $order) {
-                            echo "<tr onclick='window.location.href=\"" . ROOT . "/viewOrder/{$order['order_id']}\"'>";
-                            echo "<td>" . htmlspecialchars($order['order_id']) . "</td>";
-                            echo "<td>" . htmlspecialchars($order['book_title']) . "</td>";
-                            echo "<td>" . htmlspecialchars($order['customer_name']) . "</td>";
-                            echo "<td>" . htmlspecialchars($order['store']) . "</td>";
-                            echo "<td>" . htmlspecialchars($order['date_placed']) . "</td>";
-                            echo "<td>" . htmlspecialchars($order['payment']) . "</td>";
-                            echo "<td>" . htmlspecialchars($order['quantity']) . "</td>";
-                            echo "<td>" . htmlspecialchars($order['status']) . "</td>";
-                            echo "</tr>";
-                        }
-                        ?>
+                                <td><?= htmlspecialchars($order->title) ?></td>
+                                <td><?= htmlspecialchars($order->full_name) ?></td>
+                                <td><?= htmlspecialchars($order->publisher) ?></td>
+                                <td><?= htmlspecialchars($order->created_on) ?></td>
+                                <td><?= htmlspecialchars($order->total_amount) ?></td>
+                                <td><?= htmlspecialchars($order->quanitity) ?></a></td>
+                                <td><?= htmlspecialchars($order->order_status) ?></td>
+
+                            </tr>
+                        <?php endforeach; ?>
+
                     </tbody>
                 </table>
+                <?php else : ?>
+                        <div class="no-order-message">
+                            <p>No orders found.</p>
+                        </div>
+                    <?php endif; ?>    
             </div><br><br><br>
 
+            <!-- Pagination -->
+            <?php if(isset($totalPages) && $totalPages > 1): ?>
             <div class="pagination">
-                <button class="page-button previous">&lt;</button>
-                <button class="page-button">1</button>
-                <button class="page-button">2</button>
-                <button class="page-button">3</button>
-                <button class="page-button">4</button>
-                <button class="page-button">5</button>
-                <button class="page-button next">&gt;</button>
+                <?php if($currentPage > 1): ?>
+                    <a href="?page=<?= $currentPage - 1 ?><?= !empty($searchQuery) ? '&search=' . urlencode($searchQuery) : '' ?><?= !empty($sort) ? '&sort=' . urlencode($sort) : '' ?>" class="pagination-btn">&laquo; Previous</a>
+                <?php endif; ?>
+                
+                <?php for($i = 1; $i <= $totalPages; $i++): ?>
+                    <a href="?page=<?= $i ?><?= !empty($searchQuery) ? '&search=' . urlencode($searchQuery) : '' ?><?= !empty($sort) ? '&sort=' . urlencode($sort) : '' ?>" 
+                    class="pagination-btn <?= $i === $currentPage ? 'active' : '' ?>">
+                        <?= $i ?>
+                    </a>
+                <?php endfor; ?>
+                
+                <?php if($currentPage < $totalPages): ?>
+                    <a href="?page=<?= $currentPage + 1 ?><?= !empty($searchQuery) ? '&search=' . urlencode($searchQuery) : '' ?><?= !empty($sort) ? '&sort=' . urlencode($sort) : '' ?>" class="pagination-btn">Next &raquo;</a>
+                <?php endif; ?>
             </div>
+            <?php endif; ?>
+
 
         </div>
     </div>

@@ -159,6 +159,95 @@ class UserModel {
     }
 
     
+    public function getUserById($user_id) {
+        // Define the query to fetch the user by ID
+        $query = 'SELECT * FROM user WHERE ID = :id';
+    
+        // Bind the data for the query
+        $data = [':id' => $user_id];
+    
+        // Use the getRow method from the Database trait to fetch a single user
+        return $this->getRow($query, $data);
+    }
+
+
+
+    
+    //admin view all users
+    public function getAllUsers(){
+        $query = "SELECT * FROM user";
+        return $this->query($query);
+    }
+    
+    public function getUsersByRole($role, $limit = null, $offset = null, $sortClause = "") {
+        $query = "SELECT * FROM user WHERE role = :role";
+        $query .= $sortClause;
+        
+        $params = [':role' => $role];
+        
+        if ($limit !== null) {
+            $query .= " LIMIT " . (int)$limit . " OFFSET " . (int)$offset;
+        }
+        
+        return $this->query($query, $params);
+    }
+
+    // Add to UserModel.php
+    public function searchUsers($search, $limit, $offset, $sortClause = "", $role = "") {
+        $query = "SELECT * FROM user WHERE (username LIKE :search OR email LIKE :search)";
+        if (!empty($role)) {
+            $query .= " AND role = :role";
+        }
+        $query .= $sortClause;
+        
+        $params = [':search' => "%$search%"];
+        if (!empty($role)) {
+            $params[':role'] = $role;
+        }
+        
+        if ($limit !== null) {
+            $query .= " LIMIT " . (int)$limit . " OFFSET " . (int)$offset;
+        }
+        
+        return $this->query($query, $params);
+    }
+
+    public function countSearchResults($search, $role = "") {
+        $query = "SELECT COUNT(*) as count FROM user WHERE (username LIKE :search OR email LIKE :search)";
+        if (!empty($role)) {
+            $query .= " AND role = :role";
+        }
+        
+        $params = [':search' => "%$search%"];
+        if (!empty($role)) {
+            $params[':role'] = $role;
+        }
+        
+        $result = $this->query($query, $params);
+        return $result[0]->count ?? 0;
+    }
+
+    public function count($role = "") {
+        $query = "SELECT COUNT(*) as count FROM user";
+        if (!empty($role)) {
+            $query .= " WHERE role = :role";
+            return $this->query($query, [':role' => $role])[0]->count ?? 0;
+        }
+        return $this->query($query)[0]->count ?? 0;
+    }
+
+    public function findAll($limit = null, $offset = null, $sortClause = "") {
+        $query = "SELECT * FROM user";
+        $query .= $sortClause;
+        
+        $params = [];
+
+        if ($limit !== null) {
+            $query .= " LIMIT " . (int)$limit . " OFFSET " . (int)$offset;
+        }
+        
+        return $this->query($query);
+    }
 
 }
 

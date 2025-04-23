@@ -5,175 +5,233 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/adminViewusers.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><!--bell icon-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>view seller</title>
 </head>
 <body>
-<!-- navBar division begin -->
-<?php include 'adminNavBar.view.php'; ?>
-    <!-- navBar division end -->
-    <div class="sidebar">
-        <ul>
-            <h1 class="sidebar-heading">Hi Admin!</h1>
-            <li><a href="<?= ROOT ?>/" class="active" ><i class="Dashboard"></i>Users</a></li>
-            <li><a href="<?= ROOT ?>/adminViewallusers"  ><i class="fa-solid fa-users"></i>Users</a></li>
-            <li><a href="<?= ROOT ?>/admin/bookstoreView"><i class="fa-solid fa-store"></i>Shops</a></li>
-            <li><a href="<?= ROOT ?>/adminSearchorders"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
-            <li><a href="<?= ROOT ?>/adminSearchbooks"><i class="fa-solid fa-book"></i>Books</a></li>
-            <li><a href="<?= ROOT ?>/adminAdvertisment"><i class="fa-solid fa-up-right-from-square"></i>Ads</a></li>
-            <li><a href="<?= ROOT ?>/adminProfile" class="active"><i class="fa-regular fa-user"></i>Profile</a></li>
-        </ul>   
+
+    <div class="header">
+        <div class="header-wrapper">
+            <div class="logo-container">
+                <a href="<?= ROOT ?>/home" class="title-link">
+                    <h2 class="logo">Book<span class="highlight">Mart</span></h2>
+                </a>
+            </div>
+            <div class="page-title">
+                <h1><center>Seller Details</center></h1>
+            </div>
+        </div>
     </div>
 
-<div class="container">
-    <h2>User Information</h2>
+<div class="main-container">
+    <div class="box">
+        <div class="user-profile">
+            <div class="user-image">
+                <i class="fas fa-user"></i>
+            </div>
+
+            <div class="user-details">
+                <div class="user-name"><?= htmlspecialchars($data['bookseller']->full_name ?? 'Seller Name') ?></div>
+                <div class="user-type">Seller</div>
+                <div class="info-row">
+                    <span class="label">Status</span>
+                    <span class="detail-value">
+                        <span class="status <?= ($data['user']->active_status ?? '') === 'active' ? 'status-active' : 'status-suspended' ?>" id="status-text">
+                            <?= htmlspecialchars($data['user']->active_status ?? '') ?>
+                        </span>
+                    </span>
+                </div>
+                <div class="button-group">
+                    <button class="btn suspendBtn" id="status-toggle">
+                        <?= ($data['user']->active_status ?? '') === 'active' ? 'Suspend' : 'Activate' ?>
+                    </button>
+                    <a href="<?= ROOT ?>/adminSendmsg?email=<?= htmlspecialchars($data['user']->email ?? '') ?>" class="btn messageBtn">
+                        <i class="fas fa-envelope"></i> Send Message
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User information -->
+    <div class="tabs">
+        <div class="tab active">Basic Info</div>
+        <div class="tab">Book Listnings</div>
+        <div class="tab">Ratings</div>
+    </div>
+
     <div class="box">
         <div class="user-info">
             <div class="info-row">
-                <span class="label">Name:</span>
-                <span class="value" id="userName">R.K.L Piyumi</span>
-            </div>
-            <div class="info-row">
                 <span class="label">Seller ID:</span>
-                <span class="value" id="sellerId">S001</span>
+                <span class="detail-value"><?= htmlspecialchars($data['bookseller']->id ?? '') ?></span>
             </div>
             <div class="info-row">
-                <span class="label">Location:</span>
-                <span class="value" id="location">278A Delkada Colombo</span>
+                <span class="label">Full Name:</span>
+                <span class="detail-value"><?= htmlspecialchars($data['bookseller']->full_name ?? '') ?></span>
+            </div>
+            <div class="info-row">
+                <span class="label">Gender:</span>
+                <span class="detail-value"><?= htmlspecialchars($data['bookseller']->gender ?? '') ?></span>
+            </div>
+            <div class="info-row">
+                <span class="label">Date Of Birth:</span>
+                <span class="detail-value"><?= htmlspecialchars($data['bookseller']->dob ?? '') ?></span>
             </div>
             <div class="info-row">
                 <span class="label">Email:</span>
-                <span class="value" id="email">piyumibooks167@gmail.com</span>
+                <span class="detail-value"><?= htmlspecialchars($data['user']->email ?? '') ?></span>
             </div>
             <div class="info-row">
                 <span class="label">Phone Number:</span>
-                <span class="value" id="phoneNumber">0713989143</span>
+                <span class="detail-value"><?= htmlspecialchars($data['bookseller']->phone_number ?? '') ?></span>
+            </div>
+            <div class="info-row">
+                <span class="label">Address:</span>
+                <span class="detail-value"><?= htmlspecialchars($data['bookseller']->street_address ?? '') ?></span>
+            </div>
+            <div class="info-row">
+                <span class="label">City:</span>
+                <span class="detail-value"><?= htmlspecialchars($data['bookseller']->city ?? '') ?></span>
+            </div>
+            <div class="info-row">
+                <span class="label">District:</span>
+                <span class="detail-value"><?= htmlspecialchars($data['bookseller']->district ?? '') ?></span>
+            </div>
+            <div class="info-row">
+                <span class="label">Province:</span>
+                <span class="detail-value"><?= htmlspecialchars($data['bookseller']->province ?? '') ?></span>
+            </div>
+            <div class="info-row">
+                <span class="label">Payment Method:</span>
+                <span class="detail-value"><?= htmlspecialchars($data['bookseller']->payment_method ?? '') ?></span>
             </div>
             <div class="info-row">
                 <span class="label">Account created:</span>
-                <span class="value" id="accountCreated">2024 January 25</span>
+                <span class="detail-value"><?= htmlspecialchars($data['user']->createdAt ?? '') ?></span>
             </div>
             <div class="info-row">
                 <span class="label">Last Login:</span>
-                <span class="value" id="lastLogin">2024 December 23</span>
+                <span class="detail-value"><?= htmlspecialchars($data['user']->last_login ?? '') ?></span>
             </div>
             <div class="info-row">
                 <span class="label">Status:</span>
-                <span class="value" id="status">Active</span>
+                <span class="detail-value"><?= htmlspecialchars($data['user']->active_status ?? '') ?></span>
             </div>
         </div>
-        <div class="button-group">
-            <button class="btn suspendBtn">Suspend</button>
-            <button class="btn deleteUserBtn">Delete User</button>
-            <a href="<?= ROOT ?>/adminSendmsg" class="btn messageBtn">Send Message</a>
-        </div>
-</div><br>  
-
-<!--dialog box for deletion-->
-<div id="confirmationDialog" class="dialog-overlay">
-    <div class="dialog-box">
-        <p>Are you sure you want to delete this User?</p>
-        <div class="dialog-buttons">
-            <button id="cancelBtn" class="btn">Cancel</button>
-            <button id="confirmDeleteBtn" class="btn">Confirm deletion</button>
-        </div>
     </div>
-</div>
 
-<div id="successMessage" class="dialog-overlay">
-    <div class="dialog-box">
-        <p>Successfully deleted.</p>
+    <!-- Listning section -->
+    <div class="section-title">
+        <h2>Book Listnings</h2>
     </div>
-</div>
 
-
-<div class="container">
-    <h2>Book Listnings</h2>
     <div class="box">
-        <input type="text" id="searchInput" placeholder="Search...">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Book ID</th>
-                    <th>Book Title</th>
-                    <th>Genre</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Sales Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>B001</td>
-                    <td>Madol Duuwa</td>
-                    <td>Novel</td>
-                    <td>2</td>
-                    <td>490</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>B008</td>
-                    <td>1984</td>
-                    <td>Novel</td>
-                    <td>1</td>
-                    <td>670</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>B045</td>
-                    <td>Steve Jobs</td>
-                    <td>Business</td>
-                    <td>1</td>
-                    <td>970</td>
-                    <td>0</td>
-                </tr>
-            </tbody>
-        </table>    
-    </div>
-</div><br>
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search listnings...">
+        </div>
 
-
-<div class="container">
-    <h2>Ratings</h2>
-    <div class="box">
-        <input type="text" id="searchInput" placeholder="Search...">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Book ID</th>
-                    <th>Book Title</th>
-                    <th>Rating</th>
-                    <th>Reviewed user</th>
-                    <th>Date</th>
-                    <th>Comment</th>
-                </tr>
-            </thead>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Book Title</th>
+                        <th>Genre</th>
+                        <th>Price</th>
+                        <th>Discount Applied</th>
+                        <th>Sales Quantity</th>
+                    </tr>
+                </thead>
             <tbody>
-                <tr>
-                    <td>B001</td>
-                    <td>Madol Duuwa</td>
-                    <td>4.5</td>
-                    <td>R.K.L. Piyumi</td>
-                    <td>2024/03/18</td>
-                    <td>Excellent Seller</td>
-                </tr>
-                <tr>
-                    <td>B008</td>
-                    <td>1984</td>
-                    <td>5.0</td>
-                    <td>B.W.A. Sanjeewani</td>
-                    <td>2024/08/20</td>
-                    <td>Great</td>
-                </tr>
+                <?php if(isset($data['orders']) && is_array($data['orders']) && count($data['orders']) > 0): ?>
+                    <?php foreach($data['orders'] as $order): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($order->order_id) ?></td>
+                            <td><?= htmlspecialchars($order->title) ?></td>
+                            <td><?= htmlspecialchars($order->genre) ?></td>
+                            <td><?= htmlspecialchars($order->price) ?></td>
+                            <td><?= htmlspecialchars($order->discount_applied) ?></td>
+                            <td><?= htmlspecialchars($order->quanitity) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5">No listnings found</td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
+    </div> 
+
+    <!-- Ratings section -->
+    <div class="section-title">
+        <h2>Ratings</h2>
+    </div>
+
+    <div class="box">
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="reviewSearchInput" placeholder="Search ratings...">
+        </div>
+
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Review ID</th>
+                        <th>Book Title</th>
+                        <th>Rating</th>
+                        <th>Reviewed user</th>
+                        <th>Date</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if(isset($data['review']) && is_array($data['review']) && count($data['review']) > 0): ?>
+                        <?php foreach($data['review'] as $review): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($review->id) ?></td>
+                                <td><?= htmlspecialchars($review->title) ?></td>
+                                <td><?= htmlspecialchars($review->rating) ?></td>
+                                <td><?= htmlspecialchars($review->full_name) ?></td>
+                                <td><?= htmlspecialchars($review->review_date) ?></td>
+                                <td><?= htmlspecialchars($review->comment) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="5">No ratings found</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-<br><br>
 
+<!-- Confirmation Dialog -->
+<div id="confirmationDialog">
+    <div class="dialog-content">
+        <h3>Confirm Action</h3>
+            <p>Are you sure you want to change this user's status?</p>
+        <div class="dialog-buttons">
+            <button id="cancelBtn" class="btn">Cancel</button>
+            <button id="confirmDeleteBtn" class="btn deleteUserBtn">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<!-- Success Message -->
+<div id="successMessage">
+    <div class="dialog-content">
+        <h3>Success!</h3>
+        <p>User status has been updated successfully.</p>
+    </div>
+</div>
 
     <script src="<?= ROOT ?>/assets/JS/adminViewusers.js"></script>
 </body>

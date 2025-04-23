@@ -1,9 +1,137 @@
 <?php
 
-class AdminProfile extends Controller{
+class AdminProfile extends Controller {
+    private $userModel;
 
-    public function index(){
-        $this->view('adminProfile');
+    public function __construct() {
+        // Check if the user is logged in and is an admin or superAdmin
+        if (!isset($_SESSION['user_id']) || 
+            !isset($_SESSION['user_role']) || 
+            ($_SESSION['user_role'] !== 'admin' && $_SESSION['user_role'] !== 'superAdmin')) {
+            redirect('login');
+        }
+
+        $this->userModel = $this->model('UserModel');
     }
 
+    // Add this method to handle model loading
+    public function model($model) {
+        require_once '../app/models/' . $model . '.php';
+        return new $model();
+    }
+
+    public function index() {
+        // Get admin ID from session
+        $admin_id = $_SESSION['user_id'] ?? null;
+
+        if (!$admin_id) {
+            redirect('login');
+        }
+
+        // Get admin details from user model
+        $userData = $this->userModel->getUserById($admin_id);
+
+        $data = [
+            'user' => $userData
+        ];
+
+        $this->view('adminProfile', $data);
+    }
+
+    public function updateUsername() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $adminId = $_SESSION['user_id']; // Get ID from session for security
+            $username = trim($_POST['username']);
+    
+            $errors = [];
+            if (empty($username)) {
+                $errors[] = 'Username is required.';
+            }
+    
+            // Check if username is taken
+            if ($this->userModel->isUsernameTaken($username)) {
+                // Make sure it's not just the current user's username
+                $currentUser = $this->userModel->getUserById($adminId);
+                if (!$currentUser || $currentUser->username !== $username) {
+                    $errors[] = 'Username already taken.';
+                }
+            }
+    
+            if (!empty($errors)) {
+                $_SESSION['error_message'] = implode('<br>', $errors);
+                redirect('adminProfile');
+                return;
+            }
+    
+            // Correct structure: key is column name, value is the new value
+            $result = $this->userModel->update($adminId, ['username' => $username]);
+            
+            if ($result) {
+                $_SESSION['error_message'] = 'Failed to update username.';
+            } else {
+                $_SESSION['success_message'] = 'Username updated successfully!';
+                
+            }
+            
+            redirect('adminProfile');
+        } else {
+            redirect('adminProfile');
+        }
+    }
+    
+    public function changePassword() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $adminId = $_SESSION['user_id']; // Get ID from session for security
+            $current = $_POST['current_password'];
+            $new = $_POST['new_password'];
+            $confirm = $_POST['confirm_password'];
+    
+            $errors = [];
+            
+            // Validate passwords
+            if (empty($current)) {
+                $errors[] = 'Current password is required.';
+            }
+            
+            if (empty($new)) {
+                $errors[] = 'New password is required.';
+            } elseif (strlen($new) < 8 || !preg_match('/[A-Z]/', $new) || 
+                     !preg_match('/[a-z]/', $new) || !preg_match('/[0-9]/', $new)) {
+                $errors[] = 'Password must be at least 8 characters and contain uppercase, lowercase, and numbers.';
+            }
+            
+            if ($new !== $confirm) {
+                $errors[] = 'New password and confirm password do not match.';
+            }
+            
+            // Verify current password
+            $user = $this->userModel->getUserById($adminId);
+            if (!$user || !password_verify($current, $user->password)) {
+                $errors[] = 'Current password is incorrect.';
+            }
+            
+            if (!empty($errors)) {
+                $_SESSION['error_message'] = implode('<br>', $errors);
+                redirect('adminProfile');
+                return;
+            }
+            
+            // Hash the new password
+            $hashedPassword = password_hash($new, PASSWORD_DEFAULT);
+            
+            // Update the password
+            $result = $this->userModel->update($adminId, ['password' => $hashedPassword]);
+            
+            if ($result) {
+                $_SESSION['error_message'] = 'Failed to change password.';
+            } else {
+                $_SESSION['success_message'] = 'Password changed successfully!';
+            }
+            
+            redirect('adminProfile');
+        } else {
+            redirect('adminProfile');
+        }
+    }
 }
+?>

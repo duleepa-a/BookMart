@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/adminsearchusers.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/adminsearch.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,34 +11,26 @@
     <title>View All Users</title>
 </head>
 <body>
-<!-- navBar division begin -->
-<?php include 'adminNavBar.view.php'; ?>
-<div class="sidebar">
-        <ul>
-            <h1 class="sidebar-heading">Hi Admin!</h1>
-            <li><a href="<?= ROOT ?>/"><i class="fa-solid fa-house"></i>Dashboard</a></li>
-            <li><a href="<?= ROOT ?>/adminViewallusers" class="active"  ><i class="fa-solid fa-users"></i>Users</a></li>
-            <li><a href="<?= ROOT ?>/admin/bookstoreView"><i class="fa-solid fa-store"></i>Shops</a></li>
-            <li><a href="<?= ROOT ?>/adminSearchorders"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
-            <li><a href="<?= ROOT ?>/adminSearchbooks"><i class="fa-solid fa-book"></i>Books</a></li>
-            <li><a href="<?= ROOT ?>/adminViewContactUs"><i class="fa-solid fa-envelope"></i>Inquiries</a></li>
-            <li><a href="<?= ROOT ?>/adminViewCourierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
-            <li><a href="<?= ROOT ?>/admin/payRolls" ><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
-            <li><a href="<?= ROOT ?>/adminAdvertisment"><i class="fa-solid fa-up-right-from-square"></i>Ads</a></li>
-            <li><a href="<?= ROOT ?>/adminProfile" ><i class="fa-regular fa-user"></i>Profile</a></li>
-        </ul>   
-    </div>
+    
+    <!-- navBar division begin -->
+    <?php include 'adminNavBar.view.php'; ?>
     <!-- navBar division end -->
+
+    <!-- sideBar division begin -->
+    <?php include 'adminSideBar.view.php';?>
+    <!-- sideBar division end -->
+
     <div class="container">
         <div class="box">
             <div class="search-row">
                 <h2>Find Users</h2>
-                    <input type="text" class="search-input" placeholder="Filter users..." id="searchInput">
-                    <select class="sort-by">
-                        <option value="">Buyers</option>
-                        <option value="id">Sellers</option>
-                        <option value="name">Shops</option>
-                        <option value="email">Couriers</option>
+                    <input type="text" class="search-input" placeholder="Filter users by User ID or Name" id="searchInput">
+                    <select class="sort-by" id="roleFilter" onchange="filterByRole()">
+                        <option value="">All Users</option>
+                        <option value="buyer" <?= $data['selected_role'] == 'buyer' ? 'selected' : '' ?>>Buyers</option>
+                        <option value="bookseller" <?= $data['selected_role'] == 'seller' ? 'selected' : '' ?>>Sellers</option>
+                        <option value="bookstore" <?= $data['selected_role'] == 'store' ? 'selected' : '' ?>>Shops</option>
+                        <option value="courier" <?= $data['selected_role'] == 'courier' ? 'selected' : '' ?>>Couriers</option>
                     </select>
             </div>
 
@@ -49,27 +41,35 @@
                             <th>User ID</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Role</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        // Example array of users fetched from your database
-                        $users = [
-                            ['id' => '001', 'name' => 'D.W.C. Sameera', 'email' => 'sameeradwc67@gmail.com'],
-                            ['id' => '002', 'name' => 'John Doe', 'email' => 'johndoe@example.com'],
-                            ['id' => '003', 'name' => 'Jane Smith', 'email' => 'janesmith@example.com'],
-                            ['id' => '004', 'name' => 'Mike Ross', 'email' => 'mikeross@example.com'],
-                            ['id' => '005', 'name' => 'Rachel Zane', 'email' => 'rachels@example.com'],
-                            ['id' => '006', 'name' => 'Harvey Specter', 'email' => 'harveyspecter@example.com'],
-                        ];
+                        if(isset($data['users']) && is_array($data['users'])){
+                            foreach ($data['users'] as $user){
 
-                        // Loop through each user and create a row
-                        foreach ($users as $user) {
-                            echo "<tr onclick='window.location.href=\"" . ROOT . "/adminViewbuyer\"'>";
-                            echo "<td>" . htmlspecialchars($user['id']) . "</td>";
-                            echo "<td>" . htmlspecialchars($user['name']) . "</td>";
-                            echo "<td>" . htmlspecialchars($user['email']) . "</td>";
-                            echo "</tr>";
+                                if ($user->role === "buyer") {
+                                    $viewPage = "adminViewbuyer";
+                                } elseif ($user->role === "bookSeller") {
+                                    $viewPage = "adminViewseller";
+                                } elseif ($user->role === "bookStore") {
+                                    $viewPage = "adminViewshops";
+                                } elseif ($user->role === "courier") {
+                                    $viewPage = "adminViewcourier";
+                                } else{
+                                    continue;
+                                }
+                                
+                                echo "<tr onclick='window.location.href=\"" . ROOT . "/" . $viewPage . "?id=" . $user->ID . "\"'>";
+                                echo "<td>" . htmlspecialchars($user->ID) . "</td>";
+                                echo "<td>" . htmlspecialchars($user->username) . "</td>";
+                                echo "<td>" . htmlspecialchars($user->email) . "</td>";
+                                echo "<td>" . htmlspecialchars($user->role) . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='3'>No users found</td></tr>";
                         }
                         ?>
                     </tbody>
@@ -77,16 +77,25 @@
                 </table>
             </div><br><br><br>
 
+         <!-- Pagination -->
+         <?php if(isset($data['totalPages']) && $data['totalPages'] > 1): ?>
             <div class="pagination">
-                <button class="page-button previous">&lt;</button>
-                <button class="page-button">4</button>
-                <button class="page-button">5</button>
-                <button class="page-button">6</button>
-                <button class="page-button">7</button>
-                <button class="page-button">8</button>
-                <button class="page-button">9</button>
-                <button class="page-button next">&gt;</button>
+                <?php if($data['currentPage'] > 1): ?>
+                    <a href="?page=<?= $data['currentPage'] - 1 ?><?= !empty($data['selected_role']) ? '&role=' . urlencode($data['selected_role']) : '' ?>" class="pagination-btn">&laquo; Previous</a>
+                <?php endif; ?>
+                
+                <?php for($i = 1; $i <= $data['totalPages']; $i++): ?>
+                    <a href="?page=<?= $i ?><?= !empty($data['selected_role']) ? '&role=' . urlencode($data['selected_role']) : '' ?>" 
+                    class="pagination-btn <?= $i === $data['currentPage'] ? 'active' : '' ?>">
+                        <?= $i ?>
+                    </a>
+                <?php endfor; ?>
+                
+                <?php if($data['currentPage'] < $data['totalPages']): ?>
+                    <a href="?page=<?= $data['currentPage'] + 1 ?><?= !empty($data['selected_role']) ? '&role=' . urlencode($data['selected_role']) : '' ?>" class="pagination-btn">Next &raquo;</a>
+                <?php endif; ?>
             </div>
+        <?php endif; ?>
 
         </div>
     </div>

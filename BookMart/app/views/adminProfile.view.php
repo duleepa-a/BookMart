@@ -12,155 +12,108 @@
     <title>Admin Profile</title>
 </head>
 <body>
+
     <!-- navBar division begin -->
     <?php include 'adminNavBar.view.php'; ?>
-    <div class="sidebar">
-        <ul>
-            <h1 class="sidebar-heading">Hi Admin!</h1>
-            <li><a href="<?= ROOT ?>/"><i class="fa-solid fa-house"></i>Dashboard</a></li>
-            <li><a href="<?= ROOT ?>/adminViewallusers"  ><i class="fa-solid fa-users"></i>Users</a></li>
-            <li><a href="<?= ROOT ?>/admin/bookstoreView"><i class="fa-solid fa-store"></i>Shops</a></li>
-            <li><a href="<?= ROOT ?>/adminSearchorders"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
-            <li><a href="<?= ROOT ?>/adminSearchbooks"><i class="fa-solid fa-book"></i>Books</a></li>
-            <li><a href="<?= ROOT ?>/adminViewContactUs"><i class="fa-solid fa-envelope"></i>Inquiries</a></li>
-            <li><a href="<?= ROOT ?>/adminViewCourierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
-            <li><a href="<?= ROOT ?>/admin/payRolls" ><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
-            <li><a href="<?= ROOT ?>/adminAdvertisment"><i class="fa-solid fa-up-right-from-square"></i>Ads</a></li>
-            <li><a href="<?= ROOT ?>/adminProfile" class="active"><i class="fa-regular fa-user"></i>Profile</a></li>
-        </ul>   
-    </div>
     <!-- navBar division end -->
+
+    <!-- sideBar division begin -->
+    <?php include 'adminSideBar.view.php';?>
+    <!-- sideBar division end -->
+
+    <!-- Popup Messages -->
+    <?php if (!empty($_SESSION['success_message'])): ?>
+        <div class="popup-message popup-success" id="success-popup">
+            <div class="message-content">
+                <span class="message-icon"><i class="fas fa-check-circle"></i></span>
+                <span class="message-text"><?= $_SESSION['success_message']; unset($_SESSION['success_message']); ?></span>
+            </div>
+            <button class="close-btn" onclick="closePopup('success-popup')"><i class="fas fa-times"></i></button>
+        </div>
+    <?php endif; ?>
+    
+    <?php if (!empty($_SESSION['error_message'])): ?>
+        <div class="popup-message popup-error" id="error-popup">
+            <div class="message-content">
+                <span class="message-icon"><i class="fas fa-exclamation-circle"></i></span>
+                <span class="message-text"><?= $_SESSION['error_message']; unset($_SESSION['error_message']); ?></span>
+            </div>
+            <button class="close-btn" onclick="closePopup('error-popup')"><i class="fas fa-times"></i></button>
+        </div>
+    <?php endif; ?>
 
     <div class="container"> 
         <div class="box"> 
             <h1>My Profile</h1><br>
             <nav class="tabs">
-                <button class="tab-button active first-child" onclick="showTab('Admin-details',event)">Personal Details</button>
-                <button class="tab-button" onclick="showTab('Bank-details',event)">Bank Details</button>
-                <button class="tab-button last-child" onclick="showTab('Password change',event)">Password Change</button>
-            </nav>
+                <button class="tab-button active first-child" onclick="showTab('Admin-details', event)">Personal Details</button>
+                <button class="tab-button last-child" onclick="showTab('Password-change', event)">Password Change</button>
+            </nav><br>
 
-            <form id="AdminProfile"  class="profile">
-                <div class="tab-content" id="Admin-details">
-                
+            <!-- Personal Details Form -->
+            <form id="personal-details-form" class="profile" action="<?= ROOT ?>/adminProfile/updateUsername" method="POST">
+                <div class="tab-content active" id="Admin-details">
                     <div class="profile-group-row">
                         <div class="profile-group">
-                            <label for="First-Name">First Name:</label>
-                            <input type="text" id="first-name" placeholder="First Name">
+                            <label for="user-name">User Name:
+                            <span class="error" style="display: none; color: red;">This username is requred.</span>
+                            <span class="valid" style="display: none; color: green;">Username is available!</span></label>
+                            <input type="text" id="user-name" name="username" placeholder="Choose a username" required
+                            value="<?= htmlspecialchars($user->username ?? '') ?>">
                         </div>
 
                         <div class="profile-group">
-                            <label for="Last-Name">Last Name:</label>
-                            <input type="text" id="last-name" placeholder="Last Name">
+                            <label for="email">Email Address:</label>
+                            <input type="email" id="email" name="email" placeholder="Please enter your email address" required disabled
+                            value="<?= htmlspecialchars($user->email ?? '') ?>">
                         </div>
                     </div>
-                    
-                    <div class="profile-group-row">
-                        <div class="profile-group">
-                            <label for="Name">Name With Initials:</label>
-                            <input type="text" id="initial-name" placeholder="Name With Initials">
-                        </div>
-
-                        <div class="profile-group">
-                            <label for="Email">Email Address:</label>
-                            <input type="email" id="Email" placeholder="Email Address">
-                        </div>
-                    </div>
-
-                    <div class="profile-group">
-                        <label for="Phone-Number"> Phone Number:</label>
-                        <input type="text" id="Phone-Number" placeholder="Phone Number">
-                    </div>
-
-                    <button class="save-button" onclick="showTab('Admin-details')">Change & Save</button>
-                
+                    <button type="submit" class="save-button" id="save-personal">Update & Save</button>
                 </div>
+            </form>
             
-
-                <div class="tab-content" id="Bank-details">
-
+            <!-- Password Change Form -->
+            <form id="password-change-form" class="profile" action="<?= ROOT ?>/adminProfile/changePassword" method="POST">
+                <div class="tab-content" id="Password-change">
                     <div class="profile-group-row">
                         <div class="profile-group">
-                            <label for="Bank">Bank Name:</label>
-                            <input type="text" id="Bank-name" placeholder="Bank Name">
-                        </div>
-
-                        <div class="profile-group">
-                            <label for="Branch">Branch Name:</label>
-                            <input type="text" id="Branch-name" placeholder="Branch Name">
+                            <label for="current-password">Current Password:</label>
+                            <input type="password" name="current_password" id="current-password" required>
                         </div>
                     </div>
-                    
                     <div class="profile-group-row">
                         <div class="profile-group">
-                            <label for="AccNumber">Account Number:</label>
-                            <input type="text" id="AccountNumber" placeholder="Account Number">
-                        </div>
-
-                        <div class="profile-group">
-                            <label for="AccName">Account Name:</label>
-                            <input type="text" id="AccountName" placeholder="Account Name">
-                        </div>
-                    </div>
-                
-                    <button class="save-button" onclick="showTab('Bank-details')" >Change & Save</button>
-                
-                </div>
-
-
-                <div class="tab-content" id="Password change">
-
-                    <div class="profile-group-row">
-                        <div class="profile-group">
-                            <div class="password-container">
-                                <label for="current-password">Current password:</label>
-                                <div class="input-wrapper">
-                                    <input type="password" id="current-password" placeholder="Enter Current Password">
-                                    <span class="toggle-password-visibility" data-target="current-password"><i class="fa fa-eye"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-password">
-                            <a href="#">Forgot Password?</a>
-                        </div>
-                    </div>
-
-                    <br>
-                    <div class="profile-group-row">
-                        <div class="profile-group">
-                            <div class="password-container">
-                                    <label for="new-password">New password:
-                                        <span class="password-strength" style="display: none; color: green;">Strong password</span>
-                                        <span class="password-strength-weak" style="display: none; color: red;">Weak password</span>
-                                    </label>
-                                    <div class="input-wrapper">
-                                        <input type="password" id="new-password" placeholder="Enter New Password">
-                                        <span class="toggle-password-visibility" data-target="new-password"><i class="fa fa-eye"></i></span>
+                            <label for="password">Create New Password:
+                                <span class="password-strength" style="display: none; color: green;">Strong password</span>
+                                <span class="password-strength-weak" style="display: none; color: red;">Weak password</span>
+                                <div class="tooltip">
+                                    <div class="icon">i</div>
+                                    <div class="tooltiptext">
+                                        <ul>
+                                        <li>Use at least <strong>8 characters.</strong></li>
+                                        <li>Include <strong>uppercase</strong> and <strong>lowercase</strong> letters.</li>
+                                        <li>Add <strong>numbers</strong> and <strong>special characters (e.g., !, @, #, $, etc.).</strong></li>
+                                        <li><strong>Avoid personal information</strong>(like names or birthdays).</li>
+                                        </ul>
                                     </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-group">
-                            <div class="password-container">
-                                <label for="confirm-password">Confirm new password:
-                                    <span class="confirm-password-error" style="display: none; color: red;"> Not matching with the password</span>
-                                </label>
-                                <div class="input-wrapper">
-                                    
-                                    <p class="confirm-password-error" style="display: none; color: red;">Passwords do not match.</p>
-                                    <input type="password" id="confirm-password" placeholder="Re-enter New Password">
-                                    <span class="toggle-password-visibility" data-target="confirm-password"><i class="fa fa-eye"></i></span>
                                 </div>
-                            </div>
+                            </label>
+                            <input type="password" name="new_password" id="password" required>
+                        </div>
+                        <div class="profile-group">
+                            <label for="confirm-password">Confirm New Password:
+                                <span class="confirm-password-error" style="display: none; color: red;"> Not matching with the password</span>
+                            </label>
+                            <input type="password" name="confirm_password" id="confirm-password" required>
                         </div>
                     </div>
-
-                    <button class="save-button" onclick="showTab('Password change')" >Change & Save</button>
+                    <button type="submit" class="save-button" id="save-password">Change & Save</button>
                 </div>
+            </form>
+
         </div>
     </div>
     <br><br>
-        <script src="<?= ROOT ?>/assets/JS/adminProfile.js"></script>
-    
+    <script src="<?= ROOT ?>/assets/JS/adminProfile.js"></script>
 </body>
- </html>
+</html>

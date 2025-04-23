@@ -11,38 +11,38 @@
     <title>Search Books</title>
 </head>
 <body>
-<!-- navBar division begin -->
-<?php include 'adminNavBar.view.php'; ?>
-<div class="sidebar">
-        <ul>
-            <h1 class="sidebar-heading">Hi Admin!</h1>
-            <li><a href="<?= ROOT ?>/"><i class="fa-solid fa-house"></i>Dashboard</a></li>
-            <li><a href="<?= ROOT ?>/adminViewallusers"  ><i class="fa-solid fa-users"></i>Users</a></li>
-            <li><a href="<?= ROOT ?>/admin/bookstoreView"><i class="fa-solid fa-store"></i>Shops</a></li>
-            <li><a href="<?= ROOT ?>/adminSearchorders"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
-            <li><a href="<?= ROOT ?>/adminSearchbooks" class="active"><i class="fa-solid fa-book"></i>Books</a></li>
-            <li><a href="<?= ROOT ?>/adminViewContactUs"><i class="fa-solid fa-envelope"></i>Inquiries</a></li>
-            <li><a href="<?= ROOT ?>/adminViewCourierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
-            <li><a href="<?= ROOT ?>/admin/payRolls" ><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
-            <li><a href="<?= ROOT ?>/adminAdvertisment"><i class="fa-solid fa-up-right-from-square"></i>Ads</a></li>
-            <li><a href="<?= ROOT ?>/adminProfile" ><i class="fa-regular fa-user"></i>Profile</a></li>
-        </ul>   
-    </div>
+    
+    <!-- navBar division begin -->
+    <?php include 'adminNavBar.view.php'; ?>
     <!-- navBar division end -->
+
+    <!-- sideBar division begin -->
+    <?php include 'adminSideBar.view.php';?>
+    <!-- sideBar division end -->
+
     <div class="container">
         <div class="box">
-            <div class="search-row">
-                <h2>Search Books</h2>
-                <input type="text" class="search-input" placeholder="Search books by Title, Author..." id="searchInput">
-                <select class="sort-by">
-                    <option value="">Sort by</option>
-                    <option value="id">Book Title</option>
-                    <option value="name">Author</option>
-                    <option value="email">Book store/Seller</option>
-                </select>
-            </div>
+            <form action="<?= ROOT ?>/adminSearchbooks" method="GET">
+                <div class="search-row">
+                    <h2>Search Books</h2>
+                    <div class="search-container">
+                        <input type="text" name="search" placeholder="Search by title, author, or ISBN" value="<?= htmlspecialchars($searchQuery) ?>">
+                        <button type="submit">
+                            <i class="fa fa-search"></i> 
+                        </button>
+                    </div>
+                    <select class="sort-by" name="sort" onchange="this.form.submit()">
+                        <option value="">Sort by</option>
+                        <option value="title" <?= isset($_GET['sort']) && $_GET['sort'] == 'title' ? 'selected' : '' ?>>Book Title</option>
+                        <option value="author" <?= isset($_GET['sort']) && $_GET['sort'] == 'author' ? 'selected' : '' ?>>Author</option>
+                        <option value="publisher" <?= isset($_GET['sort']) && $_GET['sort'] == 'publisher' ? 'selected' : '' ?>>Book store/Seller</option>
+                    </select>
+                </div>
+            </form>
+
 
             <div class="table-container">
+            <?php if (!empty($book) && is_array($book)) : ?>
                 <table class="table">
                     <thead>
                         <tr>
@@ -55,42 +55,56 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        // Example array of books fetched from your database
-                        $books = [
-                            ['isbn' => '123456', 'title' => 'The Great Gatsby', 'author' => 'F. Scott Fitzgerald', 'store' => 'BookStore1', 'price' => '$10.99', 'quantity' => 20],
-                            ['isbn' => '789101', 'title' => 'To Kill a Mockingbird', 'author' => 'Harper Lee', 'store' => 'BookStore2', 'price' => '$8.99', 'quantity' => 15],
-                            ['isbn' => '112131', 'title' => '1984', 'author' => 'George Orwell', 'store' => 'BookStore3', 'price' => '$9.99', 'quantity' => 30],
-                            ['isbn' => '415161', 'title' => 'Moby Dick', 'author' => 'Herman Melville', 'store' => 'BookStore1', 'price' => '$11.99', 'quantity' => 10],
-                            ['isbn' => '718192', 'title' => 'Pride and Prejudice', 'author' => 'Jane Austen', 'store' => 'BookStore2', 'price' => '$7.99', 'quantity' => 25],
-                        ];
+                        <?php foreach ($book as $book) : ?>
+                            <tr class="book-row" 
+                                data-bookid="<?= $book->id ?>" 
+                                data-booktitle="<?= htmlspecialchars($book->title) ?>"
+                                data-bookauthor="<?= htmlspecialchars($book->author) ?>"
+                                data-bookisbn="<?= htmlspecialchars($book->ISBN) ?>"
+                                data-bookshop="<?= htmlspecialchars($book->publisher) ?>"
+                                data-bookprice="<?= htmlspecialchars($book->price) ?>"
+                                data-bookquantity="<?= htmlspecialchars($book->quantity) ?>"
+                                onclick="window.location.href='<?= ROOT ?>/adminBookView?book_id=<?= $book->id ?>'">
 
-                        // Loop through each book and create a row
-                        foreach ($books as $book) {
-                            echo "<tr onclick='window.location.href=\"" . ROOT . "/viewBook/{$book['isbn']}\"'>";
-                            echo "<td>" . htmlspecialchars($book['title']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['author']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['isbn']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['store']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['price']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['quantity']) . "</td>";
-                            echo "</tr>";
-                        }
-                        ?>
+                                <td><?= htmlspecialchars($book->title) ?></td>
+                                <td><?= htmlspecialchars($book->author) ?></td>
+                                <td><?= htmlspecialchars($book->ISBN) ?></td>
+                                <td><?= htmlspecialchars($book->publisher) ?></td>
+                                <td><?= htmlspecialchars($book->price) ?></td>
+                                <td><?= htmlspecialchars($book->quantity) ?></a></td>
+                                
+                        </tr>
+                    <?php endforeach; ?>
+
                     </tbody>
                 </table>
+                <?php else : ?>
+                        <div class="no-book-message">
+                            <p>No books found.</p>
+                        </div>
+                    <?php endif; ?>    
             </div><br><br><br>
 
+            <!-- Pagination -->
+            <?php if(isset($totalPages) && $totalPages > 1): ?>
             <div class="pagination">
-                <button class="page-button previous">&lt;</button>
-                <button class="page-button">4</button>
-                <button class="page-button">5</button>
-                <button class="page-button">6</button>
-                <button class="page-button">7</button>
-                <button class="page-button">8</button>
-                <button class="page-button">9</button>
-                <button class="page-button next">&gt;</button>
+                <?php if($currentPage > 1): ?>
+                    <a href="?page=<?= $currentPage - 1 ?><?= !empty($searchQuery) ? '&search=' . urlencode($searchQuery) : '' ?><?= !empty($sort) ? '&sort=' . urlencode($sort) : '' ?>" class="pagination-btn">&laquo; Previous</a>
+                <?php endif; ?>
+                
+                <?php for($i = 1; $i <= $totalPages; $i++): ?>
+                    <a href="?page=<?= $i ?><?= !empty($searchQuery) ? '&search=' . urlencode($searchQuery) : '' ?><?= !empty($sort) ? '&sort=' . urlencode($sort) : '' ?>" 
+                    class="pagination-btn <?= $i === $currentPage ? 'active' : '' ?>">
+                        <?= $i ?>
+                    </a>
+                <?php endfor; ?>
+                
+                <?php if($currentPage < $totalPages): ?>
+                    <a href="?page=<?= $currentPage + 1 ?><?= !empty($searchQuery) ? '&search=' . urlencode($searchQuery) : '' ?><?= !empty($sort) ? '&sort=' . urlencode($sort) : '' ?>" class="pagination-btn">Next &raquo;</a>
+                <?php endif; ?>
             </div>
+            <?php endif; ?>
+
 
         </div>
     </div>

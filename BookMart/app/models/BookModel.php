@@ -100,4 +100,82 @@ class BookModel {
 
         return $recommended;
     }
+
+
+    public function adminsearchBooks($keyword, $limit = null, $offset = 0, $sortClause = "", $searchField = "") {
+        // Start with basic query
+        $query = "SELECT * FROM book WHERE ";
+        
+        // If a specific search field is specified, only search in that field
+        if (!empty($searchField) && in_array($searchField, ['title', 'author', 'publisher'])) {
+            $query .= "$searchField LIKE :keyword";
+        } else {
+            // Otherwise use the default search across multiple fields
+            $query .= "title LIKE :keyword OR author LIKE :keyword OR ISBN LIKE :keyword";
+        }
+        
+        // Apply sort clause if provided
+        if (!empty($sortClause)) {
+            $query .= $sortClause;
+        } else {
+            $query .= " ORDER BY title ASC"; // Default sorting
+        }
+        
+        // Add pagination
+        if ($limit !== null) {
+            $query .= " LIMIT $limit OFFSET $offset";
+        }
+        
+        $data = [':keyword' => '%' . $keyword . '%'];
+        return $this->query($query, $data);
+    }
+    
+    public function countSearchResults($keyword, $searchField = "") {
+        $query = "SELECT COUNT(*) as total FROM book WHERE ";
+        
+        // If a specific search field is specified, only search in that field
+        if (!empty($searchField) && in_array($searchField, ['title', 'author', 'publisher'])) {
+            $query .= "$searchField LIKE :keyword";
+        } else {
+            // Otherwise use the default search across multiple fields
+            $query .= "title LIKE :keyword OR author LIKE :keyword OR ISBN LIKE :keyword";
+        }
+        
+        $data = [':keyword' => '%' . $keyword . '%'];
+        $result = $this->query($query, $data);
+        return $result[0]->total ?? 0;
+    }
+
+    public function findById($bookId) {
+        $query = "SELECT * FROM book WHERE id = :id LIMIT 1";
+        $data = [':id' => $bookId];
+
+        $result = $this->query($query, $data);
+    
+        return $result ? $result[0] : null;
+    }
+
+    public function findAll($limit = null, $offset = 0, $sortClause = "") {
+        $query = "SELECT * FROM {$this->table}";
+        
+        // Apply sort clause if provided
+        if (!empty($sortClause)) {
+            $query .= $sortClause;
+        } else {
+            $query .= " ORDER BY title ASC"; // Default sorting
+        }
+        
+        // Add pagination
+        if ($limit !== null) {
+            $query .= " LIMIT $limit OFFSET $offset";
+        }
+        
+        return $this->query($query);
+    }
+
+    public function count() {
+        $query = "SELECT COUNT(*) as total FROM {$this->table}";
+        $result = $this->query($query);
+        return $result[0]->total ?? 0;
+    }
 }

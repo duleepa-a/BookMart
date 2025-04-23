@@ -10,50 +10,214 @@
     <title>Book Detail</title>
 </head>
 <body>
-    <span class = "title">
-        <a href="<?= ROOT ?>/home" class="title-link"><h2>Book<span class="highlight">Mart</span></h2></a>
-    </span>
-    <div class="container">
-        <div class="box">
-            <form id="form">
-                <div class="image-container">
-                    <img src="<?= ROOT ?>/assets/Images/admin images/book1.jpg" alt="">
+    <div class="header">
+        <div class="header-wrapper">
+            <div class="logo-container">
+                <a href="<?= ROOT ?>/home" class="title-link">
+                    <h2 class="logo">Book<span class="highlight">Mart</span></h2>
+                </a>
+            </div>
+            <div class="page-title">
+                <h1><center>Book Details</center></h1>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <div class="book-preview-card">
+            <div class="book-cover">
+                <?php if (!empty($book->cover_image)) : ?>
+                    <img src="<?= ROOT ?>/assets/Images/book cover images/<?= htmlspecialchars($book->cover_image) ?>" 
+                        alt="<?= htmlspecialchars($book->title ?? 'Book cover') ?>">
+                <?php else : ?>
+                    <div class="no-image">
+                        <i class="book-icon">📚</i>
+                        <p>No cover available</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="book-headline">
+                <h2 class="book-title"><?= htmlspecialchars($book->title ?? 'Untitled Book') ?></h2>
+                <p class="book-author">By <?= htmlspecialchars($book->author ?? 'Unknown Author') ?></p>
+                <div class="book-price-tag">
+                    <span class="price-value">$<?= htmlspecialchars($book->price ?? '0.00') ?></span>
+                    <?php if (!empty($book->discount) && $book->discount > 0) : ?>
+                        <span class="discount-badge"><?= htmlspecialchars($book->discount ?? '0') ?>% OFF</span>
+                    <?php endif; ?>
                 </div>
-                </info>
-                <div class="info-row">
-                    <span class="label">Book Title :</span>
-                    <span class="value" id="adTitle">Daughter Of Man</span>
-                </div><br>
-                <div class="info-row">
-                    <span class="label">Author :</span>
-                    <span class="value" id="adTitle">L.J. Sysko</span>
-                </div><br>
-                <div class="info-row">
-                    <span class="label">Submitted By :</span>
-                    <span class="value" id="adTitle">Sarasavi Book Shop</span>
-                </div><br>
-                <div class="info-row">
-                    <span class="label">Date Submitted :</span>
-                    <span class="value" id="adTitle">2024 October 12</span>
-                </div><br>
-                <div class="info-row">
-                    <span class="label">ISBN :</span>
-                    <span class="value" id="adTitle">ISBN987754329</span>
-                </div><br>
-                <div class="info-row">
-                    <span class="label">Genre :</span>
-                    <span class="value" id="adTitle">Novel</span>
-                </div><br>
-                <div class="info-row">
-                    <span class="label">Price :</span>
-                    <span class="value" id="adTitle">Rs.750</span>
-                </div><br>
-            </form>
-        </div><br>
-        <div class="button-group">
-            <button type="button" id="deleteBtn" class="btn">Delete</button>
-            <button type="button" class="btn">Close</button>
+            </div>
         </div>
 
+        <div class="book-details-container">
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="basic">Basic Info</button>
+                    <button class="tab-button" data-tab="publication">Publication</button>
+                    <button class="tab-button" data-tab="inventory">Inventory</button>
+                    <button class="tab-button" data-tab="description">Description</button>
+                </div>
+                
+                <div class="tab-content active" id="basic-tab">
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Book Title</span>
+                            <span class="detail-value"><?= htmlspecialchars($book->title ?? '') ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Author</span>
+                            <span class="detail-value"><?= htmlspecialchars($book->author ?? '') ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Submitted By</span>
+                            <span class="detail-value"><?= htmlspecialchars($book->publisher ?? '') ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Date Submitted</span>
+                            <span class="detail-value"><?= htmlspecialchars($book->created_at ?? '') ?></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="publication-tab">
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">ISBN</span>
+                            <span class="detail-value"><?= htmlspecialchars($book->ISBN ?? '') ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Genre</span>
+                            <span class="detail-value"><?= htmlspecialchars($book->genre ?? '') ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Language</span>
+                            <span class="detail-value"><?= htmlspecialchars($book->language ?? '') ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Book Condition</span>
+                            <span class="detail-value"><?= htmlspecialchars($book->book_condition ?? '') ?></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="inventory-tab">
+                    <div class="inventory-stats">
+                        <div class="inventory-stat">
+                            <div class="stat-circle">
+                                <span class="stat-number"><?= htmlspecialchars($book->quantity ?? '0') ?></span>
+                            </div>
+                            <span class="stat-label">In Stock</span>
+                        </div>
+                        
+                        <div class="inventory-stat">
+                            <div class="stat-circle price-circle">
+                                <span class="stat-number">$<?= htmlspecialchars($book->price ?? '0.00') ?></span>
+                            </div>
+                            <span class="stat-label">Unit Price</span>
+                        </div>
+                        
+                        <div class="inventory-stat">
+                            <div class="stat-circle discount-circle">
+                                <span class="stat-number"><?= htmlspecialchars($book->discount ?? '0') ?>%</span>
+                            </div>
+                            <span class="stat-label">Discount</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="description-tab">
+                    <div class="book-description">
+                        <?php if (!empty($book->description)) : ?>
+                            <p><?= htmlspecialchars($book->description) ?></p>
+                        <?php else : ?>
+                            <p class="no-description">No description available for this book.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <form action="<?= ROOT ?>/AdminBookView/deleteBook" method="POST" style="display:inline" id="delete-form">
+                <input type="hidden" name="book_id" value="<?= $book->id ?>">
+                <button type="button" id="deleteBtn" class="delete-btn"> Delete</button>
+            </form>
+            <button onclick="window.location.href='<?= ROOT ?>/AdminSearchbooks'" class="close-btn"> Back to Search</button>
+        </div>
+
+        <!-- Delete Modal -->
+        <div class="modal" id="delete-book-modal">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Delete Book</h2>
+                    <button type="button" class="close-modal-x">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p class="warning-message">Are you sure you want to delete this book?</p>
+                    <p class="warning-book-title">"<?= htmlspecialchars($book->title ?? 'This book') ?>"</p>
+                    <p class="warning-sub">This action cannot be undone.</p>
+                </div>
+                <form class="delete-book-form" method="POST" action="<?= ROOT ?>/AdminBookView/deleteBook">
+                    <input type="hidden" id="delete-book-id" name="book_id" value="<?= $book->id ?>">
+                    <div class="modal-actions">
+                        <button type="button" class="cancel-btn close-modal">Cancel</button>
+                        <button type="button" class="confirm-delete">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const tabId = this.getAttribute('data-tab') + '-tab';
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Delete modal functionality
+            const deleteBtn = document.getElementById('deleteBtn');
+            const modal = document.getElementById('delete-book-modal');
+            const closeModalBtn = document.querySelector('.close-modal');
+            const closeModalX = document.querySelector('.close-modal-x');
+            const confirmDelete = document.querySelector('.confirm-delete');
+            
+            deleteBtn.addEventListener('click', function() {
+                modal.classList.add('active');
+            });
+            
+            closeModalBtn.addEventListener('click', function() {
+                modal.classList.remove('active');
+            });
+            
+            closeModalX.addEventListener('click', function() {
+                modal.classList.remove('active');
+            });
+            
+            confirmDelete.addEventListener('click', function() {
+                document.querySelector('.delete-book-form').submit();
+            });
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
