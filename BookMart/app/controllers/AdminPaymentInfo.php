@@ -8,7 +8,7 @@ class AdminPaymentInfo extends Controller {
         }
         
         $paymentInfoModel = new PaymentInfo();
-        $systemStatsModel = new SystemStats();
+        // $systemStatsModel = new SystemStats();
 
         // Pagination parameters
         $limit = 10; // Changed from 1 to 10 for better usability
@@ -25,14 +25,14 @@ class AdminPaymentInfo extends Controller {
         $payment = $paymentInfoModel->findAll($limit, $offset);
         
         // Get system stats
-        $stat = $systemStatsModel->getAll();
+        // $stat = $systemStatsModel->getAll();
         
         // Pass data to the view - simplified variables for direct access
         $this->view('adminPaymentInfo', [
             'payment' => $payment,
             'currentPage' => $page,
             'totalPages' => $totalPages,
-            'stat' => $stat
+            // 'stat' => $stat
         ]);
     }
     
