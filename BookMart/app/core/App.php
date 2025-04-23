@@ -53,7 +53,7 @@ class App{
             'Payment' => ['index','checkOut','process','success','cancel','cartView','addToCart','cartCheckout','cartSuccess','increase','decrease','deleteSelected','clear','removeBook','deleteSelected']
         ],
         'courier' => [
-            'CourierProfile' => ['index'],
+            'CourierProfile' => ['index','updatePersonalDetails','updateBankDetails','updateVehicalDetails'],
             'CourierOrderDetails' => ['index','create','update','delete','OrderPage'],
             'CourierEarns' => ['index'],
             'CourierComplains' => ['index','create'],

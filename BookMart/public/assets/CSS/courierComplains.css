@@ -1,197 +1,10 @@
 * {
     margin: 0;
-    box-sizing: 250px;
+    box-sizing: border-box;
     font-family: 'poppins',Calibri, sans-serif;
 }
 
-body {
-    background-color: #F1F1F1;
-}
-
-
-
-
-.sidebar {
-    width: 15%;
-    height: 100vh;
-    background-color: #f6f8fc;
-    position: fixed;
-    top: 9%;
-    left: 0;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.001);
-}
-
-.sidebar ul {
-    margin-top: 20px;
-    list-style-type: none;
-    padding: 0;
-}
-
-.sidebar ul li {
-    margin-right: 10px;
-}
-
-.sidebar ul li a {
-    display: block;
-    padding: 10px;
-    font-size: 16px;
-    color: #000;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-
-.sidebar ul li a i {
-    margin-left: 20px;
-    margin-right: 15px;
-}
-
-.sidebar ul li a:hover{
-    background-color: #eaeaea;
-    color: #333;
-}
-
-.sidebar ul li a.active {
-    background-color: #f4e2d7;
-    color: #BE5715;
-    font-weight: 600;
-}
-
-.sidebar-heading{
-    margin-left: 30px;
-    margin-bottom: 80px;
-    margin-top: 50px;
-}
-.earnings-title {
-    /* text-align: center;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    font-size: 24px; */
-    
-        color: #d95e00;
-        font-size: 32px;
-        font-weight: bold;
-        margin-bottom: 10px;
-    
-    
-}
-
-.earnings-summary {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
-}
-
-.earnings-box {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 48%;
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.earnings-box:hover {
-    transform: scale(1.05);
-}
-
-.earnings-box h2 {
-    color: #3498db;
-    font-size: 18px;
-}
-
-.earnings-box .amount {
-    color: #2ecc71;
-    font-size: 28px;
-    margin: 10px 0;
-}
-
-.earnings-box h3 {
-    color: #7f8c8d;
-    font-size: 16px;
-}
-
-.last-days {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-}
-
-.last-days h3 {
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 15px;
-    font-size: 20px;
-}
-
-.days-table {
-    width: 100%;
-}
-
-.table-header {
-    display: flex;
-    justify-content: space-between;
-    background-color: #3498db;
-    color: white;
-    padding: 10px;
-    border-radius: 5px 5px 0 0;
-}
-
-.table-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #ecf0f1;
-    transition: background-color 0.3s ease;
-}
-
-.table-row:hover {
-    background-color: #f1f3f4;
-}
-
-.table-row:last-child {
-    border-bottom: none;
-}
-
-@media (max-width: 480px) {
-    .earnings-summary {
-        flex-direction: column;
-    }
-    
-    .earnings-box {
-        width: 100%;
-        margin-bottom: 15px;
-    }
-}
-
-.container {
-    margin-top: 5%;
-    margin-left: 18%;
-    padding: 20px;
-    align-items: center;
-    box-sizing: border-box;
-}
-
-button {
-    width: 80px;
-    padding: 8px;
-    border: 1px solid #d95e00;
-    background-color: white;
-    color: #d95e00;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-  }
-  
-  button:hover {
-    background-color: #d95e00;
-    color: white;
-  }
-
-  .navBar{
+.navBar{
     position: fixed;
     top: 0;
     left: 0;
@@ -336,11 +149,63 @@ button {
     box-sizing: border-box;
 }
 
+.sidebar {
+    width: 15%;
+    height: 100vh;
+    background-color: #f6f8fc;
+    position: fixed;
+    top: 9%;
+    left: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.001);
+}
 
+.sidebar ul {
+    margin-top: 20px;
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-right: 10px;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px;
+    font-size: 16px;
+    color: #000;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.sidebar ul li a i {
+    margin-left: 20px;
+    margin-right: 15px;
+}
+
+.sidebar ul li a:hover{
+    background-color: #eaeaea;
+    color: #333;
+}
+
+.sidebar ul li a.active {
+    background-color: #f4e2d7;
+    color: #BE5715;
+    font-weight: 600;
+}
+
+.sidebar-heading{
+    margin-left: 30px;
+    margin-bottom: 80px;
+    margin-top: 50px;
+}
 
 .profile-container {
+    box-sizing: border-box;
     background-color: #fff;
-    width: 100%;
+    width: 80%;
     margin: auto;
     margin-left: 0;
     margin-right: 0;
@@ -349,3 +214,83 @@ button {
     align-items: center;
     height: 90%;
 }
+
+..earnings-title {
+    /* text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 24px; */
+    
+        color: #d95e00;
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    
+    
+}
+
+.container{
+    width: 100%;
+  }
+    /* Contact Container */
+    .contact-container {
+      margin:auto ;
+      width: 40%;
+      background-color: #f4f4f4;
+      padding: 30px;
+      border-radius: 8px;
+      
+      text-align: center;
+       /* Purple border */
+    }
+    
+    .contact-container h1 {
+      font-size: 2rem;
+      color: #b5651d;
+      margin-bottom: 20px;
+    }
+    
+    .contact-container p {
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+    
+    /* Form Styling */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: left;
+    }
+    
+    .contact-form label {
+      font-weight: bold;
+      text-align: left;
+    }
+    
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    .contact-form .submit-btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #fff;
+      color: #b5651d;
+      border: 2px solid #b5651d;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+    .contact-form .submit-btn:hover {
+      background-color: #b5651d;
+      color: #fff;
+    }
