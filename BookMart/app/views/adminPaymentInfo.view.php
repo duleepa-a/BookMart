@@ -14,12 +14,12 @@
 <body>
     
     <!-- navBar division begin -->
-    <?php include 'adminNavBar.view.php'; ?>
+    <?php include 'secondaryNavBar.view.php';?>
     <!-- navBar division end -->
-
-    <!-- sideBar division begin -->
-    <?php include 'adminSideBar.view.php';?>
-    <!-- sideBar division end -->
+     
+    <!-- navBar division begin -->
+    <?php include 'commonSidebar.view.php'; ?>
+    <!-- navBar division end -->
 
     <div class="container">
         <div class="box">

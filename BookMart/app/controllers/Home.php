@@ -71,6 +71,9 @@ class Home extends Controller{
                 case 'admin':
                     $this->view('adminHome');
                     break;
+                case 'superAdmin':
+                    $this->view('adminHome');
+                    break;
                 case 'bookSeller':
                     $this->view('bookSellerHome',$data);
                     break;

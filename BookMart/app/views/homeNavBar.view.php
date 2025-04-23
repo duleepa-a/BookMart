@@ -61,7 +61,7 @@
                     <a href="./articles" class="navbar-links">Articles</a>
                     <a href="<?= ROOT ?>/Payment/cartView" class="navbar-links"><i class="fa-solid fa-cart-shopping"></i></a>
                     <a href="./notifications" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
-                <?php elseif ($_SESSION['user_role'] == 'admin'): ?>
+                <?php elseif ($_SESSION['user_role'] == 'admin' || $_SESSION['user_role'] == 'superAdmin'): ?>
                     <!-- Links for admin -->
                     <a href="" class="navbar-links">My Profile</a>
                     <a href="<?= ROOT ?>/Chat" class="navbar-links">Chat</a>
@@ -71,7 +71,6 @@
                     <a href="<?= ROOT ?>/CourierProfile" class="navbar-links">My Profile</a>
                     <a href="<?= ROOT ?>/Login" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
                 <?php endif; ?>
-
                 <!-- Log Out button for all roles -->
                 <button id="logoutButton" class="navbar-links-select">Log Out</button>
             <?php endif; ?>

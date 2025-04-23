@@ -11,25 +11,12 @@
     <title>Advertisements</title>
 </head>
 <body>
-<!-- navBar division begin -->
-<?php include 'secondaryNavBar.view.php'; ?>
+    <!-- navBar division begin -->
+    <?php include 'secondaryNavBar.view.php'; ?>
     <!-- navBar division end -->
-    <div class="sidebar">
-        <ul>
-            <h1 class="sidebar-heading">Hi Admin!</h1>
-            <li><a href="<?= ROOT ?>/"><i class="fa-solid fa-house"></i>Dashboard</a></li>
-            <li><a href="<?= ROOT ?>/adminViewallusers" ><i class="fa-solid fa-users"></i>Users</a></li>
-            <li><a href="<?= ROOT ?>/admin/bookstoreView" class="active"><i class="fa-solid fa-store"></i>Shops</a></li>
-            <li><a href="<?= ROOT ?>/adminSearchorders"><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
-            <li><a href="<?= ROOT ?>/adminSearchbooks"><i class="fa-solid fa-book"></i>Books</a></li>
-            <li><a href="<?= ROOT ?>/adminViewContactUs"><i class="fa-solid fa-envelope"></i>Inquiries</a></li>
-            <li><a href="<?= ROOT ?>/adminViewCourierComplains"><i class="fa-solid fa-circle-exclamation"></i>Complains</a></li>
-            <li><a href="<?= ROOT ?>/admin/payRolls" ><i class="fa-solid fa-money-bill"></i>Payrolls</a></li>
-            <li><a href="<?= ROOT ?>/adminAdvertisment"><i class="fa-solid fa-up-right-from-square"></i>Ads</a></li>
-            <li><a href="<?= ROOT ?>/adminProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
-        </ul>   
-    </div>
-
+    <!-- navBar division begin -->
+    <?php include 'commonSidebar.view.php'; ?>
+    <!-- navBar division end -->
     <div class="container">
         <div class="box">
             <div class="page-title">

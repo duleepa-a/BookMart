@@ -14,13 +14,13 @@
 <body>
 
     <!-- navBar division begin -->
-    <?php include 'adminNavBar.view.php'; ?>
+    <?php include 'secondaryNavBar.view.php';?>
     <!-- navBar division end -->
-
-    <!-- sideBar division begin -->
-    <?php include 'adminSideBar.view.php';?>
-    <!-- sideBar division end -->
-
+     
+    <!-- navBar division begin -->
+    <?php include 'commonSidebar.view.php'; ?>
+    <!-- navBar division end -->
+     
     <!-- Popup Messages -->
     <?php if (!empty($_SESSION['success_message'])): ?>
         <div class="popup-message popup-success" id="success-popup">

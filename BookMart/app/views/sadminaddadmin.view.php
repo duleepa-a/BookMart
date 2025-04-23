@@ -12,13 +12,13 @@
 </head>
 <body>
     
-    <!-- navBar division begin -->
-    <?php include 'adminNavBar.view.php';?>
+   <!-- navBar division begin -->
+   <?php include 'secondaryNavBar.view.php';?>
     <!-- navBar division end -->
-
-    <!-- sideBar division begin -->
-    <?php include 'adminSideBar.view.php';?>
-    <!-- sideBar division end -->
+     
+    <!-- navBar division begin -->
+    <?php include 'commonSidebar.view.php'; ?>
+    <!-- navBar division end -->
         
         <!-- Display success and error messages -->
         <?php if(isset($_SESSION['success'])): ?>

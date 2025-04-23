@@ -41,13 +41,22 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     </ul>   
 </div>
 
-<?php elseif ($_SESSION['user_role'] == 'admin'): ?>
+<?php elseif ($_SESSION['user_role'] == 'admin' || $_SESSION['user_role'] == 'superAdmin'): ?>
     <div class="sidebar">
         <ul>
-            <h1 class="sidebar-heading">Hi Admin!</h1>
+            <h3 class="sidebar-heading" style="color: #02224E;">
+                Hi <?= $_SESSION['username'] ?? 'User' ?>
+            </h3>
+            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'superAdmin'): ?>
+                <li>
+                    <a href="<?= ROOT ?>/SAdminAddAdmin" class="<?= strpos($currentPath, '/SAdminAddAdmin') !== false ? 'active' : '' ?>">
+                        <i class="fa-solid fa-user"></i>Other Admin
+                    </a>
+                </li>
+            <?php endif; ?>
             <li>
-                <a href="<?= ROOT ?>/" class="<?= strpos($currentPath, ROOT . '/') === strlen(ROOT) ? 'active' : '' ?>">
-                    <i class="fa-solid fa-house"></i>Dashboard
+                <a href="<?= ROOT ?>/home" class="<?= strpos($currentPath,'/') || strpos($currentPath, '/home') !== false ? 'active' : '' ?>">
+                        <i class="fa-solid fa-house"></i>Dashboard
                 </a>
             </li>
             <li>
