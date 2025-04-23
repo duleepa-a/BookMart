@@ -49,6 +49,22 @@ class BookStore {
                 LIMIT 5";
         return $this->query($sql, [':userId' => $userId]);
     }
+
+    public function bookSalesByGenres($storeId,$genre){
+        $query = "SELECT COUNT(*) AS total_orders FROM orders o JOIN book b ON o.book_id = b.id WHERE o.seller_id = :seller_id
+                   AND LOWER(b.genre) = LOWER(:genre)";
+
+        return $this->query($query,[':seller_id' => $storeId , ':genre' => $genre]);
+
+    }
+
+    public function inventoryCountByGenres($storeId,$genre){
+        $query = "SELECT COUNT(*) AS total_books FROM  book b WHERE b.seller_id = :seller_id
+                   AND LOWER(b.genre) = LOWER(:genre)";
+
+        return $this->query($query,[':seller_id' => $storeId , ':genre' => $genre]);
+
+    }
     
     public function getHomeData($user_id){
         $store = $this->first(['user_id' =>  $user_id]);   
@@ -65,6 +81,15 @@ class BookStore {
                                 (SELECT COUNT(*) FROM orders WHERE seller_id = :id) AS orders_count;
                         ";
         $summary = $this->query($summarySql, [':id' =>$user_id]);
+
+        $genres = ['romance', 'fiction', 'horror', 'education', 'History'];
+
+        $genreSales = [];
+
+        foreach ($genres as $genre) {
+            $result = $this->bookSalesByGenres($user_id, $genre);
+            $genreSales[$genre] = $result[0]->total_orders ?? 0;
+        }
         
         if(!$store->rating){
             $query = "SELECT AVG(seller_rating) as avg_rating FROM review WHERE seller_id = :id";
@@ -74,9 +99,21 @@ class BookStore {
             $summary[0]->rating = $store->rating;
         }
 
+        $genres = ['romance', 'fiction', 'horror', 'education', 'history','novel' , 'sci-fi'];
+
+        $genreCount = [];
+
+        foreach ($genres as $genre) {
+            $result = $this->inventoryCountByGenres($user_id, $genre);
+            $genreCount[$genre] = $result[0]->total_books ?? 0;
+        }
+
+
         $data = [
             'lowStockBooks' => $lowStockbooks,
-            'summary' => $summary[0]
+            'summary' => $summary[0],
+            'genreSales' => $genreSales,
+            'genreCount' => $genreCount
         ];
 
         return $data;

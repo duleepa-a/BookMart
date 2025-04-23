@@ -78,7 +78,7 @@ class App{
         'BookByGenres' => ['index'],
         'Payment' => ['checkOut'],
         'Book' => ['index','getNewArrivals','search'],
-        'User' => ['login','logout','registerBuyer','registerCourier','registerBookSeller','registerBookStore','checkusername','checkemail'],
+        'User' => ['login','logout','registerBuyer','registerCourier','registerBookSeller','registerBookStore','checkusername','checkemail','termsConditions'],
         'Loading' => ['index'],
         'ContactUs' => ['index','create'],
         'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle', 'myArticles'],

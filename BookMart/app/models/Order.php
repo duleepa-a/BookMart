@@ -69,4 +69,37 @@ class Order {
         return $counts;
     }
 
+    public function getSalesByGenre($sellerId) {
+        $query = "SELECT LOWER(b.genre) AS genre, COUNT(*) AS total_orders
+            FROM orders o
+            JOIN book b ON o.book_id = b.id
+            WHERE o.seller_id = :seller_id
+            GROUP BY LOWER(b.genre)";
+    
+        $results = $this->query($query, ['seller_id' => $sellerId]);
+    
+        $salesByGenre = [];
+        if ($results) {
+            foreach ($results as $row) {
+                $salesByGenre[ucfirst($row->genre)] = $row->total_orders;
+            }
+        }
+    
+        return $salesByGenre;
+    }
+    
+    public function getTopSellingBooks($sellerId) {
+        $query = "SELECT 
+                b.title, 
+                b.author, 
+                SUM(o.quanitity) AS total_sales
+            FROM orders o
+            JOIN book b ON o.book_id = b.id
+            WHERE o.seller_id = :seller_id
+            GROUP BY o.book_id
+            ORDER BY total_sales DESC ";
+
+        $this->query($query,[':seller_id' => $sellerId]);
+    }
+
 }

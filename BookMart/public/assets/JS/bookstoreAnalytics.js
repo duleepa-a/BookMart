@@ -1,31 +1,3 @@
-document.getElementById('logoutButton').addEventListener('click', function() {
-    
-    fetch('http://localhost/BookMart/public/user/logout', { 
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json(); 
-            throw new Error('Logout failed.');
-        }
-    })
-    .then(data => {
-        console.log(data); 
-        if (data.status === 'success') {
-            window.location.href = 'http://localhost/BookMart/public/'; 
-        } else {
-            alert('Error: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error during logout:', error);
-        alert('Logout failed. Please try again.');
-    });
-});
-
 // Select elements
 const addBookButton = document.querySelector('.add-book-bttn');
 const modal = document.querySelector('.modal');
@@ -56,15 +28,17 @@ const genreCtx = document.getElementById('genreChart').getContext('2d');
 new Chart(genreCtx, {
     type: 'pie',
     data: {
-        labels: ['Fiction', 'Non-Fiction', 'Mystery', 'Science Fiction', 'Romance'],
+        labels: genreLabels,
         datasets: [{
-            data: [400, 300, 200, 150, 100],
+            data: genreData,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.7)',
                 'rgba(54, 162, 235, 0.7)',
                 'rgba(255, 206, 86, 0.7)',
                 'rgba(75, 192, 192, 0.7)',
-                'rgba(153, 102, 255, 0.7)'
+                'rgba(153, 102, 255, 0.7)',
+                'rgba(255, 159, 64, 0.7)',
+                'rgba(201, 203, 207, 0.7)' // more colors if needed
             ]
         }]
     },
@@ -75,7 +49,8 @@ new Chart(genreCtx, {
                 position: 'top',
             },
             title: {
-                display: false
+                display: true,
+                text: 'Sales by Genre'
             }
         }
     }
@@ -108,25 +83,4 @@ new Chart(salesCtx, {
             }
         }
     }
-});
-
-// Top Selling Books
-const topBooks = [
-    { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', sales: 1200 },
-    { title: 'To Kill a Mockingbird', author: 'Harper Lee', sales: 1100 },
-    { title: '1984', author: 'George Orwell', sales: 1000 },
-    { title: 'Pride and Prejudice', author: 'Jane Austen', sales: 900 },
-    { title: 'The Hobbit', author: 'J.R.R. Tolkien', sales: 800 }
-];
-
-const topBooksBody = document.getElementById('topBooksBody');
-topBooks.forEach((book, index) => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${book.title}</td>
-        <td>${book.author}</td>
-        <td>${book.sales}</td>
-    `;
-    topBooksBody.appendChild(row);
 });

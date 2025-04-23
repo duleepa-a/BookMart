@@ -108,8 +108,7 @@ class BookstoreController extends Controller{
     }
     
 
-    public function markAsRead($review_id)
-    {
+    public function markAsRead($review_id){
         $reviewModel = new ReviewModel();
         $reviewModel->update($review_id, ['is_read' => 1]);
 
@@ -131,7 +130,15 @@ class BookstoreController extends Controller{
     }
 
     public function Analytics(){
-        $this->view('bookstoreAnalytics');
+        $orderModel = new Order();
+        $salesByGenre = $orderModel->getSalesByGenre($_SESSION['user_id']);
+        $topSellers = $orderModel->getTopSellingBooks($_SESSION['user_id']);
+
+
+        $this->view('bookstoreAnalytics',[
+                                            'salesByGenre' => $salesByGenre ,
+                                            'topSellers' => $topSellers
+                                         ]);
     }
 
     public function inventory(){

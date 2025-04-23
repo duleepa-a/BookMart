@@ -187,7 +187,7 @@
                     <div class="form-group checkbox-group">
                         <!-- <label for="TermsAndConditions" id="terms">Terms and Conditions:</label> <br> -->
                         <input type="checkbox"  name="terms" required>
-                        <label for="terms">I agree to the <a href="<?= ROOT ?>/TermsAndConditions"> Terms and Conditions </a> which include my responsibilities, prohibited activities, intellectual property rights, liability limitations, and dispute resolution procedures</label>
+                        <label for="terms">I agree to the <a href="<?= ROOT ?>/user/termsConditions"> Terms and Conditions </a> which include my responsibilities, prohibited activities, intellectual property rights, liability limitations, and dispute resolution procedures</label>
                       </div>
                       <div class="form-group checkbox-group">
                         <!-- <label for="privacyPolicy" id="privacy">Privacy Policy:</label> <br> -->

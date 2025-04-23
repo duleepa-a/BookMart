@@ -279,7 +279,7 @@ p {
     margin-top: 20px;
     display: flex;
     justify-content:flex-start;
-    gap: 40px;
+    gap: 28px;
     flex-wrap: wrap;
     align-items:baseline;
 }

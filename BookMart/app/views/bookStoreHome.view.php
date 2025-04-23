@@ -70,6 +70,15 @@
                     </div>
                 </div>
                 <div class="hero right">
+                    <?php
+                        $genres = ['Romance', 'Fiction', 'Horror', 'Education', 'History'];
+                        $colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
+                        $barSpacing = 120;
+                        $barWidth = 80;
+                        $maxOrders = max($genreSales) ?: 1; // prevent division by zero
+                        $maxHeight = 175; // max SVG bar height
+                    ?>
+
                     <svg viewBox="0 0 800 250" xmlns="http://www.w3.org/2000/svg">
                         <!-- Title -->
                         <text x="400" y="30" text-anchor="middle" class="chart-title">Book Sales by Category</text>
@@ -87,58 +96,38 @@
 
                         <!-- Bars -->
                         <g transform="translate(60, 220)">
-                            <!-- Fiction -->
-                            <rect class="bar" x="40" width="80" y="-150" height="0" fill="#FF6384">
-                                <animate attributeName="height" from="0" to="150" dur="0.8s" fill="freeze" />
-                            </rect>
-                            
-                            <!-- Non-Fiction -->
-                            <rect class="bar" x="160" width="80" y="-120" height="0" fill="#36A2EB">
-                                <animate attributeName="height" from="0" to="120" dur="0.8s" fill="freeze" />
-                            </rect>
-                            
-                            <!-- Children's -->
-                            <rect class="bar" x="280" width="80" y="-135" height="0" fill="#FFCE56">
-                                <animate attributeName="height" from="0" to="135" dur="0.8s" fill="freeze" />
-                            </rect>
-                            
-                            <!-- Science -->
-                            <rect class="bar" x="400" width="80" y="-105" height="0" fill="#4BC0C0">
-                                <animate attributeName="height" from="0" to="105" dur="0.8s" fill="freeze" />
-                            </rect>
-                            
-                            <!-- History -->
-                            <rect class="bar" x="520" width="80" y="-127" height="0" fill="#9966FF">
-                                <animate attributeName="height" from="0" to="127" dur="0.8s" fill="freeze" />
-                            </rect>
+                            <?php foreach ($genres as $index => $genre):
+                                $orderCount = $genreSales[strtolower($genre)] ?? 0;
+                                $height = ($orderCount / $maxOrders) * $maxHeight;
+                                $x = 40 + $index * $barSpacing;
+                                $y = -$height;
+                                $color = $colors[$index];
+                            ?>
+                                <rect class="bar" x="<?= $x ?>" width="<?= $barWidth ?>" y="<?= $y ?>" height="0" fill="<?= $color ?>">
+                                    <animate attributeName="height" from="0" to="<?= $height ?>" dur="0.8s" fill="freeze" />
+                                </rect>
+                            <?php endforeach; ?>
                         </g>
+
 
                         <!-- Value labels -->
                         <g transform="translate(60, 220)">
-                            <text x="80" y="-155" text-anchor="middle" class="value-label">250</text>
-                            <text x="200" y="-125" text-anchor="middle" class="value-label">180</text>
-                            <text x="320" y="-140" text-anchor="middle" class="value-label">220</text>
-                            <text x="440" y="-110" text-anchor="middle" class="value-label">150</text>
-                            <text x="560" y="-132" text-anchor="middle" class="value-label">200</text>
+                            <?php foreach ($genres as $index => $genre):
+                                $orderCount = $genreSales[strtolower($genre)] ?? 0;
+                                $height = ($orderCount / $maxOrders) * $maxHeight;
+                                $x = 80 + $index * $barSpacing;
+                                $y = -$height - 5;
+                            ?>
+                                <text x="<?= $x ?>" y="<?= $y ?>" text-anchor="middle" class="value-label"><?= $orderCount ?></text>
+                            <?php endforeach; ?>
                         </g>
+
 
                         <!-- X-axis labels -->
                         <g transform="translate(60, 235)">
-                            <text x="80" y="0" text-anchor="middle" class="axis-label">Fiction</text>
-                            <text x="200" y="0" text-anchor="middle" class="axis-label">Non-Fiction</text>
-                            <text x="320" y="0" text-anchor="middle" class="axis-label">Children's</text>
-                            <text x="440" y="0" text-anchor="middle" class="axis-label">Science</text>
-                            <text x="560" y="0" text-anchor="middle" class="axis-label">History</text>
-                        </g>
-
-                        <!-- Y-axis labels -->
-                        <g transform="translate(50, 220)">
-                            <text x="0" y="-175" text-anchor="end" class="axis-label">300</text>
-                            <text x="0" y="-140" text-anchor="end" class="axis-label">240</text>
-                            <text x="0" y="-105" text-anchor="end" class="axis-label">180</text>
-                            <text x="0" y="-70" text-anchor="end" class="axis-label">120</text>
-                            <text x="0" y="-35" text-anchor="end" class="axis-label">60</text>
-                            <text x="0" y="0" text-anchor="end" class="axis-label">0</text>
+                            <?php foreach ($genres as $index => $genre): ?>
+                                <text x="<?= 80 + $index * $barSpacing ?>" y="0" text-anchor="middle" class="axis-label"><?= $genre ?></text>
+                            <?php endforeach; ?>
                         </g>
                     </svg>
                 </div> 
@@ -191,32 +180,14 @@
                     <h2 class="inventory-heading">Inventory Count</h2>
                 </div>
                 <div class="inventory-item">
-                        <div class="inventory-card">
-                            <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
-                            <p>Fiction</p>
-                            <span>10</span>
-                        </div>
-                        <div class="inventory-card">
-                            <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
-                            <p>History</p>
-                            <span>50</span>
-                        </div>
-                        <div class="inventory-card">
-                        <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
-                            <p>Romance</p>
-                            <span>40</span>
-                        </div>
-                        <div class="inventory-card">
-                        <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
-                            <p>Novel</p>
-                            <span>20</span>
-                        </div>
-                        <div class="inventory-card">
-                        <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
-                            <p>Sci-Fi</p>
-                            <span>30</span>
-                        </div>
-                </div>
+                    <?php foreach($genreCount as $genre => $count):?>
+                            <div class="inventory-card">
+                                <img src="<?= ROOT ?>/assets/Images/bookstore-home-icons/book-icon.png">
+                                <p><?= $genre?></p>
+                                <span><?= $count?></span>
+                            </div>  
+                    <?php endforeach; ?>
+                </div>   
             </div>
             <br><br>
             <!-- footer begin -->

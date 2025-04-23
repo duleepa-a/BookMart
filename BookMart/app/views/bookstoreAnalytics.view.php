@@ -147,6 +147,7 @@
 
         <div class="sales-table">
             <h2 class="table-heading">Top Selling Books</h2>
+            <?php if(!empty($topSellers)):?>
             <table>
                 <thead>
                     <tr>
@@ -156,9 +157,22 @@
                         <th>Sales</th>
                     </tr>
                 </thead>
-                <tbody id="topBooksBody">
-                </tbody>
+                <tbody>
+                <?php foreach ($topSellers as $index => $book): ?>
+                    <tr>
+                        <td><?= $index + 1 ?></td>
+                        <td><?= htmlspecialchars($book->title) ?></td>
+                        <td><?= htmlspecialchars($book->author) ?></td>
+                        <td><?= $book->total_sales ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
             </table>
+            <?php else:?>
+                <div class="message-div">
+                    <p>No orders done yet!</p>
+                </div>
+            <?php endif;?>
         </div>
 
              
@@ -166,6 +180,11 @@
     <footer class="small-footer">
             <p>&copy; 2024 BookMart, all rights reserved.</p>
     </footer> 
+    <script>
+        const salesByGenre = <?= json_encode($salesByGenre) ?>;
+        const genreLabels = Object.keys(salesByGenre);
+        const genreData = Object.values(salesByGenre);
+    </script>
     <script src="<?= ROOT ?>/assets/JS/bookstoreAnalytics.js"></script>
 
 </body>

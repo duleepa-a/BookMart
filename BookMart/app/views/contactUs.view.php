@@ -20,7 +20,7 @@
           Send us a message and we'll get back to you as soon as possible.<br>
           Looking forward to hearing from you.
         </p>
-        <form class="contact-form" id="contactForm" action="<?= ROOT ?>/ContactUs/create" enctype="multipart/form-data" method="POST">
+        <form class="contact-form" id="contactForm" action="<?= ROOT ?>/ContactUs/create" method="POST">
           <label for="name">Name:</label>
           <input type="text" id="name" name="name" placeholder="Enter your name" required>
 

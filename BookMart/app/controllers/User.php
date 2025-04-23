@@ -504,5 +504,9 @@ class User extends Controller {
                 $storeModel->update($store->id, ['followers' => $newCount]);
             }
         }
+
+        public function termsConditions(){
+            $this->view('termsAndConditions');
+        }
         
     }

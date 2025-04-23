@@ -57,3 +57,25 @@
     margin-bottom: 70px;
 }
 
+@media (max-width: 768px) {
+    .sidebar {
+      width: 70%;
+      height: 100vh;
+      top: 0;
+      left: -100%;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+  
+    .sidebar.active {
+      left: 0;
+    }
+  
+    .sidebar-heading {
+      margin-top: 60px;
+    }
+    .container{
+        margin-left: 0;
+    }
+  }
+  
