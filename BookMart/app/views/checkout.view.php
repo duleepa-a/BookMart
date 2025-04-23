@@ -18,7 +18,7 @@
 
     <div class="container">
         <header>
-            <div class="logo">BookStore</div>
+            <div class="logo"><?= htmlspecialchars($book->seller_name ?? 'Seller') ?></div>
             <div class="cart-icon"><i class="fa-solid fa-shop"></i></div>
         </header>
 
