@@ -47,9 +47,9 @@
                         </div>
 
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-save"><?= isset($data['articles']) ? "Update Article" : "Create Article" ?></button>
+                            <button type="submit" class="btn-save"><?= isset($data['articles']) ? "Update Article" : "Create Article" ?></button>
                             <?php if (isset($data['articles'])): ?>
-                            <button type="button" id="delete-article-trigger" class="btn btn-delete">Delete Article</button>
+                            <button type="button" id="delete-article-trigger" class="btn-delete">Delete Article</button>
                             <?php endif; ?>
                         </div>
                 </form>
@@ -65,7 +65,7 @@
                     <input type="hidden" id="delete-article-id" name="article_id" 
                         value="<?= htmlspecialchars($data['article_id']) ?>">
                     <div class="modal-actions">
-                        <button type="submit" class="confirm-delete">Delete</button>
+                        <button type="submit" class="btn-delete">Delete</button>
                         <button type="button" class="close-modal">Cancel</button>
                     </div>
                 </form>

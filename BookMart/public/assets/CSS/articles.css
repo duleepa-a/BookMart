@@ -54,9 +54,9 @@ body {
 }
 
 .articles-tab.selected {
-    background-color: #007BFF;
+    background-color: #02224E;
     color: white;
-    border-color: #007BFF;
+    border-color: #02224E;
 }
 
 .articles-container {
