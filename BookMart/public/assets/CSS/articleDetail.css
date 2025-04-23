@@ -69,7 +69,6 @@ body {
     margin-bottom: 25px;
 }
 
-/* Recommended Articles Section */
 .recommended-section {
     max-width: 1200px;
     margin: 60px auto 0;
@@ -94,7 +93,6 @@ body {
 }
 
 .article-card:hover {
-    /* transform: translateY(-5px); */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 

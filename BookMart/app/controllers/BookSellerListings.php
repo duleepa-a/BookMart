@@ -19,17 +19,17 @@ class BookSellerListings extends Controller{
             echo("addBook POST in");
 
             $bookData = [
-                'title' => htmlspecialchars(trim($_POST['title'])),
-                'ISBN' => htmlspecialchars(trim($_POST['ISBN'])),
-                'author' => htmlspecialchars(trim($_POST['author'])),
-                'genre' => htmlspecialchars(trim($_POST['genre'])),
-                'publisher' => htmlspecialchars(trim($_POST['publisher'])),
+                'title' => trim($_POST['title']),
+                'ISBN' => trim($_POST['ISBN']),
+                'author' => trim($_POST['author']),
+                'genre' => trim($_POST['genre']),
+                'publisher' => trim($_POST['publisher']),
                 'price' => filter_var(trim($_POST['price']), FILTER_VALIDATE_FLOAT),
                 'discount' => filter_var(trim($_POST['discount']), FILTER_VALIDATE_FLOAT),
                 'quantity' => filter_var(trim($_POST['quantity']), FILTER_VALIDATE_INT),
-                'book_condition' => htmlspecialchars(trim($_POST['book_condition'])),
-                'language' => htmlspecialchars(trim($_POST['language'])),
-                'description' => htmlspecialchars(trim($_POST['description'])),
+                'book_condition' => trim($_POST['book_condition']),
+                'language' => trim($_POST['language']),
+                'description' => trim($_POST['description']),
                 'seller_id' => $_SESSION['user_id'],
             ];
            
@@ -71,7 +71,6 @@ class BookSellerListings extends Controller{
 
             echo("Validation passed");
             if ($bookModel->insert($bookData)) {
-                // Get the last inserted book ID using the bookModel
                 $query = "SELECT id FROM book WHERE seller_id = :seller_id ORDER BY id DESC LIMIT 1";
                 $data = ['seller_id' => $_SESSION['user_id']];
                 $result = $bookModel->query($query, $data);
