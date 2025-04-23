@@ -90,6 +90,11 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                 </a>
             </li>
             <li>
+                <a href="<?= ROOT ?>/AdminPaymentInfo" class="<?= strpos($currentPath, '/AdminPaymentInfo') !== false ? 'active' : '' ?>">
+                    <i class="fa-solid fa-circle-exclamation"></i>Complains
+                </a>
+            </li>
+            <li>
                 <a href="<?= ROOT ?>/admin/payRolls" class="<?= strpos($currentPath, '/admin/payRolls') !== false ? 'active' : '' ?>">
                     <i class="fa-solid fa-money-bill"></i>Payrolls
                 </a>
