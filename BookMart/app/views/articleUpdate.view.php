@@ -16,7 +16,7 @@
         <!-- navBar division end -->
 
         <!-- Sidebar division begin -->
-        <?php include 'bookSellerSidebar.view.php'; ?>
+        <?php include 'commonSidebar.view.php'; ?>
         <!-- Sidebar division end -->
 
         <div class="container">
@@ -54,7 +54,7 @@
                         </div>
                 </form>
             </div>
-        </div>
+
         <div class="modal" id="delete-article-modal">
             <div class="modal-overlay"></div>
             <div class="modal-content">
@@ -72,9 +72,11 @@
             </div>
         </div>
 
-        <!-- Footer division begin -->
-        <?php include 'bookSellerFooter.view.php'; ?>
-        <!-- Footer division end -->
+            <!-- Footer division begin -->
+            <?php include 'smallFooter.view.php'; ?>
+            <!-- Footer division end -->
+
+        </div>
 
         <script src="<?= ROOT ?>/assets/JS/articleUpdate.js"></script>
         

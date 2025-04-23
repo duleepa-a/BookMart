@@ -17,7 +17,7 @@
     <!-- navBar division end -->
 
     <!-- navBar division begin -->
-    <?php include 'bookSellerSidebar.view.php'; ?>
+    <?php include 'commonSidebar.view.php'; ?>
     <!-- navBar division end -->
 
     <div class="container">
@@ -253,17 +253,16 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <div id="auctionEndedPopup" class="popup-hidden">
         Auction has ended. Reloading...
     </div>
 
-    <br><br>
-
-    <!-- Footer division begin -->
-    <?php include 'bookSellerFooter.view.php'; ?>
-    <!-- Footer division end -->
+        <!-- Footer division begin -->
+        <?php include 'smallFooter.view.php'; ?>
+        <!-- Footer division end -->
+        
+    </div>
 
     <script src="<?= ROOT ?>/assets/JS/auctionDetails.js"></script>
 

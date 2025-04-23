@@ -18,10 +18,9 @@
     <!-- navBar division end -->
 
     <!-- navBar division begin -->
-    <?php include 'bookSellerSidebar.view.php'; ?>
+    <?php include 'commonSidebar.view.php'; ?>
     <!-- navBar division end -->
     
-    <center>
     <div class="container">    <!-- inner background box begin -->        
         <h1 class="title-text">My Listings</h1>
 
@@ -179,6 +178,8 @@
                         <textarea id="update-description" name="description" rows="4" required></textarea>
                     </div>
                     <div class="modal-actions">
+                        <button type="button" class="create-auction-modal">Create Auction</button>
+                        <button type="button" class="delete-modal">Delete</button>
                         <button type="submit" class="update-button">Update</button>
                         <button type="button" class="close-modal">Cancel</button>
                     </div>
@@ -254,13 +255,11 @@
             </div>
         </div>
 
-    </div>                        <!-- inner background box end -->
+        <!-- Footer division begin -->
+        <?php include 'smallFooter.view.php'; ?>
+        <!-- Footer division end -->
 
-    <br><br>
-
-    <!-- Footer division begin -->
-    <?php include 'bookSellerFooter.view.php'; ?>
-    <!-- Footer division end -->
+    </div>
 
     <script src="<?= ROOT ?>/assets/JS/bookSellerlistings.js"></script>
 

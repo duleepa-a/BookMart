@@ -17,7 +17,7 @@
     <!-- navBar division end -->
 
     <!-- Sidebar division begin -->
-    <?php include 'bookSellerSidebar.view.php'; ?>
+    <?php include 'commonSidebar.view.php'; ?>
     <!-- Sidebar division end -->
     
     <center>

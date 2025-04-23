@@ -17,7 +17,7 @@
     <!-- navBar division end -->
 
     <!-- navBar division begin -->
-    <?php include 'bookSellerSidebar.view.php'; ?>
+    <?php include 'commonSidebar.view.php'; ?>
     <!-- navBar division end -->
 
     <div class="container">
@@ -92,14 +92,14 @@
                     <p>No articles found.</p>
                 <?php endif; ?>
             </div>
+    
+
+        <!-- Footer division begin -->
+        <?php include 'smallFooter.view.php'; ?>
+        <!-- Footer division end -->
+         
     </div>
 
-
-    <br><br>
-
-    <!-- Footer division begin -->
-    <?php include 'bookSellerFooter.view.php'; ?>
-    <!-- Footer division end -->
     <script src="<?= ROOT ?>/assets/JS/articles.js"></script>
 </body>
 </html>
