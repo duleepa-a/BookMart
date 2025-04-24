@@ -37,7 +37,7 @@
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Price:</span>
-                        <span class="detail-value">$<?= htmlspecialchars($order->price ?? '') ?></span>
+                        <span class="detail-value">Rs. <?= htmlspecialchars($order->price ?? '') ?></span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Quantity:</span>
@@ -58,15 +58,15 @@
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Discount Applied:</span>
-                        <span class="detail-value">$<?= htmlspecialchars($order->discount_applied ?? '0.00') ?></span>
+                        <span class="detail-value">Rs.<?= htmlspecialchars($order->discount_applied ?? '0.00') ?></span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Delivery Fee:</span>
-                        <span class="detail-value">$<?= htmlspecialchars($order->delivery_fee ?? '0.00') ?></span>
+                        <span class="detail-value">Rs.<?= htmlspecialchars($order->delivery_fee ?? '0.00') ?></span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Total Amount:</span>
-                        <span class="detail-value total-amount">$<?= htmlspecialchars($order->total_amount ?? '') ?></span>
+                        <span class="detail-value total-amount">Rs.<?= htmlspecialchars($order->total_amount ?? '') ?></span>
                     </div>
                 </div>
             </div>

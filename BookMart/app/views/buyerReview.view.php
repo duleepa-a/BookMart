@@ -93,6 +93,8 @@
                                 <i class="fas fa-meh <?= ($order->review->seller_rating == 2) ? 'active-rating' : '' ?>"></i>
                                 <i class="fas fa-smile <?= ($order->review->seller_rating == 3) ? 'active-rating' : '' ?>"></i>
                             </div>
+                            <button data-reviewid = <?=$order->review->id?> class="review-button" id="delete-btn">Delete Review 
+                            </button>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -108,5 +110,12 @@
             <p>&copy; 2024 BookMart, all rights reserved.</p>
     </footer> 
     <script src="<?= ROOT ?>/assets/JS/buyerReview.js"></script>
+    <script>
+        deleteButton = document.getElementById('delete-btn');
+        deleteButton.addEventListener('click',()=>{
+            const reviewId = deleteButton.dataset.reviewid;
+            window.location.href = `<?= ROOT ?>/Buyer/deleteReview/${reviewId}`;
+        });
+    </script>
 </body>
 </html>

@@ -103,25 +103,20 @@ class BookModel {
 
 
     public function adminsearchBooks($keyword, $limit = null, $offset = 0, $sortClause = "", $searchField = "") {
-        // Start with basic query
-        $query = "SELECT * FROM book WHERE ";
+        $query = "SELECT * FROM book WHERE status = 'available' AND ";
         
-        // If a specific search field is specified, only search in that field
         if (!empty($searchField) && in_array($searchField, ['title', 'author', 'publisher'])) {
             $query .= "$searchField LIKE :keyword";
         } else {
-            // Otherwise use the default search across multiple fields
             $query .= "title LIKE :keyword OR author LIKE :keyword OR ISBN LIKE :keyword";
         }
         
-        // Apply sort clause if provided
         if (!empty($sortClause)) {
             $query .= $sortClause;
         } else {
-            $query .= " ORDER BY title ASC"; // Default sorting
+            $query .= " ORDER BY title ASC"; 
         }
         
-        // Add pagination
         if ($limit !== null) {
             $query .= " LIMIT $limit OFFSET $offset";
         }
@@ -131,13 +126,11 @@ class BookModel {
     }
     
     public function countSearchResults($keyword, $searchField = "") {
-        $query = "SELECT COUNT(*) as total FROM book WHERE ";
+        $query = "SELECT COUNT(*) as total FROM book WHERE status = 'available' AND ";
         
-        // If a specific search field is specified, only search in that field
         if (!empty($searchField) && in_array($searchField, ['title', 'author', 'publisher'])) {
             $query .= "$searchField LIKE :keyword";
         } else {
-            // Otherwise use the default search across multiple fields
             $query .= "title LIKE :keyword OR author LIKE :keyword OR ISBN LIKE :keyword";
         }
         
@@ -147,7 +140,7 @@ class BookModel {
     }
 
     public function findById($bookId) {
-        $query = "SELECT * FROM book WHERE id = :id LIMIT 1";
+        $query = "SELECT * FROM book WHERE status = 'available' AND  id = :id LIMIT 1";
         $data = [':id' => $bookId];
 
         $result = $this->query($query, $data);
@@ -155,17 +148,15 @@ class BookModel {
         return $result ? $result[0] : null;
     }
 
-    public function findAll($limit = null, $offset = 0, $sortClause = "") {
-        $query = "SELECT * FROM {$this->table}";
-        
-        // Apply sort clause if provided
+    public function adminFindAllBooks($limit = null, $offset = 0, $sortClause = "") {
+        $query = "SELECT * FROM {$this->table} WHERE status = 'available'";
+     
         if (!empty($sortClause)) {
             $query .= $sortClause;
         } else {
-            $query .= " ORDER BY title ASC"; // Default sorting
+            $query .= " ORDER BY title ASC"; 
         }
         
-        // Add pagination
         if ($limit !== null) {
             $query .= " LIMIT $limit OFFSET $offset";
         }
@@ -174,7 +165,7 @@ class BookModel {
     }
 
     public function count() {
-        $query = "SELECT COUNT(*) as total FROM {$this->table}";
+        $query = "SELECT COUNT(*) as total FROM {$this->table}  WHERE status = 'available'";
         $result = $this->query($query);
         return $result[0]->total ?? 0;
     }

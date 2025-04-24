@@ -7,6 +7,7 @@ class ReviewModel{
     protected $table = 'review';
 
     protected $allowedColumns = [
+        'id',
         'buyer_id',
         'book_id',
         'order_id',

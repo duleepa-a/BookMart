@@ -104,18 +104,19 @@ class User extends Controller {
                     $userData['password'] = password_hash($userData['password'], PASSWORD_DEFAULT);
         
                     if ($this->userModel->registerBuyer($userData, $buyerData)) {
-                        echo "Registration successful!";
+                        $_SESSION['success'] =  "Registration successful!";
                         redirect('login');
                     } else {
-                        echo "Something went wrong!";
+                        $_SESSION['error'] = "Something went wrong!";
+                        $this->view('buyerRegister');
                     }
                 } else {
-                    echo("validate not done");
+                        $_SESSION['error'] ="validate not done";
                    
-                    $this->view('buyerRegister', $userData);
+                        $this->view('buyerRegister', $userData);
                 }
             } else {
-                echo("registerBuyer else");
+                $_SESSION['error'] = "Server Error";
                 $this->view('buyerRegister');
             }
         }
@@ -148,24 +149,22 @@ class User extends Controller {
         
               
                 if ($this->userModel->validate($userData)) {
-                    echo("validate done");
                     
                     $userData['password'] = password_hash($userData['password'], PASSWORD_DEFAULT);
         
                   
                     if ($this->userModel->registerBookSeller($userData, $buyerData)) {
-                        echo "Registration successful!";
+                        $_SESSION['success'] = "Registration successful!";
                         redirect('login');
                     } else {
                         echo "Something went wrong!";
                     }
                 } else {
-                    echo("validate not done");
                    
                     $this->view('bookSellerRegister', $userData);
                 }
             } else {
-                echo("registerBuyer else");
+                $_SESSION['error'] = "Server Error";
                 $this->view('bookSellerRegister');
             }
         }
@@ -223,7 +222,8 @@ class User extends Controller {
                             $courierData[$fieldName] = $newName;
                         } else {
                             $courierData[$fieldName] = null;
-                            echo "Failed to upload $inputName";
+                            $_SESSION['error'] = "Failed to upload $inputName";
+                            $this->view('courierRegister', $userData);
                         }
                     } else {
                         $courierData[$fieldName] = null;
@@ -236,13 +236,16 @@ class User extends Controller {
                     if ($this->userModel->registerCourier($userData, $courierData)) {
                         redirect('login');
                     } else {
-                        echo "Something went wrong during registration!";
+                        $_SESSION['error'] = "Something went wrong during registration!";
+                        $this->view('courierRegister');
                     }
                 } else {
+                    $_SESSION['error'] = "Data invalid";
                     $this->view('courierRegister', $userData);
                 }
         
             } else {
+                $_SESSION['error'] = "Server error";
                 $this->view('courierRegister');
             }
         }        
@@ -293,19 +296,19 @@ class User extends Controller {
                     $fileExt = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
 
                     if (!in_array($fileExt, $allowedExtensions) || !in_array($fileType, $allowedMimeTypes)) {
-                        echo "Invalid file type. Only PDF, PNG, JPG, and JPEG are allowed.";
-                        return;
+                        $_SESSION['error'] = "Invalid file type. Only PDF, PNG, JPG, and JPEG are allowed.";
+                        $this->view('bookstoreRegister', $storeData);
                     }
             
                     if (move_uploaded_file($fileTmp, $destination)) {
                         $storeData['evidence_doc'] = $uniqueName; 
                     } else {
-                        echo "Failed to upload file.";
-                        return;
+                        $_SESSION['error'] =  "Failed to upload file.";
+                        $this->view('bookstoreRegister', $storeData);
                     }
                 } else {
-                    echo "Evidence document is required.";
-                    return;
+                    $_SESSION['error'] =  "Evidence document is required.";
+                    $this->view('bookstoreRegister', $storeData);
                 }
         
                 if ($this->userModel->validate($userData)) {
@@ -314,17 +317,16 @@ class User extends Controller {
         
                   
                     if ($this->userModel->registerBookStore($userData, $storeData)) {
-                        echo "Bookstore registration successful!";
-                        redirect('login'); 
+                        $this->view('bookstoreAfterRegistration',[ 'bookstore'=> $storeData ]); 
                     } else {
-                        echo "Something went wrong during the registration process!";
+                        $_SESSION['error'] =  "Something went wrong during the registration process!";
                     }
                 } else {
-                    echo("not validated");
+                    $_SESSION['error'] = "not validated";
                     $this->view('bookstoreRegister', $storeData);
                 }
             } else {
-                echo("not pOSt");
+                $_SESSION['error'] = "Server error";
                 $this->view('bookstoreRegister');
             }
         }
@@ -419,19 +421,29 @@ class User extends Controller {
                 $bookstore = new BookstoreController();
                 $buyer = new Buyer();
                 $bookSeller = new BookSellerController();
+                $courier = new CourierProfile();
 
                 $userRole = $_SESSION['user_role'];
 
                 if ($newPassword !== $confirmPassword) {
                     $_SESSION['error'] = "New passwords do not match.";
-                    if($userRole =='bookStore'){
-                        $bookstore->myProfile();
-                    }
-                    else if($userRole == 'buyer'){
-                        $buyer->myProfile();
-                    }
-                    else if($userRole == 'bookSeller'){
-                        $bookSeller->myProfile();
+                    
+                    switch($userRole){
+                        case 'bookStore' :
+                            $bookstore->myProfile();
+                            break;
+                        case 'bookSeller' :
+                            $bookSeller->myProfile();
+                            break;
+                        case 'courier' :
+                            $courier->index();
+                            break;
+                        case 'buyer' :
+                            $buyer->myProfile();
+                            break;
+                        default:
+                            redirect("/home");
+                            break;
                     }
                 }
 
@@ -449,26 +461,43 @@ class User extends Controller {
                     $userModel->update($userId,['password'=> $hashedPassword]);
 
                     $_SESSION['success'] = "Password changed successfully.";
-                    if($userRole =='bookStore'){
-                        $bookstore->myProfile();
-                    }
-                    else if($userRole == 'buyer'){
-                        $buyer->myProfile();
-                    }
-                    else if($userRole == 'bookSeller'){
-                        $bookSeller->myProfile();
+
+                    switch($userRole){
+                        case 'bookStore' :
+                            $bookstore->myProfile();
+                            break;
+                        case 'bookSeller' :
+                            $bookSeller->myProfile();
+                            break;
+                        case 'courier' :
+                            $courier->index();
+                            break;
+                        case 'buyer' :
+                            $buyer->myProfile();
+                            break;
+                        default:
+                            redirect("/home");
                     }
                     
                 } else {
                     $_SESSION['error'] = "Current password is incorrect.";
-                    if($userRole =='bookStore'){
-                        $bookstore->myProfile();
-                    }
-                    else if($userRole == 'buyer'){
-                        $buyer->myProfile();
-                    }
-                    else if($userRole == 'bookSeller'){
-                        $bookSeller->myProfile();
+
+                    switch($userRole){
+                        case 'bookStore' :
+                            $bookstore->myProfile();
+                            break;
+                        case 'bookSeller' :
+                            $bookSeller->myProfile();
+                            break;
+                        case 'courier' :
+                            $courier->index();
+                            break;
+                        case 'buyer' :
+                            $buyer->myProfile();
+                            break;
+                        default:
+                            redirect("/home");
+                            break;
                     }
                 }
             }

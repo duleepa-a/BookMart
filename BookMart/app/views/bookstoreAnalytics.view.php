@@ -174,17 +174,24 @@
                 </div>
             <?php endif;?>
         </div>
-
+        <?= show($monthlySales)?>
              
     </div>
-    <footer class="small-footer">
-            <p>&copy; 2024 BookMart, all rights reserved.</p>
-    </footer> 
+    
+    <?php include "smallFooter.view.php"?>
     <script>
         const salesByGenre = <?= json_encode($salesByGenre) ?>;
         const genreLabels = Object.keys(salesByGenre);
         const genreData = Object.values(salesByGenre);
+        const monthlySalesRaw = <?= json_encode($monthlySales) ?>;
+        const monthlyLabels = monthlySalesRaw.map(item => {
+            const date = new Date(item.month + '-01');
+            return date.toLocaleString('default', { month: 'short' }); 
+        });
+
+        const monthlyData = monthlySalesRaw.map(item => parseFloat(item.monthly_sales));
     </script>
+    
     <script src="<?= ROOT ?>/assets/JS/bookstoreAnalytics.js"></script>
 
 </body>

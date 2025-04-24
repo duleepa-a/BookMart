@@ -48,7 +48,7 @@
                         <?= ($data['user']->active_status ?? '') === 'active' ? 'Suspend' : 'Activate' ?>
                     </button>
                     <a href="<?= ROOT ?>/adminSendmsg?email=<?= htmlspecialchars($data['user']->email ?? '') ?>" class="btn messageBtn">
-                        <i class="fas fa-envelope"></i> Send Message
+                        <i class="fas fa-envelope"></i> Send Mail
                     </a>
                 </div>
             </div>

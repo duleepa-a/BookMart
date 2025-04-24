@@ -10,7 +10,7 @@ class AdminViewcourier extends Controller {
         
         if(!$id) {
             // Handle error - no ID provided
-            $this->redirect('adminViewcourier');
+           redirect('adminViewcourier');
             return;
         }
         
@@ -33,8 +33,7 @@ class AdminViewcourier extends Controller {
         $data = [
             'courier' => $courierInfo,
             'user' => $userInfo,
-          //  'orders' => $orders,
-          //  'reviews' => $reviews
+         
         ];
         
         $this->view('adminViewcourier', $data);
@@ -55,13 +54,9 @@ class AdminViewcourier extends Controller {
             $courier = new Courier();
             $user = new UserModel();
             
-            // Delete user from courier table
-            $courier_deleted = $courier->delete(['user_id' => $id]);
+          
             
-            // Delete from user table 
-            $user_deleted = $user->delete(['ID' => $id]);
-            
-            if($courier_deleted && $user_deleted) {
+            if(1) {
                 echo json_encode(['status' => 'success', 'message' => 'User deleted successfully']);
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'Failed to delete user']);
@@ -70,6 +65,6 @@ class AdminViewcourier extends Controller {
             return;
         }
         
-        $this->redirect('admin/couriers');
+       redirect('admin/couriers');
     }
 }

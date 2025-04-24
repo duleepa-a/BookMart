@@ -24,12 +24,15 @@
             </div>
             
             <div class="chat-messages" id="chatMessages" data-receiver-id="<?= $receiverId ?>">
-                <?php foreach ($messages as $msg): ?>
-                    <div class="message <?= $msg->sender_id == $_SESSION['user_id'] ? 'message-sent' : 'message-received' ?>">
-                        <p class="message-text"><?= htmlspecialchars($msg->message) ?></p>
-                        <span class="message-time"><?= date("d M Y, h:i A", strtotime($msg->created_at)) ?></span>
-                    </div>
-                <?php endforeach; ?>
+                <?php if(!empty($messages)):?>
+                    <?php foreach ($messages as $msg): ?>
+                        <div class="message <?= $msg->sender_id == $_SESSION['user_id'] ? 'message-sent' : 'message-received' ?>">
+                            <p class="message-text"><?= htmlspecialchars($msg->message) ?></p>
+                            <span class="message-time"><?= date("d M Y, h:i A", strtotime($msg->created_at)) ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else :?>
+                <?php endif;?>
             </div>
 
             <div class="chat-input-container">

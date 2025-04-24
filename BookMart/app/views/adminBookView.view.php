@@ -40,7 +40,7 @@
                 <h2 class="book-title"><?= htmlspecialchars($book->title ?? 'Untitled Book') ?></h2>
                 <p class="book-author">By <?= htmlspecialchars($book->author ?? 'Unknown Author') ?></p>
                 <div class="book-price-tag">
-                    <span class="price-value">$<?= htmlspecialchars($book->price ?? '0.00') ?></span>
+                    <span class="price-value">Rs. <?= htmlspecialchars($book->price ?? '0.00') ?></span>
                     <?php if (!empty($book->discount) && $book->discount > 0) : ?>
                         <span class="discount-badge"><?= htmlspecialchars($book->discount ?? '0') ?>% OFF</span>
                     <?php endif; ?>
@@ -68,7 +68,7 @@
                             <span class="detail-value"><?= htmlspecialchars($book->author ?? '') ?></span>
                         </div>
                         <div class="detail-item">
-                            <span class="detail-label">Submitted By</span>
+                            <span class="detail-label">Publisher</span>
                             <span class="detail-value"><?= htmlspecialchars($book->publisher ?? '') ?></span>
                         </div>
                         <div class="detail-item">
@@ -110,7 +110,7 @@
                         
                         <div class="inventory-stat">
                             <div class="stat-circle price-circle">
-                                <span class="stat-number">$<?= htmlspecialchars($book->price ?? '0.00') ?></span>
+                                <span class="stat-number"  style="font-size: 15px;">Rs. <?= htmlspecialchars($book->price ?? '0.00') ?></span>
                             </div>
                             <span class="stat-label">Unit Price</span>
                         </div>

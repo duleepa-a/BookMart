@@ -29,13 +29,11 @@ class UserModel {
     }
 
     public function registerBuyer($userData, $buyerData) {
-        echo(" in function ");
         $userId = $this->insert($userData);
         if ($userId) {
-            echo(" user data done");
             $buyerModel = new BuyerModel();
             $result = $this->findUserByUsernameOrEmail($userData['email']);
-            $user = $result; // Get the first object from the array
+            $user = $result; 
             $buyerData['user_id'] = $user->ID;
             return $buyerModel->insert($buyerData);
         }
@@ -47,10 +45,8 @@ class UserModel {
     }
 
     public function registerBookSeller($userData, $bookSellerData) {
-        echo(" in function ");
         $userId = $this->insert($userData);
         if ($userId) {
-            echo(" user data done");
             $bookSellerModel = new BookSeller();
             $result = $this->findUserByUsernameOrEmail($userData['email']);
             $user = $result;
@@ -65,11 +61,9 @@ class UserModel {
     }
 
     public function registerCourier($userData, $courierData) {
-        echo(" in function ");
         $userId = $this->insert($userData);
         
         if ($userId) {
-            echo(" user data done");
             
             $courierModel = new Courier();
             $result = $this->findUserByUsernameOrEmail($userData['email']);
@@ -91,11 +85,9 @@ class UserModel {
     }
 
     public function registerBookStore($userData, $storeData) {
-        echo(" in function ");
         $userId = $this->insert($userData);
         
         if ($userId) {
-            echo(" user data done");
             
             $storeModel = new BookStore();
             $result = $this->findUserByUsernameOrEmail($userData['email']);
@@ -160,20 +152,12 @@ class UserModel {
 
     
     public function getUserById($user_id) {
-        // Define the query to fetch the user by ID
         $query = 'SELECT * FROM user WHERE ID = :id';
-    
-        // Bind the data for the query
         $data = [':id' => $user_id];
     
-        // Use the getRow method from the Database trait to fetch a single user
         return $this->getRow($query, $data);
     }
 
-
-
-    
-    //admin view all users
     public function getAllUsers(){
         $query = "SELECT * FROM user";
         return $this->query($query);
@@ -192,7 +176,6 @@ class UserModel {
         return $this->query($query, $params);
     }
 
-    // Add to UserModel.php
     public function searchUsers($search, $limit, $offset, $sortClause = "", $role = "") {
         $query = "SELECT * FROM user WHERE (username LIKE :search OR email LIKE :search)";
         if (!empty($role)) {

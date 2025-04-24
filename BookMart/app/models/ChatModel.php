@@ -10,7 +10,8 @@ class ChatModel{
         $query = "SELECT * FROM messages WHERE (sender_id = :user1 AND receiver_id = :user2) 
                   OR (sender_id = :user2 AND receiver_id = :user1) ORDER BY created_at ASC";
 
-        return $this->query($query, ["user1" => $user1, "user2" => $user2]);
+        $result= $this->query($query, ["user1" => $user1, "user2" => $user2]);
+        return is_array($result) ? $result : [];
     }
 
     public function sendMessage($sender_id, $receiver_id, $message) {
@@ -20,8 +21,10 @@ class ChatModel{
     public function markAsRead($receiver_id, $sender_id) {
         $allMessages = $this->where(['receiver_id' => $receiver_id ,"sender_id" => $sender_id ]);
         
-        foreach($allMessages as $message){
-            $this->update($message->id,['is_read' => 1]);
+        if($allMessages){
+            foreach($allMessages as $message){
+                $this->update($message->id,['is_read' => 1]);
+            }
         }
     }
 

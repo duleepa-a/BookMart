@@ -4,7 +4,6 @@ class AdminProfile extends Controller {
     private $userModel;
 
     public function __construct() {
-        // Check if the user is logged in and is an admin or superAdmin
         if (!isset($_SESSION['user_id']) || 
             !isset($_SESSION['user_role']) || 
             ($_SESSION['user_role'] !== 'admin' && $_SESSION['user_role'] !== 'superAdmin')) {
@@ -14,21 +13,18 @@ class AdminProfile extends Controller {
         $this->userModel = $this->model('UserModel');
     }
 
-    // Add this method to handle model loading
     public function model($model) {
         require_once '../app/models/' . $model . '.php';
         return new $model();
     }
 
     public function index() {
-        // Get admin ID from session
         $admin_id = $_SESSION['user_id'] ?? null;
 
         if (!$admin_id) {
             redirect('login');
         }
 
-        // Get admin details from user model
         $userData = $this->userModel->getUserById($admin_id);
 
         $data = [
@@ -40,7 +36,7 @@ class AdminProfile extends Controller {
 
     public function updateUsername() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $adminId = $_SESSION['user_id']; // Get ID from session for security
+            $adminId = $_SESSION['user_id']; 
             $username = trim($_POST['username']);
     
             $errors = [];
@@ -48,9 +44,7 @@ class AdminProfile extends Controller {
                 $errors[] = 'Username is required.';
             }
     
-            // Check if username is taken
             if ($this->userModel->isUsernameTaken($username)) {
-                // Make sure it's not just the current user's username
                 $currentUser = $this->userModel->getUserById($adminId);
                 if (!$currentUser || $currentUser->username !== $username) {
                     $errors[] = 'Username already taken.';
@@ -62,16 +56,12 @@ class AdminProfile extends Controller {
                 redirect('adminProfile');
                 return;
             }
-    
-            // Correct structure: key is column name, value is the new value
-            $result = $this->userModel->update($adminId, ['username' => $username]);
+
+            $this->userModel->update($adminId, ['username' => $username]);
             
-            if ($result) {
-                $_SESSION['error_message'] = 'Failed to update username.';
-            } else {
-                $_SESSION['success_message'] = 'Username updated successfully!';
+        
+            $_SESSION['success_message'] = 'Username updated successfully!';
                 
-            }
             
             redirect('adminProfile');
         } else {
@@ -81,22 +71,23 @@ class AdminProfile extends Controller {
     
     public function changePassword() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $adminId = $_SESSION['user_id']; // Get ID from session for security
+            $adminId = $_SESSION['user_id'];
             $current = $_POST['current_password'];
             $new = $_POST['new_password'];
             $confirm = $_POST['confirm_password'];
     
             $errors = [];
             
-            // Validate passwords
             if (empty($current)) {
                 $errors[] = 'Current password is required.';
             }
             
             if (empty($new)) {
+                
                 $errors[] = 'New password is required.';
-            } elseif (strlen($new) < 8 || !preg_match('/[A-Z]/', $new) || 
-                     !preg_match('/[a-z]/', $new) || !preg_match('/[0-9]/', $new)) {
+            } 
+            elseif(strlen($new) < 8 || !preg_match('/[A-Z]/', $new) || !preg_match('/[a-z]/', $new) || !preg_match('/[0-9]/', $new)){
+
                 $errors[] = 'Password must be at least 8 characters and contain uppercase, lowercase, and numbers.';
             }
             
@@ -104,7 +95,6 @@ class AdminProfile extends Controller {
                 $errors[] = 'New password and confirm password do not match.';
             }
             
-            // Verify current password
             $user = $this->userModel->getUserById($adminId);
             if (!$user || !password_verify($current, $user->password)) {
                 $errors[] = 'Current password is incorrect.';
@@ -116,10 +106,8 @@ class AdminProfile extends Controller {
                 return;
             }
             
-            // Hash the new password
             $hashedPassword = password_hash($new, PASSWORD_DEFAULT);
             
-            // Update the password
             $result = $this->userModel->update($adminId, ['password' => $hashedPassword]);
             
             if ($result) {

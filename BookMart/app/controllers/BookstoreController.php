@@ -133,11 +133,12 @@ class BookstoreController extends Controller{
         $orderModel = new Order();
         $salesByGenre = $orderModel->getSalesByGenre($_SESSION['user_id']);
         $topSellers = $orderModel->getTopSellingBooks($_SESSION['user_id']);
-
+        $monthlySales = $orderModel->getMonthlySalesForSeller($_SESSION['user_id']);
 
         $this->view('bookstoreAnalytics',[
                                             'salesByGenre' => $salesByGenre ,
-                                            'topSellers' => $topSellers
+                                            'topSellers' => $topSellers,
+                                            'monthlySales' => $monthlySales
                                          ]);
     }
 
@@ -352,7 +353,8 @@ class BookstoreController extends Controller{
             $image = $_FILES['image'];
 
             if (empty($title) || empty($image['name'])) {
-                echo "Title and image are required.";
+                $_SESSION['error'] = "Title and image are required.";
+                $this->advertisments();
                 return;
             }
 
@@ -360,7 +362,8 @@ class BookstoreController extends Controller{
             $extension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
 
             if (!in_array($extension, $allowedExtensions)) {
-                echo "Invalid image file type.";
+                $_SESSION['error'] = "Invalid image file type.";
+                $this->advertisments();
                 return;
             }
 
@@ -373,8 +376,8 @@ class BookstoreController extends Controller{
             }
 
             if (!move_uploaded_file($image['tmp_name'], $uploadPath)) {
-                echo "Image upload failed.";
-                $this->orders();
+                $_SESSION['error'] = "Image upload failed.";
+                $this->advertisments();
                 return;
             }
 
@@ -391,10 +394,12 @@ class BookstoreController extends Controller{
             if ($advModel->insert($data)) {
                 $this->advertisments();
             } else {
-                echo "Failed to submit advertisement.";
+                $_SESSION['error'] = "Failed to submit advertisement.";
             }
         } else {
-            echo "Invalid request method.";
+            $_SESSION['error'] = "Invalid request method.";
+            $this->advertisments();
+            return;
         }
     }
 
@@ -405,7 +410,7 @@ class BookstoreController extends Controller{
             $storeAddModel = new StoreAdvModel();
 
             $storeAddModel->delete($adId);
-
+            $_SESSION['success'] = "Advertisment deleted successfully";
             $this->advertisments();
         }
     }
@@ -633,10 +638,24 @@ class BookstoreController extends Controller{
     public function coupons(){
         $couponModel = new CouponModel();
 
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $itemsPerPage = 10;
+        $offset = ($currentPage - 1) * $itemsPerPage;
+
+        $couponModel->setLimit($itemsPerPage);
+        $couponModel->setOffset($offset);
+
+        $totalCoupons = $couponModel->count(['store_id' => $_SESSION['user_id']]);
+
+        $totalPages = ceil($totalCoupons/$itemsPerPage);
+
         $coupons = $couponModel->where(['store_id' => $_SESSION['user_id']]);
 
-
-        $this->view('bookstoreCoupons',['coupons' => $coupons]);
+        $this->view('bookstoreCoupons',[
+                                            'coupons' => $coupons,
+                                            'currentPage' => $currentPage,
+                                            'totalPages' => $totalPages
+                                        ]);
     }
 
     public function addCoupon() {
@@ -658,12 +677,15 @@ class BookstoreController extends Controller{
             ];
 
             if ($couponModel->insert($data)) {
+                $_SESSION['success'] = "Coupon added successfully";
                 redirect('BookstoreController/coupons');
             } else {
-                echo "Failed to add coupon.";
+                $_SESSION['error'] = "Failed to add coupon.";
+                redirect('BookstoreController/coupons');
             }
         } else {
-            echo "Invalid request method.";
+            $_SESSION['error'] = "Invalid request method.";
+            redirect('BookstoreController/coupons');
         }
     }
 
@@ -687,14 +709,17 @@ class BookstoreController extends Controller{
             ];
             $couponModel->update($id, $data);
 
+            $_SESSION['success'] = "coupon updated successfully!";
             redirect('BookstoreController/coupons');
  
         }
         else {
-            echo "Coupon not found or you do not have permission to update it.";
+            $_SESSION['error'] = "Coupon not found or you do not have permission to update it.";
+            redirect('BookstoreController/coupons');
         }
         } else {
-            echo "Invalid request method.";
+            $_SESSION['error'] = "Invalid request method.";
+            redirect('BookstoreController/coupons');
         }
     }
 
@@ -713,15 +738,17 @@ class BookstoreController extends Controller{
             ];
             $couponModel->update($id, $data);
 
+            $_SESSION['success'] = "Status updated successfully";
             redirect('BookstoreController/coupons');
  
         }
         else {
-            echo "Coupon not found or you do not have permission to update it.";
+            $_SESSION['error'] = "Coupon not found or you do not have permission to update it.";
             redirect('BookstoreController/coupons');
         }
         } else {
-            echo "Invalid request method.";
+            $_SESSION['error'] =  "Invalid request method.";
+            redirect('BookstoreController/coupons');
         }
     }
 
@@ -735,15 +762,17 @@ class BookstoreController extends Controller{
             if ($couponModel->first(['id' => $id, 'store_id' => $storeId])) { 
                 $couponModel->delete($id);
 
+                $_SESSION['success'] = "coupon deleted successfully" ;
                 redirect('BookstoreController/coupons');
             }
             else {
-                echo "Coupon not found or you do not have permission to delete it.";
+                $_SESSION['error'] =  "Coupon not found or you do not have permission to delete it.";
                 redirect('BookstoreController/coupons');
             }
         }
         else {
-            echo "Invalid request method.";
+            $_SESSION['error'] =  "Invalid request method.";
+            redirect('BookstoreController/coupons');
         }
     }
 }

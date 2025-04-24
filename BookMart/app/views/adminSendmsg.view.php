@@ -310,12 +310,12 @@
         <div id="alertContainer"></div>
         
         <div class="message-form">
-            <form id="messageForm" action="/AdminSendmsg/send" method="POST" enctype="multipart/form-data">
+            <form id="messageForm" action="<?= ROOT?>/AdminSendmsg/send" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="email" class="form-label">
                         <i class="fas fa-user"></i> Recipient
                     </label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter recipient's email" required>
+                    <input type="email" id="email" name="email" class="form-control" value="<?= $email ?>" placeholder="Enter recipient's email" required>
                 </div>
                 
                 <div class="form-group">
@@ -330,19 +330,6 @@
                         <i class="fas fa-comment-alt"></i> Message
                     </label>
                     <textarea id="message" name="message" class="form-control" placeholder="Type your message here..." required></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-paperclip"></i> Attachment (optional)
-                    </label>
-                    <div class="file-input-wrapper">
-                        <label for="fileInput" class="file-input-label">
-                            <i class="fas fa-upload"></i> Choose File
-                        </label>
-                        <input type="file" id="fileInput" name="attachment" class="file-input">
-                        <span class="file-name" id="fileName">No file chosen</span>
-                    </div>
                 </div>
                 
                 <div class="btn-group">

@@ -43,6 +43,8 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 <div class="sidebar">
     <h3 class="sidebar-heading">Welcome back,<br><?= $_SESSION['full_name'] ?? 'User' ?></h3>
     <ul>
+    <li>
+        <button class="add-book-bttn" onClick="location.href='<?= ROOT ?>/articles/create';"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Create Article</button></li>
         <li>
             <a href="<?= ROOT ?>/buyer/orders" class="<?= strpos($currentPath, '/buyer/orders') || strpos($currentPath, '/Buyer/trackOrder') !== false ? 'active' : '' ?>">
                 <i class="fa-solid fa-cart-plus"></i>Orders
@@ -53,6 +55,8 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                 <i class="fa-solid fa-comment-dots"></i>Reviews
             </a>
         </li>
+        <li><a href="<?= ROOT ?>/auctions" class="<?= strpos($currentPath, '/auctions') !== false ? 'active' : '' ?>"><i class="fa-solid fa-chart-column"></i>Auctions</a></li>
+            <li><a href="<?= ROOT ?>/articles" class="<?= strpos($currentPath, '/articles') !== false && strpos($currentPath, '/myArticles') === false ? 'active' : '' ?>"><i class="fa-solid fa-cart-plus"></i>Articles</a></li>
         <li>
             <a href="<?= ROOT ?>/buyer/myProfile" class="<?= strpos($currentPath, '/buyer/myProfile') !== false ? 'active' : '' ?>">
                 <i class="fa-regular fa-user"></i>Profile
@@ -60,17 +64,18 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         </li>
     </ul>   
 </div>
+<link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/bookSellerAddButton.css">
 
 <?php elseif ($_SESSION['user_role'] == 'admin' || $_SESSION['user_role'] == 'superAdmin'): ?>
     <div class="sidebar">
         <ul>
-            <h3 class="sidebar-heading" style="color: #02224E;">
+            <h3 class="sidebar-heading" style="color: #02224E; margin-bottom:40px">
                 Hi <?= $_SESSION['username'] ?? 'User' ?>
             </h3>
             <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'superAdmin'): ?>
                 <li>
                     <a href="<?= ROOT ?>/SAdminAddAdmin" class="<?= strpos($currentPath, '/SAdminAddAdmin') !== false ? 'active' : '' ?>">
-                        <i class="fa-solid fa-user"></i>Other Admin
+                        <i class="fa-solid fa-user"></i>Add Admin
                     </a>
                 </li>
             <?php endif; ?>
@@ -136,7 +141,7 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         <ul>
             <li>
                 <button class="add-book-bttn">
-                    <span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book
+                    <span class="compose-icon"><i class="fa-solid fa-plus"></i></span><?= strpos($currentPath, '/BookstoreController/coupons') !== false ? 'Add Coupon' : (strpos($currentPath, '/BookstoreController/advertisments') !== false ? 'Post Ads & Offers' : 'Add Book') ?>
                 </button>
             </li>
             <li>

@@ -8,7 +8,7 @@
                     type="text" 
                     name="keyword" 
                     class="search-bar" 
-                    placeholder="Search your book, bookstore"
+                    placeholder="Search your book by title, author.."
                     required  
                 />
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
@@ -45,27 +45,27 @@
                     </select>
                     <a href="<?= ROOT ?>/BookstoreController/myProfile" class="navbar-links">My Profile</a>
                     <a href="<?= ROOT ?>/Chat" class="navbar-links">Chat</a>
-                    <a href="./notifications" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
+                    <a href="<?= ROOT ?>/notifications" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
                 <?php elseif ($_SESSION['user_role'] == 'buyer'): ?>
                     <!-- Links for buyer -->
                     <a href="<?= ROOT ?>/buyer/myProfile" class="navbar-links">My Profile</a>
                     <a href="<?= ROOT ?>/buyer/orders" class="navbar-links">Orders</a>
                     <a href="<?= ROOT ?>/Chat" class="navbar-links">Chat</a>
                     <a href="<?= ROOT ?>/Payment/cartView" class="navbar-links"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
-                    <a href="./notifications" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
+                    <a href="<?= ROOT ?>/notifications" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
                 <?php elseif ($_SESSION['user_role'] == 'bookSeller'): ?>
                     <!-- Links for bookseller -->
                     <a href="<?= ROOT ?>/bookSellerController/myProfile" class="navbar-links">Profile</a>
-                    <a href="<?= ROOT ?>/bookSellerController/listings" class="navbar-links">Listings</a>
+                    <a href="<?= ROOT ?>/bookSellerController/bookSellerListings" class="navbar-links">Listings</a>
                     <a href="<?= ROOT ?>/articles" class="navbar-links">Articles</a>
                     <a href="<?= ROOT ?>/auctions" class="navbar-links">Auctions</a>
                     <a href="<?= ROOT ?>/Payment/cartView" class="navbar-links"><i class="fa-solid fa-cart-shopping"></i></a>
-                    <a href="./notifications" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
+                    <a href="<?= ROOT ?>/notifications" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
                 <?php elseif ($_SESSION['user_role'] == 'admin' || $_SESSION['user_role'] == 'superAdmin'): ?>
                     <!-- Links for admin -->
-                    <a href="" class="navbar-links">My Profile</a>
+                    <a href="<?= ROOT?>/adminProfile" class="navbar-links">My Profile</a>
                     <a href="<?= ROOT ?>/Chat" class="navbar-links">Chat</a>
-                    <a href="" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
+                    <a href="<?= ROOT ?>/notifications" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
                 <?php elseif ($_SESSION['user_role'] == 'courier'): ?>
                     <!-- Links for courier -->
                     <a href="<?= ROOT ?>/CourierProfile" class="navbar-links">My Profile</a>

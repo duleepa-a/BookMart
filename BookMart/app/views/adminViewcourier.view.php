@@ -33,7 +33,7 @@
             </div>
 
             <div class="user-details">
-                <div class="user-name"><?= htmlspecialchars($data['bookseller']->full_name ?? 'Seller Name') ?></div>
+                <div class="user-name"><?= htmlspecialchars($data['courier']->first_name ?? 'courier') ?>  <?= htmlspecialchars($data['courier']->last_name ?? 'name') ?></div>
                 <div class="user-type">Courier</div>
                 <div class="info-row">
                     <span class="label">Status</span>
@@ -48,7 +48,7 @@
                         <?= ($data['user']->active_status ?? '') === 'active' ? 'Suspend' : 'Activate' ?>
                     </button>
                     <a href="<?= ROOT ?>/adminSendmsg?email=<?= htmlspecialchars($data['user']->email ?? '') ?>" class="btn messageBtn">
-                        <i class="fas fa-envelope"></i> Send Message
+                        <i class="fas fa-envelope"></i> Send Mail
                     </a>
                 </div>
             </div>

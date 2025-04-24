@@ -79,7 +79,7 @@ body{
 }
 
 .profile-group {
-    width: 80%;
+    width: 50%;
     margin-bottom: 15px;
 }
 
@@ -104,7 +104,7 @@ body{
     text-align: left;
 }
 
-.profile-group input[type="text"],.profile-group input[type="email"],.profile-group input[type="date"] {
+.profile-group input[type="text"],.profile-group input[type="email"],.profile-group input[type="date"] ,.profile-group input[type="password"]{
     width: 100%;
     padding: 10px;
     border: 1px solid #000000;
@@ -117,13 +117,6 @@ body{
     border: 1px solid #000000;
     font-size: 16px;
     margin-right: 40%;
-}
-
-.profile-group input[type="password"]{
-    width: 90%;
-    padding: 10px;
-    border: 1px solid #000000;
-    font-size: 16px;
 }
 
 .profile-group input[type="text"]::placeholder,.profile-group input[type="email"]::placeholder,.profile-group input[type="password"]::placeholder {
