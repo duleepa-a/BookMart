@@ -52,22 +52,29 @@
                             </div>
 
                             <div class="seller-info">
-                                <img src="/api/placeholder/60/60" alt="Seller" class="seller-avatar">
+                                <?php if (!empty($auction->seller_image)): ?>
+                                    <img id="profileImagePreview" 
+                                        src="<?= ROOT ?>/assets/Images/bookstore-profile-pics/<?= htmlspecialchars($auction->seller_image) ?>" 
+                                        alt="Profile Picture" 
+                                        class="profile-image">
+                                <?php else: ?>
+                                    <div class="profile-placeholder">
+                                        <?= strtoupper(substr($bookSeller->full_name, 0, 2)) ?>
+                                    </div>
+                                <?php endif; ?>
                                 <div class="seller-details">
                                     <div class="seller-name"><?= htmlspecialchars($auction->seller_name) ?></div>
-                                    <div>Member since Jan 2022</div>
                                     <div class="seller-rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>(4.5/5 from 28 ratings)</span>
+                                        <div class="star-rating">
+                                            <?php $percentage = ($auction->seller_rating / 5) * 100; ?>
+                                            <div class="star-rating-filled" style="width: <?= $percentage ?>%"></div>
+                                        </div>
+                                        <span><?= htmlspecialchars($auction->seller_rating) ?></span>
                                     </div>
                                 </div>
-                                <button class="contact-seller">
+                                <!-- <button class="contact-seller">
                                     <i class="fas fa-envelope"></i> Contact
-                                </button>
+                                </button> -->
                             </div>
                         </div>
 
@@ -116,7 +123,7 @@
                                     <form class="bid-form" method="POST" action="<?= ROOT ?>/auctions/completeAuction" enctype="multipart/form-data">
                                         <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
                                         <input type="hidden" name="current_bidder_id" value="<?= htmlspecialchars($auction->current_bidder_id) ?>">
-                                        <button type="submit" class="bid-button complete-auction-btn" <?= $auction->is_closed ? 'disabled' : (isset($auction->winner_user_id) ? '' : 'disabled') ?>>
+                                        <button type="submit" class="bid-button complete-auction-btn" <?= $auction->is_closed ? 'disabled' : (isset($auction->current_bidder_id) ? '' : 'disabled') ?>>
                                             Complete Auction
                                         </button>
                                     </form>
@@ -139,6 +146,8 @@
                                             <form class="bid-form" method="POST" action="<?= ROOT ?>/auctions/buyNow" enctype="multipart/form-data">
                                                 <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
                                                 <input type="hidden" name="book_id" value="<?= htmlspecialchars($auction->book_id) ?>">
+                                                <input type="hidden" name="title" value="<?= htmlspecialchars($auction->title) ?>">
+                                                <input type="hidden" name="seller_id" value="<?= htmlspecialchars($auction->seller_id) ?>">
                                                 <input type="hidden" name="current_price" value="<?= htmlspecialchars($auction->buy_now_price) ?>">
                                                 <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->current_price) ?>">
                                                 <button type='submit' class="bid-button buy-now-btn">
@@ -147,6 +156,8 @@
                                             </form>
                                             <form class="bid-form" method="POST" action="<?= ROOT ?>/auctions/withdraw" enctype="multipart/form-data">
                                                 <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
+                                                <input type="hidden" name="seller_id" value="<?= htmlspecialchars($auction->seller_id) ?>">
+                                                <input type="hidden" name="title" value="<?= htmlspecialchars($auction->title) ?>">
                                                 <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->previous_bid) ?>">
                                                 <input type="hidden" name="is_closed" value="<?= htmlspecialchars($auction->is_closed) ?>">
                                                 <button type='submit' class="bid-button delete-auction-btn">
@@ -155,6 +166,8 @@
                                             </form>
                                         </div>
                                     </div>
+                                <?php else : ?>
+                                    <!-- Non winner no butttons -->
                                 <?php endif; ?>
                             <?php else : ?>
                                 <div class="bid-info">
@@ -174,6 +187,7 @@
                                     <form class="bid-form" method="POST" action="<?= ROOT ?>/auctions/updateBid" enctype="multipart/form-data">
                                         <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
                                         <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->current_price) ?>">
+                                        <input type="hidden" name="current_bidder_id" value="<?= htmlspecialchars($auction->current_bidder_id) ?>">
                                         <input type="hidden" name="bid-amount" id="bid-amount" value="<?= htmlspecialchars($auction->current_price+100) ?>">
                                         <button type="submit" class="bid-button place-bid" <?= ($auction->current_bidder_id == $_SESSION['user_id']) ? 'disabled' : '' ?>>
                                             <i class="fas fa-gavel"></i> Place Bid
@@ -184,6 +198,8 @@
                                         <form class="bid-form" method="POST" action="<?= ROOT ?>/auctions/buyNow" enctype="multipart/form-data">
                                             <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
                                             <input type="hidden" name="book_id" value="<?= htmlspecialchars($auction->book_id) ?>">
+                                            <input type="hidden" name="title" value="<?= htmlspecialchars($auction->title) ?>">
+                                            <input type="hidden" name="seller_id" value="<?= htmlspecialchars($auction->seller_id) ?>">
                                             <input type="hidden" name="current_price" value="<?= htmlspecialchars($auction->buy_now_price) ?>">
                                             <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->current_price) ?>">
                                             <button type='submit' class="bid-button buy-now-btn" <?= empty($auction->buy_now_price) ? 'disabled' : '' ?>>
@@ -192,6 +208,8 @@
                                         </form>
                                         <form class="bid-form" method="POST" action="<?= ROOT ?>/auctions/withdraw" enctype="multipart/form-data">
                                             <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
+                                            <input type="hidden" name="seller_id" value="<?= htmlspecialchars($auction->seller_id) ?>">
+                                            <input type="hidden" name="title" value="<?= htmlspecialchars($auction->title) ?>">
                                             <input type="hidden" name="is_closed" value="<?= htmlspecialchars($auction->is_closed) ?>">
                                             <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->previous_bid) ?>">
                                             <button type='submit' class="bid-button delete-auction-btn" <?= (($auction->current_bidder_id) == $_SESSION['user_id']) ? '' : 'disabled' ?>>

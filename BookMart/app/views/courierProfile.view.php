@@ -13,16 +13,9 @@
 </head>
 <body>
     <?php include 'homeNavBar.view.php'; ?>
-    <div class="sidebar">
-    <ul>
-        <h1 class="sidebar-heading">Welcome Back Courier!</h1>
-        <li><a href="<?= ROOT ?>/" ><i class="fa fa-home"></i> Home</a></li>
-        <li><a href="<?= ROOT ?>/courierEarns"><i class="fa fa-money"></i> Earnings</a></li>
-        <li><a href="<?= ROOT ?>/CourierOrderDetails/OrderPage"><i class="fa fa-clock"></i> My Orders</a></li>
-        <li><a href="<?= ROOT ?>/courierComplains"><i class="fa-solid fa-circle-exclamation"></i> Complains</a></li>
-        <li><a href="<?= ROOT ?>/courierProfile" class="active"><i class="fa fa-user"></i> Profile</a></li>
-    </ul>   
-    </div>
+    
+    <?php include 'commonSidebar.view.php'; ?>
+
     <div class="container">
         <div class="profile-container">
             <h1>My Profile</h1> <br><br>

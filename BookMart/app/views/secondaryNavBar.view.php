@@ -53,7 +53,7 @@
                 <?php elseif ($_SESSION['user_role'] == 'bookSeller'): ?>
                     <!-- Links for bookseller -->
                     <a href="<?= ROOT ?>/bookSellerController/myProfile" class="navbar-links">Profile</a>
-                    <a href="<?= ROOT ?>/bookSellerListings" class="navbar-links">Listings</a>
+                    <a href="<?= ROOT ?>/bookSellerController/listings" class="navbar-links">Listings</a>
                     <a href="<?= ROOT ?>/articles" class="navbar-links">Articles</a>
                     <a href="<?= ROOT ?>/Payment/cartView" class="navbar-links"><i class="fa-solid fa-cart-shopping"></i></a>
                     <a href="<?= ROOT ?>/notifications" class="navbar-links"><i class="fa-solid fa-bell"></i></a>

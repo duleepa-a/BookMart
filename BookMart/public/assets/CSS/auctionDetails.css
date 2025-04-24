@@ -114,6 +114,43 @@ body {
     font-size: 0.9rem;
 }
 
+.profile-image {
+    margin-top: 5px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+
+.star-rating {
+    position: relative;
+    display: inline-block;
+    font-size: 1.2rem;
+    line-height: 1;
+    color: #ccc; 
+}
+
+.star-rating::before {
+    content: "★★★★★"; 
+    letter-spacing: 1px;
+}
+
+.star-rating-filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #ffc107; 
+}
+
+.star-rating-filled::before {
+    content: "★★★★★";
+    letter-spacing: 1px;
+    }
+  
+
 .auction-info {
     background-color: #f9f9f9;
     border-radius: 10px;

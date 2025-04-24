@@ -24,6 +24,18 @@ class NotificationModel {
             'is_read' => 0,
             'created_at' => date('Y-m-d H:i:s')
         ];
+
+        /*
+
+            // Example of how to use the NotificationModel in the controller
+            $notificationModel = new NotificationModel();
+                $notificationModel->createNotification(
+                    user_id,
+                    'Title',
+                    'Content',
+                    'Link to page -> format example -> (  /auctions/details/' . $auctionData['id']  )
+                );
+        */
     
         return $this->insert($data);
     }
