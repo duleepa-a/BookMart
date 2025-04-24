@@ -6,14 +6,34 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     <div class="sidebar">
         <h3 class="sidebar-heading">Welcome back,<br><?= $_SESSION['full_name'] ?? 'User' ?></h3>
         <ul>
-            <li><button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button></li>
-            <li><button class="add-book-bttn" onClick="location.href='<?= ROOT ?>/articles/create';"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Create Article</button></li>
-            <li><a href="<?= ROOT ?>/bookSellerController/listings" class="<?= strpos($currentPath, '/bookSellerController/listings') !== false ? 'active' : '' ?>" class="active" ><i class="fa-solid fa-book"></i>My Listings</a></li>
-            <li><a href="<?= ROOT ?>/auctions" class="<?= strpos($currentPath, '/auctions') !== false ? 'active' : '' ?>"><i class="fa-solid fa-chart-column"></i>Auctions</a></li>
-            <li><a href="<?= ROOT ?>/articles" class="<?= strpos($currentPath, '/articles') !== false && strpos($currentPath, '/myArticles') === false ? 'active' : '' ?>"><i class="fa-solid fa-cart-plus"></i>Articles</a></li>
+            <li>
+                <button class="add-book-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add book</button>
+            </li>
+            <li>
+                <button class="add-book-bttn" onClick="location.href='<?= ROOT ?>/articles/create';"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Create Article</button>
+            </li>
+            <li>
+                <a href="<?= ROOT ?>/bookSellerController/listings" class="<?= strpos($currentPath, '/bookSellerController/listings') !== false ? 'active' : '' ?>" class="active" ><i class="fa-solid fa-book"></i>My Listings</a>
+            </li>
+            <li>
+                <a href="<?= ROOT ?>/auctions" class="<?= strpos($currentPath, '/auctions') !== false ? 'active' : '' ?>"><i class="fa-solid fa-chart-column"></i>Auctions</a>
+            </li>
+            <li>
+                <a href="<?= ROOT ?>/articles" class="<?= strpos($currentPath, '/articles') !== false && strpos($currentPath, '/myArticles') === false ? 'active' : '' ?>"><i class="fa-solid fa-cart-plus"></i>Articles</a>
+            </li>
             <li>
                 <a href="<?= ROOT ?>/BookstoreController/payRolls" class="<?= strpos($currentPath, '/BookstoreController/payRolls') !== false ? 'active' : '' ?>">
                     <i class="fa-solid fa-money-bill"></i>Payrolls
+                </a>
+            </li>
+            <li>
+            <a href="<?= ROOT ?>/buyer/orders" class="<?= strpos($currentPath, '/buyer/orders') || strpos($currentPath, '/Buyer/trackOrder') !== false ? 'active' : '' ?>">
+                <i class="fa-solid fa-cart-plus"></i>Orders
+            </a>
+            </li>
+            <li>
+                <a href="<?= ROOT ?>/buyer/reviews" class="<?= strpos($currentPath, '/buyer/reviews') || strpos($currentPath, '/buyer/addReview') !== false ? 'active' : '' ?>">
+                    <i class="fa-solid fa-comment-dots"></i>Reviews
                 </a>
             </li>
             <li><a href="<?= ROOT ?>/bookSellerController/myProfile" class="<?= strpos($currentPath, '/bookSellerController/myProfile') !== false ? 'active' : '' ?>"><i class="fa-regular fa-user"></i>Profile</a></li>

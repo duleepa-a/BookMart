@@ -196,8 +196,6 @@ class Auctions extends Controller {
             $bookModel = new BookModel();
             $bookModel->query($query, $params);
 
-            //Buy now function
-
             $bookModel = new BookModel();
             $bookModel->update($auctionData['book_id'], ['status' => 'removed']);
 
@@ -208,7 +206,8 @@ class Auctions extends Controller {
                 'The book ' . trim($_POST['title']) . ' that was placed for auction has been sold.'
             );
             
-            redirect('auctions');
+            $qty = 1;
+            redirect("payment/checkOut/{$auctionData['book_id']}/{$qty}");
         } else {
             redirect('auctions/details/' . trim($_POST['auction_id']));
         }
