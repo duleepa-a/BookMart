@@ -146,6 +146,8 @@
                                             <form class="bid-form" method="POST" action="<?= ROOT ?>/auctions/buyNow" enctype="multipart/form-data">
                                                 <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
                                                 <input type="hidden" name="book_id" value="<?= htmlspecialchars($auction->book_id) ?>">
+                                                <input type="hidden" name="title" value="<?= htmlspecialchars($auction->title) ?>">
+                                                <input type="hidden" name="seller_id" value="<?= htmlspecialchars($auction->seller_id) ?>">
                                                 <input type="hidden" name="current_price" value="<?= htmlspecialchars($auction->buy_now_price) ?>">
                                                 <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->current_price) ?>">
                                                 <button type='submit' class="bid-button buy-now-btn">
@@ -154,6 +156,8 @@
                                             </form>
                                             <form class="bid-form" method="POST" action="<?= ROOT ?>/auctions/withdraw" enctype="multipart/form-data">
                                                 <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
+                                                <input type="hidden" name="seller_id" value="<?= htmlspecialchars($auction->seller_id) ?>">
+                                                <input type="hidden" name="title" value="<?= htmlspecialchars($auction->title) ?>">
                                                 <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->previous_bid) ?>">
                                                 <input type="hidden" name="is_closed" value="<?= htmlspecialchars($auction->is_closed) ?>">
                                                 <button type='submit' class="bid-button delete-auction-btn">
@@ -194,6 +198,8 @@
                                         <form class="bid-form" method="POST" action="<?= ROOT ?>/auctions/buyNow" enctype="multipart/form-data">
                                             <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
                                             <input type="hidden" name="book_id" value="<?= htmlspecialchars($auction->book_id) ?>">
+                                            <input type="hidden" name="title" value="<?= htmlspecialchars($auction->title) ?>">
+                                            <input type="hidden" name="seller_id" value="<?= htmlspecialchars($auction->seller_id) ?>">
                                             <input type="hidden" name="current_price" value="<?= htmlspecialchars($auction->buy_now_price) ?>">
                                             <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->current_price) ?>">
                                             <button type='submit' class="bid-button buy-now-btn" <?= empty($auction->buy_now_price) ? 'disabled' : '' ?>>
@@ -202,6 +208,8 @@
                                         </form>
                                         <form class="bid-form" method="POST" action="<?= ROOT ?>/auctions/withdraw" enctype="multipart/form-data">
                                             <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
+                                            <input type="hidden" name="seller_id" value="<?= htmlspecialchars($auction->seller_id) ?>">
+                                            <input type="hidden" name="title" value="<?= htmlspecialchars($auction->title) ?>">
                                             <input type="hidden" name="is_closed" value="<?= htmlspecialchars($auction->is_closed) ?>">
                                             <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->previous_bid) ?>">
                                             <button type='submit' class="bid-button delete-auction-btn" <?= (($auction->current_bidder_id) == $_SESSION['user_id']) ? '' : 'disabled' ?>>
