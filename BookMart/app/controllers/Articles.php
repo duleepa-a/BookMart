@@ -39,6 +39,10 @@ class Articles extends Controller {
         $articleModel = new ArticleModel();
         $articles = $articleModel->getArticleById($article_id);
         $recArticles = $articleModel->getRecomendedArticles($article_id);
+
+        if (!$articles) {
+            redirect('articles?view=latest');
+        }
         
         $data = [
             'articles' => $articles[0],

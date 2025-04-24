@@ -77,9 +77,8 @@ class AuctionModel {
         
         $result = $this->insert($auctionData);
         if ($result) {
-            $query = "UPDATE listings SET status = 'auction' WHERE book_id = :book_id";
-            $params = ['book_id' => $data['book_id']];
-            $this->query($query, $params); 
+            $bookModel = new BookModel();
+            $bookModel->update($data['book_id'], ['status' => 'auction']);
         }
         return $result;
     }
@@ -108,14 +107,6 @@ class AuctionModel {
         }
 
         $result = $this->update($data['id'], $auctionData);
-
-        if(isset($data['sold']) && $data['sold'] == '1') {
-            if ($data['is_closed'] == '1') {
-                $query = "UPDATE listings SET status = 'sold' WHERE book_id = :book_id";
-                $params = ['book_id' => $data['book_id']];
-                $this->query($query, $params); 
-            }
-        }
         
         return $result;
 

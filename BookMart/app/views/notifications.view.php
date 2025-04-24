@@ -20,7 +20,6 @@
     <?php include 'commonSidebar.view.php'; ?>
     <!-- Sidebar division end -->
     
-    <center>
     <div class="container">
         <h1 class="title-text">Notifications</h1>
         <br>
@@ -37,9 +36,11 @@
                         </div>
                         <div class="notification-content">
                             <p><?= htmlspecialchars($notification->content) ?></p>
-                            <?php if(!empty($notification->link)): ?>
-                                <a href="<?= ROOT ?><?= htmlspecialchars($notification->link) ?>">View in page</a>
-                            <?php endif; ?>
+                            <div class="link-wrapper">
+                                <?php if(!empty($notification->link)): ?>
+                                    <a href="<?= ROOT ?><?= htmlspecialchars($notification->link) ?>" class="page-link">Go to page<i class="fa-solid fa-arrow-right"></i></a>
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <div class="notification-footer">
                             <div class="notification-actions">
@@ -79,18 +80,16 @@
                 <?php endif; ?>
 
             <?php else: ?>
-                <p>No notifications found.</p>
+                <center>
+                    <p>No notifications found.</p>
+                </center>
             <?php endif; ?>
-        </div>
-        
+
+        <!-- Footer division begin -->
+        <?php include 'smallFooter.view.php'; ?>
+        <!-- Footer division end -->
+
     </div>
-    </center>
-
-    <br><br>
-
-    <!-- Footer division begin -->
-    <?php include 'bookSellerFooter.view.php'; ?>
-    <!-- Footer division end -->
 
     <script>
     document.querySelectorAll('.delete-notification-btn').forEach(button => {

@@ -82,7 +82,7 @@
                             <td>Rs. <?= number_format($book->price * (1 - $book->discount/100), 2) ?></td>
                             <td><?= htmlspecialchars($book->quantity ?? '0') ?></td>
                             <td class="status <?= ($book->status == 'available') ? 'available' : (($book->status == 'auction') ? 'auction' : (($book->status == 'sold') ? 'sold' : (($book->status == 'delivery') ? 'delivery' : 'completed'))) ?>">
-                            <?= ($book->status == 'available') ? 'Available' : (($book->status == 'auction') ? 'Auction' : (($book->status == 'sold') ? 'Sold' : (($book->status == 'delivery') ? 'Delivery' : 'Completed'))) ?>
+                            <?= ($book->status == 'available') ? 'Available' : (($book->status == 'auction') ? 'Auction' : 'Removed') ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

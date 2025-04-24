@@ -116,7 +116,7 @@
                                     <form class="bid-form" method="POST" action="<?= ROOT ?>/auctions/completeAuction" enctype="multipart/form-data">
                                         <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
                                         <input type="hidden" name="current_bidder_id" value="<?= htmlspecialchars($auction->current_bidder_id) ?>">
-                                        <button type="submit" class="bid-button complete-auction-btn" <?= $auction->is_closed ? 'disabled' : (isset($auction->winner_user_id) ? '' : 'disabled') ?>>
+                                        <button type="submit" class="bid-button complete-auction-btn" <?= $auction->is_closed ? 'disabled' : (isset($auction->current_bidder_id) ? '' : 'disabled') ?>>
                                             Complete Auction
                                         </button>
                                     </form>
@@ -155,6 +155,8 @@
                                             </form>
                                         </div>
                                     </div>
+                                <?php else : ?>
+                                    <!-- Non winner no butttons -->
                                 <?php endif; ?>
                             <?php else : ?>
                                 <div class="bid-info">
@@ -174,6 +176,7 @@
                                     <form class="bid-form" method="POST" action="<?= ROOT ?>/auctions/updateBid" enctype="multipart/form-data">
                                         <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
                                         <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->current_price) ?>">
+                                        <input type="hidden" name="current_bidder_id" value="<?= htmlspecialchars($auction->current_bidder_id) ?>">
                                         <input type="hidden" name="bid-amount" id="bid-amount" value="<?= htmlspecialchars($auction->current_price+100) ?>">
                                         <button type="submit" class="bid-button place-bid" <?= ($auction->current_bidder_id == $_SESSION['user_id']) ? 'disabled' : '' ?>>
                                             <i class="fas fa-gavel"></i> Place Bid
