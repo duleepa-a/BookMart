@@ -47,6 +47,8 @@
                     <a href="<?= ROOT ?>/notifications" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
                 <?php elseif ($_SESSION['user_role'] == 'buyer'): ?>
                     <!-- Links for buyer -->
+                    <a href="<?= ROOT ?>/articles" class="navbar-links">Articles</a>
+                    <a href="<?= ROOT ?>/auctions" class="navbar-links">Auctions</a>
                     <a href="<?= ROOT ?>/Chat" class="navbar-links">Chat</a>
                     <a href="<?= ROOT ?>/Payment/cartView" class="navbar-links"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
                     <a href="<?= ROOT ?>/notifications" class="navbar-links"><i class="fa-solid fa-bell fa-lg"></i></a>
@@ -55,6 +57,8 @@
                     <a href="<?= ROOT ?>/bookSellerController/myProfile" class="navbar-links">Profile</a>
                     <a href="<?= ROOT ?>/bookSellerController/listings" class="navbar-links">Listings</a>
                     <a href="<?= ROOT ?>/articles" class="navbar-links">Articles</a>
+                    <a href="<?= ROOT ?>/auctions" class="navbar-links">Auctions</a>
+                    <a href="<?= ROOT ?>/Chat" class="navbar-links">Chat</a>
                     <a href="<?= ROOT ?>/Payment/cartView" class="navbar-links"><i class="fa-solid fa-cart-shopping"></i></a>
                     <a href="<?= ROOT ?>/notifications" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
                 <?php elseif ($_SESSION['user_role'] == 'admin' || $_SESSION['user_role'] == 'superAdmin'): ?>

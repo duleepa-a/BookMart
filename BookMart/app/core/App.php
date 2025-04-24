@@ -72,6 +72,8 @@ class App{
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],
+            'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle'],
+            'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],
             'Buyer' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile','updateLoginDetails','updatePersonalDetails','refundRequest','addRefundRequest','deleteReview'],
             'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
             'Payment' => ['index','checkOut','process','success','cancel','cartView','addToCart','cartCheckout','cartSuccess','increase','decrease','deleteSelected','clear','removeBook','deleteSelected'],
