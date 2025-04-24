@@ -75,7 +75,27 @@ body {
 .notification-content {
     color: #333;
     line-height: 1.6;
-    text-align: left;
+}
+
+.link-wrapper {
+    text-align: right;
+}
+
+.page-link {
+    color: #BE5715;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    gap: 8px;
+    transition: color 0.2s ease;
+}
+
+.page-link:hover {
+    color: #02224E;
+}
+
+.page-link i {
+    font-size: 0.9rem;
 }
 
 .notification-footer {
