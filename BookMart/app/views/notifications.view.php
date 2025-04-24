@@ -27,7 +27,7 @@
         <div class="notifications-container">
             <?php if (!empty($data['notifications'])): ?>
                 <?php foreach ($data['notifications'] as $notification): ?>
-                    <div class="notification-card" data-id="<?= htmlspecialchars($notification->id) ?>">
+                    <div class="notification-card <?= ($notification->is_read) ? "read" : '' ?>" data-id="<?= htmlspecialchars($notification->id) ?>">
                         <div class="notification-header">
                             <h2><?= htmlspecialchars($notification->title) ?></h2>
                             <span class="notification-meta"> | 
@@ -50,7 +50,7 @@
                                 </button>
 
                                 
-                                <button class="mark-read-btn" data-id="<?= htmlspecialchars($notification->id) ?>">
+                                <button class="mark-read-btn" style="visibility:<?= ($notification->is_read) ? "hidden" : "visible" ?>" data-id="<?= htmlspecialchars($notification->id) ?>">
                                     <i class="fa-solid fa-check"></i> Mark as Read
                                 </button>
                                 
