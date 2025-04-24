@@ -133,11 +133,12 @@ class BookstoreController extends Controller{
         $orderModel = new Order();
         $salesByGenre = $orderModel->getSalesByGenre($_SESSION['user_id']);
         $topSellers = $orderModel->getTopSellingBooks($_SESSION['user_id']);
-
+        $monthlySales = $orderModel->getMonthlySalesForSeller($_SESSION['user_id']);
 
         $this->view('bookstoreAnalytics',[
                                             'salesByGenre' => $salesByGenre ,
-                                            'topSellers' => $topSellers
+                                            'topSellers' => $topSellers,
+                                            'monthlySales' => $monthlySales
                                          ]);
     }
 
@@ -633,10 +634,24 @@ class BookstoreController extends Controller{
     public function coupons(){
         $couponModel = new CouponModel();
 
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $itemsPerPage = 10;
+        $offset = ($currentPage - 1) * $itemsPerPage;
+
+        $couponModel->setLimit($itemsPerPage);
+        $couponModel->setOffset($offset);
+
+        $totalCoupons = $couponModel->count(['store_id' => $_SESSION['user_id']]);
+
+        $totalPages = ceil($totalCoupons/$itemsPerPage);
+
         $coupons = $couponModel->where(['store_id' => $_SESSION['user_id']]);
 
-
-        $this->view('bookstoreCoupons',['coupons' => $coupons]);
+        $this->view('bookstoreCoupons',[
+                                            'coupons' => $coupons,
+                                            'currentPage' => $currentPage,
+                                            'totalPages' => $totalPages
+                                        ]);
     }
 
     public function addCoupon() {

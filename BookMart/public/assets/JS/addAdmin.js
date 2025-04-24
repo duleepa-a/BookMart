@@ -1,36 +1,33 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Admin form handler loaded");
     
-    // Get the modal and buttons
     const modal = document.getElementById('add-modal');
     const addAdminButton = document.querySelector('.add-bttn');
     const closeModalButton = document.querySelector('.close-modal');
     const addForm = document.querySelector('.add-form');
     
-    // Show modal when Add Admin button is clicked
     if (addAdminButton) {
         addAdminButton.addEventListener('click', function(e) {
             console.log("Button clicked");
-            e.preventDefault(); // Prevent the default link behavior
+            e.preventDefault(); 
             modal.classList.remove('hidden');
         });
     }
 
-    // Hide modal when Cancel button is clicked
+
     if (closeModalButton) {
         closeModalButton.addEventListener('click', function() {
             modal.classList.add('hidden');
         });
     }
 
-    // Close modal when clicking outside of it
+
     window.addEventListener('click', function(event) {
         if (event.target === modal) {
             modal.classList.add('hidden');
         }
     });
-    
-    // Username and password validation
+
     const usernameInput = document.getElementById("username");
     const usernameError = document.querySelector(".error");
     const usernameValid = document.querySelector(".valid");
@@ -46,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let usernameIsValid = false;
     let passwordIsValid = false;
     
-    // Username validation
     if (usernameInput) {
         usernameInput.addEventListener("input", function() {
             const username = usernameInput.value;
@@ -81,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Email validation
     if (emailInput) {
         emailInput.addEventListener("input", function() {
             const email = emailInput.value;
@@ -113,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Validate password strength
     if (passwordInput) {
         passwordInput.addEventListener("input", function() {
             const password = passwordInput.value;
@@ -125,17 +119,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
             if (strongPasswordRegex.test(password)) {
                 passwordIsValid = true;
-                passwordStrength.style.display = "inline"; // Show strong message
-                passwordStrengthWeak.style.display = "none"; // Hide weak message
+                passwordStrength.style.display = "inline"; 
+                passwordStrengthWeak.style.display = "none"; 
             } else {
                 passwordIsValid = false;
-                passwordStrength.style.display = "none"; // Hide strong message
-                passwordStrengthWeak.style.display = "inline"; // Show weak message
+                passwordStrength.style.display = "none"; 
+                passwordStrengthWeak.style.display = "inline"; 
             }
         });
     }
     
-    // Confirm password match
     if (confirmPasswordInput) {
         confirmPasswordInput.addEventListener("input", function() {
             if (passwordInput.value !== confirmPasswordInput.value) {
@@ -150,18 +143,17 @@ document.addEventListener('DOMContentLoaded', function() {
     button.addEventListener('click', function() {
         const userId = this.dataset.userid;
         const toggle = document.querySelector(`.status-toggle[data-userid="${userId}"]`);
-        const status = toggle.checked ? 1 : 0;
+        const status = toggle.checked ? 'active' : 'inactive';
         const label = toggle.closest('td').querySelector('.status-label');
         
-        // Create a FormData object
         const formData = new FormData();
         formData.append('ID', userId);
         formData.append('active_status', status);
+
+        console.log(formData);
         
-        // Use the correct endpoint URL
         const url = `${window.location.origin}/BookMart/public/SAdminAddAdmin/updateAdminStatus`;
         
-        // Send the request
         fetch(url, {
             method: 'POST',
             body: formData
@@ -174,18 +166,15 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             if (data.success) {
-                // Update label
-                label.textContent = status ? 'active' : 'inactive';
+
+                label.textContent = status;
                 label.className = 'status-label px-2 py-1 rounded-full text-sm ' + 
                                 (status ? 'bg-green-200 text-green-600' : 'bg-red-200 text-red-600');
-                
-                // Show success message
-                alert("Status saved successfully!");
+                window.location.reload();
+               
             } else {
-                // Show error message
-                alert("Failed to update status.");
-                // Revert toggle if update failed
                 toggle.checked = !toggle.checked;
+                window.location.reload();
             }
         })
         .catch(error => {

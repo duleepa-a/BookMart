@@ -13,53 +13,6 @@ body {
     background-color: #F1F1F1;
 }
 
-.sidebar {
-    width: 15%;
-    height: 100vh;
-    background-color: #f6f8fc;
-    position: fixed;
-    top: 9%;
-    left: 0;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.001);
-}
-
-.sidebar ul {
-    margin-top: 20px;
-    list-style-type: none;
-    padding: 0;
-}
-
-.sidebar ul li {
-    margin-right: 10px;
-}
-
-.sidebar ul li a {
-    display: block;
-    padding: 10px;
-    font-size: 16px;
-    color: #000;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-
-.sidebar ul li a i {
-    margin-left: 20px;
-    margin-right: 15px;
-}
-
-.sidebar ul li a:hover{
-    background-color: #eaeaea;
-    color: #333;
-}
-
-.sidebar ul li a.active {
-    background-color: #f4e2d7;
-    color: #BE5715;
-    font-weight: 600;
-}
-
 .container{
     width:85%;
     margin-top: 6%;
@@ -336,13 +289,11 @@ body {
 }
 
 
-/* The hover effect needs to be handled differently */
 .rating-container input:checked + label,
 .rating-container input:checked + label ~ label {
   color: #ffb700;
 }
 
-/* For hover effect */
 .rating-container label:hover,
 .rating-container label:hover ~ label {
   color: #ffb700;
@@ -364,6 +315,7 @@ body {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
 }
+
 textarea {
   width: 100%;
   height: 100%;
@@ -405,6 +357,7 @@ textarea {
 }
 
 .seller-review-icons-unique {
+  cursor: pointer;
   display: flex;
   gap: 12px;
 }
@@ -412,6 +365,26 @@ textarea {
 .seller-review-icons-unique i {
   font-size: 20px;
   color: #777;
+}
+
+.seller-review-icons-unique label i{
+  font-size: 24px;
+  color: #aaa; 
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+
+#seller-bad:checked + label i{
+  color: red;
+}
+
+#seller-neutral:checked + label i{
+  color: orange;
+}
+
+#seller-good:checked + label i{
+  color: green;
 }
 
 

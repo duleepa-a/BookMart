@@ -9,8 +9,7 @@ class AdminViewseller extends Controller {
         }
         
         if(!$id) {
-            // Handle error - no ID provided
-            $this->redirect('adminViewallusers');
+            redirect('adminViewallusers');
             return;
         }
         

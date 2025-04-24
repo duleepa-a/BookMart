@@ -55,9 +55,57 @@ class Admin extends Controller {
         $bookstoreModel->update($id, ['status'=>'approved']);
 
         $bookstore = $bookstoreModel->findById($id);
+
         if ($bookstore) {
             $userModel = new UserModel();
             $userModel->update($bookstore->user_id, ['active_status'=>'active']);
+        }
+
+        $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+        
+        $email = $bookstore->owner_email;
+        $subject = "Your BookMart Registration Has Been Approved";
+
+        $message = "
+        Dear ".$bookstore->owner_name.",
+
+        We are pleased to inform you that your registration request to join BookMart has been successfully approved.
+
+        You can now log in to your account using the credentials you provided during registration. Simply visit our login page and enter your email and password to access your bookstore dashboard.
+
+        From your dashboard, you’ll be able to:
+        - Add and manage your book listings
+        - View and handle orders
+        - Post advertisements
+        - Track sales and performance
+
+        If you encounter any issues logging in or have questions about using the platform, feel free to reach out to our support team at bookmart.info.lk@gmail.com 
+
+        Welcome to the BookMart community—we're excited to have you on board!
+
+        Best regards,
+        BookMart Team
+        ";
+
+
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'duleepa24@gmail.com';
+            $mail->Password = 'dnbzkaydjffxlrkx';
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
+
+            $mail->setFrom('duleepa24@gmail.com', 'BookMart');
+            $mail->addAddress($email);
+            $mail->Subject = $subject;
+            $mail->Body = $message;
+
+            $mail->send();
+            $_SESSION['message'] = 'Email sent successfully!';
+        } catch (\PHPMailer\PHPMailer\Exception $e) {
+            $_SESSION['message'] = 'Mailer Error: ' . $mail->ErrorInfo;
         }
 
         redirect('admin/bookstoreView');

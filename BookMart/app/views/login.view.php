@@ -10,14 +10,6 @@
     <title>Book Mart</title>
 </head>
 <body>
-    <!-- <div class="navBar">
-        <span class = "title">
-            <h2>BookMart</h2>
-        </span>
-        <span class = "SignIn">
-            <p>Sign in</p>
-        </span>
-    </div> -->
     <div class="container">
         <div class="first-half">
             <div class="navBar-left">

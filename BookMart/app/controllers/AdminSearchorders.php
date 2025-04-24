@@ -6,12 +6,11 @@ class AdminSearchorders extends Controller {
         $searchQuery = isset($_GET['search']) ? trim($_GET['search']) : '';
         $sort = isset($_GET['sort']) ? trim($_GET['sort']) : '';
         
-        // Pagination parameters
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit = 1; // Books per page (adjusted to 3 as per your comment)
+        $limit = 5; 
         $offset = ($page - 1) * $limit;
         
-        // Build the sort clause
+
         $sortClause = "";
         if ($sort) {
             switch ($sort) {
@@ -31,25 +30,20 @@ class AdminSearchorders extends Controller {
                     $sortClause = " ORDER BY b.title ASC";
             }
         } else {
-            $sortClause = " ORDER BY b.title ASC"; // Default sorting
+            $sortClause = " ORDER BY b.title ASC";
         }
         
-        // Get orders based on search query and sorting
+  
         if (!empty($searchQuery)) {
-            // Get paginated search results
             $orders = $orderModel->searchOrders($searchQuery, $limit, $offset, $sortClause, $sort);
-            // Get total count for pagination
             $totalOrders = $orderModel->countSearchResults($searchQuery, $sort);
         } else {
-            // Get all orders when no search is performed
             $orders = $orderModel->findAll($limit, $offset, $sortClause);
-            // Get total count for pagination
             $totalOrders = $orderModel->count();
         }
         
-        $totalPages = ceil($totalOrders / $limit); // Calculate the total number of pages
+        $totalPages = ceil($totalOrders / $limit);
         
-        // Pass data to the view
         $this->view('adminSearchorders', [
             'order' => $orders,
             'searchQuery' => $searchQuery,

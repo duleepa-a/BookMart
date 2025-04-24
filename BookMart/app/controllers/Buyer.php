@@ -261,6 +261,17 @@ class Buyer extends Controller{
         $this->view('buyerReview', ['orders' => $unreviewedOrders ,'history' => $history]);
     }
     
+    public function deleteReview($reviewId){    
+        $reviewModel = new ReviewModel();
+        $orderModel = new Order();
+
+        $orderModel->update($reviewModel->first(['id' => $reviewId])->order_id,["order_status" => "completed"]);
+
+        $reviewModel->delete($reviewId);
+
+        $this->reviews();
+    }
+
     public function updatePersonalDetails() {
         if (!isset($_SESSION['user_id'])) {
             redirect('login');

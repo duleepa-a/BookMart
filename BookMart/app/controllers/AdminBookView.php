@@ -121,13 +121,11 @@ class AdminBookView extends Controller {
             $bookModel = new BookModel();
             $id = $_POST['book_id'];
             
-            $result = $bookModel->delete($id);
+            $result = $bookModel->update($id,['status' => 'removed']);
             
             if($result) {
-                // Success - set a success message
                 $_SESSION['success_message'] = "Book successfully deleted";
             } else {
-                // Failed - set an error message
                 $_SESSION['error_message'] = "Failed to delete book. It may be referenced by other records.";
             }
         }

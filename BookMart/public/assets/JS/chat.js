@@ -23,21 +23,18 @@ document.addEventListener("DOMContentLoaded", function () {
                         messageElement.classList.add("message-sent");
                     }
     
-                    // Message content
                     const messageText = document.createElement("p");
                     messageText.classList.add("message-text");
-                    messageText.textContent = msg.message;
-    
-                    // Timestamp
+                    messageText.textContent = msg.message || "";
+
                     const messageTime = document.createElement("span");
                     if (msg.sender_id == receiverId) {
                         messageTime.classList.add("message-time");
                     } else { 
                         messageTime.classList.add("message-time-sent");
                     }
-                    messageTime.textContent = formatTimestamp(msg.created_at);
-    
-                    // Append elements
+                    messageTime.textContent = msg.created_at ? formatTimestamp(msg.created_at) : "";  
+              
                     messageElement.appendChild(messageText);
                     messageElement.appendChild(messageTime);
                     chatMessages.appendChild(messageElement);
@@ -50,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("Error fetching messages:", error));
     }
     
-    // Format timestamp function
     function formatTimestamp(timestamp) {
         const date = new Date(timestamp);
         return date.toLocaleString("en-US", {
@@ -90,14 +86,13 @@ document.addEventListener("DOMContentLoaded", function () {
     
     chatInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter" && !event.shiftKey) {
-            event.preventDefault(); // Prevents adding a new line
+            event.preventDefault(); 
             sendMessage();
         }
     });
 
     chatSendButton.addEventListener("click", sendMessage);
 
-    // Auto fetch messages every second
     setInterval(fetchMessages, 1000);
     fetchMessages();
 });

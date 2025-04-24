@@ -14,14 +14,9 @@
     <!-- navBar division begin -->
     <?php include 'secondaryNavBar.view.php'; ?>        
     <!-- navBar division end -->
-    <div class="sidebar">
-        <h3 class="sidebar-heading">Welcome back,<br>Duleepa Edirisinghe</h3>
-        <ul>
-            <li><a href="<?= ROOT ?>/buyer/orders" ><i class="fa-solid fa-cart-plus"></i>Orders</a></li>
-            <li><a href="<?= ROOT ?>/buyer/reviews" class="active"><i class="fa-solid fa-comment-dots"></i>Reviews</a></li>
-            <li><a href="<?= ROOT ?>/buyer/myProfile"><i class="fa-regular fa-user"></i>Profile</a></li>
-        </ul>   
-    </div>
+   <!-- navBar sideBar begin -->
+   <?php include 'commonSidebar.view.php'; ?>
+    <!-- navBar sideBar end -->
     <div class="container">
         <h1 class="heading">Add Review</h1>
         <form id="reviewForm" class="review-card-unique" method="POST" action="<?= ROOT ?>/Buyer/submitReview/" >
@@ -57,11 +52,11 @@
                 <p class="seller-review-header">Your seller review:</p>
                 <div class="seller-review-icons-unique">
                     <input type="radio" id="seller-bad" name="seller_rating" value="1" hidden>
-                    <label for="seller-bad"><i class="far fa-frown"></i></label>
+                        <label for="seller-bad"><i class="far fa-frown"></i></label>
                     <input type="radio" id="seller-neutral" name="seller_rating" value="2" hidden>
-                    <label for="seller-neutral"><i class="far fa-meh"></i></label>
+                        <label for="seller-neutral"><i class="far fa-meh"></i></label>
                     <input type="radio" id="seller-good" name="seller_rating" value="3" hidden>
-                    <label for="seller-good"><i class="far fa-smile"></i></label>
+                        <label for="seller-good"><i class="far fa-smile"></i></label>
                 </div>
                 <input type="hidden" name="book_id" value="<?= $book_id ?>">
                 <input type="hidden" name="order_id" value="<?= $order_id ?>">

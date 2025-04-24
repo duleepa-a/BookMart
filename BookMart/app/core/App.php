@@ -67,14 +67,14 @@ class App{
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle'],
             'BookSellerSidebar' => ['index'],
             'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],
-            'Buyer' => ['refundRequest','addRefundRequest'],
+            'Buyer' => ['refundRequest','addRefundRequest','deleteReview'],
             'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
             'Payment' => ['index','checkOut','process','success','cancel','cartView'],
             'Notifications' => ['index','deleteNotification','markAsRead'],
         ],
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],
-            'Buyer' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile','updateLoginDetails','updatePersonalDetails','refundRequest','addRefundRequest'],
+            'Buyer' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile','updateLoginDetails','updatePersonalDetails','refundRequest','addRefundRequest','deleteReview'],
             'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
             'Payment' => ['index','checkOut','process','success','cancel','cartView','addToCart','cartCheckout','cartSuccess','increase','decrease','deleteSelected','clear','removeBook','deleteSelected']
         ],

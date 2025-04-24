@@ -26,7 +26,7 @@
         <?php endif; ?>
         
         <?php if(isset($_SESSION['error'])): ?>
-            <div class="alert error"><?= $_SESSION['error']; unset($_SESSION['error']); ?></div>
+            <div class="alert error"><?= show($_SESSION['error']); unset($_SESSION['error']); ?></div>
         <?php endif; ?>
         
         <div class= "box">
@@ -44,6 +44,7 @@
                             <th>User Name</th>
                             <th>Email</th>
                             <th>Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,25 +54,32 @@
                                 foreach ($data['user'] as $admin): 
                                     if ($admin->role === 'admin'): 
                                         $hasAdmin = true;
-                                        $statusClass = isset($admin->active_status) && $admin->active_status == 1 ? 'active' : 'inactive';
+                                        $statusClass = isset($admin->active_status) && $admin->active_status == 'active' ? 'active' : 'inactive';
                             ?>
                                 <tr class="add-row">
                                     <td><?= $admin->username ?></td>
                                     <td><?= $admin->email ?></td>
                                     
                                     <td>
-                                        <span class="status-label px-2 py-1 rounded-full text-sm <?= $admin->active_status ? 'bg-green-200 text-green-600' : 'bg-red-200 text-red-600' ?>">
-                                        <?= $admin->active_status ? 'active' : 'inactive' ?>
+                                        <span class="status-label px-2 py-1 rounded-full text-sm <?= $admin->active_status == 'active'? 'bg-green-200 text-green-600' : 'bg-red-200 text-red-600' ?>">
+                                        <?= $admin->active_status ?>
                                         </span>
 
                                         <label class="switch ml-2">
                                         <input type="checkbox"
                                                 class="status-toggle"
                                                 data-userid="<?= $admin->ID ?>"
-                                                <?= $admin->active_status ? 'checked' : '' ?>>
+
+                                                <?= $admin->active_status == "active" ? 'checked' : '' ?>>
                                         <span class="slider round"></span>
                                         </label>
                                     </td>
+                                    <td>
+                                        <button class="save-status-btn"
+                                                data-userid="<?= $admin->ID ?>"
+                                        >
+                                            Update 
+                                        </button>
                                     </td>
                                 </tr>
                             <?php 

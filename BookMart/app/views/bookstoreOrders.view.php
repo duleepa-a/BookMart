@@ -308,7 +308,6 @@
                     const cells = row.querySelectorAll("td");
                     let matchFound = false;
 
-                    // Check relevant cells: Book Title, Customer Name, Shipping Address, Contact No, Shipped Date, Completed Date, Status
                     const searchableColumns = [0,1,2,3,4,7,8];
 
                     searchableColumns.forEach(index => {

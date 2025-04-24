@@ -10,7 +10,7 @@ class AdminViewshops extends Controller {
         
         if(!$id) {
             // Handle error - no ID provided
-            $this->redirect('adminViewshops');
+            redirect('adminViewshops');
             return;
         }
         
@@ -28,7 +28,8 @@ class AdminViewshops extends Controller {
         
         // orders
         if ($bookstoreInfo) {
-            $orders = $order->query("SELECT o.*, b.title, b.genre, b.price 
+            $orders = $order->query(
+                                    "SELECT o.*, b.title, b.genre, b.price 
                                     FROM orders o
                                     LEFT JOIN book b ON o.book_id = b.id
                                     WHERE o.seller_id = :seller_id 
@@ -39,7 +40,8 @@ class AdminViewshops extends Controller {
         }
 
         //review
-        $reviews = $review->query("SELECT r.*, b.title, bu.full_name
+        $reviews = $review->query(
+                                    "SELECT r.*, b.title, bu.full_name
                                     FROM review r
                                     LEFT JOIN book b ON r.book_id = b.id
                                     LEFT JOIN buyer bu ON r.buyer_id = bu.user_id

@@ -97,11 +97,24 @@ class Order {
             JOIN book b ON o.book_id = b.id
             WHERE o.seller_id = :seller_id
             GROUP BY o.book_id
-            ORDER BY total_sales DESC ";
+            ORDER BY total_sales DESC limit 5 ";
 
-        $this->query($query,[':seller_id' => $sellerId]);
+        return $this->query($query,[':seller_id' => $sellerId]);
     }
 
+    public function getMonthlySalesForSeller($seller_id){
+        $query = "SELECT 
+                    DATE_FORMAT(created_on, '%Y-%m') AS month,
+                    SUM(total_amount) AS monthly_sales
+                FROM $this->table
+                WHERE 
+                    seller_id = :seller_id
+                    AND created_on >= DATE_SUB(CURDATE(), INTERVAL 5 MONTH)
+                GROUP BY month
+                ORDER BY month DESC";
+
+        return $this->query($query, ['seller_id' => $seller_id]);
+    }
 
     //ADMIN
     public function searchOrders($keyword, $limit = null, $offset = 0, $sortClause = "", $searchField = "") {

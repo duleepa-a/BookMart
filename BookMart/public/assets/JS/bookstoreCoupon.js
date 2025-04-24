@@ -62,27 +62,25 @@ document.querySelectorAll(".modal-overlay").forEach((overlay) => {
 
 document.addEventListener("DOMContentLoaded", function () {
     const searchBar = document.querySelector(".inventory-search-bar");
-    const tableRows = document.querySelectorAll(".inventory-table tbody .book-row");
+    const tableRows = document.querySelectorAll(".inventory-table tbody tr");
 
     searchBar.addEventListener("input", function () {
         const searchQuery = searchBar.value.toLowerCase();
 
         tableRows.forEach(row => {
-            const title = row.dataset.title.toLowerCase();
-            const author = row.dataset.author.toLowerCase();
-            const genre = row.dataset.genre.toLowerCase();
-            const publisher = row.dataset.publisher.toLowerCase();
+            const cells = row.querySelectorAll("td");
+            let matchFound = false;
 
-            if (
-                title.includes(searchQuery) || 
-                author.includes(searchQuery) || 
-                genre.includes(searchQuery) || 
-                publisher.includes(searchQuery)
-            ) {
-                row.style.display = ""; 
-            } else {
-                row.style.display = "none"; 
-            }
+            const searchableColumns = [0,1,2,3,4];
+
+            searchableColumns.forEach(index => {
+                const cellText = cells[index]?.textContent.toLowerCase();
+                if (cellText && cellText.includes(searchQuery)) {
+                    matchFound = true;
+                }
+            });
+
+            row.style.display = matchFound ? "" : "none";
         });
     });
 });

@@ -8,23 +8,19 @@ class AdminOrderView extends Controller {
     
         $order_id = $_GET['order_id'];
     
-        // Load the model
         $orderModel = new Order();
         $order = $orderModel->findById($order_id);
     
-        // Check if the order exists
         if (!$order) {
             die('Order not found');
         }
     
-        // Pass the order data to the view
         $this->view('adminOrderView', ['order' => $order]);
     }
     
-    // Add this method for book listing with pagination
     public function list($page = 1) {
         $page = max(1, (int)$page);
-        $perPage = 11; // 11 books per page
+        $perPage = 11;
         $offset = ($page - 1) * $perPage;
         
         $orderModel = new Order();
@@ -40,7 +36,7 @@ class AdminOrderView extends Controller {
         ]);
     }
     
-    // Add this method for searching with pagination
+   
     public function search() {
         $keyword = $_GET['keyword'] ?? '';
         $page = max(1, (int)($_GET['page'] ?? 1));

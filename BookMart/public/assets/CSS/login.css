@@ -209,3 +209,69 @@ body{
     font-size: 15px;
     font-weight: 400;
   }
+
+  @media screen and (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .first-half {
+      display: none;
+    }
+  
+    .second-half {
+      width: 100%;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .login-form-container {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .form-group {
+      width: 100%;
+      margin-left: 0;
+    }
+  
+    label {
+      margin-left: 0;
+    }
+  
+    input[type='text'],
+    input[type='email'],
+    input[type='password'],
+    textarea {
+      margin-left: 0;
+      width: 100%;
+    }
+  
+    .login-text-heading,
+    .login-text {
+      margin-left: 0;
+      text-align: center;
+    }
+  
+    button[type='submit'] {
+      width: 100%;
+    }
+  
+    .navBar-right {
+      display: none;
+    }
+  
+    .transperant-bttn {
+      margin-left: 0;
+      margin-top: 10px;
+    }
+  
+    .title {
+      text-align: center;
+      margin: 10px 0;
+    }
+    
+  }
+  

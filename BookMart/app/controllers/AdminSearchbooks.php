@@ -6,7 +6,6 @@ class AdminSearchbooks extends Controller {
         $searchQuery = isset($_GET['search']) ? trim($_GET['search']) : '';
         $sort = isset($_GET['sort']) ? trim($_GET['sort']) : '';
         
-        // Build the sort clause
         $sortClause = "";
         if ($sort) {
             switch ($sort) {
@@ -23,47 +22,41 @@ class AdminSearchbooks extends Controller {
                     $sortClause = " ORDER BY title ASC";
             }
         } else {
-            $sortClause = " ORDER BY title ASC"; // Default sorting
+            $sortClause = " ORDER BY title ASC"; 
         }
         
-        // Determine search field based on sort selection
         $searchField = "";
         if (!empty($searchQuery) && !empty($sort)) {
-            $searchField = $sort; // Use the sort field as the search field
+            $searchField = $sort; 
         }
-        
-        // Get total count for pagination (before applying pagination limits)
+
         if (!empty($searchQuery)) {
             $totalBooks = $bookModel->countSearchResults($searchQuery, $searchField);
         } else {
             $totalBooks = $bookModel->count();
         }
+
+        $limit = 3; 
+        $totalPages = ceil($totalBooks / $limit);
         
-        // Pagination parameters - calculate after getting total count
-        $limit = 3; // Books per page
-        $totalPages = ceil($totalBooks / $limit); // Calculate the total number of pages
-        
-        // Make sure the page is valid
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         if ($page < 1) $page = 1;
         if ($page > $totalPages && $totalPages > 0) $page = $totalPages;
         
         $offset = ($page - 1) * $limit;
-        
-        // Now get the books for the current page
+
         if (!empty($searchQuery)) {
-            $books = $bookModel->searchBooks($searchQuery, $limit, $offset, $sortClause, $searchField);
+            $books = $bookModel->adminsearchBooks($searchQuery, $limit, $offset, $sortClause, $searchField);
         } else {
-            $books = $bookModel->findAll($limit, $offset, $sortClause);
+            $books = $bookModel->adminFindAllBooks($limit, $offset, $sortClause);
         }
-        
-        // Pass data to the view
+
         $this->view('adminSearchbooks', [
-            'book' => $books,
-            'searchQuery' => $searchQuery,
-            'currentPage' => $page,
-            'totalPages' => $totalPages,
-            'sort' => $sort
-        ]);
+                                            'book' => $books,
+                                            'searchQuery' => $searchQuery,
+                                            'currentPage' => $page,
+                                            'totalPages' => $totalPages,
+                                            'sort' => $sort
+                                         ]);
     }
 }

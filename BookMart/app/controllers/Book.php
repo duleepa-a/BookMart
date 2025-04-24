@@ -51,7 +51,7 @@ class Book extends Controller{
 
     public function getBooksByBookstore($bookstoreId) {
         $bookModel = new BookModel();
-        return $bookModel->where(['seller_id' => $bookstoreId]);
+        return $bookModel->where(['seller_id' => $bookstoreId, 'status' => 'available']);
     }
 
     public function getBooksByGenre($genre) {

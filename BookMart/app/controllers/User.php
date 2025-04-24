@@ -314,8 +314,7 @@ class User extends Controller {
         
                   
                     if ($this->userModel->registerBookStore($userData, $storeData)) {
-                        echo "Bookstore registration successful!";
-                        redirect('login'); 
+                        $this->view('bookstoreAfterRegistration',[ 'bookstore'=> $storeData ]); 
                     } else {
                         echo "Something went wrong during the registration process!";
                     }
@@ -419,19 +418,29 @@ class User extends Controller {
                 $bookstore = new BookstoreController();
                 $buyer = new Buyer();
                 $bookSeller = new BookSellerController();
+                $courier = new CourierProfile();
 
                 $userRole = $_SESSION['user_role'];
 
                 if ($newPassword !== $confirmPassword) {
                     $_SESSION['error'] = "New passwords do not match.";
-                    if($userRole =='bookStore'){
-                        $bookstore->myProfile();
-                    }
-                    else if($userRole == 'buyer'){
-                        $buyer->myProfile();
-                    }
-                    else if($userRole == 'bookSeller'){
-                        $bookSeller->myProfile();
+                    
+                    switch($userRole){
+                        case 'bookStore' :
+                            $bookstore->myProfile();
+                            break;
+                        case 'bookSeller' :
+                            $bookSeller->myProfile();
+                            break;
+                        case 'courier' :
+                            $courier->index();
+                            break;
+                        case 'buyer' :
+                            $buyer->myProfile();
+                            break;
+                        default:
+                            redirect("/home");
+                            break;
                     }
                 }
 
@@ -449,26 +458,43 @@ class User extends Controller {
                     $userModel->update($userId,['password'=> $hashedPassword]);
 
                     $_SESSION['success'] = "Password changed successfully.";
-                    if($userRole =='bookStore'){
-                        $bookstore->myProfile();
-                    }
-                    else if($userRole == 'buyer'){
-                        $buyer->myProfile();
-                    }
-                    else if($userRole == 'bookSeller'){
-                        $bookSeller->myProfile();
+
+                    switch($userRole){
+                        case 'bookStore' :
+                            $bookstore->myProfile();
+                            break;
+                        case 'bookSeller' :
+                            $bookSeller->myProfile();
+                            break;
+                        case 'courier' :
+                            $courier->index();
+                            break;
+                        case 'buyer' :
+                            $buyer->myProfile();
+                            break;
+                        default:
+                            redirect("/home");
                     }
                     
                 } else {
                     $_SESSION['error'] = "Current password is incorrect.";
-                    if($userRole =='bookStore'){
-                        $bookstore->myProfile();
-                    }
-                    else if($userRole == 'buyer'){
-                        $buyer->myProfile();
-                    }
-                    else if($userRole == 'bookSeller'){
-                        $bookSeller->myProfile();
+
+                    switch($userRole){
+                        case 'bookStore' :
+                            $bookstore->myProfile();
+                            break;
+                        case 'bookSeller' :
+                            $bookSeller->myProfile();
+                            break;
+                        case 'courier' :
+                            $courier->index();
+                            break;
+                        case 'buyer' :
+                            $buyer->myProfile();
+                            break;
+                        default:
+                            redirect("/home");
+                            break;
                     }
                 }
             }

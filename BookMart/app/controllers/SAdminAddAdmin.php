@@ -99,14 +99,13 @@ class SAdminAddAdmin extends Controller {
     
         $result = $userModel->update($userId, ['active_status' => $status]);
     
-        if ($result) {
-            error_log("Status updated successfully for user $userId to $status");
-            echo json_encode(['success' => true]);
-        } else {
-            error_log("Failed to update status for user $userId");
-            echo json_encode(['success' => false, 'message' => 'Failed to update status']);
-        }
+        error_log("Status updated successfully for user $userId to $status");
+
+        $_SESSION['success'] = "Status updated successfully for user $userId to $status";
+        
+        echo json_encode(['success' => true]);
+     
+
     }
     
-
 }

@@ -61,10 +61,10 @@ const salesCtx = document.getElementById('salesChart').getContext('2d');
 new Chart(salesCtx, {
     type: 'bar',
     data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        labels: monthlyLabels,
         datasets: [{
             label: 'Monthly Sales',
-            data: [4000, 3000, 5000, 4500, 6000, 5500],
+            data: monthlyData,
             backgroundColor: 'rgba(75, 192, 192, 0.6)',
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 1
