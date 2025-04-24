@@ -97,7 +97,7 @@
         <div class="modal" id="update-book-modal">
             <div class="modal-overlay"></div>
             <div class="modal-content">
-                <form class="update-book-form" method="POST" action="<?= ROOT ?>/bookSellerListings/updateBook" enctype="multipart/form-data">
+                <form class="update-book-form" method="POST" action="<?= ROOT ?>/bookSellerController/updateBook" enctype="multipart/form-data">
                     <h2>Update Book</h2>
                     <input type="hidden" id="update-book-id" name="book_id">
                     <div>
@@ -181,7 +181,7 @@
         <div class="modal" id="delete-book-modal">
             <div class="modal-overlay"></div>
             <div class="modal-content">
-                <form class="delete-book-form" method="POST" action="<?= ROOT ?>/bookSellerListings/deleteBook">
+                <form class="delete-book-form" method="POST" action="<?= ROOT ?>/bookSellerController/deleteBook">
                     <h2>Confirm Deletion</h2>
                     <input type="hidden" id="delete-book-ids" name="book_id">
                     

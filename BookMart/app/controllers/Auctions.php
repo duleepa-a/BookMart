@@ -67,10 +67,6 @@ class Auctions extends Controller {
     
         $mainAuction = $auctionModel->getAuctionWithBook($id);
 
-        if (!$mainAuction) {
-            redirect('auctions');
-        }
-
         if ($mainAuction && !$mainAuction->is_closed) {
             $timeQuery = "SELECT NOW() as server_time";
             $result = $auctionModel->query($timeQuery);
@@ -126,7 +122,7 @@ class Auctions extends Controller {
             
             redirect('auctions');
         } else {
-            redirect('bookSellerListings');
+            redirect('bookSellerController/listings');
         }
     }
 

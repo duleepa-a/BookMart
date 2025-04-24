@@ -56,9 +56,9 @@
                 <?php elseif ($_SESSION['user_role'] == 'bookSeller'): ?>
                     <!-- Links for bookseller -->
                     <a href="./bookSellerController/myProfile" class="navbar-links">Profile</a>
-                    <a href="./bookSellerListings" class="navbar-links">Listings</a>
-                    <a href="./bookSellerSales" class="navbar-links">Sales</a>
+                    <a href="./bookSellerController/listings" class="navbar-links">Listings</a>
                     <a href="./articles" class="navbar-links">Articles</a>
+                    <a href="./auctions" class="navbar-links">Auctions</a>
                     <a href="<?= ROOT ?>/Payment/cartView" class="navbar-links"><i class="fa-solid fa-cart-shopping"></i></a>
                     <a href="./notifications" class="navbar-links"><i class="fa-solid fa-bell"></i></a>
                 <?php elseif ($_SESSION['user_role'] == 'admin' || $_SESSION['user_role'] == 'superAdmin'): ?>

@@ -52,22 +52,29 @@
                             </div>
 
                             <div class="seller-info">
-                                <img src="/api/placeholder/60/60" alt="Seller" class="seller-avatar">
+                                <?php if (!empty($auction->seller_image)): ?>
+                                    <img id="profileImagePreview" 
+                                        src="<?= ROOT ?>/assets/Images/bookstore-profile-pics/<?= htmlspecialchars($auction->seller_image) ?>" 
+                                        alt="Profile Picture" 
+                                        class="profile-image">
+                                <?php else: ?>
+                                    <div class="profile-placeholder">
+                                        <?= strtoupper(substr($bookSeller->full_name, 0, 2)) ?>
+                                    </div>
+                                <?php endif; ?>
                                 <div class="seller-details">
                                     <div class="seller-name"><?= htmlspecialchars($auction->seller_name) ?></div>
-                                    <div>Member since Jan 2022</div>
                                     <div class="seller-rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>(4.5/5 from 28 ratings)</span>
+                                        <div class="star-rating">
+                                            <?php $percentage = ($auction->seller_rating / 5) * 100; ?>
+                                            <div class="star-rating-filled" style="width: <?= $percentage ?>%"></div>
+                                        </div>
+                                        <span><?= htmlspecialchars($auction->seller_rating) ?></span>
                                     </div>
                                 </div>
-                                <button class="contact-seller">
+                                <!-- <button class="contact-seller">
                                     <i class="fas fa-envelope"></i> Contact
-                                </button>
+                                </button> -->
                             </div>
                         </div>
 

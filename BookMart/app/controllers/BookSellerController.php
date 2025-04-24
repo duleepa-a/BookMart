@@ -6,6 +6,157 @@ class BookSellerController extends Controller{
         $this->view('bookSellerHome');
     }
 
+    public function listings() {
+        $id=$_SESSION['user_id'];
+        $books = $this->getBooksByBookSeller($id);
+
+        $data = ['inventory' => $books,
+                ];
+        $this->view('bookSellerListings',$data);
+    }
+
+    public function addBook(){
+        $bookModel = new BookModel();
+        echo("addBook");
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            echo("addBook POST in");
+
+            $bookData = [
+                'title' => trim($_POST['title']),
+                'ISBN' => trim($_POST['ISBN']),
+                'author' => trim($_POST['author']),
+                'genre' => trim($_POST['genre']),
+                'publisher' => trim($_POST['publisher']),
+                'price' => filter_var(trim($_POST['price']), FILTER_VALIDATE_FLOAT),
+                'discount' => filter_var(trim($_POST['discount']), FILTER_VALIDATE_FLOAT),
+                'quantity' => filter_var(trim($_POST['quantity']), FILTER_VALIDATE_INT),
+                'book_condition' => trim($_POST['book_condition']),
+                'language' => trim($_POST['language']),
+                'description' => trim($_POST['description']),
+                'seller_id' => $_SESSION['user_id'],
+            ];
+           
+            if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] == 0) {
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                $fileExtension = strtolower(pathinfo($_FILES['cover_image']['name'], PATHINFO_EXTENSION));
+
+                if (in_array($fileExtension, $allowedExtensions)) {
+                    $uploadDir = 'C:\xampp\htdocs\BookMart\public\assets\Images\book cover images';
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0777, true); 
+                    }
+                    $filename= uniqid() . '.' . $fileExtension;
+                    $filePath = $uploadDir. '\\' . $filename; 
+                    if (!file_exists($_FILES['cover_image']['tmp_name'])) {
+                        echo "Temporary file does not exist!<br>";
+                    }
+                    if (!is_dir($uploadDir)) {
+                        echo "Directory does not exist. Creating: $uploadDir<br>";
+                        mkdir($uploadDir, 0777, true);
+                    }
+                    if (!is_writable($uploadDir)) {
+                        echo "Directory is not writable: $uploadDir<br>";
+                    }
+                    if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $filePath)) {
+                        $bookData['cover_image'] = $filename;
+                    } else {
+                        echo "Error uploading cover image!";
+                        return;
+                    }
+                } else {
+                    echo "Invalid file type!";
+                    return;
+                }
+            } else {
+                echo "Cover image is required!";
+                return;
+            }
+
+            if ($bookModel->insert($bookData)) {
+                redirect('bookSellerController/listings');
+            } else {
+                echo "Something went wrong!";
+            }
+        } else {
+            echo("addBook GET request");
+            $this->view('addBook');
+        }
+    }
+
+    public function updateBook(){
+        $bookModel = new BookModel();
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $bookId = $_POST['book_id'];
+
+            $bookData = [
+                'title' => trim($_POST['title']),
+                'ISBN' => trim($_POST['ISBN']),
+                'author' => trim($_POST['author']),
+                'genre' => trim($_POST['genre']),
+                'publisher' => trim($_POST['publisher']),
+                'price' => filter_var(trim($_POST['price']), FILTER_VALIDATE_FLOAT),
+                'discount' => filter_var(trim($_POST['discount']), FILTER_VALIDATE_FLOAT),
+                'quantity' => filter_var(trim($_POST['quantity']), FILTER_VALIDATE_INT),
+                'book_condition' => trim($_POST['book_condition']),
+                'language' => trim($_POST['language']),
+                'description' => trim($_POST['description']),
+            ];
+
+            show($bookData);
+
+            if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] == 0) {
+                
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                $fileExtension = strtolower(pathinfo($_FILES['cover_image']['name'], PATHINFO_EXTENSION));
+
+                if (in_array($fileExtension, $allowedExtensions)) {
+                    $uploadDir = 'C:\xampp\htdocs\BookMart\public\assets\Images\book cover images';
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0777, true);
+                    }
+
+                    $filename = uniqid() . '.' . $fileExtension;
+                    $filePath = $uploadDir . '\\' . $filename;
+
+                    if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $filePath)) {
+                        $bookData['cover_image'] = $filename;
+                    } else {
+                        echo "Error uploading cover image!";
+                        return;
+                    }
+                } else {
+                    echo "Invalid file type!";
+                    return;
+                }
+            }
+            if (!($bookModel->update($bookId, $bookData))) {
+                redirect('bookSellerController/listings');
+            } else {
+                echo "Something went wrong while updating the book!";
+            }
+        } else {
+            echo "Invalid request method!";
+        }
+    }
+
+    public function deleteBook(){
+        $bookModel = new BookModel();
+        $id = $_POST['book_id'];
+        
+        show($id);
+        $bookModel->update($id,['status' => 'removed']);
+        redirect('bookSellerController/listings');
+        
+    }
+
+    public function getBooksByBookSeller($id) {
+        $bookModel = new BookModel();
+
+        return $bookModel->where(['seller_id' => $id], ['status' => 'removed']) ?? null;
+
+    }
+
     public function orders() {
         $buyerModel = new BookSeller();
         $buyerId = $buyerModel->first(['user_id' => $_SESSION['user_id']])->id;
