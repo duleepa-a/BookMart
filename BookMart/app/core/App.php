@@ -58,12 +58,12 @@ class App{
             'Book' => ['addBook','updateBook','deleteBook'],
             'User' => ['like','changePassword'],
             'Payment' => ['payAd','adSuccess','adCancel'],
+            'Notifications' => ['index','deleteNotification','markAsRead'],
         ],
         'bookSeller' => [
             'BookSellerHome' => ['index','storePage', 'viewSales'],
             'BookSellerController' => ['index', 'listings', 'addBook', 'updateBook', 'deleteBook', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile','updateLoginDetails','updatePersonalDetails', 'updateBankDetails', 'uploadProfilePicture'],
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle'],
-            'BookSellerSidebar' => ['index'],
             'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],
             'Buyer' => ['refundRequest','addRefundRequest'],
             'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
@@ -74,7 +74,8 @@ class App{
             'BuyerHome' => ['index', 'viewOrders'],
             'Buyer' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile','updateLoginDetails','updatePersonalDetails','refundRequest','addRefundRequest'],
             'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
-            'Payment' => ['index','checkOut','process','success','cancel','cartView','addToCart','cartCheckout','cartSuccess','increase','decrease','deleteSelected','clear','removeBook','deleteSelected']
+            'Payment' => ['index','checkOut','process','success','cancel','cartView','addToCart','cartCheckout','cartSuccess','increase','decrease','deleteSelected','clear','removeBook','deleteSelected'],
+            'Notifications' => ['index','deleteNotification','markAsRead'],
         ],
         'courier' => [
             'CourierProfile' => ['index','updatePersonalDetails','updateBankDetails','updateVehicalDetails'],
@@ -82,7 +83,8 @@ class App{
             'CourierEarns' => ['index'],
             'CourierComplains' => ['index','create'],
             'Map' =>['index'],
-            'BookstoreController' => ['payRolls']
+            'BookstoreController' => ['payRolls'],
+            'Notifications' => ['index','deleteNotification','markAsRead'],
         ]
     ];
     

@@ -80,8 +80,30 @@ class Auctions extends Controller {
                 ];
                 $auctionModel->updateAuction($auctionData);
                 $mainAuction = $auctionModel->getAuctionWithBook($id);
+                
+                $notificationModel = new NotificationModel();
+                $notificationModel->createNotification(
+                    $mainAuction->seller_id,
+                    'Auction Update',
+                    'The auction for' . $mainAuction->title . ' has ended.',
+                    '/auctions/details/' . $auctionData['id']
+                );
+                if($mainAuction->winner_user_id) {
+                    $notificationModel->createNotification(
+                        $mainAuction->winner_user_id,
+                        'Auction Update',
+                        'The auction has been completed. 
+                        Congratulations!! You have won the auction.',
+                        '/auctions/details/' . $auctionData['id']
+                    );
+                }
             }
         }
+
+        if(!$mainAuction) {
+            redirect('auctions');
+        }
+
         $auctions = $auctionModel->getActiveAuctions($limit + 1);
     
         if (!empty($auctions)) {
@@ -105,7 +127,6 @@ class Auctions extends Controller {
     public function createAuction() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
-            // Get form data
             $auctionData = [
                 'book_id' => trim($_POST['book_id']),
                 'seller_id' => $_SESSION['user_id'],
@@ -116,7 +137,6 @@ class Auctions extends Controller {
                 'end_time' => trim($_POST['end_time']),
             ];
             
-            // Create auction
             $auction = new AuctionModel();
             $auction->createAuction($auctionData);
             
@@ -129,7 +149,6 @@ class Auctions extends Controller {
     public function updateBid() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
-            // Get form data
             $auctionData = [
                 'id' => trim($_POST['auction_id']),
                 'current_price' => filter_var(trim($_POST['bid-amount']), FILTER_VALIDATE_FLOAT),
@@ -139,7 +158,6 @@ class Auctions extends Controller {
                 'is_closed' => 0,
             ];
             
-            // Update auction
             $auction = new AuctionModel();
             $auction->updateAuction($auctionData);
 
@@ -173,12 +191,24 @@ class Auctions extends Controller {
             $auction = new AuctionModel();
             $auction->updateAuction($auctionData);
 
+            $query = "UPDATE book SET price = :price, discount = :discount WHERE id = :id";
+            $params = ['id' => $auctionData['book_id'], 'discount' => 0, 'price' => $auctionData['current_price']];
+            $bookModel = new BookModel();
+            $bookModel->query($query, $params);
+
             //Buy now function
 
             $bookModel = new BookModel();
             $bookModel->update($auctionData['book_id'], ['status' => 'removed']);
+
+            $notificationModel = new NotificationModel();
+            $notificationModel->createNotification(
+                trim($_POST['seller_id']),
+                'Auction Update',
+                'The book ' . trim($_POST['title']) . ' that was placed for auction has been sold.'
+            );
             
-            redirect('auctions/details/' . trim($_POST['auction_id']));
+            redirect('auctions');
         } else {
             redirect('auctions/details/' . trim($_POST['auction_id']));
         }
@@ -247,6 +277,13 @@ class Auctions extends Controller {
             $is_closed = trim($_POST['is_closed']);
     
             if ($is_closed == 1) {
+                $notificationModel = new NotificationModel();
+                $notificationModel->createNotification(
+                    trim($_POST['seller_id']),
+                    'Auction Update',
+                    'The winner has withdrawn his bid from auction for book ' . trim($_POST['title']) . '.',
+                    '/auctions/details/' . $auctionData['id']
+                );
                 redirect('auctions');
             }
             else {
