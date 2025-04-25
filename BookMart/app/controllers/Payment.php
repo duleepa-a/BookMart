@@ -139,6 +139,22 @@ class Payment extends Controller{
             'payment_amount' => $orderData['total_amount']
         ];
         $payment=$paymentModel->insert($paymentData);
+
+
+        $userModel = new UserModel(); 
+        if ($userModel->getRole($book->seller_id) == 'bookSeller') {
+            $bookModel = new BookModel();
+            $bookModel->update($book->id, ['status' => 'removed']);
+        }
+
+        $notificationModel = new NotificationModel();
+            $notificationModel->createNotification(
+            trim($orderData['seller_id']),
+            'Order Placed',
+            'A new order has been placed for the book ' . trim($book->title) . '.',
+            '/bookstoreController/orderView/' . $orderId,
+        );
+        
     
         $this->view('paymentSuccess',['payment' => $payment]);
     }
