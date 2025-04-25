@@ -23,7 +23,7 @@
                 <nav class="tabs">
                     <button class="tab-button active first-child" onclick="showTab('personal-details')">Personal Details</button>
                     <button class="tab-button" onclick="showTab('bank-details')">Bank Details</button>
-                    <button class="tab-button" onclick="showTab('vehical-details')">Vehical Details</button>
+                    <button class="tab-button" onclick="showTab('vehical-details')">Vehicle Details</button>
                     <button class="tab-button last-child" onclick="showTab('change-password')">Change Password</button>
                 </nav>
                 <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/courierProfile/updatePersonalDetails"  >

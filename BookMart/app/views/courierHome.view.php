@@ -21,13 +21,13 @@
     <main>
         <section class="orders-section">
             <h2>Available Orders</h2>
-            <div class="sort-by">
+            <!-- <div class="sort-by">
                 <select id="sort-by" name="sort-by" class="sort-bttn">
                     <option value="" disabled selected>Sort by</option>
                     <option value="date">Date</option>
                     <option value="distance">Distance</option>
                 </select>
-            </div>
+            </div> -->
 
             <div class="order-list" >
                 
