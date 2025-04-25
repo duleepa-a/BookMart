@@ -215,7 +215,7 @@
     height: 90%;
 }
 
-..earnings-title {
+.earnings-title {
     /* text-align: center;
     color: #2c3e50;
     margin-bottom: 20px;
@@ -224,13 +224,16 @@
         color: #d95e00;
         font-size: 32px;
         font-weight: bold;
-        margin-bottom: 10px;
-    
-    
+        /* margin-bottom: 10px; */
+        margin-top: 130px; /* Adjust as needed */
+        z-index: 1;
+        transform: translateX(-180px); /* move 10px to the left */
 }
 
 .container{
     width: 100%;
+    border: #f6f8fc;
+    box-sizing: border-box;
   }
     /* Contact Container */
     .contact-container {
@@ -263,11 +266,13 @@
       flex-direction: column;
       gap: 20px;
       text-align: left;
+      transform: translateX(-160px); /* move 10px to the left */
     }
     
     .contact-form label {
       font-weight: bold;
       text-align: left;
+      
     }
     
     .contact-form input,
@@ -294,3 +299,62 @@
       background-color: #b5651d;
       color: #fff;
     }
+    
+
+  
+  /* Tablet screens */
+  @media (max-width: 768px) {
+    .earnings-title {
+      font-size: 28px;
+      margin-top: 100px;
+      padding-left: 15px;
+    }
+  
+    .profile-container {
+      padding: 15px;
+    }
+  }
+  
+  /* Mobile screens */
+  @media (max-width: 480px) {
+    .earnings-title {
+      font-size: 24px;
+      margin-top: 80px;
+      padding-left: 10px;
+    }
+  
+    .profile-container {
+      padding: 10px;
+    }
+  }
+  
+  /* Tablet */
+@media (max-width: 768px) {
+    .earnings-title {
+      font-size: 28px;
+      padding-left: 15px;
+    }
+  
+    .contact-container {
+      width: 90%;
+      padding: 20px;
+    }
+  }
+  
+  /* Mobile */
+  @media (max-width: 480px) {
+    .earnings-title {
+      font-size: 24px;
+      padding-left: 10px;
+      transform: translateX(-80px);
+    }
+  
+    .contact-container {
+      width: 95%;
+      padding: 15px;
+    }
+
+    .contact-form{
+        transform: translateX(-30px);
+    }
+  }
