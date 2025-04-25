@@ -114,7 +114,7 @@
                             </div>
                             
                             <br>
-                            <button class="next-button" onclick="showTab('bank-details')" type="button">Change & Save</button>
+                            <button class="next-button"  type="submit">Change & Save</button>
                             <br><br><br><br>
                         
                         </div>
@@ -158,7 +158,7 @@
                             </div>
             
                             <br>
-                            <button class="next-button" onclick="showTab('vehical-details')" type="button">Change & Save</button>
+                            <button class="next-button"  type="submit">Change & Save</button>
                             <br><br><br><br>
             
                         </div>
@@ -197,13 +197,19 @@
                             </div>
             
                             <br>
-                            <button class="next-button" onclick="showTab('change-password')" type="button">Change & Save</button>
+                            <button class="next-button"  type="submit">Change & Save</button>
                             <br><br><br><br>
-            
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?php endforeach; ?>
+                                <?php else: ?>
+                                    <!-- <p>No</p> -->
+                                <?php endif; ?>
                         </div>
                         </form>
                         
             
+                        <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/changePassword">
                         <div class="tab-content" id="change-password" style="display: none;">
                             
                             <div class="form-group-row">
@@ -212,19 +218,35 @@
                                     <input type="text" id="current-password"  name="current-password" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="vehical-registration-document"><a href="#">Forgot Password ?</a></label>
-                                    <!-- <input type="file" id="vehical-registration-document" name="vehical-registration-document" > -->
+                                    <!-- <label for="vehical-registration-document"><a href="#">Forgot Password ?</a></label> -->
+                                    
                                 </div>
                             </div>
             
                             <div class="form-group-row">
                                 <div class="form-group">
-                                    <label for="new-password">New Password:</label>
-                                    <input type="text" id="new-password"  name="new-password" required>
+                                <label for="password">Create New Password:
+                            <span class="password-strength" style="display: none; color: green;">Strong password</span>
+                        <span class="password-strength-weak" style="display: none; color: red;">Weak password</span>
+                        <div class="tooltip">
+                            <div class="icon">i</div>
+                            <div class="tooltiptext">
+                                <ul>
+                                <li>Use at least <strong>8 characters.</strong></li>
+                                <li>Include <strong>uppercase</strong> and <strong>lowercase</strong> letters.</li>
+                                <li>Add <strong>numbers</strong> and <strong>special characters (e.g., !, @, #, $, etc.).</strong></li>
+                                <li><strong>Avoid personal information</strong>(like names or birthdays).</li>
+                                </ul>
+                            </div>
+                        </div>
+                        </label>
+                        <input type="password" name="password" id="password"  required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="confirm-new-password">Confirm New Password:</label>
-                                    <input type="text" id="confirm-new-password"  name="confirm-new-password" required>
+                                <label for="confirm-password">Confirm New Password:
+                            <span class="confirm-password-error" style="display: none; color: red;"> Not matching with the password</span>
+                        </label>
+                        <input type="password" name="confirm-password" id="confirm-password"  required>
                                 </div>
                             </div>
             
@@ -233,12 +255,7 @@
                             <button class="next-button" type="submit" >Change & Save</button>
                             <br>
                             <br>
-                            <?php endforeach; ?>
-                            <?php endif; ?>
-                            <?php endforeach; ?>
-                                <?php else: ?>
-                                    <p>No</p>
-                                <?php endif; ?>
+                            
                         </div>
                     </form>
         </div>
