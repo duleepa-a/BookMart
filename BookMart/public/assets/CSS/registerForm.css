@@ -384,3 +384,78 @@ flex: 1;
     font-size: 10px;
   }
  
+  @media screen and (max-width: 768px) {
+    .container {
+        width: 95%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .tab-button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .form-group,
+    .form-group-small,
+    .form-group-smaller {
+        width: 100%;
+    }
+
+    .form-group-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .registration-form {
+        width: 100%;
+    }
+
+    .next-button,
+    button[type='submit'] {
+        width: 100%;
+        margin: 20px 0;
+        margin-left: 0;
+    }
+
+    .navBar {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        padding: 10px 0;
+    }
+
+    .title {
+        margin: 10px 0;
+        margin-right: 0;
+        text-align: center;
+    }
+
+    .logIn {
+        margin-right: 0;
+        text-align: center;
+    }
+
+    .form-group select {
+        width: 100%;
+    }
+
+    .form-group input[type="file"] {
+        width: 100%;
+    }
+
+    .checkbox-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .tooltiptext {
+        top: -130px;
+    }
+}

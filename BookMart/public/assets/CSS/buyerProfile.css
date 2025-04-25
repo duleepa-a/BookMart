@@ -19,13 +19,7 @@ body {
     margin-left: 15%;
     padding: 20px;
 }
-  
-  @media (max-width: 768px) {
-    .search-field {
-      width: 100%;
-    }
-  }
-
+ 
 .sidebar-heading{
     color: #02224E;
     margin: 30px;
@@ -376,4 +370,74 @@ flex: 1;
 
 .small-footer p{
     color: #6b7280;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        margin: 10% auto;
+        padding: 15px;
+    }
+
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tab-button {
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .tab-button.first-child,
+    .tab-button.last-child {
+        margin: 0;
+        padding: 10px 0;
+    }
+
+    .form-group,
+    .form-group-small,
+    .form-group-smaller {
+        width: 100%;
+    }
+
+    .form-group-row {
+        flex-direction: column;
+    }
+
+    .next-button,
+    button[type='submit'] {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 15px;
+    }
+
+    .form-bttn {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .btn-inside-input {
+        left: 85%;
+        top: 50%;
+    }
+
+    .tooltiptext {
+        top: -150px;
+        width: 180px;
+        margin-left: -90px;
+    }
+
+    .profile-container h1 {
+        margin-right: 0;
+        text-align: center;
+    }
+
+    .small-footer {
+        width: 100%;
+        margin-left: 0;
+        padding: 10px;
+        text-align: center;
+    }
 }

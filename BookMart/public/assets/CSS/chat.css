@@ -101,13 +101,6 @@ body {
     background-color: #02224E;
 }
 
-@media (max-width: 480px) {
-    .chat-container {
-        width: 100%;
-        height: 100vh;
-        border-radius: 0;
-    }
-}
 
 .chats-container {
     width: 90%;
@@ -212,4 +205,55 @@ body {
 .chat-link{
     text-decoration: none;
     color: #333;
+}
+
+@media (max-width: 768px) {
+    body {
+        margin-left: 0;
+        margin-top: 10%;
+        padding: 10px;
+    }
+
+    .background-box {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .chat-container {
+        height: auto;
+        max-height: 90vh;
+        width: 100%;
+    }
+
+    .chat-messages {
+        padding: 10px;
+    }
+
+    .chat-input-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .chat-input {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .chat-send-button {
+        width: 100%;
+    }
+
+    .chat-item {
+        flex-direction: row;
+    }
+
+    .chat-avatar {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+    }
+
+    .chat-name, .chat-preview {
+        font-size: 14px;
+    }
 }

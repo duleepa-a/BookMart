@@ -124,5 +124,42 @@
   }
 
 
+  @media screen and (max-width: 768px) {
+    .navBar {
+        align-items: flex-start;
+    }
 
+    .title {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .logIn {
+        display: none;
+    }
+
+    .heading {
+        font-size: 2rem;
+    }
+
+    .cards-container{
+        width: 90%;
+        padding: 15px;
+        flex-direction: column;
+    }
+
+    .card{
+        width: 90%;
+        height: auto;
+    }
+
+    .card img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .card p {
+        font-size: 1.1rem;
+    }
+}
   

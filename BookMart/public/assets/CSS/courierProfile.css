@@ -38,9 +38,6 @@ main {
     align-items: center;
     height: 90%;
 }
-
-
-
   .profile-container h1{
     margin-right: 78%;
     margin-top: 20px;
@@ -329,27 +326,6 @@ main {
     font-size: 10px;
   }
 
-  /* Base styles for mobile devices */
-body {
-    font-size: 16px;
-    /* Other base styles */
-}
-
-/* Medium devices (tablets, 600px and up) */
-@media screen and (min-width: 600px) {
-    body {
-        font-size: 18px;
-        /* Adjustments for tablets */
-    }
-}
-
-/* Large devices (desktops, 1024px and up) */
-@media screen and (min-width: 1024px) {
-    body {
-        font-size: 20px;
-        /* Adjustments for desktops */
-    }
-}
 @media screen and (max-width: 768px) {
     .form-group-row {
         flex-direction: column;

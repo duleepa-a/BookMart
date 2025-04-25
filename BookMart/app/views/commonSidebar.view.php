@@ -1,6 +1,9 @@
 <?php
 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 ?>
+<div class="floating-arrow" onclick="toggleSidebar()">
+    &#8594;
+</div>
 
 <?php if ($_SESSION['user_role'] == 'bookSeller'): ?>
     <div class="sidebar">
@@ -343,4 +346,11 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     <script src="<?= ROOT ?>/assets/JS/bookSellerSidebar.js"></script>
 <?php endif;?>
 
+
 <link rel="stylesheet" href="<?= ROOT ?>/assets/CSS/commonSidebar.css">
+<script>
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('active');
+    }
+</script>

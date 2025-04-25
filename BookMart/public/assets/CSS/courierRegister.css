@@ -399,4 +399,82 @@ flex: 1;
     font-size: 10px;
   }
   
+  @media (max-width: 768px) {
+    .container {
+        width: 95%;
+        height: auto;
+        padding: 20px 10px;
+    }
+
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tab-button {
+        width: 100%;
+        margin: 5px 0;
+        text-align: center;
+    }
+
+    .form-group,
+    .form-group-small,
+    .form-group-smaller {
+        width: 100%;
+    }
+
+    .form-group-row {
+        flex-direction: column;
+    }
+
+    .form-group select,
+    .form-group input[type="date"],
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="password"],
+    .form-group input[type="file"] {
+        width: 100%;
+    }
+
+    .next-button {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    button[type='submit'] {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .navBar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .title {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .logIn {
+        margin-right: 0;
+        margin-top: 10px;
+    }
+
+    .tooltiptext {
+        width: 90vw;
+        top: auto;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .tooltiptext::after {
+        top: 100%;
+        border-color: #333 transparent transparent transparent;
+    }
+}
 

@@ -2,19 +2,22 @@
         <span class = "title">
         <a href="<?= ROOT ?>/home" class="title-link"><h2>Book<span class="highlight">Mart</span></h2></a>
         </span>
-        <div class="search-bar-div">
-            <form action="<?= ROOT ?>/book/search" method="GET" class="search-form ">
-                <input 
-                    type="text" 
-                    name="keyword" 
-                    class="search-bar" 
-                    placeholder="Search your book by title, author.."
-                    required  
-                />
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            </form>
-        </div>
+        <?php if (!isset($_SESSION['user_status']) || $_SESSION['user_role'] != 'courier'): ?>
+            <div class="search-bar-div">
+                <form action="<?= ROOT ?>/book/search" method="GET" class="search-form ">
+                    <input 
+                        type="text" 
+                        name="keyword" 
+                        class="search-bar" 
+                        placeholder="Search your book by title, author.."
+                        required  
+                    />
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                </form>
+            </div>
+        <?php endif;?>
         <div class="nav-links">
+        <?php if (!isset($_SESSION['user_status']) || $_SESSION['user_role'] != 'courier'): ?>
             <select id="genres" name="genres" class="navbar-links-select" onchange="navigateToGenre()">
                     <option value="" disabled selected>Genres</option>
                     <option value="fiction">Fiction</option>
@@ -27,6 +30,7 @@
                     <option value="Crime">Crime</option>
                     <option value="education">Education</option>
             </select>
+        <?php endif;?>
             <?php if (!isset($_SESSION['user_status'])): ?>
                 <!-- Links for guests -->
                 <a href="<?= ROOT ?>/Login" class="navbar-links">Log In</a>

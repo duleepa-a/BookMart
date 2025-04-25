@@ -1,41 +1,45 @@
+/* Base styles */
 * {
     margin: 0;
     box-sizing: border-box;
-    font-family: 'poppins',Calibri, sans-serif;
+    font-family: 'poppins', Calibri, sans-serif;
 }
 
-body{
+body {
     width: 100%;
     background-color: #F1F1F1;
 }
 
-.container{
+/* Container styles with responsive adjustments */
+.container {
     justify-content: center;
     align-items: center;
-    width: 80%;
-    margin:auto;
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
 }
 
-.large-container{
+.large-container {
     margin-top: 5%;
-} 
+}
 
-.container h1{
-    color:#000000;
-    
+.container h1 {
+    color: #000000;
+    font-size: 1.8rem;
 }
 
 .container h1::after {
     content: "";
     display: block;
-    width: 50px; /* Adjust the width of the line */
-    height: 3px; /* Adjust the thickness of the line */
-    background-color: #BE5715; /* Color of the line */
+    width: 50px;
+    height: 3px;
+    background-color: #BE5715;
     margin-left: 0%;
-    margin-top: 10px; /* Space between the heading and the line */
-    border-radius: 2px; /* Slightly round the edges of the line */
+    margin-top: 10px;
+    border-radius: 2px;
 }
 
+/* Discount and price styles */
 .discount {
     position: absolute;
     top: 10px;
@@ -47,10 +51,10 @@ body{
     font-size: 12px;
 }
 
-.price { 
+.price {
     color: #5690DF;
     font-weight: light;
-    font-size: 30px;
+    font-size: 24px;
     margin-top: 10px;
     margin-bottom: 20px;
 }
@@ -61,6 +65,7 @@ body{
     margin-top: 10px;
 }
 
+/* Navigation buttons */
 button.prev, button.next {
     color: #002b54;
     border: none;
@@ -72,43 +77,80 @@ button.prev:hover, button.next:hover {
     color: #34495e;
 }
 
+/* Book view responsive layout */
 .book-view {
     display: flex;
-    gap: 30px;
+    flex-direction: column;
+    gap: 20px;
     max-width: 1000px;
-    margin: 40px auto;
+    margin: 20px auto;
     padding: 0 15px;
 }
 
-.book-container{
-    width: 80%;
+@media (min-width: 768px) {
+    .book-view {
+        flex-direction: row;
+        gap: 30px;
+        margin: 40px auto;
+    }
+}
+
+.book-container {
+    width: 100%;
     margin: auto;
     margin-top: 30px;
     display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .book-container {
+        width: 80%;
+        flex-direction: row;
+    }
 }
 
 .book-image img {
-    width:308px;
-    height: 442px;
+    width: 100%;
+    max-width: 308px;
+    height: auto;
+    max-height: 442px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    display: block;
 }
-
 
 .book-details {
     flex: 1;
     background-color: white;
-    margin-left: 20px;
+    margin-top: 20px;
+    margin-left: 0;
     padding: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+@media (min-width: 768px) {
+    .book-details {
+        margin-top: 0;
+        margin-left: 20px;
+    }
+}
+
 .book-details h1 {
-    font-size: 30px;
+    font-size: 24px;
     margin-bottom: 10px;
 }
 
-.book-details-availabitiy-condition{
+@media (min-width: 768px) {
+    .book-details h1 {
+        font-size: 30px;
+    }
+}
+
+.book-details-availabitiy-condition {
     display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .book-details-availability {
@@ -123,24 +165,28 @@ button.prev:hover, button.next:hover {
     color: #888;
     font-weight: bold;
     display: inline-block;
-    cursor:default;
+    cursor: default;
+    position: relative;
 }
 
 .bookstore {
     color: #777;
     margin-bottom: 20px;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
-.book-info{
-    
+@media (min-width: 768px) {
+    .bookstore {
+        font-size: 1.1rem;
+    }
 }
 
 .book-info ul {
-    list-style:circle;
+    list-style: circle;
     margin-left: 0;
     margin-top: 10px;
     margin-bottom: 20px;
+    padding-left: 20px;
 }
 
 .book-info ul li {
@@ -148,29 +194,53 @@ button.prev:hover, button.next:hover {
     margin-bottom: 10px;
 }
 
-.book-title{
+.book-title {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
 }
 
-.book-view-buttons{
-   
+@media (min-width: 768px) {
+    .book-title {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.book-view-buttons {
     justify-content: center;
     align-items: center;
-    margin-left: 10%;
+    margin-left: 0;
+    margin-top: 10px;
 }
 
+@media (min-width: 768px) {
+    .book-view-buttons {
+        margin-left: 10%;
+        margin-top: 0;
+    }
+}
+
+/* Product actions responsive */
 .product-actions {
     width: 100%;
     margin: auto;
     display: flex;
+    flex-direction: column;
     margin-top: 20px;
     margin-bottom: 20px;
-    align-items: center;
-    gap: 30px;
-  }
+    align-items: flex-start;
+    gap: 15px;
+}
 
-  .out-of-stock {
+@media (min-width: 768px) {
+    .product-actions {
+        flex-direction: row;
+        align-items: center;
+        gap: 30px;
+    }
+}
+
+.out-of-stock {
     width: 100%;
     margin: auto;
     background-color: rgba(255, 0, 0, 0.1);
@@ -179,90 +249,118 @@ button.prev:hover, button.next:hover {
     padding: 8px 12px;
     display: inline-block;
     text-align: center;
-  }
-  
-  .out-of-stock p {
+}
+
+.out-of-stock p {
     color: #d32f2f;
     font-weight: 600;
     font-size: 14px;
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-  }
-  
-  .quantity-selector {
+}
+
+.quantity-selector {
     display: flex;
     align-items: center;
-    background-color: #ffffffff;
+    background-color: #ffffff;
     border: 1px solid #e0e0e0;
     padding: 5px;
-    margin-left: 30px;
-  }
-  
-  .quantity-btn {
+    margin-left: 0;
+}
+
+@media (min-width: 768px) {
+    .quantity-selector {
+        margin-left: 30px;
+    }
+}
+
+.quantity-btn {
     background-color: #ffffff;
     border: none;
     font-size: 20px;
     padding: 0 10px;
     cursor: pointer;
-  }
-  
-  .quantity {
-    background-color:#ffffff;
+}
+
+.quantity {
+    background-color: #ffffff;
     font-weight: bold;
     padding: 0 10px;
-  }
-  
+}
 
-  .buy-now-btn {
-    background-color: #02224E; /* Navy blue */
-    color: #f1f1f1;
-    width: 150px;
+/* Buttons responsive */
+.buy-now-btn, .add-to-cart-btn {
+    width: 100%;
     font-size: 0.9rem;
-    border: solid 2px #02224E;
     padding: 10px 20px;
     cursor: pointer;
-  }
-  
-  .buy-now-btn:hover {
+    margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+    .buy-now-btn, .add-to-cart-btn {
+        width: 150px;
+        margin-bottom: 0;
+    }
+}
+
+.buy-now-btn {
+    background-color: #02224E;
+    color: #f1f1f1;
+    border: solid 2px #02224E;
+}
+
+.buy-now-btn:hover {
     color: #02224E;
-    background-color: #f1f1f100;
-  }
-  
-  /* Add to Cart button */
-  .add-to-cart-btn {
+    background-color: transparent;
+}
+
+.add-to-cart-btn {
     background-color: #BE5715;
-    width: 150px;
-    font-size: 0.9rem; 
     color: #f1f1f1;
     border: solid 2px #BE5715;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-  
-  .add-to-cart-btn:hover {
+}
+
+.add-to-cart-btn:hover {
     color: #BE5715;
-    background-color: #ffffff00;
-  }
-  
-  .tabs {
+    background-color: transparent;
+}
+
+/* Tabs responsive */
+.tabs {
     display: flex;
-    width: 90%;
+    flex-wrap: wrap;
+    width: 100%;
     margin: auto;
     margin-bottom: 20px;
 }
 
+@media (min-width: 768px) {
+    .tabs {
+        width: 90%;
+    }
+}
+
 .tab-button {
-    padding: 10px 20px;
+    padding: 10px 15px;
     border: none;
     background-color: #f1f1f1;
     cursor: pointer;
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: bold;
     color: #02224e96;
     border-bottom: 2px solid transparent;
     transition: border-color 0.3s ease;
 }
+
+@media (min-width: 768px) {
+    .tab-button {
+        padding: 10px 20px;
+        font-size: 1.3rem;
+    }
+}
+
 .tab-button.first-child {
     padding-left: 0;
 }
@@ -280,164 +378,225 @@ button.prev:hover, button.next:hover {
 }
 
 .tab-content {
-    width: 90%;
+    width: 100%;
     margin: auto;
+}
 
+@media (min-width: 768px) {
+    .tab-content {
+        width: 90%;
+    }
 }
 
 .tab-content.active {
     display: block;
 }
 
-
-/* Container to hold everything */
-.review-container {
-}
-  
-  /* Sort section */
-  .sort-section {
+/* Review section responsive */
+.sort-section {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 20px;
-  }
+    flex-wrap: wrap;
+}
 
-  .sortby{
-  }
-  .sort-section select {
+.sort-section select {
     padding: 5px;
     background-color: #736464;
     color: #aaa;
     border-radius: 0px;
     margin-left: 5px;
     border: 1px solid #ccc;
-  }
-  
-  /* Card styles */
-  .card {
+}
+
+.card {
     background-color: white;
     border-bottom: 1px solid #f7f2f2;
     padding: 15px;
-  }
+}
 
-  .reply{
+.reply {
     background-color: #fbfbfb;
-    padding-left: 100px;
-  }
-  
-  /* Card header with username and date */
-  .card-header {
+    padding-left: 30px;
+}
+
+@media (min-width: 768px) {
+    .reply {
+        padding-left: 100px;
+    }
+}
+
+.card-header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     font-weight: bold;
     margin-bottom: 10px;
-  }
+}
 
-  .user-name,.date{
-    font-size: 1rem;
+@media (min-width: 768px) {
+    .card-header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.user-name, .date {
+    font-size: 0.9rem;
     color: #a9a7a7;
-  }
-  
-  /* Card content styling */
-  .card-content {
+}
+
+@media (min-width: 768px) {
+    .user-name, .date {
+        font-size: 1rem;
+    }
+}
+
+.card-content {
     color: #404040;
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin-bottom: 15px;
-  }
-  
-  /* Card footer with like and count */
-  .card-footer {
+}
+
+@media (min-width: 768px) {
+    .card-content {
+        font-size: 1rem;
+    }
+}
+
+.card-footer {
     display: flex;
     align-items: center;
-  }
-  
-  .like-icon {
+}
+
+.like-icon {
     color: #736464;
     margin-right: 5px;
     cursor: pointer;
-  }
-  
-  .like-icon:hover{
-  color: #000000;
 }
-  .like-count {
+
+.like-icon:hover {
+    color: #000000;
+}
+
+.like-count {
     font-size: 14px;
     margin-left: 5px;
-  }
+}
 
-  .like-icon.liked i {
+.like-icon.liked i {
     color: #000000;
     cursor: pointer;
 }
-  
 
-.condition-details{
+/* Condition details popup responsive */
+.condition-details {
     display: none;
     background-color: #daf0d7;
     color: #000000;
-    width: 420px;
-    height:fit-content;
+    width: 280px;
+    height: fit-content;
     position: absolute;
-    justify-content: center;
-    top: 0;
-    left: 50%;
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-left: 0px;
+    top: 30px;
+    left: 0;
+    padding: 10px;
     border-radius: 5px;
     z-index: 1001;
 }
 
-.condition-details p{
+@media (min-width: 768px) {
+    .condition-details {
+        width: 420px;
+        left: 50%;
+        padding-left: 0;
+        padding-right: 10px;
+    }
+}
+
+.condition-details p {
     font-size: 12px;
     margin-top: 5px;
 }
 
-.condition-details ul{
+.condition-details ul {
     margin: auto;
+    padding-left: 20px;
 }
 
-.condition-details li{
+.condition-details li {
     margin-bottom: 5px;
 }
 
-
-.book-details-condition:hover +.condition-details{
+.book-details-condition:hover + .condition-details {
     display: block;
 }
 
-
-.book-description{
+.book-description {
     background-color: white;
     color: #807f7f;
-    padding: 20px;
-    padding-bottom: 40px;
-    font-size: 1.1rem;
+    padding: 15px;
+    padding-bottom: 30px;
+    font-size: 1rem;
     margin-bottom: 20px;
 }
 
+@media (min-width: 768px) {
+    .book-description {
+        padding: 20px;
+        padding-bottom: 40px;
+        font-size: 1.1rem;
+    }
+}
 
+/* Footer responsive */
 .footer {
-    background-color: #0b2b4600;
+    background-color: transparent;
     color: #02224E;
-    padding: 40px;
-    border-top:solid 1px #555;
+    padding: 20px;
+    border-top: solid 1px #555;
+}
+
+@media (min-width: 768px) {
+    .footer {
+        padding: 40px;
+    }
 }
 
 .footer-content {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    flex:3;
+}
+
+@media (min-width: 768px) {
+    .footer-content {
+        flex-direction: row;
+        flex: 3;
+    }
 }
 
 .footer-left, .footer-center, .footer-right {
     flex: 1;
     padding: 10px;
     padding-top: 0;
-    margin-top: 50px;
+    margin-top: 20px;
 }
-.footer-left{
-    margin-left: 10%;
+
+@media (min-width: 768px) {
+    .footer-left, .footer-center, .footer-right {
+        margin-top: 50px;
+    }
 }
+
+.footer-left {
+    margin-left: 0;
+}
+
+@media (min-width: 768px) {
+    .footer-left {
+        margin-left: 10%;
+    }
+}
+
 .footer-left h2 {
     color: #02224E;
     font-weight: normal;
@@ -475,17 +634,15 @@ button.prev:hover, button.next:hover {
     margin-bottom: 10px;
 }
 
-
-.footer-right p{
+.footer-right p {
     font-size: 0.85rem;
     font-style: italic;
     margin-bottom: 10px;
 }
 
-
-
+/* Carousel responsive */
 .carousel {
-    width: 90%;
+    width: 100%;
     margin: auto;
     display: flex;
     align-items: center;
@@ -493,25 +650,48 @@ button.prev:hover, button.next:hover {
     position: relative;
 }
 
+@media (min-width: 768px) {
+    .carousel {
+        width: 90%;
+    }
+}
+
 .book-cards {
     display: flex;
-    overflow: hidden;
+    overflow-x: auto;
     width: 100%;
-    height: 50%;
+    height: auto;
     padding: 10px 0;
-    gap: 20px;
+    gap: 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 768px) {
+    .book-cards {
+        overflow: hidden;
+        gap: 20px;
+        height: 50%;
+    }
 }
 
 .book-card {
-    background-color: #ffffff00;
+    background-color: transparent;
     margin: 0;
-    width: 160px;
+    width: 140px;
     height: auto;
     text-align: center;
     transition: transform 0.3s ease;
     position: relative;
     flex-shrink: 0;
     border-radius: 0;
+    scroll-snap-align: start;
+}
+
+@media (min-width: 768px) {
+    .book-card {
+        width: 160px;
+    }
 }
 
 .book-card-link {
@@ -521,28 +701,45 @@ button.prev:hover, button.next:hover {
 }
 
 .book-card p {
-    font-size: 0.95rem;
-    padding: 0 10px;
+    font-size: 0.9rem;
+    padding: 0 5px;
     margin: 8px 0;
     line-height: 1.3;
     overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+@media (min-width: 768px) {
+    .book-card p {
+        font-size: 0.95rem;
+        padding: 0 10px;
+    }
 }
 
 .book-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  }
+}
 
 .book-card:hover .book-image img {
     transform: scale(1.1);
 }
+
 .book-card img {
-    width:160px;
-    height: 250px;
+    width: 140px;
+    height: 220px;
     object-fit: cover;
     margin-bottom: 10px;
 }
 
+@media (min-width: 768px) {
+    .book-card img {
+        width: 160px;
+        height: 250px;
+    }
+}
 
 .bookcard-discount {
     position: absolute;
@@ -560,7 +757,13 @@ button.prev:hover, button.next:hover {
     color: #2b2b2b;
     font-weight: 500;
     margin: 5px 0 10px;
-    font-size: 1rem;
+    font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+    .bookcard-price {
+        font-size: 1rem;
+    }
 }
 
 .bookcard-old-price {
@@ -570,25 +773,40 @@ button.prev:hover, button.next:hover {
     font-size: 0.7rem;
 }
 
-
-.heading{
-    margin-left:5.5%;
+.heading {
+    margin-left: 5%;
     margin-bottom: 20px;
 }
 
+@media (min-width: 768px) {
+    .heading {
+        margin-left: 5.5%;
+    }
+}
 
-.message-div{
-    height: 50lvh;
+/* Message div responsive */
+.message-div {
+    height: 50vh;
     align-items: center;
     text-align: center;
     justify-content: center;
     display: flex;
+    flex-direction: column;
     gap: 10px;
+    padding: 0 15px;
 }
 
+@media (min-width: 768px) {
+    .message-div {
+        flex-direction: row;
+    }
+}
+
+/* Error message responsive */
 .error {
     font-family: system-ui, sans-serif;
-    width: 320px;
+    width: 90%;
+    max-width: 320px;
     padding: 12px;
     display: flex;
     flex-direction: row;
@@ -599,35 +817,60 @@ button.prev:hover, button.next:hover {
     box-shadow: 0px 0px 5px -3px #111;
     position: fixed;
     top: 20px;
-    right: 40%;
+    right: 5%;
     z-index: 9999;
-  }
-  
-  .error__icon {
+}
+
+@media (min-width: 768px) {
+    .error {
+        right: 40%;
+    }
+}
+
+.error__icon {
     width: 20px;
     height: 20px;
     transform: translateY(-2px);
     margin-right: 8px;
-  }
-  
-  .error__icon path {
+}
+
+.error__icon path {
     fill: #fff;
-  }
-  
-  .error__title {
+}
+
+.error__title {
     font-weight: 500;
     font-size: 14px;
     color: #fff;
-  }
-  
-  .error__close {
+}
+
+.error__close {
     width: 20px;
     height: 20px;
     cursor: pointer;
     margin-left: auto;
-  }
-  
-  .error__close path {
+}
+
+.error__close path {
     fill: #fff;
-  }
-  
+}
+
+/* Add meta viewport tag to HTML */
+@media screen and (max-width: 480px) {
+    .container {
+        width: 95%;
+    }
+    
+    .book-details h1 {
+        font-size: 20px;
+    }
+    
+    .tabs {
+        justify-content: space-between;
+    }
+    
+    .tab-button {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+}

@@ -13,53 +13,6 @@ body {
     background-color: #F1F1F1;
 }
 
-.sidebar {
-    width: 15%;
-    height: 100vh;
-    background-color: #f6f8fc;
-    position: fixed;
-    top: 9%;
-    left: 0;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.001);
-}
-
-.sidebar ul {
-    margin-top: 20px;
-    list-style-type: none;
-    padding: 0;
-}
-
-.sidebar ul li {
-    margin-right: 10px;
-}
-
-.sidebar ul li a {
-    display: block;
-    padding: 10px;
-    font-size: 16px;
-    color: #000;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-
-.sidebar ul li a i {
-    margin-left: 20px;
-    margin-right: 15px;
-}
-
-.sidebar ul li a:hover{
-    background-color: #eaeaea;
-    color: #333;
-}
-
-.sidebar ul li a.active {
-    background-color: #f4e2d7;
-    color: #BE5715;
-    font-weight: 600;
-}
-
 .container{
     width:85%;
     margin-top: 6%;
@@ -67,12 +20,6 @@ body {
     padding: 20px;
 }
   
-  @media (max-width: 768px) {
-    .search-field {
-      width: 100%;
-    }
-  }
-
 .sidebar-heading{
     color: #02224E;;
     margin: 30px;
@@ -361,4 +308,78 @@ body {
 
 .message-text{
     color: #333;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 4%;
+        padding: 10px;
+    }
+
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .tab-button {
+        width: 100%;
+        padding: 12px 0;
+        font-size: 1rem;
+    }
+
+    .tab-button.first-child,
+    .tab-button.last-child {
+        margin: 0;
+        padding: 0;
+    }
+
+    .order-card {
+        padding: 12px;
+    }
+
+    .store-header {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .product {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        align-items: center;
+    }
+
+    .product img {
+        width: 30%;
+        height: auto;
+    }
+
+    .price-qty-section {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .btn {
+        width: 100%;
+        margin: 15px 0 0 0;
+    }
+
+    .small-footer {
+        margin-left: 0;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .message-div {
+        height: auto;
+        padding: 40px 10px;
+    }
+
+    .message-text {
+        font-size: 1rem;
+    }
 }

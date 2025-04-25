@@ -211,6 +211,7 @@
     <script src="<?= ROOT ?>/assets/JS/bookView.js"></script>
     <script>
         const isLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
+        const isBuyer = <?= isset($_SESSION['user_id']) && ($_SESSION['user_role'] == 'buyer' || $_SESSION['user_role'] == 'bookSeller' ) ? 'true' : 'false'?>;
         const isAvailable = <?= isset($book->status) && $book->status == 'available' ? 'true' : 'false' ?>;
 
         function showAlert(message) {
@@ -270,6 +271,11 @@
                 showAlert("Please log in to buy this item.");
                 return;
             }
+            if (!isBuyer) {
+                showAlert("You must be logged in as a Buyer account.");
+                return;
+            }
+
             if (!isAvailable) {
                 showAlert("This Item is not Available at the moment.");
                 return;
@@ -282,6 +288,10 @@
         function addToCart() {
             if (!isLoggedIn) {
                 showAlert("Please log in to add this item to the cart.");
+                return;
+            }
+            if (!isBuyer) {
+                showAlert("You must be logged in as a Buyer account.");
                 return;
             }
             if (!isAvailable) {
