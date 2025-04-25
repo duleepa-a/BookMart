@@ -169,7 +169,7 @@
                             
                             <div class="form-group-row">
                                 <div class="form-group">
-                                    <label for="vehical-type">Vehical Type:</label>
+                                    <label for="vehical-type">Vehicle Type:</label>
                                     <select id="vehical-type" name="vehical-type" required>
                                         <option value="" disabled selected><?= $courierDetail->vehicle_type ?></option> 
                                         <option value="bike">Bike</option>
@@ -179,7 +179,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="vehical-model">Vehical Model:</label>
+                                    <label for="vehical-model">Vehicle Model:</label>
                                     <input type="text" id="vehical-model" 
                                     name="vehical-model"  value="<?= $courierDetail->vehicle_model ?>" required>
                                 </div>
@@ -187,7 +187,7 @@
                 
                             <div class="form-group-row">
                                 <div class="form-group">
-                                    <label for="vehical-registration-number">Vehical Registration Number:</label>
+                                    <label for="vehical-registration-number">Vehicle Registration Number:</label>
                                     <input type="text" id="vehical-registration-number" value="<?= $courierDetail->vehicle_registration_number ?>" name="vehical-registration-number" required>
                                 </div>
                                 <!-- <div class="form-group">
