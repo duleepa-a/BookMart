@@ -455,3 +455,56 @@ main {
 .message-text{
     color: #333;
 }
+
+/* Media Queries for Responsive Design */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 20%;
+    }
+
+    main,
+    .container {
+        width: 80%;
+        margin-left: 20%;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+    }
+
+    main,
+    .container {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .tabs {
+        flex-direction: column;
+    }
+
+    .form-group-row {
+        flex-direction: column;
+    }
+
+    .next-button {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .order-header,
+    .order-details,
+    .order-actions {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .action-btn {
+        width: 100%;
+    }
+}
