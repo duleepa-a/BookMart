@@ -28,7 +28,12 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
             </li>
             <li>
             <a href="<?= ROOT ?>/buyer/orders" class="<?= strpos($currentPath, '/buyer/orders') || strpos($currentPath, '/Buyer/trackOrder') !== false ? 'active' : '' ?>">
-                <i class="fa-solid fa-cart-plus"></i>Orders
+                <i class="fa-solid fa-cart-plus"></i>My Orders
+            </a>
+            </li>
+            <li>
+            <a href="<?= ROOT ?>/bookstoreController/orders" class="<?= strpos($currentPath, '/bookstoreController/orders') || strpos($currentPath, '/Buyer/trackOrder') !== false ? 'active' : '' ?>">
+                <i class="fa-solid fa-cart-plus"></i>Sale Orders
             </a>
             </li>
             <li>
