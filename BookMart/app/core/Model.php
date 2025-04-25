@@ -153,5 +153,14 @@ Trait Model{
     
         return $result ? $result[0]->total : 0;
     }
+
+    public function countAll(){
+         $query = "SELECT COUNT(*) as total FROM $this->table";
+
+         $result = $this->query($query);
+
+         return $result ? $result[0]->total : 0 ;
+
+    }
     
 }

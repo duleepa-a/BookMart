@@ -80,7 +80,62 @@
                     <div class="add-toolbar">
                         <button class="add-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add Refund</button>
                         <input type="text" placeholder="Search payroll" class="add-search-bar">
-                        <button class="sort-button">Sort by <i class="fa-solid fa-sort-down "></i></button>
+                        <div class="filter">
+                            <label for="status-filter">SHOW:</label>
+                            <select id="status-filter" class="status-filter">
+                                <option value="all" <?= $filterStatus === 'all' ? 'selected' : '' ?>>All</option>
+                                <option value="pending" <?= $filterStatus === 'pending' ? 'selected' : '' ?>>Pending</option>
+                                <option value="paid" <?= $filterStatus === 'paid' ? 'selected' : '' ?>>Paid</option>
+                            </select>
+                        </div>
+                        <div class="pagination">
+                            <!-- Previous Arrow -->
+                            <div class="pagination-item pagination-arrow <?= $currentPage <= 1 ? 'disabled' : '' ?>">
+                                <?php if ($currentPage > 1): ?>
+                                    <a href="?page=<?= $currentPage - 1 ?>&status=<?= urlencode($filterStatus) ?>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="15 18 9 12 15 6"></polyline>
+                                        </svg>
+                                    </a>
+                                <?php else: ?>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Page Numbers -->
+                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <?php if ($i == 1 || $i == $totalPages || abs($i - $currentPage) <= 1): ?>
+                                    <div class="pagination-item pagination-number <?= $currentPage == $i ? 'active' : '' ?>">
+                                    <a href="?page=<?= $i ?>&status=<?= urlencode($filterStatus) ?>" style="color: inherit; text-decoration: none; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                            <?= $i ?>
+                                        </a>
+                                    </div>
+                                <?php elseif ($i == 2 && $currentPage > 3 || $i == $totalPages - 1 && $currentPage < $totalPages - 2): ?>
+                                    <div class="pagination-item pagination-dots">...</div>
+                                <?php endif; ?>
+                            <?php endfor; ?>
+
+                            <!-- Next Arrow -->
+                            <div class="pagination-item pagination-arrow <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
+                                <?php if ($currentPage < $totalPages): ?>
+                                    <a href="?page=<?= $currentPage + 1 ?>&status=<?= urlencode($filterStatus) ?>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="9 18 15 12 9 6"></polyline>
+                                        </svg>
+                                    </a>
+                                <?php else: ?>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                <?php endif; ?>
+                            </div>
+                        </div>
                     </div>
                 
                     <!-- Retrieve Advertisements -->
@@ -261,8 +316,65 @@
                 window.location.href = `<?= ROOT ?>/admin/markAsResolve/${Id}`;
             });
         });
+        const statusFilter = document.getElementById('status-filter');
+        statusFilter.addEventListener('change', () => {
+            const selectedStatus = statusFilter.value;
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('status', selectedStatus);
+            urlParams.set('page', 1); // reset to first page on filter change
+            window.location.search = urlParams.toString();
+        });
+        function showTab(tabId) {
+            event.preventDefault();
+            // Hide all tab contents
+            var tabContents = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].style.display = 'none';
+            }
+
+            // Remove 'active' class from all tab buttons
+            var tabButtons = document.getElementsByClassName('tab-button');
+            for (var i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+
+            // Show the selected tab content
+            document.getElementById(tabId).style.display = 'block';
+
+            // Add 'active' class to the clicked tab button
+            event.currentTarget.classList.add('active');
+        }
+
+        // Initially display the first tab
+        document.getElementById('new-add').style.display = 'block';
+
+
+        // Select elements
+        const addButton = document.querySelector('.add-bttn');
+        const modal = document.querySelector('#add-modal');
+        const closeModalButton = document.querySelector('.close-modal');
+
+
+        // Show modal
+        addButton.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+
+        // Hide modal
+        closeModalButton.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+
+        // Close modal when clicking on the overlay
+        modal.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                modal.classList.remove('active');
+            }
+        });
+
     </script>
-    <script src="<?= ROOT ?>/assets/JS/addAdd.js"></script>
 
 </body>
 </html>

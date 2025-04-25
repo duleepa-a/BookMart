@@ -142,12 +142,12 @@
                     <option value="unread" <?= $filterStatus === 'unread' ? 'selected' : '' ?>>unread</option>
                     <option value="read" <?= $filterStatus === 'read' ? 'selected' : '' ?>>read</option>
                 </select>
-                </div>
+            </div>
             <div class="pagination">
                 <!-- Previous Arrow -->
                 <div class="pagination-item pagination-arrow <?= $currentPage <= 1 ? 'disabled' : '' ?>">
                     <?php if ($currentPage > 1): ?>
-                        <a href="?page=<?= $currentPage - 1 ?>">
+                        <a href="?page=<?= $currentPage - 1 ?>&status=<?= urlencode($filterStatus) ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="15 18 9 12 15 6"></polyline>
@@ -165,7 +165,7 @@
                 <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                     <?php if ($i == 1 || $i == $totalPages || abs($i - $currentPage) <= 1): ?>
                         <div class="pagination-item pagination-number <?= $currentPage == $i ? 'active' : '' ?>">
-                            <a href="?page=<?= $i ?>" style="color: inherit; text-decoration: none; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <a href="?page=<?= $i ?>&status=<?= urlencode($filterStatus) ?>" style="color: inherit; text-decoration: none; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
                                 <?= $i ?>
                             </a>
                         </div>
@@ -177,7 +177,7 @@
                 <!-- Next Arrow -->
                 <div class="pagination-item pagination-arrow <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
                     <?php if ($currentPage < $totalPages): ?>
-                        <a href="?page=<?= $currentPage + 1 ?>">
+                        <a href="?page=<?= $currentPage + 1 ?>&status=<?= urlencode($filterStatus) ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="9 18 15 12 9 6"></polyline>
@@ -191,6 +191,7 @@
                     <?php endif; ?>
                 </div>
             </div>
+            
         </div>
         <?php if (!empty($reviews)): ?>
         <table class="reviews-table">

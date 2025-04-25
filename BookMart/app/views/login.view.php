@@ -34,7 +34,7 @@
                       <div class="form-group">
                         <label htmlFor="name" class='label'>Email Or Username  
                         <?php if (isset($error) && !empty($error)): ?>
-                            <span class="error" style="color: red;"><?= htmlspecialchars($error) ?></span>
+                            <span class="error-line" style="color: red;"><?= htmlspecialchars($error) ?></span>
                         <?php endif; ?>
                         </label><br/>
                         <input
@@ -89,7 +89,32 @@
             </svg>
         </div>
     </div>
+
     <script>
+        function showAlert(message, type = "error") {
+            const alertBox = document.getElementById("custom-alert");
+            const alertMsg = document.getElementById("alert-message");
+            const alertMsgbox = document.getElementsByClassName("error")[0];
+
+            // Change alert style based on the type
+            if (type === "success") {
+                alertBox.style.backgroundColor = "#4CAF50";  // green
+            }
+
+            alertMsg.textContent = message;
+            alertBox.style.display = "flex";
+
+            console.log(alertMsg.textContent);
+
+            setTimeout(() => {
+                closeAlert();
+            }, 4000);
+        }
+
+        function closeAlert() {
+            document.getElementById("custom-alert").style.display = "none";
+        }
+        
         <?php if (!empty($_SESSION['error'])): ?>
         <script>
             showAlert("<?= $_SESSION['error'] ?>", "error");

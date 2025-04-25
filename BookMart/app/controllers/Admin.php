@@ -126,13 +126,38 @@ class Admin extends Controller {
     public function payRolls(){
         $refundModel = new RefundRequest();
         $payrollModel = new payRoll();
+
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 5;
+        $offset = ($currentPage - 1) * $limit;
+
+        $payrollModel->setLimit($limit);
+        $payrollModel->setOffset($offset);
+
+        $filterStatus = isset($_GET['status']) ? $_GET['status'] : 'all';
+
+        $baseConditions = [];
         
-        $payrolls = $payrollModel->findall();
+        if ($filterStatus !== 'all') {
+            $baseConditions['settlement_status'] = $filterStatus;
+            $allPayrolls = $payrollModel->where($baseConditions);
+        }
+        else{
+            $allPayrolls = $payrollModel->findAll();
+        }
+        
+        $totalPayrolls = $payrollModel->countAll();
+
+        $totalPages = ceil($totalPayrolls / $limit);
+
         $refunds = $refundModel->findAll();
 
         $this->view('adminPayRoll',[ 
-                                        'payrolls' => $payrolls,
-                                        'refundRequests'  => $refunds
+                                        'payrolls' => $allPayrolls,
+                                        'refundRequests'  => $refunds,
+                                        'currentPage' => $currentPage,
+                                        'totalPages' => $totalPages,
+                                        'filterStatus' => $filterStatus
                                    ]);
     }
 

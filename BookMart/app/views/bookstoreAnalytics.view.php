@@ -174,7 +174,6 @@
                 </div>
             <?php endif;?>
         </div>
-        <?= show($monthlySales)?>
              
     </div>
     
