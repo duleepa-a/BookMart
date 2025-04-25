@@ -50,6 +50,7 @@ class App{
             'User' => ['changePassword'],
             'AdminViewCourierComplains' => ['index','delete','update'],
             'AdminPaymentInfo' => ['index'],
+            'AdminSystemStat' => ['index', 'getAll', 'updateStat'],
             'SAdminAddAdmin' => ['index', 'addAdmin', 'checkUsername', 'checkEmail', 'updateAdminStatus'],
         ],
 
