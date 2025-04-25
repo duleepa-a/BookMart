@@ -1,28 +1,3 @@
-function showTab(tabId) {
-    event.preventDefault();
-    // Hide all tab contents
-    var tabContents = document.getElementsByClassName('tab-content');
-    for (var i = 0; i < tabContents.length; i++) {
-        tabContents[i].style.display = 'none';
-    }
-
-    // Remove 'active' class from all tab buttons
-    var tabButtons = document.getElementsByClassName('tab-button');
-    for (var i = 0; i < tabButtons.length; i++) {
-        tabButtons[i].classList.remove('active');
-    }
-
-    // Show the selected tab content
-    document.getElementById(tabId).style.display = 'block';
-
-    // Add 'active' class to the clicked tab button
-    event.currentTarget.classList.add('active');
-}
-
-// Initially display the first tab
-document.getElementById('new-add').style.display = 'block';
-
-
 // Select elements
 const addButton = document.querySelector('.add-bttn');
 const modal = document.querySelector('#add-modal');
@@ -96,39 +71,6 @@ document.querySelectorAll(".modal-overlay").forEach((overlay) => {
         overlay.closest(".modal").classList.remove('active');
     });
 });
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Get references to the search bar and table rows
-    const searchBar = document.querySelector(".add-search-bar");
-    const tableRows = document.querySelectorAll(".add-table tbody .add-row");
-
-    // Listen for input on the search bar
-    searchBar.addEventListener("input", function () {
-        const searchQuery = searchBar.value.toLowerCase();
-
-        // Loop through each row and check if it matches the search query
-        tableRows.forEach(row => {
-            const Advertisement_Title = row.dataset.Advertisement_Title.toLowerCase();
-            const Advertisement_Type = row.dataset.Advertisement_Type.toLowerCase();
-            const Start_date = row.dataset.Start_date.toLowerCase();
-            const End_date = row.dataset.End_date.toLowerCase();
-
-            // Check if any of the fields match the query
-            if (
-                Advertisement_Title.includes(searchQuery) || 
-                Advertisement_Type.includes(searchQuery) || 
-                Start_date.includes(searchQuery) || 
-                End_date.includes(searchQuery)
-            ) {
-                row.style.display = ""; // Show matching row
-            } else {
-                row.style.display = "none"; // Hide non-matching row
-            }
-        });
-    });
-});
-
 
 document.querySelector(".delete-modal").addEventListener("click", (e) => {
     

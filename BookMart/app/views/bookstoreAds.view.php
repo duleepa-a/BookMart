@@ -225,6 +225,7 @@
         </div>
     </div>   
     <script src="<?= ROOT ?>/assets/JS/bookstoreAds.js"></script>
+    <script src="<?= ROOT ?>/assets/JS/adminBookstore.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const searchBar = document.querySelector(".inventory-search-bar");
@@ -236,8 +237,6 @@
                 tableRows.forEach(row => {
                     const cells = row.querySelectorAll("td");
                     let matchFound = false;
-
-                    // Check relevant cells: Book Title, Customer Name, Shipping Address, Contact No, Shipped Date, Completed Date, Status
                     const searchableColumns = [2,3,4,5,7];
 
                     searchableColumns.forEach(index => {

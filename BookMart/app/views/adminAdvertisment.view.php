@@ -81,18 +81,17 @@
             <!--tabs button-->
             <h1 class="inventory-title">Advertisement</h1><br>
             <nav class="tabs">
-                <button class="tab-button active first-child" onclick="showTab('new-add')">Add New Advertisemants</button>
-                <button class="tab-button" onclick="showTab('pending-add')">Pending Advertisemants</button>
-                <button class="tab-button last-child" onclick="showTab('approved-add')">Approved Advertisemants</button>
+                <button class="tab-button active first-child" id='new-add-button' onclick="showTab('new-add')">Add New Advertisemants</button>
+                <button class="tab-button" id='pending-add-button' onclick="showTab('pending-add')">Pending Advertisemants</button>
+                <button class="tab-button last-child" id="approved-add-button" onclick="showTab('approved-add')">Approved Advertisemants</button>
             </nav>
 
             <div class="tab-content" id="new-add" >
-            
-                    <div class="add-toolbar">
-                        <button class="add-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add Advertisement</button>
-                        <input type="text" placeholder="Search advertisements" class="add-search-bar">
-                        <button class="sort-button">Sort by <i class="fa-solid fa-sort-down "></i></button>
-                    </div>
+                <div class="add-toolbar">
+                    <button class="add-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add Advertisement</button>
+                    <input type="text" placeholder="Search Admin Advertisements.." class="add-search-bar" id="searchInput" onkeyup="searchStores()">
+                </div>
+                
                 
                     <!-- Retrieve Advertisements -->
                     <?php if (!empty($advertisements)) : ?>
@@ -141,7 +140,24 @@
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
-
+                        <div class="pagination-container">
+                            <div class="pagination">
+                                <button class="page-button previous" 
+                                        onclick="window.location.href='?page=<?= max(1, $currentPage - 1) ?>&pending_page=<?= $pendingPage ?>&approved_page=<?= $approvedPage ?>'"
+                                        <?= $currentPage <= 1 ? 'disabled' : '' ?>>&lt;</button>
+                                
+                                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                    <button class="page-button <?= $currentPage == $i ? 'active' : '' ?>" 
+                                            onclick="window.location.href='?page=<?= $i ?>&pending_page=<?= $pendingPage ?>&approved_page=<?= $approvedPage ?>'">
+                                        <?= $i ?>
+                                    </button>
+                                <?php endfor; ?>
+                                
+                                <button class="page-button next" 
+                                        onclick="window.location.href='?page=<?= min($totalPages, $currentPage + 1) ?>&pending_page=<?= $pendingPage ?>&approved_page=<?= $approvedPage ?>'"
+                                        <?= $currentPage >= $totalPages ? 'disabled' : '' ?>>&gt;</button>
+                            </div>
+                        </div>
                     <!--no add msg-->
                     <?php else : ?>
                         <div class="no-add-message">
@@ -221,10 +237,9 @@
 
             <!--Pending Advertisement-->
             <div class="tab-content" id="pending-add">
-                <div class="add-toolbar"> 
-                    <input type="text" class="search" placeholder="Search">
-                </div>
-                <div style="overflow-x: auto;">
+                    <div class="add-toolbar"> 
+                        <input type="text" placeholder="Search Pending advertisments" class="add-search-bar" id="searchInput" onkeyup="searchStores()"/>
+                    </div>
                     <?php if (!empty($pendingStoreAds)): ?>
                         <table class="advertisement-table">
                             <thead>
@@ -264,55 +279,79 @@
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+                        <div class="pagination-container">
+                            <div class="pagination">
+                                <button class="page-button previous" 
+                                        onclick="window.location.href='?pending_page=<?= max(1, $pendingPage - 1) ?>&page=<?= $currentPage ?>&approved_page=<?= $approvedPage ?>'"
+                                        <?= $pendingPage <= 1 ? 'disabled' : '' ?>>&lt;</button>
+                                
+                                <?php for ($i = 1; $i <= $totalPendingPages; $i++): ?>
+                                    <button class="page-button <?= $pendingPage == $i ? 'active' : '' ?>" 
+                                            onclick="window.location.href='?pending_page=<?= $i ?>&page=<?= $currentPage ?>&approved_page=<?= $approvedPage ?>'">
+                                        <?= $i ?>
+                                    </button>
+                                <?php endfor; ?>
+                                
+                                <button class="page-button next" 
+                                        onclick="window.location.href='?pending_page=<?= min($totalPendingPages, $pendingPage + 1) ?>&page=<?= $currentPage ?>&approved_page=<?= $approvedPage ?>'"
+                                        <?= $pendingPage >= $totalPendingPages ? 'disabled' : '' ?>>&gt;</button>
+                            </div>
+                        </div>
                     <?php else: ?>
                     <div class="no-add-message">
                         <p>No pending advertisements available at the moment.</p>
                     </div>
                     <?php endif; ?>
-                </div>
-
-                <br><br><br>
-                <div class="pagination">
-                    <button class="page-button previous">&lt;</button>
-                    <button class="page-button">1</button>
-                    <button class="page-button">2</button>
-                    <button class="page-button">3</button>
-                    <button class="page-button next">&gt;</button>
-                </div>
             </div>
 
 
             <!--Approved Advertisement-->
             <div class="tab-content" id="approved-add">
                 <div class="add-toolbar"> 
-                    <input type="text" class="search" placeholder="Search">
+                    <input type="text" placeholder="Search Approved Advertisments.." id="searchInput" onkeyup="searchStores()" class="add-search-bar"/>
                 </div>
                 <?php if (!empty($approvedAds)): ?>
-                    <div class="table-wrapper">
-                        <table class="advertisement-table">
-                            <thead>
+                    <table class="advertisement-table">
+                        <thead>
+                            <tr>
+                                <th>Advertisement Title</th>
+                                <th>Submitted by</th>
+                                <th>Advertisement Time</th>
+                                <th>Price (Rs.)</th>
+                                <th>Payment Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($approvedAds as $ad): ?>
                                 <tr>
-                                    <th>Advertisement Title</th>
-                                    <th>Submitted by</th>
-                                    <th>Advertisement Time</th>
-                                    <th>Price (Rs.)</th>
-                                    <th>Payment Status</th>
+                                    <td><?= htmlspecialchars($ad->title) ?></td>
+                                    <td><?= htmlspecialchars($ad->store_name ?? 'N/A') ?></td>
+                                    <td><?= date('Y/m/d', strtotime($ad->start_date)) ?> - <?= date('Y/m/d', strtotime($ad->end_date)) ?></td>
+                                    <td><?= number_format($ad->payment_amount, 2) ?></td>
+                                    <td>
+                                        <span class="tag <?= $ad->active_status? 'tag-green' : 'tag-red' ?>"> <?= $ad->active_status? 'Paid' : 'Unpaid' ?> </span>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($approvedAds as $ad): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($ad->title) ?></td>
-                                        <td><?= htmlspecialchars($ad->store_name ?? 'N/A') ?></td>
-                                        <td><?= date('Y/m/d', strtotime($ad->start_date)) ?> - <?= date('Y/m/d', strtotime($ad->end_date)) ?></td>
-                                        <td><?= number_format($ad->payment_amount, 2) ?></td>
-                                        <td>
-                                           <span class="tag <?= $ad->active_status? 'tag-green' : 'tag-red' ?>"> <?= $ad->active_status? 'Paid' : 'Unpaid' ?> </span>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <div class="pagination-container">
+                        <div class="pagination">
+                            <button class="page-button previous" 
+                                    onclick="window.location.href='?approved_page=<?= max(1, $approvedPage - 1) ?>&page=<?= $currentPage ?>&pending_page=<?= $pendingPage ?>'"
+                                    <?= $approvedPage <= 1 ? 'disabled' : '' ?>>&lt;</button>
+                            
+                            <?php for ($i = 1; $i <= $totalApprovedPages; $i++): ?>
+                                <button class="page-button <?= $approvedPage == $i ? 'active' : '' ?>" 
+                                        onclick="window.location.href='?approved_page=<?= $i ?>&page=<?= $currentPage ?>&pending_page=<?= $pendingPage ?>'">
+                                    <?= $i ?>
+                                </button>
+                            <?php endfor; ?>
+                            
+                            <button class="page-button next" 
+                                    onclick="window.location.href='?approved_page=<?= min($totalApprovedPages, $approvedPage + 1) ?>&page=<?= $currentPage ?>&pending_page=<?= $pendingPage ?>'"
+                                    <?= $approvedPage >= $totalApprovedPages ? 'disabled' : '' ?>>&gt;</button>
+                        </div>
                     </div>
                 <?php else: ?>
                     <div class="no-add-message">
@@ -320,25 +359,56 @@
                     </div>
                 <?php endif; ?>
 
-                <br><br><br>
-
-                <div class="pagination">
-                    <button class="page-button previous">&lt;</button>
-                    <button class="page-button">4</button>
-                    <button class="page-button">5</button>
-                    <button class="page-button">6</button>
-                    <button class="page-button">7</button>
-                    <button class="page-button">8</button>
-                    <button class="page-button">9</button>
-                    <button class="page-button next">&gt;</button>
-                </div>
             </div>
-
         </div>
     </div>
     <script>
         const ROOT = "<?= ROOT ?>";
+          // Tab switching - preserve pagination and filter state
+          function showTab(tabId) {
+            // Hide all tab contents
+            var tabContents = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].style.display = 'none';
+            }
+
+            // Remove 'active' class from all tab buttons
+            var tabButtons = document.getElementsByClassName('tab-button');
+            for (var i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+
+            const buttonId = tabId + "-button";
+            const tabbutton = document.getElementById(buttonId);
+
+            // Show the selected tab content
+            document.getElementById(tabId).style.display = 'block';
+
+            // Add 'active' class to the clicked tab button
+            tabbutton.classList.add('active');
+            
+            // Update URL to reflect current tab without reloading
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('tab', tabId);
+            history.replaceState(null, null, '?' + urlParams.toString());
+        }
+
+        // On page load, check if a specific tab was requested
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const requestedTab = urlParams.get('tab');
+
+            console.log(requestedTab);
+            
+            if (requestedTab && (requestedTab === 'new-add' || requestedTab === 'pending-add' || requestedTab === 'approved-add')) {
+                showTab(requestedTab);
+            } else {
+                showTab('new-add'); // Default to first tab
+            }
+        });
+
     </script>
+    <script src="<?= ROOT ?>/assets/JS/adminBookstore.js"></script>
     <script src="<?= ROOT ?>/assets/JS/addAdd.js"></script>
 
 </body>

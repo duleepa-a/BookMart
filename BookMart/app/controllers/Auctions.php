@@ -196,7 +196,15 @@ class Auctions extends Controller {
             $bookModel = new BookModel();
             $bookModel->query($query, $params);
 
-            
+            $bookModel = new BookModel();
+            $bookModel->update($auctionData['book_id'], ['status' => 'removed']);
+
+            $notificationModel = new NotificationModel();
+            $notificationModel->createNotification(
+                trim($_POST['seller_id']),
+                'Auction Update',
+                'The book ' . trim($_POST['title']) . ' that was placed for auction has been sold.'
+            );
             
             $qty = 1;
             redirect("payment/checkOut/{$auctionData['book_id']}/{$qty}");

@@ -2,43 +2,82 @@
 
 class AdminAdvertisment extends Controller{
 
-    public function index(){
-        $ads = $this->getAllAds();
-
+    public function index() {
+        $advModel = new AdvModel();
         $store_add = new StoreAdvModel();
         $userModel = new BookStore();
-        $storeAds = $store_add->findAll();
-        
+    
+
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $pendingPage = isset($_GET['pending_page']) ? (int)$_GET['pending_page'] : 1;
+        $approvedPage = isset($_GET['approved_page']) ? (int)$_GET['approved_page'] : 1;
+        $limit = 5; 
+
+        $tab = isset($_GET['tab']) ? $_GET['tab'] : 'new-add';
         
 
-        $pendingStoreAds = [];
-        $acceptedStoreAds = [];
+        $offset = ($currentPage - 1) * $limit;
+        $advModel->setLimit($limit);
+        $advModel->setOffset($offset);
+        $ads = $advModel->findAll();
+        $totalAds = $advModel->countAll();
+        $totalPages = ceil($totalAds / $limit);
+    
 
-        foreach ($storeAds as $ad) {
-            $user = $userModel->first(['user_id' => $ad->store_id]);
-            $ad->store_name = $user->store_name;
-            if ($ad->status === 'pending') {
-                $pendingStoreAds[] = $ad;
-            } elseif ($ad->status === 'approved') {
-                $acceptedStoreAds[] = $ad;
+        $pendingOffset = ($pendingPage - 1) * $limit;
+        $store_add->setLimit($limit);
+        $store_add->setOffset($pendingOffset);
+        $pendingConditions = ['status' => 'pending'];
+        $pendingStoreAds = $store_add->where($pendingConditions);
+        $totalPending = $store_add->count($pendingConditions);
+        $totalPendingPages = ceil($totalPending / $limit);
+    
+
+        $approvedOffset = ($approvedPage - 1) * $limit;
+        $store_add->setLimit($limit);
+        $store_add->setOffset($approvedOffset);
+        $approvedConditions = ['status' => 'approved'];
+        $approvedAds = $store_add->where($approvedConditions);
+        $totalApproved = $store_add->count($approvedConditions);
+        $totalApprovedPages = ceil($totalApproved / $limit);
+        
+
+        if($pendingStoreAds){
+            foreach ($pendingStoreAds as $ad) {
+                $user = $userModel->first(['user_id' => $ad->store_id]);
+                $ad->store_name = $user->store_name ?? 'N/A';
             }
         }
-
+    
+        if($approvedAds){
+            foreach ($approvedAds as $ad) {
+                $user = $userModel->first(['user_id' => $ad->store_id]);
+                $ad->store_name = $user->store_name ?? 'N/A';
+            }
+        }
+    
         $data = [
             'advertisements' => $ads,
             'pendingStoreAds' => $pendingStoreAds,
-            'approvedAds' => $acceptedStoreAds,
+            'approvedAds' => $approvedAds,
+            // Pagination for admin ad's
+            'currentPage' => $currentPage,
+            'totalPages' => $totalPages,
+            // Pagination for pending bookstore ad's
+            'pendingPage' => $pendingPage,
+            'totalPendingPages' => $totalPendingPages,
+            // Pagination for approved bookstore ad's
+            'approvedPage' => $approvedPage,
+            'totalApprovedPages' => $totalApprovedPages,
+            // Counts
+            'totalAds' => $totalAds,
+            'totalPending' => $totalPending,
+            'totalApproved' => $totalApproved
         ];
-
-        $this->view('adminAdvertisment',$data);
-    }
-
     
-    public function getAllAds() {
-        $advModel = new AdvModel();
-
-        return $advModel->findAll(); // Calls findAll from model.php
+        $this->view('adminAdvertisment', $data);
     }
+
 
     public function addAdvertisement(){
         $advModel = new AdvModel();

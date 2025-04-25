@@ -117,26 +117,124 @@
                                 <label for="city">Zone:</label>
                                 <select id="city" name="city">
                                     <option value="" disabled <?= !isset($bookSeller->city) ? 'selected' : '' ?>>Select your Zone:</option>
-                                    <option value="pannipitya" <?= ($bookSeller->city ?? '') === 'pannipitya' ? 'selected' : '' ?>>Pannipitya</option>
-                                    <option value="maharagama" <?= ($bookSeller->city ?? '') === 'maharagama' ? 'selected' : '' ?>>Maharagama</option>
+                                    <option value="colombo" <?= $bookSeller->city === 'colombo' ? 'selected' : ''; ?>>Colombo</option>
+                                    <option value="dehiwala-mount-lavinia" <?= $bookSeller->city === 'dehiwala-mount-lavinia' ? 'selected' : ''; ?>>Dehiwala-Mount Lavinia</option>
+                                    <option value="moratuwa" <?= $bookSeller->city === 'moratuwa' ? 'selected' : ''; ?>>Moratuwa</option>
+                                    <option value="negombo" <?= $bookSeller->city === 'negombo' ? 'selected' : ''; ?>>Negombo</option>
+                                    <option value="sri-jayawardenepura-kotte" <?= $bookSeller->city === 'sri-jayawardenepura-kotte' ? 'selected' : ''; ?>>Sri Jayawardenepura Kotte</option>
+                                    <option value="ja-ela" <?= $bookSeller->city === 'ja-ela' ? 'selected' : ''; ?>>Ja-Ela</option>
+                                    <option value="wattala" <?= $bookSeller->city === 'wattala' ? 'selected' : ''; ?>>Wattala</option>
+                                    <option value="gampaha" <?= $bookSeller->city === 'gampaha' ? 'selected' : ''; ?>>Gampaha</option>
+                                    <option value="kalutara" <?= $bookSeller->city === 'kalutara' ? 'selected' : ''; ?>>Kalutara</option>
+                                    <option value="panadura" <?= $bookSeller->city === 'panadura' ? 'selected' : ''; ?>>Panadura</option>
+                                    <option value="beruwala" <?= $bookSeller->city === 'beruwala' ? 'selected' : ''; ?>>Beruwala</option>
+                                    <option value="pannipitiya" <?= $bookSeller->city === 'pannipitiya' ? 'selected' : ''; ?>>Pannipitiya</option>
+                                    <option value="maharagama" <?= $bookSeller->city === 'maharagama' ? 'selected' : ''; ?>>Maharagama</option>
+
+                                    <!-- Central Province -->
+                                    <option value="kandy" <?= $bookSeller->city === 'kandy' ? 'selected' : ''; ?>>Kandy</option>
+                                    <option value="matale" <?= $bookSeller->city === 'matale' ? 'selected' : ''; ?>>Matale</option>
+                                    <option value="nuwara-eliya" <?= $bookSeller->city === 'nuwara-eliya' ? 'selected' : ''; ?>>Nuwara Eliya</option>
+                                    <option value="gampola" <?= $bookSeller->city === 'gampola' ? 'selected' : ''; ?>>Gampola</option>
+                                    <option value="hatton" <?= $bookSeller->city === 'hatton' ? 'selected' : ''; ?>>Hatton</option>
+                                    <option value="nawalapitiya" <?= $bookSeller->city === 'nawalapitiya' ? 'selected' : ''; ?>>Nawalapitiya</option>
+
+                                    <!-- Southern Province -->
+                                    <option value="galle" <?= $bookSeller->city === 'galle' ? 'selected' : ''; ?>>Galle</option>
+                                    <option value="matara" <?= $bookSeller->city === 'matara' ? 'selected' : ''; ?>>Matara</option>
+                                    <option value="hambantota" <?= $bookSeller->city === 'hambantota' ? 'selected' : ''; ?>>Hambantota</option>
+                                    <option value="tangalle" <?= $bookSeller->city === 'tangalle' ? 'selected' : ''; ?>>Tangalle</option>
+                                    <option value="ambalangoda" <?= $bookSeller->city === 'ambalangoda' ? 'selected' : ''; ?>>Ambalangoda</option>
+                                    <option value="weligama" <?= $bookSeller->city === 'weligama' ? 'selected' : ''; ?>>Weligama</option>
+
+                                    <!-- Eastern Province -->
+                                    <option value="batticaloa" <?= $bookSeller->city === 'batticaloa' ? 'selected' : ''; ?>>Batticaloa</option>
+                                    <option value="trincomalee" <?= $bookSeller->city === 'trincomalee' ? 'selected' : ''; ?>>Trincomalee</option>
+                                    <option value="kalmunai" <?= $bookSeller->city === 'kalmunai' ? 'selected' : ''; ?>>Kalmunai</option>
+                                    <option value="ampara" <?= $bookSeller->city === 'ampara' ? 'selected' : ''; ?>>Ampara</option>
+                                    <option value="eravur" <?= $bookSeller->city === 'eravur' ? 'selected' : ''; ?>>Eravur</option>
+                                    <option value="kattankudy" <?= $bookSeller->city === 'kattankudy' ? 'selected' : ''; ?>>Kattankudy</option>
+
+                                    <!-- Northern Province -->
+                                    <option value="jaffna" <?= $bookSeller->city === 'jaffna' ? 'selected' : ''; ?>>Jaffna</option>
+                                    <option value="vavuniya" <?= $bookSeller->city === 'vavuniya' ? 'selected' : ''; ?>>Vavuniya</option>
+                                    <option value="mannar" <?= $bookSeller->city === 'mannar' ? 'selected' : ''; ?>>Mannar</option>
+                                    <option value="point-pedro" <?= $bookSeller->city === 'point-pedro' ? 'selected' : ''; ?>>Point Pedro</option>
+                                    <option value="chavakachcheri" <?= $bookSeller->city === 'chavakachcheri' ? 'selected' : ''; ?>>Chavakachcheri</option>
+                                    <option value="valvettithurai" <?= $bookSeller->city === 'valvettithurai' ? 'selected' : ''; ?>>Valvettithurai</option>
+
+                                    <!-- North Central Province -->
+                                    <option value="anuradhapura" <?= $bookSeller->city === 'anuradhapura' ? 'selected' : ''; ?>>Anuradhapura</option>
+                                    <option value="polonnaruwa" <?= $bookSeller->city === 'polonnaruwa' ? 'selected' : ''; ?>>Polonnaruwa</option>
+                                    <option value="dambulla" <?= $bookSeller->city === 'dambulla' ? 'selected' : ''; ?>>Dambulla</option>
+
+                                    <!-- North Western Province -->
+                                    <option value="kurunegala" <?= $bookSeller->city === 'kurunegala' ? 'selected' : ''; ?>>Kurunegala</option>
+                                    <option value="puttalam" <?= $bookSeller->city === 'puttalam' ? 'selected' : ''; ?>>Puttalam</option>
+                                    <option value="chilaw" <?= $bookSeller->city === 'chilaw' ? 'selected' : ''; ?>>Chilaw</option>
+                                    <option value="kuliyapitiya" <?= $bookSeller->city === 'kuliyapitiya' ? 'selected' : ''; ?>>Kuliyapitiya</option>
+
+                                    <!-- Uva Province -->
+                                    <option value="badulla" <?= $bookSeller->city === 'badulla' ? 'selected' : ''; ?>>Badulla</option>
+                                    <option value="bandarawela" <?= $bookSeller->city === 'bandarawela' ? 'selected' : ''; ?>>Bandarawela</option>
+                                    <option value="haputale" <?= $bookSeller->city === 'haputale' ? 'selected' : ''; ?>>Haputale</option>
+                                    <option value="monaragala" <?= $bookSeller->city === 'monaragala' ? 'selected' : ''; ?>>Monaragala</option>
+
+                                    <!-- Sabaragamuwa Province -->
+                                    <option value="ratnapura" <?= $bookSeller->city === 'ratnapura' ? 'selected' : ''; ?>>Ratnapura</option>
+                                    <option value="kegalle" <?= $bookSeller->city === 'kegalle' ? 'selected' : ''; ?>>Kegalle</option>
+                                    <option value="balangoda" <?= $bookSeller->city === 'balangoda' ? 'selected' : ''; ?>>Balangoda</option>
+
+                                    <!-- Other Notable Towns -->
+                                    <option value="avissawella" <?= $bookSeller->city === 'avissawella' ? 'selected' : ''; ?>>Avissawella</option>
+                                    <option value="horana" <?= $bookSeller->city === 'horana' ? 'selected' : ''; ?>>Horana</option>
+                                    <option value="minuwangoda" <?= $bookSeller->city === 'minuwangoda' ? 'selected' : ''; ?>>Minuwangoda</option>
                                 </select>
                             </div>
                             <div class="form-group-small">
                                 <label for="district">District:</label>
                                 <select id="district" name="district">
                                     <option value="" disabled <?= !isset($bookSeller->district) ? 'selected' : '' ?>>Please select your district</option>
-                                    <option value="colombo" <?= ($bookSeller->district ?? '') === 'colombo' ? 'selected' : '' ?>>Colombo</option>
-                                    <option value="gampaha" <?= ($bookSeller->district ?? '') === 'gampaha' ? 'selected' : '' ?>>Gampaha</option>
-                                    <option value="kalutara" <?= ($bookSeller->district ?? '') === 'kalutara' ? 'selected' : '' ?>>Kalutara</option>
+                                    <option value="ampara" <?= $bookSeller->district === 'ampara' ? 'selected' : ''; ?>>Ampara</option>
+                                    <option value="anuradhapura" <?= $bookSeller->district === 'anuradhapura' ? 'selected' : ''; ?>>Anuradhapura</option>
+                                    <option value="badulla" <?= $bookSeller->district === 'badulla' ? 'selected' : ''; ?>>Badulla</option>
+                                    <option value="batticaloa" <?= $bookSeller->district === 'batticaloa' ? 'selected' : ''; ?>>Batticaloa</option>
+                                    <option value="colombo" <?= $bookSeller->district === 'colombo' ? 'selected' : ''; ?>>Colombo</option>
+                                    <option value="galle" <?= $bookSeller->district === 'galle' ? 'selected' : ''; ?>>Galle</option>
+                                    <option value="gampaha" <?= $bookSeller->district === 'gampaha' ? 'selected' : ''; ?>>Gampaha</option>
+                                    <option value="hambantota" <?= $bookSeller->district === 'hambantota' ? 'selected' : ''; ?>>Hambantota</option>
+                                    <option value="jaffna" <?= $bookSeller->district === 'jaffna' ? 'selected' : ''; ?>>Jaffna</option>
+                                    <option value="kalutara" <?= $bookSeller->district === 'kalutara' ? 'selected' : ''; ?>>Kalutara</option>
+                                    <option value="kandy" <?= $bookSeller->district === 'kandy' ? 'selected' : ''; ?>>Kandy</option>
+                                    <option value="kegalle" <?= $bookSeller->district === 'kegalle' ? 'selected' : ''; ?>>Kegalle</option>
+                                    <option value="kilinochchi" <?= $bookSeller->district === 'kilinochchi' ? 'selected' : ''; ?>>Kilinochchi</option>
+                                    <option value="kurunegala" <?= $bookSeller->district === 'kurunegala' ? 'selected' : ''; ?>>Kurunegala</option>
+                                    <option value="mannar" <?= $bookSeller->district === 'mannar' ? 'selected' : ''; ?>>Mannar</option>
+                                    <option value="matale" <?= $bookSeller->district === 'matale' ? 'selected' : ''; ?>>Matale</option>
+                                    <option value="matara" <?= $bookSeller->district === 'matara' ? 'selected' : ''; ?>>Matara</option>
+                                    <option value="monaragala" <?= $bookSeller->district === 'monaragala' ? 'selected' : ''; ?>>Monaragala</option>
+                                    <option value="mullaitivu" <?= $bookSeller->district === 'mullaitivu' ? 'selected' : ''; ?>>Mullaitivu</option>
+                                    <option value="nuwara-eliya" <?= $bookSeller->district === 'nuwara-eliya' ? 'selected' : ''; ?>>Nuwara Eliya</option>
+                                    <option value="polonnaruwa" <?= $bookSeller->district === 'polonnaruwa' ? 'selected' : ''; ?>>Polonnaruwa</option>
+                                    <option value="puttalam" <?= $bookSeller->district === 'puttalam' ? 'selected' : ''; ?>>Puttalam</option>
+                                    <option value="ratnapura" <?= $bookSeller->district === 'ratnapura' ? 'selected' : ''; ?>>Ratnapura</option>
+                                    <option value="trincomalee" <?= $bookSeller->district === 'trincomalee' ? 'selected' : ''; ?>>Trincomalee</option>
+                                    <option value="vavuniya" <?= $bookSeller->district === 'vavuniya' ? 'selected' : ''; ?>>Vavuniya</option>
                                 </select>
                             </div>
                             <div class="form-group-small">
                                 <label for="province">Province:</label>
                                 <select id="province" name="province">
                                     <option value="" disabled <?= !isset($bookSeller->province) ? 'selected' : '' ?>>Please select your province</option>
-                                    <option value="Western" <?= ($bookSeller->province ?? '') === 'Western' ? 'selected' : '' ?>>Western</option>
-                                    <option value="Eastern" <?= ($bookSeller->province ?? '') === 'Eastern' ? 'selected' : '' ?>>Eastern</option>
-                                    <option value="North" <?= ($bookSeller->province ?? '') === 'North' ? 'selected' : '' ?>>North</option>
+                                    <option value="central" <?= $bookSeller->province === 'central' ? 'selected' : ''; ?>>Central</option>
+                                    <option value="eastern" <?= $bookSeller->province === 'eastern' ? 'selected' : ''; ?>>Eastern</option>
+                                    <option value="north-central" <?= $bookSeller->province === 'north-central' ? 'selected' : ''; ?>>North Central</option>
+                                    <option value="northern" <?= $bookSeller->province === 'northern' ? 'selected' : ''; ?>>Northern</option>
+                                    <option value="north-western" <?= $bookSeller->province === 'north-western' ? 'selected' : ''; ?>>North Western</option>
+                                    <option value="sabaragamuwa" <?= $bookSeller->province === 'sabaragamuwa' ? 'selected' : ''; ?>>Sabaragamuwa</option>
+                                    <option value="southern" <?= $bookSeller->province === 'southern' ? 'selected' : ''; ?>>Southern</option>
+                                    <option value="uva" <?= $bookSeller->province === 'uva' ? 'selected' : ''; ?>>Uva</option>
+                                    <option value="western" <?= $bookSeller->province === 'western' ? 'selected' : ''; ?>>Western</option>
                                 </select>
                             </div>
                         </div>
@@ -253,7 +351,7 @@
     </div>
 
     <script src="<?= ROOT ?>/assets/JS/bookSellerProfile.js"></script>
-    <script>
+    <!-- <script>
         const isLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
 
         function showAlert(message, type = "error") {
@@ -316,6 +414,6 @@
             showAlert("<?= $_SESSION['success'] ?>", "success");
         </script>
         <?php unset($_SESSION['success']); ?>
-    <?php endif; ?>
+    <?php endif; ?> -->
 
 </body>

@@ -1,37 +1,8 @@
-//Logout Button
-document.getElementById('logoutButton').addEventListener('click', function() {
-    
-    fetch('http://localhost/BookMart/public/user/logout', { 
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json(); 
-            throw new Error('Logout failed.');
-        }
-    })
-    .then(data => {
-        console.log(data); 
-        if (data.status === 'success') {
-            window.location.href = 'http://localhost/BookMart/public/'; 
-        } else {
-            alert('Error: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error during logout:', error);
-        alert('Logout failed. Please try again.');
-    });
-});
-
-function searchStores() {
-    var input = document.getElementById("searchInput");
-    var filter = input.value.toLowerCase();
+function searchStores() {  
     var table = document.querySelector(".tab-content:not([style*='display: none']) table");
+    var input = document.querySelector(".tab-content:not([style*='display: none']) input");
     var rows = table.getElementsByTagName("tr");
+    var filter = input.value.toLowerCase();
 
     for (var i = 1; i < rows.length; i++) { 
         var row = rows[i];
@@ -53,57 +24,6 @@ function searchStores() {
         }
     }
 }
-
-function showTab(tabId) {
-    // Hide all tab contents
-    var tabContents = document.getElementsByClassName('tab-content');
-    for (var i = 0; i < tabContents.length; i++) {
-        tabContents[i].style.display = 'none';
-    }
-
-    // Remove 'active' class from all tab buttons
-    var tabButtons = document.getElementsByClassName('tab-button');
-    for (var i = 0; i < tabButtons.length; i++) {
-        tabButtons[i].classList.remove('active');
-    }
-
-    // Show the selected tab content
-    document.getElementById(tabId).style.display = 'block';
-
-    // Add 'active' class to the clicked tab button
-    event.currentTarget.classList.add('active');
-}
-
-// Initially display the first tab
-document.getElementById('pending-stores').style.display = 'block';
-
-document.getElementById('logoutButtonAdmin').addEventListener('click', function() {
-    
-    fetch('http://localhost/BookMart/public/user/logout', { 
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json(); 
-            throw new Error('Logout failed.');
-        }
-    })
-    .then(data => {
-        console.log(data); 
-        if (data.status === 'success') {
-            window.location.href = 'http://localhost/BookMart/public/'; 
-        } else {
-            alert('Error: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error during logout:', error);
-        alert('Logout failed. Please try again.');
-    });
-});
 
 
 

@@ -44,15 +44,6 @@
                                     <input type="text" id="last-name" value="<?= $courierDetail->last_name ?>" name="lastname" required>
                                 </div>
                             </div>
-                            
-                            <!-- <div class="form-group-row">
-                                <div class="form-group">
-                                    <label for="user-name">Name with initials:</label>
-                                    <input type="text" id="user-name" name="username" placeholder=" " required>
-                                </div>
-                                
-                            </div> -->
-            
                             <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="dob">Date of Birth:</label>

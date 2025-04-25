@@ -4,23 +4,53 @@ class Admin extends Controller {
 
     public function bookstoreView() {
         $bookstore = new BookStore();
+    
 
-       
-        $allStores = $bookstore->findAll();
+        $pendingPage = isset($_GET['pending_page']) ? (int)$_GET['pending_page'] : 1;
+        $acceptedPage = isset($_GET['accepted_page']) ? (int)$_GET['accepted_page'] : 1;
+        $tab = isset($_GET['tab']) ? $_GET['tab'] : 'pending-stores';
+        $limit = 5; // Items per page
 
-        $pendingStores = $bookstore->where(['status' => 'pending']);
 
-        $acceptedStores = $bookstore->where(['status' => 'approved']);
+        $offset = ($pendingPage - 1)*$limit;
+        $bookstore->setLimit($limit);
+        $bookstore->setOffset($offset);
+    
+        // Get pending stores with pagination
+        $pendingConditions = ['status' => 'pending'];
+        $pendingStores = $bookstore->where($pendingConditions);
+        $totalPending = $bookstore->count($pendingConditions);
+        $totalPendingPages = ceil($totalPending / $limit);
+        
+        $acceptedBookstore = new BookStore();
+        $acceptedoffset = ($acceptedPage - 1)*$limit;
+        $acceptedBookstore->setOffset($offset);
+        $acceptedBookstore->setLimit($limit);
 
-       
-        $data['allStores'] = $allStores;
-        $data['pendingStores'] = $pendingStores;
-        $data['acceptedStores'] = $acceptedStores;
+        // Get accepted stores with pagination
+        $acceptedConditions = ['status' => 'approved'];
+        $acceptedStores = $acceptedBookstore->where($acceptedConditions);
+        $totalAccepted = $acceptedBookstore->count($acceptedConditions);
+        $totalAcceptedPages = ceil($totalAccepted / $limit);
+    
+        $data = [
 
-       
+            'pendingStores' => $pendingStores,
+            'acceptedStores' => $acceptedStores,
+            // Pagination for pending stores
+            'pendingPage' => $pendingPage,
+            'totalPendingPages' => $totalPendingPages,
+            // Pagination for accepted stores
+            'acceptedPage' => $acceptedPage,
+            'totalAcceptedPages' => $totalAcceptedPages,
+            // Counts
+            'totalPending' => $totalPending,
+            'totalAccepted' => $totalAccepted,
+            'tab' => $tab
+        ]; 
+    
         $this->view('adminBookstoreRequest', $data);
     }
-
 
     public function viewBookStore($id) {
         
@@ -123,42 +153,68 @@ class Admin extends Controller {
         redirect('admin/bookstoreView');
     }
 
-    public function payRolls(){
+    public function payRolls() {
         $refundModel = new RefundRequest();
         $payrollModel = new payRoll();
 
+        $tab = isset($_GET['tab']) ? $_GET['tab'] : 'new-add';
+    
+        // Common pagination parameters
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $refundPage = isset($_GET['refund_page']) ? (int)$_GET['refund_page'] : 1;
         $limit = 5;
-        $offset = ($currentPage - 1) * $limit;
-
+        
+        // Handle Payrolls tab
+        $payrollOffset = ($currentPage - 1) * $limit;
         $payrollModel->setLimit($limit);
-        $payrollModel->setOffset($offset);
-
-        $filterStatus = isset($_GET['status']) ? $_GET['status'] : 'all';
-
+        $payrollModel->setOffset($payrollOffset);
+    
+        $payrollFilterStatus = isset($_GET['status']) ? $_GET['status'] : 'all';
         $baseConditions = [];
         
-        if ($filterStatus !== 'all') {
-            $baseConditions['settlement_status'] = $filterStatus;
+        if ($payrollFilterStatus !== 'all') {
+            $baseConditions['settlement_status'] = $payrollFilterStatus;
             $allPayrolls = $payrollModel->where($baseConditions);
-        }
-        else{
+            $totalPayrolls = $payrollModel->count($baseConditions);
+        } else {
             $allPayrolls = $payrollModel->findAll();
+            $totalPayrolls = $payrollModel->countAll();
         }
         
-        $totalPayrolls = $payrollModel->countAll();
-
-        $totalPages = ceil($totalPayrolls / $limit);
-
-        $refunds = $refundModel->findAll();
-
-        $this->view('adminPayRoll',[ 
-                                        'payrolls' => $allPayrolls,
-                                        'refundRequests'  => $refunds,
-                                        'currentPage' => $currentPage,
-                                        'totalPages' => $totalPages,
-                                        'filterStatus' => $filterStatus
-                                   ]);
+        $totalPayrollPages = ceil($totalPayrolls / $limit);
+    
+        // Handle Refund Requests tab
+        $refundOffset = ($refundPage - 1) * $limit;
+        $refundModel->setLimit($limit);
+        $refundModel->setOffset($refundOffset);
+    
+        $refundFilterStatus = isset($_GET['refund_status']) ? $_GET['refund_status'] : 'all';
+        $refundConditions = [];
+        
+        if ($refundFilterStatus !== 'all') {
+            $refundConditions['status'] = $refundFilterStatus;
+            $refunds = $refundModel->where($refundConditions);
+            $totalRefunds = $refundModel->count($refundConditions);
+        } else {
+            $refunds = $refundModel->findAll();
+            $totalRefunds = $refundModel->countAll();
+        }
+        
+        $totalRefundPages = ceil($totalRefunds / $limit);
+    
+        $this->view('adminPayRoll', [
+            'payrolls' => $allPayrolls,
+            'refundRequests' => $refunds,
+            'currentPage' => $currentPage,
+            'refundPage' => $refundPage,
+            'totalPayrollPages' => $totalPayrollPages,
+            'totalRefundPages' => $totalRefundPages,
+            'filterStatus' => $payrollFilterStatus,
+            'refundFilterStatus' => $refundFilterStatus,
+            'totalPayrolls' => $totalPayrolls,
+            'totalRefunds' => $totalRefunds,
+            'tab' => $tab
+        ]);
     }
 
     public function markAsResolve($id){
@@ -170,6 +226,29 @@ class Admin extends Controller {
         $this->payRolls();
 
     }
+
+    public function settleAllPayrolls(){
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        if (!isset($data['payrollIds']) || !is_array($data['payrollIds'])) {
+            echo json_encode(['success' => false, 'message' => 'Invalid data']);
+            return;
+        }
+
+        $payrollModel = new payRoll();
+
+        foreach ($data['payrollIds'] as $id) {
+            $payrollModel->update($id, [
+                'settlement_status' => 'paid',
+                'settlement_date' => date('Y-m-d H:i:s')
+            ]);
+        }
+
+        $_SESSION['success'] = "successfully updated settled!";
+
+        echo json_encode(['success' => true]);
+    }
+
 
     public function addRefund(){
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

@@ -61,28 +61,128 @@
                 <div class="form-group-row">
                     <div class="form-group-small">
                         <label for="city">City:</label>
-                        <select id="city" name="city" >
+                        <select id="city" name="city">
                             <option value="" disabled selected>Select the city of the bookstore</option>
-                            <option value="pannipitya">Pannipitya</option>
+                            <!-- Western Province -->
+                            <option value="colombo">Colombo</option>
+                            <option value="dehiwala-mount-lavinia">Dehiwala-Mount Lavinia</option>
+                            <option value="moratuwa">Moratuwa</option>
+                            <option value="negombo">Negombo</option>
+                            <option value="sri-jayawardenepura-kotte">Sri Jayawardenepura Kotte</option>
+                            <option value="ja-ela">Ja-Ela</option>
+                            <option value="wattala">Wattala</option>
+                            <option value="gampaha">Gampaha</option>
+                            <option value="kalutara">Kalutara</option>
+                            <option value="panadura">Panadura</option>
+                            <option value="beruwala">Beruwala</option>
+                            <option value="pannipitiya">Pannipitiya</option>
                             <option value="maharagama">Maharagama</option>
+
+                            <!-- Central Province -->
+                            <option value="kandy">Kandy</option>
+                            <option value="matale">Matale</option>
+                            <option value="nuwara-eliya">Nuwara Eliya</option>
+                            <option value="gampola">Gampola</option>
+                            <option value="hatton">Hatton</option>
+                            <option value="nawalapitiya">Nawalapitiya</option>
+
+                            <!-- Southern Province -->
+                            <option value="galle">Galle</option>
+                            <option value="matara">Matara</option>
+                            <option value="hambantota">Hambantota</option>
+                            <option value="tangalle">Tangalle</option>
+                            <option value="ambalangoda">Ambalangoda</option>
+                            <option value="weligama">Weligama</option>
+
+                            <!-- Eastern Province -->
+                            <option value="batticaloa">Batticaloa</option>
+                            <option value="trincomalee">Trincomalee</option>
+                            <option value="kalmunai">Kalmunai</option>
+                            <option value="ampara">Ampara</option>
+                            <option value="eravur">Eravur</option>
+                            <option value="kattankudy">Kattankudy</option>
+
+                            <!-- Northern Province -->
+                            <option value="jaffna">Jaffna</option>
+                            <option value="vavuniya">Vavuniya</option>
+                            <option value="mannar">Mannar</option>
+                            <option value="point-pedro">Point Pedro</option>
+                            <option value="chavakachcheri">Chavakachcheri</option>
+                            <option value="valvettithurai">Valvettithurai</option>
+
+                            <!-- North Central Province -->
+                            <option value="anuradhapura">Anuradhapura</option>
+                            <option value="polonnaruwa">Polonnaruwa</option>
+                            <option value="dambulla">Dambulla</option>
+
+                            <!-- North Western Province -->
+                            <option value="kurunegala">Kurunegala</option>
+                            <option value="puttalam">Puttalam</option>
+                            <option value="chilaw">Chilaw</option>
+                            <option value="kuliyapitiya">Kuliyapitiya</option>
+
+                            <!-- Uva Province -->
+                            <option value="badulla">Badulla</option>
+                            <option value="bandarawela">Bandarawela</option>
+                            <option value="haputale">Haputale</option>
+                            <option value="monaragala">Monaragala</option>
+
+                            <!-- Sabaragamuwa Province -->
+                            <option value="ratnapura">Ratnapura</option>
+                            <option value="kegalle">Kegalle</option>
+                            <option value="balangoda">Balangoda</option>
+
+                            <!-- Other Notable Towns -->
+                            <option value="avissawella">Avissawella</option>
+                            <option value="horana">Horana</option>
+                            <option value="minuwangoda">Minuwangoda</option>
                         </select>
+
                     </div>
                     <div class="form-group-small">
                         <label for="district">District:</label>
-                        <select id="" name="district" >
+                        <select id="district" name="district">
                             <option value="" disabled selected>Select the district of the bookstore</option>
+                            <option value="ampara">Ampara</option>
+                            <option value="anuradhapura">Anuradhapura</option>
+                            <option value="badulla">Badulla</option>
+                            <option value="batticaloa">Batticaloa</option>
                             <option value="colombo">Colombo</option>
+                            <option value="galle">Galle</option>
                             <option value="gampaha">Gampaha</option>
+                            <option value="hambantota">Hambantota</option>
+                            <option value="jaffna">Jaffna</option>
                             <option value="kalutara">Kalutara</option>
+                            <option value="kandy">Kandy</option>
+                            <option value="kegalle">Kegalle</option>
+                            <option value="kilinochchi">Kilinochchi</option>
+                            <option value="kurunegala">Kurunegala</option>
+                            <option value="mannar">Mannar</option>
+                            <option value="matale">Matale</option>
+                            <option value="matara">Matara</option>
+                            <option value="monaragala">Monaragala</option>
+                            <option value="mullaitivu">Mullaitivu</option>
+                            <option value="nuwara-eliya">Nuwara Eliya</option>
+                            <option value="polonnaruwa">Polonnaruwa</option>
+                            <option value="puttalam">Puttalam</option>
+                            <option value="ratnapura">Ratnapura</option>
+                            <option value="trincomalee">Trincomalee</option>
+                            <option value="vavuniya">Vavuniya</option>
                         </select>
                     </div>
                     <div class="form-group-small">
                         <label for="province">Province:</label>
-                        <select id="" name="province" >
+                        <select id="province" name="province">
                             <option value="" disabled selected>Select the province of the bookstore</option>
-                            <option value="colombo">Western</option>
-                            <option value="gampaha">Eastern</option>
-                            <option value="kalutara">North</option>
+                            <option value="central">Central</option>
+                            <option value="eastern">Eastern</option>
+                            <option value="north-central">North Central</option>
+                            <option value="northern">Northern</option>
+                            <option value="north-western">North Western</option>
+                            <option value="sabaragamuwa">Sabaragamuwa</option>
+                            <option value="southern">Southern</option>
+                            <option value="uva">Uva</option>
+                            <option value="western">Western</option>
                         </select>
                     </div>
                 </div>
@@ -249,6 +349,6 @@
         </form>
     </div>
     <br><br>
-   
+    <script src="<?= ROOT ?>/assets/JS/bookstoreRegisterPage.js"></script>
 </body>
 </html>

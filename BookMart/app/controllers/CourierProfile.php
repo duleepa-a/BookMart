@@ -36,23 +36,16 @@ class CourierProfile extends Controller{
 
             $errors = [];
 
-            if (empty($firstname)) $errors['first-name'] = "First name is required.";
-            if (empty($lastname)) $errors['last-name'] = "Last name is required.";
-            if (!preg_match('/^[A-Z]\d{9}$/', $license)) $errors['license'] = "Invalid license number.";
-            if (!preg_match('/^(\d{9}[VXvx]|\d{12})$/', $nic)) $errors['nic'] = "Invalid NIC number.";
-            if (!preg_match('/^\d{10}$/', $phonenumber)) $errors['phone-number'] = "Invalid phone number.";
-            if (!preg_match('/^\d{10}$/', $secondarynumber)) $errors['secondary-number'] = "Invalid phone number.";
-            if (empty($address)) $errors['address'] = " Address is required.";
-            if (empty($city)) $errors['city'] = "City is required.";
+            // if (empty($firstname)) $errors['first-name'] = "First name is required.";
+            // if (empty($lastname)) $errors['last-name'] = "Last name is required.";
+            // if (!preg_match('/^[A-Z]\d{7}$/', $license)) $errors['license'] = "Invalid license number.";
+            // if (!preg_match('/^(\d{9}[VXvx]|\d{12})$/', $nic)) $errors['nic'] = "Invalid NIC number.";
+            // if (!preg_match('/^\d{10}$/', $phonenumber)) $errors['phone-number'] = "Invalid phone number.";
+            // if (!preg_match('/^\d{10}$/', $secondarynumber)) $errors['secondary-number'] = "Invalid phone number.";
+            // if (empty($address)) $errors['address'] = " Address is required.";
+            // if (empty($city)) $errors['city'] = "City is required.";
             // if (!filter_var($emailaddress, FILTER_VALIDATE_EMAIL)) $errors['email'] = "Invalid Email Address.";
             
-            // if (!empty($errors)) {
-            //     echo "<pre>";
-            //     print_r($errors);
-            //     echo "</pre>";
-            //     die();
-            // }
-
             if (empty($errors)) {
                 $courierModel = new Courier();
 
@@ -93,10 +86,10 @@ class CourierProfile extends Controller{
             
             $errors = [];
 
-            if (empty($bank)) $errors['bank'] = "Bank Name is required.";
-            if (empty($branchname)) $errors['branch-name'] = "Branch name is required.";
-            if (empty($accountname)) $errors['account-name'] = "Account name is required.";
-            if (!preg_match('/^\d{8,12}$/', $accountnumber)) $errors['account-number'] = "Invalid bank account number.";
+            // if (empty($bank)) $errors['bank'] = "Bank Name is required.";
+            // if (empty($branchname)) $errors['branch-name'] = "Branch name is required.";
+            // if (empty($accountname)) $errors['account-name'] = "Account name is required.";
+            // if (!preg_match('/^\d{10,12}$/', $accountnumber)) $errors['account-number'] = "Invalid bank account number.";
             
             
             if (empty($errors)) {

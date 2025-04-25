@@ -192,26 +192,127 @@
                         <label for="city">City:</label>
                         <select id="city" name="city">
                             <option value="" disabled>Select the city of the bookstore</option>
-                            <option value="pannipitya" <?= $store->city === 'pannipitya' ? 'selected' : ''; ?>>Pannipitya</option>
+                            <option value="colombo" <?= $store->city === 'colombo' ? 'selected' : ''; ?>>Colombo</option>
+                            <option value="dehiwala-mount-lavinia" <?= $store->city === 'dehiwala-mount-lavinia' ? 'selected' : ''; ?>>Dehiwala-Mount Lavinia</option>
+                            <option value="moratuwa" <?= $store->city === 'moratuwa' ? 'selected' : ''; ?>>Moratuwa</option>
+                            <option value="negombo" <?= $store->city === 'negombo' ? 'selected' : ''; ?>>Negombo</option>
+                            <option value="sri-jayawardenepura-kotte" <?= $store->city === 'sri-jayawardenepura-kotte' ? 'selected' : ''; ?>>Sri Jayawardenepura Kotte</option>
+                            <option value="ja-ela" <?= $store->city === 'ja-ela' ? 'selected' : ''; ?>>Ja-Ela</option>
+                            <option value="wattala" <?= $store->city === 'wattala' ? 'selected' : ''; ?>>Wattala</option>
+                            <option value="gampaha" <?= $store->city === 'gampaha' ? 'selected' : ''; ?>>Gampaha</option>
+                            <option value="kalutara" <?= $store->city === 'kalutara' ? 'selected' : ''; ?>>Kalutara</option>
+                            <option value="panadura" <?= $store->city === 'panadura' ? 'selected' : ''; ?>>Panadura</option>
+                            <option value="beruwala" <?= $store->city === 'beruwala' ? 'selected' : ''; ?>>Beruwala</option>
+                            <option value="pannipitiya" <?= $store->city === 'pannipitiya' ? 'selected' : ''; ?>>Pannipitiya</option>
                             <option value="maharagama" <?= $store->city === 'maharagama' ? 'selected' : ''; ?>>Maharagama</option>
+
+                            <!-- Central Province -->
+                            <option value="kandy" <?= $store->city === 'kandy' ? 'selected' : ''; ?>>Kandy</option>
+                            <option value="matale" <?= $store->city === 'matale' ? 'selected' : ''; ?>>Matale</option>
+                            <option value="nuwara-eliya" <?= $store->city === 'nuwara-eliya' ? 'selected' : ''; ?>>Nuwara Eliya</option>
+                            <option value="gampola" <?= $store->city === 'gampola' ? 'selected' : ''; ?>>Gampola</option>
+                            <option value="hatton" <?= $store->city === 'hatton' ? 'selected' : ''; ?>>Hatton</option>
+                            <option value="nawalapitiya" <?= $store->city === 'nawalapitiya' ? 'selected' : ''; ?>>Nawalapitiya</option>
+
+                            <!-- Southern Province -->
+                            <option value="galle" <?= $store->city === 'galle' ? 'selected' : ''; ?>>Galle</option>
+                            <option value="matara" <?= $store->city === 'matara' ? 'selected' : ''; ?>>Matara</option>
+                            <option value="hambantota" <?= $store->city === 'hambantota' ? 'selected' : ''; ?>>Hambantota</option>
+                            <option value="tangalle" <?= $store->city === 'tangalle' ? 'selected' : ''; ?>>Tangalle</option>
+                            <option value="ambalangoda" <?= $store->city === 'ambalangoda' ? 'selected' : ''; ?>>Ambalangoda</option>
+                            <option value="weligama" <?= $store->city === 'weligama' ? 'selected' : ''; ?>>Weligama</option>
+
+                            <!-- Eastern Province -->
+                            <option value="batticaloa" <?= $store->city === 'batticaloa' ? 'selected' : ''; ?>>Batticaloa</option>
+                            <option value="trincomalee" <?= $store->city === 'trincomalee' ? 'selected' : ''; ?>>Trincomalee</option>
+                            <option value="kalmunai" <?= $store->city === 'kalmunai' ? 'selected' : ''; ?>>Kalmunai</option>
+                            <option value="ampara" <?= $store->city === 'ampara' ? 'selected' : ''; ?>>Ampara</option>
+                            <option value="eravur" <?= $store->city === 'eravur' ? 'selected' : ''; ?>>Eravur</option>
+                            <option value="kattankudy" <?= $store->city === 'kattankudy' ? 'selected' : ''; ?>>Kattankudy</option>
+
+                            <!-- Northern Province -->
+                            <option value="jaffna" <?= $store->city === 'jaffna' ? 'selected' : ''; ?>>Jaffna</option>
+                            <option value="vavuniya" <?= $store->city === 'vavuniya' ? 'selected' : ''; ?>>Vavuniya</option>
+                            <option value="mannar" <?= $store->city === 'mannar' ? 'selected' : ''; ?>>Mannar</option>
+                            <option value="point-pedro" <?= $store->city === 'point-pedro' ? 'selected' : ''; ?>>Point Pedro</option>
+                            <option value="chavakachcheri" <?= $store->city === 'chavakachcheri' ? 'selected' : ''; ?>>Chavakachcheri</option>
+                            <option value="valvettithurai" <?= $store->city === 'valvettithurai' ? 'selected' : ''; ?>>Valvettithurai</option>
+
+                            <!-- North Central Province -->
+                            <option value="anuradhapura" <?= $store->city === 'anuradhapura' ? 'selected' : ''; ?>>Anuradhapura</option>
+                            <option value="polonnaruwa" <?= $store->city === 'polonnaruwa' ? 'selected' : ''; ?>>Polonnaruwa</option>
+                            <option value="dambulla" <?= $store->city === 'dambulla' ? 'selected' : ''; ?>>Dambulla</option>
+
+                            <!-- North Western Province -->
+                            <option value="kurunegala" <?= $store->city === 'kurunegala' ? 'selected' : ''; ?>>Kurunegala</option>
+                            <option value="puttalam" <?= $store->city === 'puttalam' ? 'selected' : ''; ?>>Puttalam</option>
+                            <option value="chilaw" <?= $store->city === 'chilaw' ? 'selected' : ''; ?>>Chilaw</option>
+                            <option value="kuliyapitiya" <?= $store->city === 'kuliyapitiya' ? 'selected' : ''; ?>>Kuliyapitiya</option>
+
+                            <!-- Uva Province -->
+                            <option value="badulla" <?= $store->city === 'badulla' ? 'selected' : ''; ?>>Badulla</option>
+                            <option value="bandarawela" <?= $store->city === 'bandarawela' ? 'selected' : ''; ?>>Bandarawela</option>
+                            <option value="haputale" <?= $store->city === 'haputale' ? 'selected' : ''; ?>>Haputale</option>
+                            <option value="monaragala" <?= $store->city === 'monaragala' ? 'selected' : ''; ?>>Monaragala</option>
+
+                            <!-- Sabaragamuwa Province -->
+                            <option value="ratnapura" <?= $store->city === 'ratnapura' ? 'selected' : ''; ?>>Ratnapura</option>
+                            <option value="kegalle" <?= $store->city === 'kegalle' ? 'selected' : ''; ?>>Kegalle</option>
+                            <option value="balangoda" <?= $store->city === 'balangoda' ? 'selected' : ''; ?>>Balangoda</option>
+
+                            <!-- Other Notable Towns -->
+                            <option value="avissawella" <?= $store->city === 'avissawella' ? 'selected' : ''; ?>>Avissawella</option>
+                            <option value="horana" <?= $store->city === 'horana' ? 'selected' : ''; ?>>Horana</option>
+                            <option value="minuwangoda" <?= $store->city === 'minuwangoda' ? 'selected' : ''; ?>>Minuwangoda</option>
+
                         </select>
                     </div>
                     <div class="form-group-small">
                         <label for="district">District:</label>
                         <select id="district" name="district">
                             <option value="" disabled>Select the district of the bookstore</option>
+                            <option value="ampara" <?= $store->district === 'ampara' ? 'selected' : ''; ?>>Ampara</option>
+                            <option value="anuradhapura" <?= $store->district === 'anuradhapura' ? 'selected' : ''; ?>>Anuradhapura</option>
+                            <option value="badulla" <?= $store->district === 'badulla' ? 'selected' : ''; ?>>Badulla</option>
+                            <option value="batticaloa" <?= $store->district === 'batticaloa' ? 'selected' : ''; ?>>Batticaloa</option>
                             <option value="colombo" <?= $store->district === 'colombo' ? 'selected' : ''; ?>>Colombo</option>
+                            <option value="galle" <?= $store->district === 'galle' ? 'selected' : ''; ?>>Galle</option>
                             <option value="gampaha" <?= $store->district === 'gampaha' ? 'selected' : ''; ?>>Gampaha</option>
+                            <option value="hambantota" <?= $store->district === 'hambantota' ? 'selected' : ''; ?>>Hambantota</option>
+                            <option value="jaffna" <?= $store->district === 'jaffna' ? 'selected' : ''; ?>>Jaffna</option>
                             <option value="kalutara" <?= $store->district === 'kalutara' ? 'selected' : ''; ?>>Kalutara</option>
+                            <option value="kandy" <?= $store->district === 'kandy' ? 'selected' : ''; ?>>Kandy</option>
+                            <option value="kegalle" <?= $store->district === 'kegalle' ? 'selected' : ''; ?>>Kegalle</option>
+                            <option value="kilinochchi" <?= $store->district === 'kilinochchi' ? 'selected' : ''; ?>>Kilinochchi</option>
+                            <option value="kurunegala" <?= $store->district === 'kurunegala' ? 'selected' : ''; ?>>Kurunegala</option>
+                            <option value="mannar" <?= $store->district === 'mannar' ? 'selected' : ''; ?>>Mannar</option>
+                            <option value="matale" <?= $store->district === 'matale' ? 'selected' : ''; ?>>Matale</option>
+                            <option value="matara" <?= $store->district === 'matara' ? 'selected' : ''; ?>>Matara</option>
+                            <option value="monaragala" <?= $store->district === 'monaragala' ? 'selected' : ''; ?>>Monaragala</option>
+                            <option value="mullaitivu" <?= $store->district === 'mullaitivu' ? 'selected' : ''; ?>>Mullaitivu</option>
+                            <option value="nuwara-eliya" <?= $store->district === 'nuwara-eliya' ? 'selected' : ''; ?>>Nuwara Eliya</option>
+                            <option value="polonnaruwa" <?= $store->district === 'polonnaruwa' ? 'selected' : ''; ?>>Polonnaruwa</option>
+                            <option value="puttalam" <?= $store->district === 'puttalam' ? 'selected' : ''; ?>>Puttalam</option>
+                            <option value="ratnapura" <?= $store->district === 'ratnapura' ? 'selected' : ''; ?>>Ratnapura</option>
+                            <option value="trincomalee" <?= $store->district === 'trincomalee' ? 'selected' : ''; ?>>Trincomalee</option>
+                            <option value="vavuniya" <?= $store->district === 'vavuniya' ? 'selected' : ''; ?>>Vavuniya</option>
+
                         </select>
                     </div>
                     <div class="form-group-small">
                         <label for="province">Province:</label>
                         <select id="province" name="province">
                             <option value="" disabled>Select the province of the bookstore</option>
-                            <option value="western" <?= $store->province === 'western' ? 'selected' : ''; ?>>Western</option>
+                            <option value="central" <?= $store->province === 'central' ? 'selected' : ''; ?>>Central</option>
                             <option value="eastern" <?= $store->province === 'eastern' ? 'selected' : ''; ?>>Eastern</option>
-                            <option value="north" <?= $store->province === 'north' ? 'selected' : ''; ?>>North</option>
+                            <option value="north-central" <?= $store->province === 'north-central' ? 'selected' : ''; ?>>North Central</option>
+                            <option value="northern" <?= $store->province === 'northern' ? 'selected' : ''; ?>>Northern</option>
+                            <option value="north-western" <?= $store->province === 'north-western' ? 'selected' : ''; ?>>North Western</option>
+                            <option value="sabaragamuwa" <?= $store->province === 'sabaragamuwa' ? 'selected' : ''; ?>>Sabaragamuwa</option>
+                            <option value="southern" <?= $store->province === 'southern' ? 'selected' : ''; ?>>Southern</option>
+                            <option value="uva" <?= $store->province === 'uva' ? 'selected' : ''; ?>>Uva</option>
+                            <option value="western" <?= $store->province === 'western' ? 'selected' : ''; ?>>Western</option>
+
                         </select>
                     </div>
                 </div>
@@ -392,21 +493,8 @@
     <footer class="small-footer">
             <p>&copy; 2024 BookMart, all rights reserved.</p>
     </footer>
-    <div id="custom-alert" class="error" style="display: none;">
-        <div class="error__icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none">
-                <path fill="#393a37" d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z"></path>
-            </svg>
-        </div>
-        <div class="error__title" id="alert-message">Alert message goes here</div>
-        <div class="error__close" onclick="closeAlert()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20">
-                <path fill="#393a37" d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"></path>
-            </svg>
-        </div>
-    </div> 
     <script src="<?= ROOT ?>/assets/JS/bookstoreProfile.js"></script>
-    <script>
+    <!-- <script>
         const isLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
 
         function showAlert(message, type = "error") {
@@ -469,6 +557,6 @@
             showAlert("<?= $_SESSION['success'] ?>", "success");
         </script>
         <?php unset($_SESSION['success']); ?>
-    <?php endif; ?>
+    <?php endif; ?> -->
 </body>
 </html>

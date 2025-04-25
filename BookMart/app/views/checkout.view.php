@@ -67,7 +67,7 @@
                 <div class="section-title">Order Summary</div>
 
                 <div class="promo-box">
-                    <input type="text" class="promo-input" id="couponCode" placeholder="Enter Store/BookMart Code">
+                    <input type="text" class="promo-input" id="couponCode" placeholder="Enter Store/Coupon Code">
                     <button class="promo-btn" onclick="handleCoupon() ">APPLY</button>
                 </div>
 

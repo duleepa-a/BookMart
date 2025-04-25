@@ -139,22 +139,6 @@ class Payment extends Controller{
             'payment_amount' => $orderData['total_amount']
         ];
         $payment=$paymentModel->insert($paymentData);
-
-
-        $userModel = new UserModel(); 
-        if ($userModel->getRole($book->seller_id) == 'bookSeller') {
-            $bookModel = new BookModel();
-            $bookModel->update($book->id, ['status' => 'removed']);
-        }
-
-        $notificationModel = new NotificationModel();
-            $notificationModel->createNotification(
-            trim($orderData['seller_id']),
-            'Order Placed',
-            'A new order has been placed for the book ' . trim($book->title) . '.',
-            '/bookstoreController/orderView/' . $orderId,
-        );
-        
     
         $this->view('paymentSuccess',['payment' => $payment]);
     }
@@ -247,7 +231,40 @@ class Payment extends Controller{
     }
 
     public function cartView(){
-        $this->view('cart',['cart'=> $_SESSION['cart'] ?? []]);
+        $messaage = "";
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            if(isset($_POST['coupon-code'])){
+                $couponModel = new CouponModel();
+                $bookModel = new BookModel();
+
+                $couponcode = $_POST['coupon-code'];
+
+                $cart = $_SESSION['cart'];
+                foreach ($cart as $item) {
+                    $book = $bookModel->first(['id' => $item['book_id']]);
+                    $bookId = $book->id;
+                    $coupon = $couponModel->getCouponValid($couponcode,$book->seller_id);
+
+                    if($coupon){
+                        $book->discount = $coupon->discount_percentage;
+                        $discountedPrice = $book->price - ($book->price * $book->discount / 100);
+                        $_SESSION['cart'][$bookId]['price'] = $discountedPrice;
+                        $_SESSION['cart'][$bookId]['discount'] = $book->discount;
+                        if(!$messaage){
+                            $messaage = "Coupon applied to the relevant items in the cart.";
+                        }
+                    }
+                }
+
+                if(!$messaage){
+                    $messaage = "Coupon is not Valid!";
+                }
+
+            }
+        }
+
+
+        $this->view('cart',['cart'=> $_SESSION['cart'] ?? [] , 'couponMessage' => $messaage]);
     }
 
     public function cartCheckout() {

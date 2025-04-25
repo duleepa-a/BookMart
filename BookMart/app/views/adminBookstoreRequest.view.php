@@ -23,9 +23,8 @@
                 <h1 class="inventory-title">Bookstores</h1><br>
              </div>
             <nav class="tabs">
-                <button class="tab-button active first-child" onclick="showTab('pending-stores',event)">Pending Requests</button>
-                <button class="tab-button" onclick="showTab('all-stores',event)">All Stores</button>
-                <button class="tab-button last-child" onclick="showTab('accept-stores',event)">Accepted Stores</button>
+                <button class="tab-button active first-child" id="pending-stores-button" onclick="showTab('pending-stores')">Pending Requests</button>
+                <button class="tab-button last-child" id="accept-stores-button" onclick="showTab('accept-stores')">Accepted Stores</button>
             </nav>
             <div class="tab-content" id="pending-stores">
                 <div class="add-toolbar">
@@ -58,54 +57,36 @@
                             <td><a href="<?= ROOT ?>/admin/viewBookStore/<?= $store->id ?>" class="resolve-btn" style="text-decoration: none;">View</a></td>
                         </tr>
                         <?php endforeach; ?>
-                        <?php else: ?>
-                        <div class="message-container">
-                        <h2 class="empty-message">No pending bookstores at the moment.</h2>
+                            </div>
                         </div>
-                    <?php endif; ?>
                     </tbody>
                 </table>
-            </div>
-
-            <div class="tab-content" id="all-stores" style="display: none;">
-                <div class="add-toolbar">
-                    <input type="text" id="searchInput" onkeyup="searchStores()" placeholder="Search..." class="search">
+                <div class="pagination-container">
+                    <div class="pagination">
+                                    <button class="page-button previous" 
+                                            onclick="window.location.href='?pending_page=<?= max(1, $pendingPage - 1) ?>&accepted_page=<?= $acceptedPage ?>&tab=<?= $tab ?>'"
+                                            <?= $pendingPage <= 1 ? 'disabled' : '' ?>>&lt;</button>
+                                    
+                                    <?php for ($i = 1; $i <= $totalPendingPages; $i++): ?>
+                                        <button class="page-button <?= $pendingPage == $i ? 'active' : '' ?>" 
+                                                onclick="window.location.href='?pending_page=<?= $i ?>&accepted_page=<?= $acceptedPage ?>&tab=<?= $tab ?>'">
+                                            <?= $i ?>
+                                        </button>
+                                    <?php endfor; ?>
+                                    
+                                    <button class="page-button next" 
+                                            onclick="window.location.href='?pending_page=<?= min($totalPendingPages, $pendingPage + 1) ?>&accepted_page=<?= $acceptedPage ?>&tab=<?= $tab ?>'"
+                                            <?= $pendingPage >= $totalPendingPages ? 'disabled' : '' ?>>&gt;</button>
+                    </div>
                 </div>
-                <?php if (isset($allStores) && !empty($allStores)): ?>
-                <table id="storesTable" class="add-table">
-                    <thead>
-                        <tr>
-                            <th>Store Name</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Street Address</th>
-                            <th>Owner Name</th>
-                            <th>Owner Email</th>
-                            <th>Date Requested</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($allStores as $store): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($store->store_name) ?></td>
-                            <td><?= htmlspecialchars($store->manager_email) ?></td>
-                            <td><?= htmlspecialchars($store->manager_phone_number) ?></td>
-                            <td><?= htmlspecialchars($store->street_address) ?></td>
-                            <td><?= htmlspecialchars($store->owner_name) ?></td>
-                            <td><?= htmlspecialchars($store->owner_email) ?></td>
-                            <td><?= htmlspecialchars($store->createdAt) ?></td>
-                            <td><a href="<?= ROOT ?>/admin/viewBookStore/<?= $store->id ?>" class="resolve-btn" style="text-decoration: none;">View</a></td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
                 <?php else: ?>
                         <div class="message-container">
-                        <h2 class="empty-message">No bookstores registered at the moment.</h2>
+                            <p class="empty-message">No pending bookstores at the moment.</p>
                         </div>
                 <?php endif; ?>
             </div>
+
+            
 
             <div class="tab-content" id="accept-stores" style="display: none;">
                 <div class="add-toolbar">
@@ -138,18 +119,76 @@
                             <td><a href="<?= ROOT ?>/admin/viewBookStore/<?= $store->id ?>" class="resolve-btn" style="text-decoration: none;">View</a></td>
                         </tr>
                         <?php endforeach; ?>
-                    <?php else: ?>
-                        <div class="message-container">
-                        <h2 class="empty-message">No accepted bookstores at the moment.</h2>
-                        </div>
-                    <?php endif; ?>
                     </tbody>
                 </table>
+                <div class="pagination-container">
+                    <div class="pagination">
+                                <button class="page-button previous" 
+                                        onclick="window.location.href='?accepted_page=<?= max(1, $acceptedPage - 1) ?>&pending_page=<?= $pendingPage ?>&tab=<?= $tab ?>'"
+                                        <?= $acceptedPage <= 1 ? 'disabled' : '' ?>>&lt;</button>
+                                
+                                <?php for ($i = 1; $i <= $totalAcceptedPages; $i++): ?>
+                                    <button class="page-button <?= $acceptedPage == $i ? 'active' : '' ?>" 
+                                            onclick="window.location.href='?accepted_page=<?= $i ?>&pending_page=<?= $pendingPage ?>&tab=<?= $tab ?>'">
+                                        <?= $i ?>
+                                    </button>
+                                <?php endfor; ?>
+                                
+                                <button class="page-button next" 
+                                        onclick="window.location.href='?accepted_page=<?= min($totalAcceptedPages, $acceptedPage + 1) ?>&pending_page=<?= $pendingPage ?>&tab=<?= $tab ?>'"
+                                        <?= $acceptedPage >= $totalAcceptedPages ? 'disabled' : '' ?>>&gt;</button>
+                    </div>
+                </div>
+                <?php else: ?>
+                        <div class="message-container">
+                            <p class="empty-message">No accepted bookstores at the moment.</p>
+                        </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
-
-    
     <script src="<?= ROOT ?>/assets/JS/adminBookstore.js"></script>
+    <script>
+          function showTab(tabId) {
+            // Hide all tab contents
+            var tabContents = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].style.display = 'none';
+            }
+
+            // Remove 'active' class from all tab buttons
+            var tabButtons = document.getElementsByClassName('tab-button');
+            for (var i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+
+            const buttonId = tabId + "-button";
+            const tabbutton = document.getElementById(buttonId);
+
+            // Show the selected tab content
+            document.getElementById(tabId).style.display = 'block';
+
+            // Add 'active' class to the clicked tab button
+            tabbutton.classList.add('active');
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('tab', tabId);
+            history.replaceState(null, null, '?' + urlParams.toString());
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const requestedTab = urlParams.get('tab');
+
+            console.log(requestedTab);
+            
+            if (requestedTab && (requestedTab === 'pending-stores' || requestedTab === 'accept-stores')) {
+                showTab(requestedTab);
+            } else {
+                showTab('pending-stores'); 
+            }
+        });
+    </script>
     </body>
     </html>

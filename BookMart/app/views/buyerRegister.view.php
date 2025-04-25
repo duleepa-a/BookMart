@@ -118,28 +118,128 @@
                 <div class="form-group-row">
                     <div class="form-group-small">
                         <label for="city">Zone:</label>
-                        <select id="city" name="city" >
-                            <option value="" disabled selected>Select your Zone:</option>
-                            <option value="pannipitya">Pannipitya</option>
+                        <select id="city" name="city">
+                            <option value="" disabled selected>Select your city:</option>
+                            <!-- Western Province -->
+                            <option value="colombo">Colombo</option>
+                            <option value="dehiwala-mount-lavinia">Dehiwala-Mount Lavinia</option>
+                            <option value="moratuwa">Moratuwa</option>
+                            <option value="negombo">Negombo</option>
+                            <option value="sri-jayawardenepura-kotte">Sri Jayawardenepura Kotte</option>
+                            <option value="ja-ela">Ja-Ela</option>
+                            <option value="wattala">Wattala</option>
+                            <option value="gampaha">Gampaha</option>
+                            <option value="kalutara">Kalutara</option>
+                            <option value="panadura">Panadura</option>
+                            <option value="beruwala">Beruwala</option>
+                            <option value="pannipitiya">Pannipitiya</option>
                             <option value="maharagama">Maharagama</option>
+
+                            <!-- Central Province -->
+                            <option value="kandy">Kandy</option>
+                            <option value="matale">Matale</option>
+                            <option value="nuwara-eliya">Nuwara Eliya</option>
+                            <option value="gampola">Gampola</option>
+                            <option value="hatton">Hatton</option>
+                            <option value="nawalapitiya">Nawalapitiya</option>
+
+                            <!-- Southern Province -->
+                            <option value="galle">Galle</option>
+                            <option value="matara">Matara</option>
+                            <option value="hambantota">Hambantota</option>
+                            <option value="tangalle">Tangalle</option>
+                            <option value="ambalangoda">Ambalangoda</option>
+                            <option value="weligama">Weligama</option>
+
+                            <!-- Eastern Province -->
+                            <option value="batticaloa">Batticaloa</option>
+                            <option value="trincomalee">Trincomalee</option>
+                            <option value="kalmunai">Kalmunai</option>
+                            <option value="ampara">Ampara</option>
+                            <option value="eravur">Eravur</option>
+                            <option value="kattankudy">Kattankudy</option>
+
+                            <!-- Northern Province -->
+                            <option value="jaffna">Jaffna</option>
+                            <option value="vavuniya">Vavuniya</option>
+                            <option value="mannar">Mannar</option>
+                            <option value="point-pedro">Point Pedro</option>
+                            <option value="chavakachcheri">Chavakachcheri</option>
+                            <option value="valvettithurai">Valvettithurai</option>
+
+                            <!-- North Central Province -->
+                            <option value="anuradhapura">Anuradhapura</option>
+                            <option value="polonnaruwa">Polonnaruwa</option>
+                            <option value="dambulla">Dambulla</option>
+
+                            <!-- North Western Province -->
+                            <option value="kurunegala">Kurunegala</option>
+                            <option value="puttalam">Puttalam</option>
+                            <option value="chilaw">Chilaw</option>
+                            <option value="kuliyapitiya">Kuliyapitiya</option>
+
+                            <!-- Uva Province -->
+                            <option value="badulla">Badulla</option>
+                            <option value="bandarawela">Bandarawela</option>
+                            <option value="haputale">Haputale</option>
+                            <option value="monaragala">Monaragala</option>
+
+                            <!-- Sabaragamuwa Province -->
+                            <option value="ratnapura">Ratnapura</option>
+                            <option value="kegalle">Kegalle</option>
+                            <option value="balangoda">Balangoda</option>
+
+                            <!-- Other Notable Towns -->
+                            <option value="avissawella">Avissawella</option>
+                            <option value="horana">Horana</option>
+                            <option value="minuwangoda">Minuwangoda</option>
                         </select>
+
                     </div>
                     <div class="form-group-small">
                         <label for="district">District:</label>
                         <select id="district" name="district" >
                             <option value="" disabled selected>Please select your district</option>
+                            <option value="ampara">Ampara</option>
+                            <option value="anuradhapura">Anuradhapura</option>
+                            <option value="badulla">Badulla</option>
+                            <option value="batticaloa">Batticaloa</option>
                             <option value="colombo">Colombo</option>
+                            <option value="galle">Galle</option>
                             <option value="gampaha">Gampaha</option>
+                            <option value="hambantota">Hambantota</option>
+                            <option value="jaffna">Jaffna</option>
                             <option value="kalutara">Kalutara</option>
+                            <option value="kandy">Kandy</option>
+                            <option value="kegalle">Kegalle</option>
+                            <option value="kilinochchi">Kilinochchi</option>
+                            <option value="kurunegala">Kurunegala</option>
+                            <option value="mannar">Mannar</option>
+                            <option value="matale">Matale</option>
+                            <option value="matara">Matara</option>
+                            <option value="monaragala">Monaragala</option>
+                            <option value="mullaitivu">Mullaitivu</option>
+                            <option value="nuwara-eliya">Nuwara Eliya</option>
+                            <option value="polonnaruwa">Polonnaruwa</option>
+                            <option value="puttalam">Puttalam</option>
+                            <option value="ratnapura">Ratnapura</option>
+                            <option value="trincomalee">Trincomalee</option>
+                            <option value="vavuniya">Vavuniya</option>
                         </select>
                     </div>
                     <div class="form-group-small">
                         <label for="province">Province:</label>
                         <select id="province" name="province" >
                             <option value="" disabled selected>Please select your province</option>
-                            <option value="Western">Western</option>
-                            <option value="Eastern">Eastern</option>
-                            <option value="kalutara">North</option>
+                            <option value="central">Central</option>
+                            <option value="eastern">Eastern</option>
+                            <option value="north-central">North Central</option>
+                            <option value="northern">Northern</option>
+                            <option value="north-western">North Western</option>
+                            <option value="sabaragamuwa">Sabaragamuwa</option>
+                            <option value="southern">Southern</option>
+                            <option value="uva">Uva</option>
+                            <option value="western">Western</option>
                         </select>
                     </div>
                 </div>
@@ -174,34 +274,6 @@
         </form>
         </div>
     </div>
-    <div id="custom-alert" class="error" style="display: none;">
-    <div class="error__icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none">
-                <path fill="#393a37" d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z"></path>
-            </svg>
-        </div>
-        <div class="error__title" id="alert-message">Alert message goes here</div>
-        <div class="error__close" onclick="closeAlert()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20">
-                <path fill="#393a37" d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"></path>
-            </svg>
-        </div>
-    </div>  
     <script src="<?= ROOT ?>/assets/JS/buyerRegisterPage.js"></script>
-    <script>
-        <?php if (!empty($_SESSION['error'])): ?>
-        <script>
-            showAlert("<?= $_SESSION['error'] ?>", "error");
-        </script>
-        <?php unset($_SESSION['error']); ?>
-        <?php endif; ?>
-
-        <?php if (!empty($_SESSION['success'])): ?>
-            <script>
-                showAlert("<?= $_SESSION['success'] ?>", "success");
-            </script>
-            <?php unset($_SESSION['success']); ?>
-        <?php endif; ?>
-    </script>
 </body>
 </html>
