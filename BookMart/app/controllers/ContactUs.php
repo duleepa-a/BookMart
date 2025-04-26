@@ -23,7 +23,7 @@ class ContactUs extends Controller{
         } else{
             $_SESSION['flash_message'] = 'Failed to submit! Please try again';
         }
-
-        $this ->view('contactUs');
+        redirect('ContactUs');
+        // $this ->view('contactUs');
     }
 }

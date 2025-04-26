@@ -85,6 +85,30 @@ body{
     color: #fff;
   }
   
+  .flash-message {
+    position: relative;
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px 40px 15px 15px;
+    border-radius: 5px;
+    margin: 10px auto;
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+    font-size: 1.1rem;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #155724;
+  }
+
   @media (max-width: 768px) {
     .contact-container {
       width: 90%;

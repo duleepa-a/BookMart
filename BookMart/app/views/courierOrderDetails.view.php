@@ -178,7 +178,7 @@
                                     <input type="hidden" name="order_id" value="<?= $order->order_id ?>">
                                     <input type="hidden" name="pickup_location" value="<?= $order->order_id ?>">
                                     <input type="hidden" name="shipping_address" value="<?= $order->order_id ?>">
-                                    <input type="hidden" name="distance" value="<?= $order->estimated_distance ?>">
+                                    <input type="hidden" name="distance" value="<?= $order->estimate_distance ?>">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fas fa-check-circle me-2"></i>Delete Order
                                     </button>
