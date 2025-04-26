@@ -115,7 +115,8 @@
             document.getElementById("custom-alert").style.display = "none";
         }
         
-        <?php if (!empty($_SESSION['error'])): ?>
+    </script>  
+     <?php if (!empty($_SESSION['error'])): ?>
         <script>
             showAlert("<?= $_SESSION['error'] ?>", "error");
         </script>
@@ -128,6 +129,5 @@
             </script>
             <?php unset($_SESSION['success']); ?>
         <?php endif; ?>
-    </script>  
 </body>
 </html>

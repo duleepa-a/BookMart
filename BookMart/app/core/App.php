@@ -94,6 +94,7 @@ class App{
 
     private $publicAccess = [
         '_404' => ['index'],
+        'Unauthorized' => ['index'],
         'BookSellerRegister' => ['index'],
         'BookstoreRegister' => ['index'],
         'BookstoreController' => ['showProfile'],
