@@ -24,23 +24,23 @@ class AdminSendmsg extends Controller
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'duleepa24@gmail.com';
-                $mail->Password = 'dnbzkaydjffxlrkx';
+                $mail->Username = 'bookmart.info.lk@gmail.com';
+                $mail->Password = 'ljykrgedgggmhgzf';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
     
-                $mail->setFrom('duleepa24@gmail.com', 'BookMart');
+                $mail->setFrom('bookmart.info.lk@gmail.com', 'BookMart');
                 $mail->addAddress($email);
                 $mail->Subject = $subject;
                 $mail->Body = $message;
     
                 $mail->send();
-                $_SESSION['message'] = 'Email sent successfully!';
+                $_SESSION['success'] = 'Email sent successfully!';
             } catch (\PHPMailer\PHPMailer\Exception $e) {
-                $_SESSION['message'] = 'Mailer Error: ' . $mail->ErrorInfo;
-            }
+                $_SESSION['error'] = 'Mailer Error: ' . $mail->ErrorInfo;
+            }  
     
-            redirect('adminSendmsg');
+            redirect('adminSendmsg?email='.$email);
         } else {
             redirect('adminSendmsg');
         }

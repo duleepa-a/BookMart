@@ -16,8 +16,9 @@
     
     <?php include 'commonSidebar.view.php'; ?>
     
-    <div class="container">
-    <div class="profile-container">
+    <!-- <div class="container">
+    <div class="profile-container"> -->
+    <div class="complain-box">
         <h1 class="earnings-title">Complain</h1>
         <br><br>
         <h4>
@@ -45,7 +46,7 @@
       <button type="submit" class="submit-btn">Complain</button>
     </form>
     </div>
-    </div>
+    
     <script src="<?= ROOT ?>/assets/JS/courierHome.js"></script>
 </body>
 </html>

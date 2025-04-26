@@ -79,7 +79,6 @@ class User extends Controller {
         }
     
         public function registerBuyer() {
-            echo("registerBuyer");
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo("registerBuyer post in");
                 $userData = [
@@ -113,14 +112,17 @@ class User extends Controller {
                     if ($this->userModel->registerBuyer($userData, $buyerData)) {
                         $_SESSION['success'] =  "Registration successful!";
                         redirect('login');
+                        return;
                     } else {
                         $_SESSION['error'] = "Something went wrong!";
                         $this->view('buyerRegister');
+                        return;
                     }
                 } else {
                         $_SESSION['error'] ="validate not done";
                    
                         $this->view('buyerRegister', $userData);
+                        return;
                 }
             } else {
                 $_SESSION['error'] = "Server Error";
@@ -163,6 +165,7 @@ class User extends Controller {
                     if ($this->userModel->registerBookSeller($userData, $buyerData)) {
                         $_SESSION['success'] = "Registration successful!";
                         redirect('login');
+                        return;
                     } else {
                         echo "Something went wrong!";
                     }
@@ -231,6 +234,7 @@ class User extends Controller {
                             $courierData[$fieldName] = null;
                             $_SESSION['error'] = "Failed to upload $inputName";
                             $this->view('courierRegister', $userData);
+                            return;
                         }
                     } else {
                         $courierData[$fieldName] = null;
@@ -241,19 +245,23 @@ class User extends Controller {
                     $userData['password'] = password_hash($userData['password'], PASSWORD_DEFAULT);
         
                     if ($this->userModel->registerCourier($userData, $courierData)) {
+                        $_SESSION['success'] = "Registration successful!";
                         redirect('login');
                     } else {
                         $_SESSION['error'] = "Something went wrong during registration!";
                         $this->view('courierRegister');
+                        return;
                     }
                 } else {
                     $_SESSION['error'] = "Data invalid";
                     $this->view('courierRegister', $userData);
+                    return;
                 }
         
             } else {
                 $_SESSION['error'] = "Server error";
                 $this->view('courierRegister');
+                
             }
         }        
 
@@ -305,6 +313,7 @@ class User extends Controller {
                     if (!in_array($fileExt, $allowedExtensions) || !in_array($fileType, $allowedMimeTypes)) {
                         $_SESSION['error'] = "Invalid file type. Only PDF, PNG, JPG, and JPEG are allowed.";
                         $this->view('bookstoreRegister', $storeData);
+                        return;
                     }
             
                     if (move_uploaded_file($fileTmp, $destination)) {
@@ -312,10 +321,12 @@ class User extends Controller {
                     } else {
                         $_SESSION['error'] =  "Failed to upload file.";
                         $this->view('bookstoreRegister', $storeData);
+                        return;
                     }
                 } else {
                     $_SESSION['error'] =  "Evidence document is required.";
                     $this->view('bookstoreRegister', $storeData);
+                    return;
                 }
         
                 if ($this->userModel->validate($userData)) {
@@ -331,6 +342,7 @@ class User extends Controller {
                 } else {
                     $_SESSION['error'] = "not validated";
                     $this->view('bookstoreRegister', $storeData);
+                    return;
                 }
             } else {
                 $_SESSION['error'] = "Server error";

@@ -49,14 +49,14 @@ class BookModel {
                                         'id' => $currentBook->id
                                     ] 
                                 );
-
         
-        foreach ($recommended as $book) {
-            if (!in_array($book->id, $recommendedIds)) {
-                $recommendedIds[] = $book->id;
+        if($recommended){
+            foreach ($recommended as $book) {
+                if (!in_array($book->id, $recommendedIds)) {
+                    $recommendedIds[] = $book->id;
+                }
             }
         }
-        
 
         if (count($recommended) < 7) {
             $this->limit = max(0,7 - count($recommended));
@@ -70,12 +70,16 @@ class BookModel {
                 ] 
             );
 
-            foreach ($moreFromSeller as $book) {
-                if (count($recommended) >= 7) break;
-                if (!in_array($book->id, $recommendedIds)) {
-                    $recommended[] = $book;
-                    $recommendedIds[] = $book->id;
+            if($moreFromSeller){
+
+                foreach ($moreFromSeller as $book) {
+                    if (count($recommended) >= 7) break;
+                    if (!in_array($book->id, $recommendedIds)) {
+                        $recommended[] = $book;
+                        $recommendedIds[] = $book->id;
+                    }
                 }
+
             }
 
         }
@@ -86,13 +90,16 @@ class BookModel {
 
             $topSelling = $orderModel->where([],['book_id' => $bookId]);
 
-            foreach ($topSelling as $order) {
-                if (count($recommended) >= 7) break;
-                if (!in_array($order->book_id, $recommendedIds)) {
-                    $book = $this->first(['id' => $order->book_id , 'status' => 'available']);
-                    if($book){
-                        $recommended[] = $book;
-                        $recommendedIds[] = $book->id;
+
+            if($topSelling){
+                foreach ($topSelling as $order) {
+                    if (count($recommended) >= 7) break;
+                    if (!in_array($order->book_id, $recommendedIds)) {
+                        $book = $this->first(['id' => $order->book_id , 'status' => 'available']);
+                        if($book){
+                            $recommended[] = $book;
+                            $recommendedIds[] = $book->id;
+                        }
                     }
                 }
             }
