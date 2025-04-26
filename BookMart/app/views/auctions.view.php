@@ -27,10 +27,12 @@
                     <input type="hidden" name="view" value="latest">
                     <button type="submit" class="auction-tab <?= ($data['selectedTab'] == 'latest') ? 'selected' : '' ?>">Latest Auctions</button>
                 </form>
-                <form method="get" style="display:inline;">
-                    <input type="hidden" name="view" value="myAuctions">
-                    <button type="submit" class="auction-tab <?= ($data['selectedTab'] == 'myAuctions') ? 'selected' : '' ?>">My Auctions</button>
-                </form>
+                <?php if ($_SESSION['user_role'] == 'bookSeller'): ?>
+                    <form method="get" style="display:inline;">
+                        <input type="hidden" name="view" value="myAuctions">
+                        <button type="submit" class="auction-tab <?= ($data['selectedTab'] == 'myAuctions') ? 'selected' : '' ?>">My Auctions</button>
+                    </form>
+                <?php endif; ?>
                 <form method="get" style="display:inline;">
                     <input type="hidden" name="view" value="participating">
                     <button type="submit" class="auction-tab <?= ($data['selectedTab'] == 'participating') ? 'selected' : '' ?>">Participating Auctions</button>
