@@ -103,10 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('start-time').addEventListener('change', function() {
         document.getElementById('end-time').min = this.value;
         
-        // If end time is now before start time, update it
-        if (document.getElementById('end-time').value < this.value) {
-            document.getElementById('end-time').value = this.value;
-        }
     });
 
     // Event delegation for handling row clicks (similar to bookstoreInventory.js)

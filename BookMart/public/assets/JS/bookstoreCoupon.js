@@ -82,6 +82,12 @@ document.addEventListener("DOMContentLoaded", function () {
             row.style.display = matchFound ? "" : "none";
         });
     });
+
+    const updateModal = document.getElementById("update-book-modal");
+    updateModal.querySelector("#update-start-date").addEventListener('change', function() {
+        updateModal.querySelector("#update-end-date").min = this.value;
+        
+    });
 });
 
 document.querySelector(".delete-modal").addEventListener("click", (e) => {
@@ -94,14 +100,6 @@ document.querySelector(".delete-modal").addEventListener("click", (e) => {
     deleteModal.querySelector("#delete-book-id").value = bookId;
     deleteModal.classList.add('active');
     
-});
-
-updateModal.querySelector("#update-start-date").addEventListener('change', function() {
-    updateModal.querySelector("#update-end-date").min = this.value;
-    
-    if (updateModal.querySelector("#update-end-date").value < this.value) {
-        updateModal.querySelector("#update-end-date").value = this.value;
-    }
 });
 
 function formattedDate(date) {
