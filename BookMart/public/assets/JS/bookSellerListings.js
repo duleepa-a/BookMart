@@ -52,8 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function setMinDateTime() {
-        const now = new Date();
-        // Format: YYYY-MM-DDThh:mm
+        const now = new Date();     // Format: YYYY-MM-DDThh:mm
         const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, '0');
         const day = String(now.getDate()).padStart(2, '0');
@@ -104,10 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('start-time').addEventListener('change', function() {
         document.getElementById('end-time').min = this.value;
         
-        // If end time is now before start time, update it
-        if (document.getElementById('end-time').value < this.value) {
-            document.getElementById('end-time').value = this.value;
-        }
     });
 
     // Event delegation for handling row clicks (similar to bookstoreInventory.js)

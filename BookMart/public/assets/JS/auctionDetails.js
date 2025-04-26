@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const isClosed = timerContainer.getAttribute('data-is-closed');
     const bidInput = document.getElementById('bid-input');
     const hiddenBidAmount = document.getElementById('bid-amount');
+    const placeBidButton = document.querySelector('.place-bid');
+    let minBid = 0;
+    if (bidInput) {
+        minBid = parseFloat(bidInput.min);
+    }
 
     const endTime = new Date(endTimeStr).getTime();
 
@@ -39,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
         document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
     }
+
     if (isClosed === '0') {
         updateTimer();
         var timerInterval = setInterval(updateTimer, 1000);
@@ -49,8 +55,27 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("seconds").textContent = "00";
     }
 
-    bidInput.addEventListener('input', function () {
-        hiddenBidAmount.value = bidInput.value;
-    });
+    function isButtonLocked() {
+        return placeBidButton.dataset.locked === "true";
+    }
+
+    function updateButtonState() {
+        if (isButtonLocked()) {
+            placeBidButton.disabled = true;
+            return;
+        }
+
+        const enteredBid = parseFloat(bidInput.value);
+        if (isNaN(enteredBid) || enteredBid < minBid) {
+            placeBidButton.disabled = true;
+        } else {
+            placeBidButton.disabled = false;
+            hiddenBidAmount.value = enteredBid;
+        }
+    }
+
+    updateButtonState();
+
+    bidInput.addEventListener('input', updateButtonState);
 
 });

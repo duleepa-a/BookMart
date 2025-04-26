@@ -33,24 +33,33 @@ class CourierProfile extends Controller{
             $city = $_POST['city'] ?? '';
             $phonenumber = $_POST['phone-number'] ?? '';
             $secondarynumber = $_POST['secondary-number'] ?? '';
+            // $email = $_POST['email'] ?? '';
 
             $errors = [];
 
-            // if (empty($firstname)) $errors['first-name'] = "First name is required.";
-            // if (empty($lastname)) $errors['last-name'] = "Last name is required.";
-            // if (!preg_match('/^[A-Z]\d{7}$/', $license)) $errors['license'] = "Invalid license number.";
-            // if (!preg_match('/^(\d{9}[VXvx]|\d{12})$/', $nic)) $errors['nic'] = "Invalid NIC number.";
-            // if (!preg_match('/^\d{10}$/', $phonenumber)) $errors['phone-number'] = "Invalid phone number.";
-            // if (!preg_match('/^\d{10}$/', $secondarynumber)) $errors['secondary-number'] = "Invalid phone number.";
-            // if (empty($address)) $errors['address'] = " Address is required.";
-            // if (empty($city)) $errors['city'] = "City is required.";
-            // if (!filter_var($emailaddress, FILTER_VALIDATE_EMAIL)) $errors['email'] = "Invalid Email Address.";
+            if (empty($firstname)) $errors['first-name'] = "First name is required.";
+            if (empty($lastname)) $errors['last-name'] = "Last name is required.";
+            if (!preg_match('/^[A-Z]\d{9}$/', $license)) $errors['license'] = "Invalid license number.";
+            if (!preg_match('/^(\d{9}[VXvx]|\d{12})$/', $nic)) $errors['nic'] = "Invalid NIC number.";
+            if (!preg_match('/^\d{10}$/', $phonenumber)) $errors['phone-number'] = "Invalid phone number.";
+            if (!preg_match('/^\d{10}$/', $secondarynumber)) $errors['secondary-number'] = "Invalid phone number.";
+            if (empty($address)) $errors['address'] = " Address is required.";
+            if (empty($city)) $errors['city'] = "City is required.";
+            // if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors['email'] = "Invalid Email Address.";
             
+            // if (!empty($errors)) {
+            //     echo "<pre>";
+            //     print_r($errors);
+            //     echo "</pre>";
+            //     die();
+            // }
+
             if (empty($errors)) {
                 $courierModel = new Courier();
-
-                $userId = $courierModel->first(['user_id' => $_SESSION['user_id']])->id ?? null;
                 
+                $userId = $courierModel->first(['user_id' => $_SESSION['user_id']])->id ?? null;
+            
+
                 if ($userId) {
                     $courierModel->update($userId, [
                         'first_name' => $firstname,
@@ -64,7 +73,7 @@ class CourierProfile extends Controller{
                         'phone_number' => $phonenumber,
                         'secondary_phone_number' =>  $secondarynumber,
                     ]);
-
+                    $_SESSION['success'] = "Successfully Updated Personal Details";
                     $this->index(); 
                 } else {
                     $_SESSION['error'] = "You must be logged in to update your store.";
@@ -72,7 +81,8 @@ class CourierProfile extends Controller{
                 }
             } else {
                 $_SESSION['form_errors'] = $errors;
-                $this->index();  
+                $this->index();  // Or whatever method loads your view
+                return;  
             }
         }
     }
@@ -86,12 +96,18 @@ class CourierProfile extends Controller{
             
             $errors = [];
 
-            // if (empty($bank)) $errors['bank'] = "Bank Name is required.";
-            // if (empty($branchname)) $errors['branch-name'] = "Branch name is required.";
-            // if (empty($accountname)) $errors['account-name'] = "Account name is required.";
-            // if (!preg_match('/^\d{10,12}$/', $accountnumber)) $errors['account-number'] = "Invalid bank account number.";
+            if (empty($bank)) $errors['bank'] = "Bank Name is required.";
+            if (empty($branchname)) $errors['branch-name'] = "Branch name is required.";
+            if (empty($accountname)) $errors['account-name'] = "Account name is required.";
+            if (!preg_match('/^\d{8,12}$/', $accountnumber)) $errors['account-number'] = "Invalid bank account number.";
             
-            
+            // if (!empty($errors)) {
+            //     echo "<pre>";
+            //     print_r($errors);
+            //     echo "</pre>";
+            //     die();
+            // }
+
             if (empty($errors)) {
                 $courierModel = new Courier();
 
@@ -104,7 +120,7 @@ class CourierProfile extends Controller{
                         'account_number' => $accountnumber,
                         'account_name' => $accountname,
                     ]);
-
+                    $_SESSION['successB'] = "Successfully Updated Bank Details";
                     $this->index(); 
                 } else {
                     $_SESSION['error'] = "You must be logged in to update your store.";
@@ -112,7 +128,8 @@ class CourierProfile extends Controller{
                 }
             } else {
                 $_SESSION['form_errors'] = $errors;
-                $this->index();  
+                $this->index();
+                return;   
             }
         }
     }
@@ -125,10 +142,19 @@ class CourierProfile extends Controller{
             
             $errors = [];
 
-            // if (empty($vehicaltype)) $errors['vehical-type'] = "vehical type is required.";
+            if (empty($vehicaltype)) $errors['vehical-type'] = "vehical type is required.";
             // if (empty($vehicalmodel)) $errors['vehical-model] = "vehical model is required.";
             // if (empty($vehicalregistrationnumber) $errors['vehical-registration-number'] = "vehical registration number is required.";
+            if (!preg_match('/^([A-Z]{2,3}-\d{4}|\d{3}-\d{4})$/i', $vehicalregistrationnumber)) $errors['vehical-registration-number'] = "Invalid vehicle registration number.";
             
+            
+            // if (!empty($errors)) {
+            //     echo "<pre>";
+            //     print_r($errors);
+            //     echo "</pre>";
+            //     die();
+            // }
+
             if (empty($errors)) {
                 $courierModel = new Courier();
 
@@ -140,7 +166,7 @@ class CourierProfile extends Controller{
                         'vehicle_model' => $vehicalmodel,
                         'vehicle_registration_number' => $vehicalregistrationnumber,                        
                     ]);
-
+                    $_SESSION['successV'] = "Successfully Updated Vehicle Details";
                     $this->index(); 
                 } else {
                     $_SESSION['error'] = "You must be logged in to update your store.";
@@ -148,7 +174,8 @@ class CourierProfile extends Controller{
                 }
             } else {
                 $_SESSION['form_errors'] = $errors;
-                $this->index();  
+                $this->index();
+                return;  
             }
         }
     }
