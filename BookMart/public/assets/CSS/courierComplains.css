@@ -4,6 +4,10 @@
   font-family: 'poppins',Calibri, sans-serif;
 }
 
+body {
+  background-color: #F1F1F1;
+}
+
 .navBar{
   position: fixed;
   top: 0;
@@ -202,7 +206,7 @@
   margin-top: 50px;
 }
 
-.profile-container {
+/* .profile-container {
   box-sizing: border-box;
   background-color: #fff;
   width: 80%;
@@ -213,6 +217,24 @@
   flex-direction: column;
   align-items: center;
   height: 90%;
+} */
+
+.profile-container {
+  box-sizing: border-box;
+  background-color: #333;
+  width: 80%;
+  margin: auto;
+  margin-left: 0;
+  margin-right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  min-height: 80%; /* Take almost full screen height */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+  overflow-y: -10px; /* Scroll inside the box if necessary */
 }
 
 .earnings-title {
@@ -225,7 +247,7 @@
       font-size: 32px;
       font-weight: bold;
       /* margin-bottom: 10px; */
-      margin-top: 130px; /* Adjust as needed */
+      margin-top: 110px; /* Adjust as needed */
       z-index: 1;
       transform: translateX(-180px); /* move 10px to the left */
 }
@@ -250,8 +272,18 @@
   .contact-container h1 {
     font-size: 2rem;
     color: #b5651d;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    margin-top: -10px;
   }
+
+  .earnings-title {
+    color: #d95e00;
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: -30px; /* Adjust as needed */
+    text-align: center; /* Center the title */
+    margin-bottom: 20px; /* Space between title and box */
+}
   
   .contact-container p {
     font-size: 1rem;
@@ -264,9 +296,9 @@
   .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     text-align: left;
-    transform: translateX(-160px); /* move 10px to the left */
+    transform: translateX(0px); /* move 10px to the left */
   }
   
   .contact-form label {
@@ -300,7 +332,22 @@
     color: #fff;
   }
   
-
+  .complain-box {
+    background-color: #ffffff;
+    padding: 90px;
+    border: 2px solid #ccc; /* Light gray border */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Nice soft shadow */
+    width: 50%; /* or adjust as you like */
+    margin-top: 80px; /* pushes down below navbar */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-bottom: 60px;
+    min-height: 300px; /* Set a minimum height */
+    padding-bottom: 50px;
+  }
+  
 
 /* Tablet screens */
 @media (max-width: 768px) {
