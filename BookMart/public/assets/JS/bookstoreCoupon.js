@@ -31,14 +31,13 @@ document.querySelector(".inventory-table").addEventListener("click", (e) => {
     const Start_date = row.dataset.startdate;
     const End_date = row.dataset.enddate;
 
-    let start_date = new Date(Start_date);
-    let end_date = new Date(End_date);
-    
     console.log(couponId);
     const updateModal = document.getElementById("update-book-modal");
     updateModal.querySelector("#update-coupon-id").value = couponId;
-    updateModal.querySelector("#update-start-date").value = Start_date;
-    updateModal.querySelector("#update-end-date").value = End_date
+    updateModal.querySelector("#update-start-date").min = formattedDate(Start_date);
+    updateModal.querySelector("#update-end-date").min= formattedDate(Start_date);
+    updateModal.querySelector("#update-start-date").value = formattedDate(Start_date);
+    updateModal.querySelector("#update-end-date").value = formattedDate(End_date);
     updateModal.querySelector("#update-coupon-code").value = code;
     updateModal.querySelector("#update-discount").value = discount;
     updateModal.classList.add('active');
@@ -96,4 +95,30 @@ document.querySelector(".delete-modal").addEventListener("click", (e) => {
     deleteModal.classList.add('active');
     
 });
+
+updateModal.querySelector("#update-start-date").addEventListener('change', function() {
+    updateModal.querySelector("#update-end-date").min = this.value;
+    
+    if (updateModal.querySelector("#update-end-date").value < this.value) {
+        updateModal.querySelector("#update-end-date").value = this.value;
+    }
+});
+
+function formattedDate(date) {
+
+    if(date == null) return null;
+
+    const now = new Date(date);
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+
+    const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+    return formattedDateTime;
+}
+
+
 

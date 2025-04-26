@@ -52,8 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function setMinDateTime() {
-        const now = new Date();
-        // Format: YYYY-MM-DDThh:mm
+        const now = new Date();     // Format: YYYY-MM-DDThh:mm
         const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, '0');
         const day = String(now.getDate()).padStart(2, '0');
