@@ -322,7 +322,7 @@
             </div>
         </form>
         
-        <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/BookstoreController/updateOwnerDetails">
+        <form id="owner-details-registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/BookstoreController/updateOwnerDetails">
             <div class="tab-content" id="owner-details" style="display: none;">
                 <div class="form-group-row">
                     <div class="form-group">
@@ -445,7 +445,7 @@
             </div>
         </form>
 
-        <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/changePassword">
+        <form id="password-registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/changePassword">
             <div class="tab-content" id="password-change" style="display: none;">
                 <div class="form-group-row">
                     <div class="form-group">
@@ -518,6 +518,9 @@
             // Change alert style based on the type
             if (type === "success") {
                 alertBox.style.backgroundColor = "#4CAF50";  // green
+            }
+            else{
+                alertBox.style.backgroundColor = "#EF665B";
             }
 
             alertMsg.textContent = message;

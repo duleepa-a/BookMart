@@ -435,6 +435,7 @@ class BookstoreController extends Controller{
 
             if (empty($errors)) {
                 $storeModel = new BookStore();
+                $userModel = new UserModel();
 
                 $userId = $storeModel->first(['user_id' => $_SESSION['user_id']])->id ?? null;
 
@@ -448,7 +449,10 @@ class BookstoreController extends Controller{
                         'province' => $province,
                     ]);
 
+                    $userModel->update( $_SESSION['user_id'],['username' => $storeName]);
+                    $_SESSION['success'] = "Updates done successfully!";
                     $this->myProfile(); 
+
                 } else {
                     $_SESSION['error'] = "You must be logged in to update your store.";
                     redirect('login');

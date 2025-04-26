@@ -3,6 +3,7 @@
 require 'BookstoreController.php';
 require 'Buyer.php';
 require 'BookSellerController.php';
+require 'CourierProfile.php';
 
 class User extends Controller {
     
@@ -450,18 +451,23 @@ class User extends Controller {
                     switch($userRole){
                         case 'bookStore' :
                             $bookstore->myProfile();
+                            return;
                             break;
                         case 'bookSeller' :
                             $bookSeller->myProfile();
+                            return;
                             break;
                         case 'courier' :
                             $courier->index();
+                            return;
                             break;
                         case 'buyer' :
                             $buyer->myProfile();
+                            return;
                             break;
                         default:
                             redirect("/home");
+                            return;
                             break;
                     }
                 }
@@ -484,15 +490,19 @@ class User extends Controller {
                     switch($userRole){
                         case 'bookStore' :
                             $bookstore->myProfile();
+                            return;
                             break;
                         case 'bookSeller' :
                             $bookSeller->myProfile();
+                            return;
                             break;
                         case 'courier' :
                             $courier->index();
+                            return;
                             break;
                         case 'buyer' :
                             $buyer->myProfile();
+                            return;
                             break;
                         default:
                             redirect("/home");
