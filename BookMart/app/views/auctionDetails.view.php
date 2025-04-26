@@ -148,7 +148,7 @@
                                                 <input type="hidden" name="book_id" value="<?= htmlspecialchars($auction->book_id) ?>">
                                                 <input type="hidden" name="title" value="<?= htmlspecialchars($auction->title) ?>">
                                                 <input type="hidden" name="seller_id" value="<?= htmlspecialchars($auction->seller_id) ?>">
-                                                <input type="hidden" name="current_price" value="<?= htmlspecialchars($auction->buy_now_price) ?>">
+                                                <input type="hidden" name="current_price" value="<?= htmlspecialchars($auction->current_price) ?>">
                                                 <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->current_price) ?>">
                                                 <button type='submit' class="bid-button buy-now-btn">
                                                     <i class="fas fa-shopping-cart"></i> Buy Now

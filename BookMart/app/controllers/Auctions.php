@@ -199,7 +199,6 @@ class Auctions extends Controller {
             $bookModel = new BookModel();
             $bookModel->query($query, $params);
 
-            $bookModel = new BookModel();
             $bookModel->update($auctionData['book_id'], ['status' => 'removed']);
 
             $notificationModel = new NotificationModel();
