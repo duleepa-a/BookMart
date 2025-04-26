@@ -349,87 +349,93 @@ body {
   }
   
 
-/* Tablet screens */
+/* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
-  .earnings-title {
-    font-size: 28px;
-    margin-top: 100px;
-    padding-left: 15px;
+
+  .navBar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
   }
 
-  .profile-container {
-    padding: 15px;
+  .title {
+    margin-left: 10px;
+    margin-bottom: 10px;
   }
-}
 
-/* Mobile screens */
-@media (max-width: 480px) {
+  .search-bar {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .sidebar {
+    display: none; /* Hide sidebar on small devices */
+  }
+
+  .complain-box {
+    width: 90%;
+    padding: 20px;
+    margin-top: 100px; /* Enough space for the navbar */
+    margin-bottom: 30px;
+    min-height: auto;
+  }
+
   .earnings-title {
     font-size: 24px;
     margin-top: 80px;
-    padding-left: 10px;
+    transform: none;
+    text-align: center;
   }
 
-  .profile-container {
-    padding: 10px;
+  .contact-form {
+    gap: 10px;
+    padding: 0;
   }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .contact-form .submit-btn {
+    width: 100%;
+    padding: 12px;
+  }
+
+  h4 {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
 }
 
-/* Tablet */
-@media (max-width: 768px) {
-  .earnings-title {
-    font-size: 28px;
-    padding-left: 15px;
-  }
-
-  .contact-container {
-    width: 90%;
-    padding: 20px;
-  }
-}
-
-/* Mobile */
+/* Even smaller devices */
 @media (max-width: 480px) {
-  .earnings-title {
-    font-size: 24px;
-    padding-left: 10px;
-    transform: translateX(-80px);
-  }
-
-  .contact-container {
-    width: 95%;
+  
+  .complain-box {
     padding: 15px;
   }
 
-  .contact-form{
-      transform: translateX(-30px);
+  .earnings-title {
+    font-size: 20px;
   }
 
-  /* notification */
-  .toast {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    padding: 15px 25px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-    font-size: 16px;
-    z-index: 9999;
-    opacity: 0;
-    transition: opacity 0.5s ease, top 0.5s ease;
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 0.85rem;
   }
-  
-  .toast.show {
-    opacity: 1;
-    top: 40px;
+
+  .contact-form .submit-btn {
+    font-size: 0.9rem;
   }
-  
-  .hidden {
-    display: none;
-  }
-  
 }
