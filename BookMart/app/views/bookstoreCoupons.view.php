@@ -168,7 +168,7 @@
                         <div class="form-group">
                             <div>
                             <label for="discount">Discount (%):</label>
-                            <input type="number" id="update-discount" name="discount" step="0.01" min="0" max="100">
+                            <input type="number" id="update-discount" name="discount" step="0.01" min="0" max="100" required>
                             </div>
                         </div>
                     </div>
