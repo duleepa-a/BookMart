@@ -13,6 +13,15 @@
     <!-- navBar division begin -->
     <?php include 'homeNavBar.view.php'; ?>
     <!-- navBar division end -->
+
+    <br>
+    <?php if (isset($_SESSION['flash_message'])): ?>
+      <div class="flash-message" id="flashMessage">
+        <span class="close-btn" onclick="closeFlashMessage()">&times;</span>
+        <?= $_SESSION['flash_message']; ?>
+        <?php unset($_SESSION['flash_message']); ?> 
+      </div>
+    <?php endif; ?>
     <div class="container">
       <div class="contact-container">
         <h1>CONTACT US</h1>
@@ -39,7 +48,7 @@
 
   <!-- <?php if (isset($_SESSION['flash_message'])): ?>
     <div class="flash-message">
-      <?=$_SESSION['flash_message']; ?>
+    <?=$_SESSION['flash_message']; ?>
       <?php unset($_SESSION['flash_message']); ?> 
     </div>
   <?php endif; ?> -->
@@ -48,5 +57,19 @@
   <?php include 'footer.view.php'; ?>   
     <!-- footer end -->
   <script src="script.js"></script>
+
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const flashMessage = document.getElementById('flashMessage');
+    if (flashMessage) {
+      setTimeout(() => {
+        flashMessage.style.opacity = '0';
+        setTimeout(() => {
+          flashMessage.style.display = 'none';
+        }, 500); // wait for fade-out animation to finish
+      }, 2000);
+    }
+  });
+</script>
 </body>
 </html>
