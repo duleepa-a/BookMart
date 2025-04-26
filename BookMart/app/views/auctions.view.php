@@ -114,5 +114,11 @@
         <!-- Footer division end -->
 
     </div>
+
+    <script>
+        setInterval(function() {
+            location.reload();
+        }, 900000); 
+    </script>
 </body>
 </html>
