@@ -180,7 +180,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="currency-symbol">Rs.</div>
-                                        <input type="number" id="bid-input" class="bid-input" placeholder="Enter your bid amount" min="<?= htmlspecialchars($auction->current_price+100) ?>" value="<?= htmlspecialchars($auction->current_price+100) ?>" step="0.1">
+                                        <input type="number" id="bid-input" class="bid-input" placeholder="Enter your bid amount" min="<?= htmlspecialchars($auction->current_price + 100)  ?>" value="<?= htmlspecialchars($auction->current_price + 100 ) ?>" step="0.1">
                                     </div>
                                     <small>Minimum bid: Rs. <?= number_format($auction->current_price+100, 2)?> (current bid + Rs. 100.00)</small>
 
@@ -188,8 +188,8 @@
                                         <input type="hidden" name="auction_id" value="<?= htmlspecialchars($auction->id) ?>">
                                         <input type="hidden" name="previous_bid" value="<?= htmlspecialchars($auction->current_price) ?>">
                                         <input type="hidden" name="current_bidder_id" value="<?= htmlspecialchars($auction->current_bidder_id) ?>">
-                                        <input type="hidden" name="bid-amount" id="bid-amount" value="<?= htmlspecialchars($auction->current_price+100) ?>">
-                                        <button type="submit" class="bid-button place-bid" <?= ($auction->current_bidder_id == $_SESSION['user_id']) ? 'disabled' : '' ?>>
+                                        <input type="hidden" name="bid-amount" id="bid-amount" value="<?= htmlspecialchars($auction->current_price+100) ?>" min="<?= htmlspecialchars($auction->current_price+100) ?>">
+                                        <button type="submit" class="bid-button place-bid" <?= ($auction->current_bidder_id == $_SESSION['user_id']) ? 'disabled data-locked="true"' : '' ?>>
                                             <i class="fas fa-gavel"></i> Place Bid
                                         </button>
                                     </form>
@@ -281,6 +281,12 @@
         <!-- Footer division end -->
         
     </div>
+
+    <script>
+        setInterval(function() {
+            location.reload();
+        }, 900000); 
+    </script>
 
     <script src="<?= ROOT ?>/assets/JS/auctionDetails.js"></script>
 
