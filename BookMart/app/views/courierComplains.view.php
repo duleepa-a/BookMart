@@ -26,7 +26,7 @@
         system errors, or any other difficulty—please let us know here.
         </h4>
         <br>
-    <form class="contact-form" id="courierComplains" action="<?= ROOT ?>/CourierComplains/create" enctype="multipart/form-data" method="POST" onsubmit="return confirmSubmit();">
+    <form class="contact-form" id="courierComplains" action="<?= ROOT ?>/CourierComplains/create" enctype="multipart/form-data" method="POST">
         <div>
             <label for="name"><bl>Order ID:</bl></label><br>
             <input type="text" id="order_id" name="order_id" placeholder="Enter order Id" required>

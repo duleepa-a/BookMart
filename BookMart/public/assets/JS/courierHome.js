@@ -25,7 +25,3 @@ document.getElementById('logoutButton').addEventListener('click', function() {
         alert('Logout failed. Please try again.');
     });
 });
-
-function confirmSubmit(){
-    return confirm("Successfully submited");
-}

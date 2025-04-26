@@ -203,11 +203,11 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                     <i class="fa fa-home"></i> Home
                 </a>
             </li>
-            <!-- <li>
+            <li>
                 <a href="<?= ROOT ?>/courierEarns" class="<?= strpos($currentPath, '/courierEarns') !== false ? 'active' : '' ?>">
                     <i class="fa fa-money"></i> Earnings
                 </a>
-            </li> -->
+            </li>
             <li>
                 <a href="<?= ROOT ?>/CourierOrderDetails/OrderPage" class="<?= strpos($currentPath, '/CourierOrderDetails/OrderPage') !== false ? 'active' : '' ?>">
                     <i class="fa fa-clock"></i> My Orders
