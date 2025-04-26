@@ -83,12 +83,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    const updateModal = document.getElementById("update-book-modal");
     updateModal.querySelector("#update-start-date").addEventListener('change', function() {
         updateModal.querySelector("#update-end-date").min = this.value;
         
-        if (updateModal.querySelector("#update-end-date").value < this.value) {
-            updateModal.querySelector("#update-end-date").value = this.value;
-        }
     });
 });
 
