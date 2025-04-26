@@ -15,10 +15,9 @@
     <?php include 'homeNavBar.view.php'; ?>
     
     <?php include 'commonSidebar.view.php'; ?>
-
     <div class="container">
         <div class="profile-container">
-            <h1>My Profile</h1> <br><br>
+            <h1>My Profile</h1>
                 <br>
                 <nav class="tabs">
                     <button class="tab-button active first-child" onclick="showTab('personal-details')">Personal Details</button>
@@ -26,6 +25,12 @@
                     <button class="tab-button" onclick="showTab('vehical-details')">Vehicle Details</button>
                     <button class="tab-button last-child" onclick="showTab('change-password')">Change Password</button>
                 </nav>
+
+                <?php
+                $errors = $_SESSION['form_errors'] ?? [];
+                unset($_SESSION['form_errors']);
+                ?>
+
                 <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/courierProfile/updatePersonalDetails"  >
                         <div class="tab-content" id="personal-details">
                             
@@ -44,17 +49,18 @@
                                     <input type="text" id="last-name" value="<?= $courierDetail->last_name ?>" name="lastname" required>
                                 </div>
                             </div>
+            
                             <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="dob">Date of Birth:</label>
-                                    <input type="date" id="dob" value="<?= $courierDetail->dob ?>" name="dob" required>
+                                    <input type="text" id="dob" value="<?= $courierDetail->dob ?>" name="dob" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="gender">Gender:</label>
                                     <select id="gender" name="gender" required>
-                                        <option value="" disabled selected><?= $courierDetail->gender ?></option> 
-                                        <option value="male">Male</option>
-                                        <option value="Female">Female</option>
+                                    <option value="">Select Gender</option>
+                                    <option value="male" <?= $courierDetail->gender == 'male' ? 'selected' : '' ?>>Male</option>
+                                    <option value="Female" <?= $courierDetail->gender == 'Female' ? 'selected' : '' ?>>Female</option>
                                     </select>
                                 </div>
                             </div>
@@ -63,10 +69,16 @@
                                 <div class="form-group">
                                     <label for="nic">NIC Number:</label>
                                     <input type="text" id="nic" value="<?= $courierDetail->nic_number ?>" name="nic" required>
+                                    <?php if (!empty($errors['nic'])): ?>
+                                    <small style="color: red"><?= $errors['nic'] ?></small>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="form-group">
                                     <label for="license">License Number:</label>
                                     <input type="text" id="license" name="license" value="<?= $courierDetail->license_number ?>" required>
+                                    <?php if (!empty($errors['license'])): ?>
+                                    <small style="color: red"><?= $errors['license'] ?></small>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             
@@ -89,10 +101,16 @@
                                 <div class="form-group">
                                     <label for="phone-number">Phone Number:</label>
                                     <input type="text" id="phone-number" name="phone-number" value="<?= $courierDetail->phone_number ?>" required>
+                                    <?php if (!empty($errors['phone-number'])): ?>
+                                    <small style="color: red"><?= $errors['phone-number'] ?></small>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="form-group">
                                     <label for="secondary-number">Secondary Phone number (optional):</label>
                                     <input type="text" id="secondary-number" name="secondary-number" value="<?= $courierDetail->secondary_phone_number ?>">
+                                    <?php if (!empty($errors['secondary-number'])): ?>
+                                    <small style="color: red"><?= $errors['secondary-number'] ?></small>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             
@@ -100,11 +118,25 @@
                                 <div class="form-group">
                                     <label for="email-address">Email Address:</label>
                                     <input type="text" id="email-address"  name="email" value="<?= $courierD->email ?> " required>
+                                    <?php if (!empty($errors['email'])): ?>
+                                    <small style="color: red"><?= $errors['email'] ?></small>
+                                    <?php endif; ?>
                                 </div>
                                 
                             </div>
-                            
                             <br>
+
+                            <div>
+                                <?php if (isset($_SESSION['success'])): ?>
+                                    <div class="alert alert-success">
+                                        <small style="display: block; width: fit-content; margin: 0 auto; background-color: #d4edda; color:rgb(20, 127, 45); padding: 10px; margin-bottom: 10px; border: 1px solid #c3e6cb;">
+                                            <?= $_SESSION['success']; ?>
+                                        </small>
+                                        <?php unset($_SESSION['success']); ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            
                             <button class="next-button"  type="submit">Change & Save</button>
                             <br><br><br><br>
                         
@@ -118,17 +150,17 @@
                                 <div class="form-group">
                                     <label for="bank">Bank:</label>
                                     <select id="bank" name="bank" required>
-                                        <option value="" disabled selected><?= $courierDetail->bank ?></option> 
-                                        <option value="boc">Bank of Ceylon</option>
-                                        <option value="sampath">Sampath Bank</option>
-                                        <option value="peoples">People's Bank</option>
-                                        <option value="hnb">Hatton National Bank</option>
-                                        <option value="nsb">National Savings Bank</option>
-                                        <option value="seylan">Seylan Bank</option>
-                                        <option value="dfcc">DFCC Bank</option>
-                                        <option value="pan-asia">Pan Asia Bank</option>
-                                        <option value="nation-trust">Nations Trust Bank</option>
-                                        <option value="commercial-bank">Commercial Bank of Ceylon</option>
+                                        <option value="" disabled <?= empty($courierDetail->bank) ? 'selected' : '' ?>>Select Bank</option>
+                                        <option value="boc" <?= $courierDetail->bank == 'boc' ? 'selected' : '' ?>>Bank of Ceylon</option>
+                                        <option value="sampath" <?= $courierDetail->bank == 'sampath' ? 'selected' : '' ?>>Sampath Bank</option>
+                                        <option value="peoples" <?= $courierDetail->bank == 'peoples' ? 'selected' : '' ?>>People's Bank</option>
+                                        <option value="hnb" <?= $courierDetail->bank == 'hnb' ? 'selected' : '' ?>>Hatton National Bank</option>
+                                        <option value="nsb" <?= $courierDetail->bank == 'nsb' ? 'selected' : '' ?>>National Savings Bank</option>
+                                        <option value="seylan" <?= $courierDetail->bank == 'seylan' ? 'selected' : '' ?>>Seylan Bank</option>
+                                        <option value="dfcc" <?= $courierDetail->bank == 'dfcc' ? 'selected' : '' ?>>DFCC Bank</option>
+                                        <option value="pan-asia" <?= $courierDetail->bank == 'pan-asia' ? 'selected' : '' ?>>Pan Asia Bank</option>
+                                        <option value="nation-trust" <?= $courierDetail->bank == 'nation-trust' ? 'selected' : '' ?>>Nations Trust Bank</option>
+                                        <option value="commercial-bank" <?= $courierDetail->bank == 'commercial-bank' ? 'selected' : '' ?>>Commercial Bank of Ceylon</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -141,6 +173,9 @@
                                 <div class="form-group">
                                     <label for="account-number">Account Number:</label>
                                     <input type="text" id="account-number" name="account-number" value="<?= $courierDetail->account_number ?>" required>
+                                    <?php if (!empty($errors['account-number'])): ?>
+                                    <small style="color: red"><?= $errors['account-number'] ?></small>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="form-group">
                                     <label for="account-name">Account Name:</label>
@@ -148,7 +183,16 @@
                                 </div>
                             </div>
             
-                            <br>
+                            <div>
+                                <?php if (isset($_SESSION['successB'])): ?>
+                                    <div class="alert alert-success">
+                                        <small style="display: block; width: fit-content; margin: 0 auto; background-color: #d4edda; color:rgb(20, 127, 45); padding: 10px; margin-bottom: 10px; border: 1px solid #c3e6cb;">
+                                            <?= $_SESSION['successB']; ?>
+                                        </small>
+                                        <?php unset($_SESSION['successB']); ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                             <button class="next-button"  type="submit">Change & Save</button>
                             <br><br><br><br>
             
@@ -162,11 +206,11 @@
                                 <div class="form-group">
                                     <label for="vehical-type">Vehicle Type:</label>
                                     <select id="vehical-type" name="vehical-type" required>
-                                        <option value="" disabled selected><?= $courierDetail->vehicle_type ?></option> 
-                                        <option value="bike">Bike</option>
-                                        <option value="three-wheeler">Three-Wheeler</option>
-                                        <option value="car">Car</option>
-                                        <option value="van">Van</option>
+                                        <option value="" disabled <?= empty($courierDetail->vehicle_type) ? 'selected' : '' ?>>Select Vehicle Type</option>
+                                        <option value="bike" <?= $courierDetail->vehicle_type == 'bike' ? 'selected' : '' ?>>Bike</option>
+                                        <option value="three-wheeler" <?= $courierDetail->vehicle_type == 'three-wheeler' ? 'selected' : '' ?>>Three-Wheeler</option>
+                                        <option value="car" <?= $courierDetail->vehicle_type == 'car' ? 'selected' : '' ?>>Car</option>
+                                        <option value="van" <?= $courierDetail->vehicle_type == 'van' ? 'selected' : '' ?>>Van</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -180,6 +224,9 @@
                                 <div class="form-group">
                                     <label for="vehical-registration-number">Vehicle Registration Number:</label>
                                     <input type="text" id="vehical-registration-number" value="<?= $courierDetail->vehicle_registration_number ?>" name="vehical-registration-number" required>
+                                    <?php if (!empty($errors['vehical-registration-number'])): ?>
+                                    <small style="color: red"><?= $errors['vehical-registration-number'] ?></small>
+                                    <?php endif; ?>
                                 </div>
                                 <!-- <div class="form-group">
                                     <label for="vehical-registration-document">Upload Vehical Registration Documents:</label>
@@ -187,19 +234,27 @@
                                 </div> -->
                             </div>
             
-                            <br>
+                            <div>
+                                <?php if (isset($_SESSION['successV'])): ?>
+                                    <div class="alert alert-success">
+                                        <small style="display: block; width: fit-content; margin: 0 auto; background-color: #d4edda; color:rgb(20, 127, 45); padding: 10px; margin-bottom: 10px; border: 1px solid #c3e6cb;">
+                                            <?= $_SESSION['successV']; ?>
+                                        </small>
+                                        <?php unset($_SESSION['successV']); ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                             <button class="next-button"  type="submit">Change & Save</button>
                             <br><br><br><br>
                             <?php endforeach; ?>
                             <?php endif; ?>
                             <?php endforeach; ?>
                                 <?php else: ?>
-                                    <!-- <p>No</p> -->
+                                    <p>No</p>
                                 <?php endif; ?>
                         </div>
                         </form>
                         
-            
                         <form id="registerForm" method="POST" class="registration-form" action="<?= ROOT ?>/user/changePassword">
                         <div class="tab-content" id="change-password" style="display: none;">
                             
@@ -249,6 +304,9 @@
                             
                         </div>
                     </form>
+
+
+
         </div>
     </div> 
     <script src="<?= ROOT ?>/assets/JS/courierProfile.js"></script>
