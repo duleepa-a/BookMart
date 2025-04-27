@@ -171,7 +171,7 @@ class BookModel {
         return $this->query($query);
     }
 
-    public function count() {
+    public function adminCount() {
         $query = "SELECT COUNT(*) as total FROM {$this->table}  WHERE status = 'available'";
         $result = $this->query($query);
         return $result[0]->total ?? 0;
