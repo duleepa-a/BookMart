@@ -19,5 +19,5 @@ function showTab(tabId) {
     event.currentTarget.classList.add('active');
 }
 
-// Initially display the first tab
+
 document.getElementById('to-be-review').style.display = 'block';

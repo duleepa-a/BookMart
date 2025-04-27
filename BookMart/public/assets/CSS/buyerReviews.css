@@ -282,21 +282,6 @@ body {
   margin-right: 5px;
 }
 
-
-.rating-container input:checked + label,
-.rating-container input:checked + label ~ label {
-  color: #ffb700;
-}
-
-.rating-container label:hover,
-.rating-container label:hover ~ label {
-  color: #ffb700;
-}
-
-.stars-unique i {
-  color: #ffcc00;
-}
-
 .rating-text-unique {
   font-size: 14px;
   color: #555;

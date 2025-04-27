@@ -55,10 +55,6 @@
 
         // Start live update
         setInterval(updateCourierLocation, 5000); // update every 5 seconds
-
-        // ✨✨ Add this: Show distances directly on page when map loads
-    document.getElementById("pickup-distance").innerText = distanceToPickup + " km";
-    document.getElementById("delivery-distance").innerText = distanceToDelivery + " km";
     }
 
     function showRoute(origin, destination) {

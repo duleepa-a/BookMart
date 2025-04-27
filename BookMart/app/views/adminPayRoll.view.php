@@ -91,7 +91,6 @@
                     <button id="settle-selected" class="settle-selected-btn">Settle Selected</button>
                 </div>
             
-                <!-- Retrieve Advertisements -->
                 <?php if (!empty($payrolls)) : ?>
                     <table class="add-table">
                         <thead>
@@ -327,7 +326,7 @@
                             <!-- Next Arrow -->
                             <div class="pagination-item pagination-arrow <?= $refundPage >= $totalRefundPages ? 'disabled' : '' ?>">
                                 <?php if ($refundPage < $totalRefundPages): ?>
-                                    <a href="?refund_page=<?= $refundPage + 1 ?>&refund_status=<?= urlencode($refundFilterStatus) ?>&page=<?= $currentPage ?>&status=<?= urlencode($filterStatus) ?>&tab=<?= urlencode($tab)?>"">
+                                    <a href="?refund_page=<?= $refundPage + 1 ?>&refund_status=<?= urlencode($refundFilterStatus) ?>&page=<?= $currentPage ?>&status=<?= urlencode($filterStatus) ?>&tab=<?= urlencode($tab)?>">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <polyline points="9 18 15 12 9 6"></polyline>
@@ -347,28 +346,7 @@
                         <p>No refund requests found.</p>
                     </div>
                 <?php endif; ?>
-            </div>
-
-        
-            <!--Delete-->
-            <div class="modal" id="delete-add-modal">
-                <div class="modal-overlay"></div>
-                <div class="modal-content">
-                    <form class="delete-add-form" method="POST" action="<?= ROOT ?>/adminAdvertisment/deleteAdvertisement">
-                        <h2 class="full-width">Delete Advertisement</h2>
-                        <p>Are you sure you want to delete this Advertisement?</p>
-                        <p id="delete-add-details"></p> <!-- For displaying book details -->
-                        <input type="hidden" id="delete-add-id" name="add_id">
-                        <div class="modal-actions">
-                            <button type="submit" class="confirm-delete">Delete</button>
-                            <button type="button" class="close-modal">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-  
-            
-
+            </div>        
         </div>
     </div>
     <div id="custom-alert" class="error-alert" style="display: none;">
@@ -394,6 +372,7 @@
         });
 
         const payrollStatusFilter = document.getElementById('status-filter');
+
         payrollStatusFilter.addEventListener('change', () => {
             const selectedStatus = payrollStatusFilter.value;
             const urlParams = new URLSearchParams(window.location.search);
@@ -465,53 +444,51 @@
             }
         });
 
-    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function () {
 
-        const selectAllCheckbox = document.getElementById("select-all-checkbox");
-        const checkboxes = document.querySelectorAll(".payroll-checkbox");
+            const selectAllCheckbox = document.getElementById("select-all-checkbox");
+            const checkboxes = document.querySelectorAll(".payroll-checkbox");
 
-        selectAllCheckbox.addEventListener("change", function () {
-            checkboxes.forEach(cb => cb.checked = selectAllCheckbox.checked);
-        });
-
-    const settleBtn = document.getElementById("settle-selected");
-
-    if(settleBtn){
-        settleBtn.addEventListener("click", function () {
-                const selected = Array.from(checkboxes)
-                    .filter(cb => cb.checked)
-                    .map(cb => cb.value);
-
-                    console.log(selected);
-
-                if (selected.length === 0) {
-                    showAlert("Please select at least one payroll to settle.");
-                    return;
-                }
-
-                fetch('<?= ROOT ?>/Admin/settleAllPayrolls', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ payrollIds: selected })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        showAlert("successs");
-                        location.href = '<?= ROOT ?>/Admin/payRolls'; 
-                    } else {
-                        showAlert("Error settling payrolls.");
-                    }
-                })
-                .catch(err => console.error(err));
+            selectAllCheckbox.addEventListener("change", function () {
+                checkboxes.forEach(cb => cb.checked = selectAllCheckbox.checked);
             });
-      
-        }
-        });
-        
 
+        const settleBtn = document.getElementById("settle-selected");
+
+        if(settleBtn){
+            settleBtn.addEventListener("click", function () {
+                    const selected = Array.from(checkboxes)
+                        .filter(cb => cb.checked)
+                        .map(cb => cb.value);
+
+                        console.log(selected);
+
+                    if (selected.length === 0) {
+                        showAlert("Please select at least one payroll to settle.");
+                        return;
+                    }
+
+                    fetch('<?= ROOT ?>/Admin/settleAllPayrolls', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ payrollIds: selected })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            showAlert("successs");
+                            location.href = '<?= ROOT ?>/Admin/payRolls'; 
+                        } else {
+                            showAlert("Error settling payrolls.");
+                        }
+                    })
+                    .catch(err => console.error(err));
+                });
+        
+            }
+            });
     </script>
     <script>
         function showAlert(message, type = "error") {
@@ -537,7 +514,6 @@
             document.getElementById("custom-alert").style.display = "none";
         }
     </script>
-
     <?php if (!empty($_SESSION['error'])): ?>
         <script>
             showAlert("<?= $_SESSION['error'] ?>", "error");
@@ -551,6 +527,6 @@
             </script>
             <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
-
+    <script src="<?= ROOT ?>/assets/JS/adminBookstore.js"></script>
 </body>
 </html>

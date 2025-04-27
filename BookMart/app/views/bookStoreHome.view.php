@@ -75,15 +75,14 @@
                         $colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
                         $barSpacing = 120;
                         $barWidth = 80;
-                        $maxOrders = max($genreSales) ?: 1; // prevent division by zero
-                        $maxHeight = 175; // max SVG bar height
+                        $maxOrders = max($genreSales) ?: 1; 
+                        $maxHeight = 175; 
                     ?>
 
                     <svg viewBox="0 0 800 250" xmlns="http://www.w3.org/2000/svg">
                         <!-- Title -->
                         <text x="400" y="30" text-anchor="middle" class="chart-title">Book Sales by Category</text>
 
-                        <!-- Grid lines -->
                         <g transform="translate(60, 45)">
                             <!-- Horizontal grid lines -->
                             <line x1="0" y1="0" x2="600" y2="0" class="grid-line" />
@@ -219,7 +218,6 @@
         
         }
 
-        // Initialize with sample data
         setPercentage(<?=  round($summary->rating / 3 * 100, 2);?>, <?= $summary->reviews_count?>);
     </script>
 </body>
