@@ -5,7 +5,7 @@ class AdminSearchbooks extends Controller {
         $bookModel = new BookModel();
 
         // Get total count of books for pagination
-        $totalBooks = $bookModel->count();
+        $totalBooks = $bookModel->adminCount();
 
         $limit = 3; 
         $totalPages = ceil($totalBooks / $limit);
