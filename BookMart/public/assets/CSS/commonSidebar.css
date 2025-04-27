@@ -3,7 +3,7 @@
     height: 100vh;
     background-color: #f6f8fc;
     position: fixed;
-    top: 9%;
+    top: 7%;
     left: 0;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.001);
 }
@@ -21,7 +21,7 @@
 .sidebar ul li a {
     display: block;
     padding: 10px;
-    font-size: 16px;
+    font-size: 15px;
     color: #000;
     text-decoration: none;
     transition: background-color 0.3s ease;
