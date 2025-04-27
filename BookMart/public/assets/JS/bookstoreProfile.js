@@ -1,31 +1,3 @@
-document.getElementById('logoutButton').addEventListener('click', function() {
-    
-    fetch('http://localhost/BookMart/public/user/logout', { 
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json(); 
-            throw new Error('Logout failed.');
-        }
-    })
-    .then(data => {
-        console.log(data); 
-        if (data.status === 'success') {
-            window.location.href = 'http://localhost/BookMart/public/'; 
-        } else {
-            alert('Error: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error during logout:', error);
-        alert('Logout failed. Please try again.');
-    });
-});
-
 
 function showTab(tabId) {
 
@@ -81,6 +53,8 @@ modal.addEventListener('click', (e) => {
 
 document.addEventListener("DOMContentLoaded", function () {
     const registerForm = document.getElementById("registerForm");
+    const ownerDetailsRegisterForm = document.getElementById("owner-details-registerForm");
+    const passwordRegisterForm = document.getElementById("password-registerForm");
 
     // Selectors for username and email
     const usernameInput = document.getElementById("store-name");
@@ -105,14 +79,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const confirmPasswordInput = document.getElementById("confirm-password");
     const confirmPasswordError = document.querySelector(".confirm-password-error");
 
-    let usernameIsValid = false;
-    let emailIsValid = false;
-    let passwordIsValid = false;
-    let phoneIsValid = false;
-    let ownerPhoneIsValid = false;
-    let managerPhoneIsValid = false;
-    let ownerNicIsValid = false;
-    let managerNicIsValid = false;
+    let usernameIsValid = true;
+    let emailIsValid = true;
+    let passwordIsValid = true;
+    let phoneIsValid = true;
+    let ownerPhoneIsValid = true;
+    let managerPhoneIsValid = true;
+    let ownerNicIsValid = true;
+    let managerNicIsValid = true;
 
     // Check if username is taken
     usernameInput.addEventListener("input", function () {
@@ -289,4 +263,25 @@ document.addEventListener("DOMContentLoaded", function () {
             nicError.style.display = "inline"; // Show error message
         }
     });
+
+    registerForm.addEventListener("submit", function (event) {
+        if (!usernameIsValid || !emailIsValid ) {
+            event.preventDefault(); 
+            showAlert("Please correct the errors before updating the profile.",'error');
+        }
+    });
+
+    ownerDetailsRegisterForm.addEventListener("submit", function (event) {
+        if (  !phoneIsValid || !ownerPhoneIsValid || !managerPhoneIsValid || !ownerNicIsValid || !managerNicIsValid ) {
+            event.preventDefault(); 
+            showAlert("Please correct the errors before updating the profile.",'error');
+        }
+    });
+    passwordRegisterForm.addEventListener("submit", function (event) {
+        if (!passwordIsValid || passwordInput.value !== confirmPasswordInput.value) {
+            event.preventDefault(); 
+            showAlert("Password Mismatch!",'error');
+        }
+    });
+
 });

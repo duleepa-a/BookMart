@@ -18,11 +18,11 @@
     <h1>Return and Refund Request</h1>
         
         <div class="policy-info">
-            <p>Our top priority is to make sure you are satisfied with the products and service we offer on our website. We strive to maintain an excellent customer service and satisfaction. We guarantee the products we sell. If you are not satisfied with the purchase you have done at Makeenbooks.com, please contact us by filling the form below.</p>
+            <p>Our top priority is to make sure you are satisfied with the products and service we offer on our website. We strive to maintain an excellent customer service and satisfaction. We guarantee the products we sell. If you are not satisfied with the purchase you have done at BookMart.com, please contact us by filling the form below.</p>
             
-            <p>Shipping costs will be refunded by Makeen Books subject to an error on the side of bookseller. On the other hand if the return was not ascended as result of an error on the side of Bookseller, you will be solely responsible for shipping charges. Similarly if you wanted to exchange the book, shipping cost should be borne by the customer.</p>
+            <p>However, please note that refunds will only be accepted if the return is due to an error or fault on the seller’s side. In all approved refund cases, the buyer will still be responsible for covering the delivery charges. Shipping fees are non-refundable.</p>
             
-            <p>If you wish to return the book for any other reason please fill out the form below within 3 days of the purchase.</p>
+            <p>If you believe the item you received is incorrect, damaged, or not as described, please fill out the form below within 3 days of your purchase to initiate the refund process.</p>
         </div>
         
         <form id="returnRefundForm" method="POST" enctype="multipart/form-data" action="<?= ROOT ?>/buyer/addRefundRequest">

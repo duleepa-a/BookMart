@@ -159,6 +159,9 @@ class Auctions extends Controller {
             ];
             
             $auction = new AuctionModel();
+            if ($auction->first(['id' => $auctionData['id']])->current_price + 100 > $auctionData['current_price']) {
+                redirect('auctions/details/' . trim($_POST['auction_id']));
+            }
             $auction->updateAuction($auctionData);
 
             $notificationModel = new NotificationModel();
@@ -196,7 +199,6 @@ class Auctions extends Controller {
             $bookModel = new BookModel();
             $bookModel->query($query, $params);
 
-            $bookModel = new BookModel();
             $bookModel->update($auctionData['book_id'], ['status' => 'removed']);
 
             $notificationModel = new NotificationModel();

@@ -30,7 +30,7 @@
                         </p>
                         <p class="item-specs">By <?= $book->author ?>, Condition: <?= $book->book_condition ?></</p>
                         <div class="rating-container">
-                                <input type="radio" id="star1" name="rating" value="1">
+                                <input type="radio" id="star1" name="rating" value="1" required>
                                 <label for="star1"><i class="far fa-star"></i></label>
                                 <input type="radio" id="star2" name="rating" value="2">
                                 <label for="star2"><i class="far fa-star"></i></label>
@@ -42,7 +42,7 @@
                                 <label for="star5"><i class="far fa-star"></i></label>
                         </div>
                         <div class="review-box-unique">
-                            <textarea name="review_text" placeholder="Write your review here..." rows="3"></textarea>
+                            <textarea name="review_text" placeholder="Write your review here..." rows="3" required></textarea>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                 <p class="seller-header">Sold by <?= htmlspecialchars($seller_username) ?></p>
                 <p class="seller-review-header">Your seller review:</p>
                 <div class="seller-review-icons-unique">
-                    <input type="radio" id="seller-bad" name="seller_rating" value="1" hidden>
+                    <input type="radio" id="seller-bad" name="seller_rating" value="1" hidden required>
                         <label for="seller-bad"><i class="far fa-frown"></i></label>
                     <input type="radio" id="seller-neutral" name="seller_rating" value="2" hidden>
                         <label for="seller-neutral"><i class="far fa-meh"></i></label>

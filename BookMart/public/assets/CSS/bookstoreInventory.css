@@ -665,7 +665,7 @@ input{
   }
 
   
-.error {
+.error-alert {
   font-family: system-ui, sans-serif;
   width: 320px;
   padding: 12px;

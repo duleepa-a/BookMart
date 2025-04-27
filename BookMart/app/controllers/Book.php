@@ -33,8 +33,24 @@ class Book extends Controller{
 
     public function getBestSellers() {
         $bookModel = new BookModel();
-        $bookModel->setLimit(50);
-        $books= $bookModel->where(['status' => 'available']);
+        $query = "
+                SELECT 
+                        b.*,
+                        COUNT(o.order_id) AS total_sales
+                    FROM 
+                        book b
+                    LEFT JOIN 
+                        orders o ON b.id = o.book_id
+                    WHERE 
+                        b.status = 'available'
+                        AND b.genre IN ('fiction', 'history', 'novel', 'romance', 'mystery', 'horror', 'young-adult', 'sci-fi', 'crime')
+                        AND (o.order_status IS NULL OR o.order_status != 'canceled')
+                    GROUP BY 
+                        b.id
+                    ORDER BY 
+                        total_sales DESC
+            ";
+        $books= $bookModel->query($query);
 
         $groupedBooks = [];
 

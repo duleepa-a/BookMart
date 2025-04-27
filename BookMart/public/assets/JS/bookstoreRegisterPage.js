@@ -153,14 +153,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Prevent form submission if validation fails
-    registerForm.addEventListener("submit", function (event) {
-        if (!usernameIsValid || !emailIsValid || !passwordIsValid || passwordInput.value !== confirmPasswordInput.value) {
-            event.preventDefault(); // Prevent form submission
-            alert("Please correct the errors before submitting the form.");
-        }
-    });
-
     phoneInput.addEventListener("input", function () {
         const phoneNumber = phoneInput.value;
     
@@ -243,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
     registerForm.addEventListener("submit", function (event) {
         if (!usernameIsValid || !emailIsValid || !passwordIsValid || !phoneIsValid || !ownerPhoneIsValid || !managerPhoneIsValid || !ownerNicIsValid || !managerNicIsValid  || passwordInput.value !== confirmPasswordInput.value) {
             event.preventDefault(); 
-            alert("Please correct the errors before submitting the form.");
+            showAlert("Please correct the errors before submitting the form.",'error');
         }
     });
 

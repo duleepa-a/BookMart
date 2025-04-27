@@ -122,12 +122,12 @@ class Admin extends Controller {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'duleepa24@gmail.com';
-            $mail->Password = 'dnbzkaydjffxlrkx';
+            $mail->Username = 'bookmart.info.lk@gmail.com';
+            $mail->Password = 'ljykrgedgggmhgzf';
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            $mail->setFrom('duleepa24@gmail.com', 'BookMart');
+            $mail->setFrom('bookmart.info.lk@gmail.com', 'BookMart');
             $mail->addAddress($email);
             $mail->Subject = $subject;
             $mail->Body = $message;

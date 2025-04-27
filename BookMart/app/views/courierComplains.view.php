@@ -16,8 +16,9 @@
     
     <?php include 'commonSidebar.view.php'; ?>
     
-    <div class="container">
-    <div class="profile-container">
+    <!-- <div class="container">
+    <div class="profile-container"> -->
+    <div class="complain-box">
         <h1 class="earnings-title">Complain</h1>
         <br><br>
         <h4>
@@ -26,7 +27,7 @@
         system errors, or any other difficulty—please let us know here.
         </h4>
         <br>
-    <form class="contact-form" id="courierComplains" action="<?= ROOT ?>/CourierComplains/create" enctype="multipart/form-data" method="POST">
+    <form class="contact-form" id="courierComplains" action="<?= ROOT ?>/CourierComplains/create" enctype="multipart/form-data" method="POST" onsubmit="return confirmSubmit();">
         <div>
             <label for="name"><bl>Order ID:</bl></label><br>
             <input type="text" id="order_id" name="order_id" placeholder="Enter order Id" required>
@@ -45,7 +46,7 @@
       <button type="submit" class="submit-btn">Complain</button>
     </form>
     </div>
-    </div>
+    
     <script src="<?= ROOT ?>/assets/JS/courierHome.js"></script>
 </body>
 </html>

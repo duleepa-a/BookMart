@@ -351,7 +351,11 @@ class Buyer extends Controller{
                 'account_name' => htmlspecialchars(trim($_POST['account_holder'])),
             ];
 
-            $order = $ordersModel->first(["order_id" => $refundData['order_id']]);
+            $order = $ordersModel->first(["order_id" => $refundData['order_id'] , 'order_status' => 'completed']);
+
+            if(!$order){
+                $order = $ordersModel->first(["order_id" => $refundData['order_id'] , 'order_status' => 'reviewed']);
+            }
 
             if(!$order){ 
                 $_SESSION['error'] =  "Invalid Order ID.";
@@ -398,6 +402,7 @@ class Buyer extends Controller{
             } else {
 
                 $_SESSION['error'] = 'Failed to submit refund request.';
+                $this->refundRequest();
                 return;
             }
         } else {
