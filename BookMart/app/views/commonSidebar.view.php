@@ -31,12 +31,22 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
             </li>
             <li>
             <a href="<?= ROOT ?>/buyer/orders" class="<?= strpos($currentPath, '/buyer/orders') || strpos($currentPath, '/Buyer/trackOrder') !== false ? 'active' : '' ?>">
-                <i class="fa-solid fa-cart-plus"></i>Orders
+                <i class="fa-solid fa-cart-plus"></i>My Orders
             </a>
             </li>
             <li>
                 <a href="<?= ROOT ?>/buyer/reviews" class="<?= strpos($currentPath, '/buyer/reviews') || strpos($currentPath, '/buyer/addReview') !== false ? 'active' : '' ?>">
-                    <i class="fa-solid fa-comment-dots"></i>Reviews
+                    <i class="fa-solid fa-comment-dots"></i>My Reviews
+                </a>
+            </li>
+            <li>
+            <a href="<?= ROOT ?>/BookstoreController/orders" class="<?= strpos($currentPath, '/BookstoreController/orders') || strpos($currentPath, '/BookstoreController/trackOrder') !== false ? 'active' : '' ?>">
+                <i class="fa-solid fa-cart-plus"></i>Customer Orders
+            </a>
+            </li>
+            <li>
+                <a href="<?= ROOT ?>/BookstoreController/getReviews" class="<?= strpos($currentPath, '/BookstoreController/getReviews') !== false ? 'active' : '' ?>">
+                    <i class="fa-solid fa-comment-dots"></i>Customer Reviews
                 </a>
             </li>
             <li><a href="<?= ROOT ?>/bookSellerController/myProfile" class="<?= strpos($currentPath, '/bookSellerController/myProfile') !== false ? 'active' : '' ?>"><i class="fa-regular fa-user"></i>Profile</a></li>

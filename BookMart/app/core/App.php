@@ -64,9 +64,10 @@ class App{
         'bookSeller' => [
             'BookSellerHome' => ['index','storePage', 'viewSales'],
             'BookSellerController' => ['index', 'listings', 'addBook', 'updateBook', 'deleteBook', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile','updateLoginDetails','updatePersonalDetails', 'updateBankDetails', 'uploadProfilePicture'],
+            'BookstoreController' => ['getReviews','orders','orderView','confirmPickup','markAsRead','addReply','payRolls'],
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle'],
             'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],
-            'Buyer' => ['refundRequest','addRefundRequest','deleteReview'],
+            'Buyer' => ['orders','trackOrder','reviews','addReview','submitReview','refundRequest','addRefundRequest','deleteReview'],
             'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
             'Payment' => ['index','checkOut','process','success','cancel','cartView'],
             'Notifications' => ['index','deleteNotification','markAsRead'],
@@ -74,7 +75,7 @@ class App{
         'buyer' => [
             'BuyerHome' => ['index', 'viewOrders'],
             'Articles' => ['index', 'create', 'addArticle', 'detail', 'update', 'updateArticle', 'deleteArticle'],
-            'Auctions' => ['index', 'details', 'createAuction', 'updateBid', 'buyNow', 'completeAuction', 'cancelAuction', 'withdraw'],
+            'Auctions' => ['index', 'details', 'updateBid', 'buyNow', 'withdraw'],
             'Buyer' => ['index', 'orders','trackOrder','register','reviews','addReview','submitReview','myProfile','updateLoginDetails','updatePersonalDetails','refundRequest','addRefundRequest','deleteReview'],
             'User' => ['like','changePassword','toggleFollow','updateFollowerCount'],
             'Payment' => ['index','checkOut','process','success','cancel','cartView','addToCart','cartCheckout','cartSuccess','increase','decrease','deleteSelected','clear','removeBook','deleteSelected'],
