@@ -148,30 +148,28 @@ document.addEventListener('DOMContentLoaded', function() {
         auctionModal.classList.add('active');
     });
 
-    // Add search functionality
-    const searchBar = document.querySelector(".search-bar");
-    if (searchBar) {
-        searchBar.addEventListener("input", function() {
-            const searchQuery = searchBar.value.toLowerCase();
-            const tableRows = document.querySelectorAll(".inventory-table tbody .book-row");
+    const searchBar = document.querySelector(".inventory-search-bar");
+    const tableRows = document.querySelectorAll(".inventory-table tbody .book-row");
 
-            tableRows.forEach(row => {
-                const title = row.dataset.title.toLowerCase();
-                const author = row.dataset.author.toLowerCase();
-                const genre = row.dataset.genre.toLowerCase();
-                const publisher = row.dataset.publisher.toLowerCase();
+    searchBar.addEventListener("input", function () {
+        const searchQuery = searchBar.value.toLowerCase();
 
-                if (
-                    title.includes(searchQuery) || 
-                    author.includes(searchQuery) || 
-                    genre.includes(searchQuery) || 
-                    publisher.includes(searchQuery)
-                ) {
-                    row.style.display = ""; 
-                } else {
-                    row.style.display = "none"; 
-                }
-            });
+        tableRows.forEach(row => {
+            const title = row.dataset.title.toLowerCase();
+            const author = row.dataset.author.toLowerCase();
+            const genre = row.dataset.genre.toLowerCase();
+            const publisher = row.dataset.publisher.toLowerCase();
+
+            if (
+                title.includes(searchQuery) || 
+                author.includes(searchQuery) || 
+                genre.includes(searchQuery) || 
+                publisher.includes(searchQuery)
+            ) {
+                row.style.display = ""; 
+            } else {
+                row.style.display = "none"; 
+            }
         });
-    }
+    });
 });
