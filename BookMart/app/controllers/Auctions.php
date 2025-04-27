@@ -85,7 +85,7 @@ class Auctions extends Controller {
                 $notificationModel->createNotification(
                     $mainAuction->seller_id,
                     'Auction Update',
-                    'The auction for' . $mainAuction->title . ' has ended.',
+                    'The auction for ' . $mainAuction->title . ' has ended.',
                     '/auctions/details/' . $auctionData['id']
                 );
                 if($mainAuction->winner_user_id) {
@@ -97,6 +97,28 @@ class Auctions extends Controller {
                         '/auctions/details/' . $auctionData['id']
                     );
                 }
+            }
+        }
+        else if ($mainAuction && $mainAuction->is_closed) {
+            $timeQuery = "SELECT NOW() as server_time";
+            $result = $auctionModel->query($timeQuery);
+            $db_time = $result[0]->server_time;
+    
+            if ($db_time >= $mainAuction->start_time) {
+                $auctionData = [
+                    'id' => $id,
+                    'is_closed' => 0,
+                ];
+                $auctionModel->updateAuction($auctionData);
+                $mainAuction = $auctionModel->getAuctionWithBook($id);
+
+                $notificationModel = new NotificationModel();
+                $notificationModel->createNotification(
+                    $mainAuction->seller_id,
+                    'Auction Update',
+                    'The auction for ' . $mainAuction->title . ' has started.',
+                    '/auctions/details/' . $auctionData['id']
+                );
             }
         }
 
@@ -126,6 +148,19 @@ class Auctions extends Controller {
 
     public function createAuction() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $is_closed = 0;
+            $timeQuery = "SELECT NOW() as server_time";
+            $auction = new AuctionModel();
+            $result = $auction->query($timeQuery);
+            $db_time = $result[0]->server_time;
+    
+            $serverTimestamp = strtotime($db_time);
+            $postTimestamp = strtotime($_POST['start_time']);
+
+            if ($serverTimestamp < $postTimestamp) {
+                $is_closed = 1;
+            }
             
             $auctionData = [
                 'book_id' => trim($_POST['book_id']),
@@ -135,15 +170,22 @@ class Auctions extends Controller {
                 'buy_now_price' => !empty(filter_var(trim($_POST['buy_now_price']))) ? filter_var(trim($_POST['buy_now_price']), FILTER_VALIDATE_FLOAT) : null,
                 'start_time' => trim($_POST['start_time']),
                 'end_time' => trim($_POST['end_time']),
+                'is_closed' => $is_closed,
             ];
             
-            $auction = new AuctionModel();
             $auction->createAuction($auctionData);
             
             redirect('auctions');
         } else {
             redirect('bookSellerController/listings');
         }
+    }
+
+    public function activateAuction() {
+        $timeQuery = "SELECT NOW() as server_time";
+        $auction = new AuctionModel();
+        $result = $auction->query($timeQuery);
+        $db_time = $result[0]->server_time;
     }
 
     public function updateBid() {
