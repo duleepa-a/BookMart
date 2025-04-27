@@ -158,6 +158,16 @@ class Payment extends Controller{
         ];
 
         $payment=$paymentModel->insert($paymentData);
+
+        if (isset($_SESSION['auction_details'])) {
+            $auctionData = $_SESSION['auction_details'];
+
+            $auction = new AuctionModel();
+            $auction->updateAuction($auctionData);
+
+            $bookModel = new BookModel();
+            $bookModel->update($auctionData['book_id'], ['status' => 'removed']);
+        }
     
         $this->view('paymentSuccess',['payment' => $payment]);
     }
