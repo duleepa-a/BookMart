@@ -71,6 +71,7 @@ class AdminPaymentInfo extends Controller {
         $systemfee_book = floatval($_POST['systemfee_book']);
         $systemfee_add = floatval($_POST['systemfee_add']);
         $deliveryfee = floatval($_POST['deliveryfee']);
+        $email = $_POST['system_email'];
         
         // Validate values
         if ($systemfee_book < 0 || $systemfee_add < 0 || $deliveryfee < 0) {
@@ -79,7 +80,7 @@ class AdminPaymentInfo extends Controller {
         }
         
         $systemStatsModel = new SystemStats();
-        $result = $systemStatsModel->updateStats($systemfee_book, $systemfee_add, $deliveryfee);
+        $result = $systemStatsModel->updateStats($systemfee_book, $systemfee_add, $deliveryfee,$email);
         
         if ($result) {
             $this->json(['success' => true]);

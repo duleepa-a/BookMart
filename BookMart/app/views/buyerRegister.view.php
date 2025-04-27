@@ -257,12 +257,12 @@
                     <div class="form-group checkbox-group">
                         <!-- <label for="TermsAndConditions" id="terms">Terms and Conditions:</label> <br> -->
                         <input type="checkbox"  name="terms" required>
-                        <label for="terms">I agree to the <a href="<?= ROOT ?>/user/termsConditions"> Terms and Conditions </a> which include my responsibilities, prohibited activities, intellectual property rights, liability limitations, and dispute resolution procedures</label>
+                        <label for="terms">I agree to the <a href="<?= ROOT ?>/user/termsConditions" class="check-box-link"> Terms and Conditions </a> which include my responsibilities, prohibited activities, intellectual property rights, liability limitations, and dispute resolution procedures</label>
                       </div>
                       <div class="form-group checkbox-group">
                         <!-- <label for="privacyPolicy" id="privacy">Privacy Policy:</label> <br> -->
                         <input type="checkbox"  name="privacy" required>
-                        <label for="privacy"> I agree to the <a href="<?= ROOT ?>/user/privacyPolicy">Privacy Policy</a> detailing how my data will be collected, used, shared, and protected, including my rights regarding my data.</label>
+                        <label for="privacy"> I agree to the <a href="<?= ROOT ?>/user/privacyAndPolicies" class="check-box-link">Privacy Policy</a> detailing how my data will be collected, used, shared, and protected, including my rights regarding my data.</label>
                         
                     </div>
                     
@@ -311,7 +311,8 @@
         function closeAlert() {
             document.getElementById("custom-alert").style.display = "none";
         }
-        <?php if (!empty($_SESSION['error'])): ?>
+    </script>
+     <?php if (!empty($_SESSION['error'])): ?>
         <script>
             showAlert("<?= $_SESSION['error'] ?>", "error");
         </script>
@@ -324,7 +325,6 @@
             </script>
             <?php unset($_SESSION['success']); ?>
         <?php endif; ?>
-    </script>
     <script src="<?= ROOT ?>/assets/JS/buyerRegisterPage.js"></script>
 </body>
 </html>

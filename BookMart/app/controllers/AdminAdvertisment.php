@@ -143,7 +143,6 @@ class AdminAdvertisment extends Controller{
             $advData = [
                 'Advertisement_Title' => htmlspecialchars(trim($_POST['Advertisement_Title'])),
                 'Advertisement_Description' => htmlspecialchars(trim($_POST['Advertisement_Description'])),
-                'Advertisement_Type' => htmlspecialchars(trim($_POST['Advertisement_Type'])),
                 'Price' => htmlspecialchars(trim($_POST['Price']), FILTER_VALIDATE_FLOAT),
                 'Start_date' => htmlspecialchars(trim($_POST['Start_date'])),
                 'End_date' => filter_var(trim($_POST['End_date'])),

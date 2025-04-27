@@ -282,7 +282,7 @@
       </div>  
       <div class="term-point">
         <i class="fa-solid fa-message fa-icon"></i>
-        <p><strong>In-App Support:</strong> Access the Help Center through your account and select "Contact Support" for direct messaging with our team</p>
+        <p><strong>In-App Support:</strong> Access the Help Center through your account and <button onclick="navigateTo()" class="click-here-button">click here</button> for direct messaging with our team</p>
       </div>
     </section>
   </div>
@@ -299,6 +299,13 @@
         behavior: 'smooth'
       });
     });
+
+    function navigateTo(){
+      if(<?= isset($_SESSION['user_status']) ? 'false' :  'true' ?>){
+          return;
+      }
+      window.location.href = '<?= ROOT ?>/chatbox/1';
+    }
   </script>
 </body>
 </html>

@@ -25,12 +25,14 @@ class Payroll {
     ];
 
     public function addPayRoll($orderId){
+
         $ordersModel = new Order();
         $userModel = new UserModel();
         $paymentModel = new PaymentInfo();
         $bookstoreModel = new BookStore();
         $booksellerModel = new BookSeller();
         $courierModel = new Courier();
+        $systemStatModel = new SystemStats();
 
         $order = $ordersModel->first(['order_id' => $orderId]);
         $courier = $courierModel->first(['user_id' => $order->courier_id]);
@@ -43,16 +45,18 @@ class Payroll {
             $seller =  $booksellerModel->first(['user_id' => $order->seller_id]);
         }
 
-        //courier payroll
-        
-        $courierData=[
+        $systemStats = $systemStatModel->first(['id' => 1 ]);
+        $systemFeePercentageForDeliveries = $systemStats->systemfee_add ? ($systemStats->systemfee_add)/100 : 0.1;
+        $systemFeePercentageForBooks = $systemStats->systemfee_book ? ($systemStats->book)/100 : 0.1;
+
+        $courierData = [
             'payee_id' => $courier->user_id,
             'order_id' => $orderId,
             'payment_id' => $payment->payment_id,
             'transaction_type' => 'delivery',
             'gross_amount' => $order->delivery_fee,
-            'system_fee' => ($order->delivery_fee * 0.1),
-            'net_amount' => $order->delivery_fee - $order->delivery_fee * 0.1,
+            'system_fee' => ($order->delivery_fee * $systemFeePercentageForDeliveries),
+            'net_amount' => $order->delivery_fee - $order->delivery_fee * $systemFeePercentageForDeliveries,
             'bank' => $courier->bank,
             'branch_name' => $courier->branch_name,
             'account_number' => $courier->account_number,
@@ -62,9 +66,9 @@ class Payroll {
 
         $this->insert($courierData);
 
-        $systemFeeforseller = (($order->total_amount - $order->delivery_fee)* 0.1);
+        $systemFeeforseller = (($order->total_amount - $order->delivery_fee)* $systemFeePercentageForBooks);
 
-        $sellerData=[
+        $sellerData = [
             'payee_id' => $seller->user_id,
             'order_id' => $orderId,
             'payment_id' => $payment->payment_id,

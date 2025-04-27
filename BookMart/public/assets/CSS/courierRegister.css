@@ -444,7 +444,16 @@ flex: 1;
   .error__close path {
     fill: #fff;
   }
-  
+    
+  .check-box-link{
+    text-decoration: none;
+    color: #004bb4;
+  }
+
+  .check-box-link:hover{
+    text-decoration: underline;
+  }
+
   
   @media (max-width: 768px) {
     .container {

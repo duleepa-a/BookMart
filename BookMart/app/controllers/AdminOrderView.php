@@ -25,7 +25,7 @@ class AdminOrderView extends Controller {
         
         $orderModel = new Order();
         $orders = $orderModel->findAll($perPage, $offset);
-        $totalOrders = $orderModel->count();
+        $totalOrders = $orderModel->adminCount();
         $totalPages = ceil($totalOrders / $perPage);
         
         $this->view('adminorders', [

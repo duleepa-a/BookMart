@@ -12,7 +12,6 @@ class SystemStats {
         'updated_at'
     ];
     
-    // Helper method to get current stats (usually a single record)
     public function getCurrentStats() {
         $stats = $this->findAll();
         return !empty($stats) ? $stats[0] : null;

@@ -268,11 +268,11 @@
                                             <td><?= date('F j, Y', strtotime($ad->start_date)) ?></td>
                                             <td><?= date('F j, Y', strtotime($ad->end_date)) ?></td>
                                             <td>
-                                                <input type="number" name="payment_amount" min="0" step="0.01" required style="width: 100px;">
+                                                <input type="number" name="payment_amount" min="100" step="0.01" required style="width: 100px;">
                                             </td>
                                             <td>
-                                                <button type="submit" name="action" value="accept" class="btn btn-success">Accept</button>
-                                                <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+                                                <button type="submit" name="action" value="accept" class="resolve-btn">Accept</button>
+                                                <button type="submit" name="action" value="reject" class="reject-btn">Reject</button>
                                             </td>
                                         </form>
                                     </tr>
@@ -294,7 +294,8 @@
                                 
                                 <button class="page-button next" 
                                         onclick="window.location.href='?pending_page=<?= min($totalPendingPages, $pendingPage + 1) ?>&page=<?= $currentPage ?>&approved_page=<?= $approvedPage ?>'"
-                                        <?= $pendingPage >= $totalPendingPages ? 'disabled' : '' ?>>&gt;</button>
+                                        <?= $pendingPage >= $totalPendingPages ? 'disabled' : '' ?>>&gt;
+                                </button>
                             </div>
                         </div>
                     <?php else: ?>

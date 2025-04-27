@@ -15,6 +15,9 @@ class Payment extends Controller{
         $bookstoreModel = new BookStore(); 
         $userModel = new UserModel(); 
         $couponModel = new CouponModel();
+        $systemStatsModel = new SystemStats();
+
+        $systemStats = $systemStatsModel->first(['id' => 1]);
     
         $book = $bookModel->first(['id' => $bookId]);
         $buyerId= $_SESSION['user_id'];
@@ -54,6 +57,9 @@ class Payment extends Controller{
 
         $book->seller_name = $userModel->first(['id' => $book->seller_id])->username;
 
+    
+        $deliveryFee = $systemStats->deliveryfee ? $systemStats->deliveryfee : 250;
+     
         $data = [
             'book' => $book,
             'buyer' => $buyer,
@@ -62,7 +68,7 @@ class Payment extends Controller{
             'discountedPrice' => $discountedPrice,
             'couponMessage' => $couponMessage,
             'totalPrice' => $totalPrice,
-            'deliveryFee' => 250,
+            'deliveryFee' => $deliveryFee,
         ];
 
         $orderdetails = [
@@ -77,7 +83,7 @@ class Payment extends Controller{
             'city'=>$buyer->city,
             'province'=>$buyer->province,
             'district'=>$buyer->district,
-            'deliveryFee' => 250,
+            'deliveryFee' => $deliveryFee,
         ];
 
         $_SESSION['order_details']= $orderdetails;
@@ -86,7 +92,6 @@ class Payment extends Controller{
     }
     public function success() {
 
-        // Retrieve order details from session
         if (!isset($_SESSION['order_details'])) {
             echo "Error: Order details not found.";
             return;
@@ -94,7 +99,6 @@ class Payment extends Controller{
 
         $orderdetails = $_SESSION['order_details'];
     
-        // Get book details
         $bookId = $orderdetails['book_id'];
         $bookModel = new BookModel();
         $book = $bookModel->first(['id' => $bookId]);
@@ -132,12 +136,27 @@ class Payment extends Controller{
         $insertedorder=$orderModel->insert($orderData);
         
         $orderId = $insertedorder->order_id;
-    
+
+        $notificationModel = new NotificationModel();
+        $notificationModel->createNotification(
+            $_SESSION['user_id'],
+            'Your Order has been placed!',
+            'Thank you for your purchase! You can view your order details by clicking here.',
+            '/Buyer/trackOrder/'.$orderId );
+        
+        $notificationModel->createNotification(
+            $book->seller_id, 
+            'You have a new order!',
+            'A buyer has placed an order for your book. Check the order details and prepare for shipping.',
+            '/BookstoreController/orderView/' . $orderId 
+        );
+
         $paymentModel = new PaymentInfo();
         $paymentData = [
             'order_id' => $orderId,
             'payment_amount' => $orderData['total_amount']
         ];
+
         $payment=$paymentModel->insert($paymentData);
     
         $this->view('paymentSuccess',['payment' => $payment]);
@@ -147,7 +166,7 @@ class Payment extends Controller{
        $this->view('paymentCancel');
     }
     public function process() {
-        $secretKey = STRIPE_SECRET_KEY; //Stripe Secret Key
+        $secretKey = STRIPE_SECRET_KEY; 
         header('Content-Type: application/json');
 
         $input = json_decode(file_get_contents('php://input'), true);
@@ -197,6 +216,11 @@ class Payment extends Controller{
         $seller= $sellerm->first(['id' => $book->seller_id]);
 
         $book->seller_name = $seller->username;
+
+        $systemStatsModel = new SystemStats();
+        $systemStats = $systemStatsModel->first(['id' => 1]);
+        $_SESSION['deliveryFee'] = $systemStats->deliveryfee ? $systemStats->deliveryfee : 250;
+
 
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
@@ -277,7 +301,7 @@ class Payment extends Controller{
         }
     
         $lineItems = [];
-        $totalAmount = 0;
+        $deliveryFee = $_SESSION['deliveryFee'];
     
         foreach ($cart as $item) {
             $lineItems[] = [
@@ -288,7 +312,15 @@ class Payment extends Controller{
                 ],
                 'quantity' => $item['quantity'],
             ];
-            $totalAmount += $item['price'] * $item['quantity'];
+
+            $lineItems[] = [
+                'price_data' => [
+                    'currency' => 'lkr',
+                    'product_data' => ['name' => 'Delivery Fee'],
+                    'unit_amount' => $deliveryFee * 100,
+                ],
+                'quantity' => 1,
+            ];
         }
     
         $fields = [
@@ -361,7 +393,7 @@ class Payment extends Controller{
             $discountedPrice = $item['price'];
             $quantity = $item['quantity'];
             $totalAmount = $discountedPrice * $quantity;
-            $deliveryFee = 250;
+            $deliveryFee = $_SESSION['deliveryFee'];
     
             // Reduce book stock
             $bookModel->update($bookId, [
@@ -445,7 +477,7 @@ class Payment extends Controller{
             $advModel = new StoreAdvModel();
             $paymentModel = new PaymentInfo();
             
-            $advModel->update($adId, ['active_status' => 1]);
+            $advModel->update($adId, ['active_status' => 1 , 'status' => 'paid']);
 
 
             $paymentData = [
@@ -482,7 +514,7 @@ class Payment extends Controller{
             'price_data' => [
                 'currency' => 'lkr',
                 'product_data' => ['name' => "Advertisement ID #$adId"],
-                'unit_amount' => $amount * 100, // Stripe uses cents
+                'unit_amount' => $amount * 100,
             ],
             'quantity' => 1,
         ]];

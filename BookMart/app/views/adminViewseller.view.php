@@ -131,45 +131,46 @@
     </div>
 
     <div class="box">
-        <div class="search-container">
-            <input type="text" name="search" placeholder="Search by ID, title, or genre" id="searchListningInput">
-            <button type="submit">
-                <i class="fa fa-search"></i> 
-            </button>
-        </div>
+            <div class="search-container">
+                <input type="text" name="search" placeholder="Search by ID, title, or genre" id="searchListningInput">
+                <button type="submit">
+                    <i class="fa fa-search"></i> 
+                </button>
+            </div>
 
-        <div class="table-container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Book Title</th>
-                        <th>Genre</th>
-                        <th>Price</th>
-                        <th>Discount Applied</th>
-                        <th>Sales Quantity</th>
-                    </tr>
-                </thead>
-            <tbody>
-                <?php if(isset($data['orders']) && is_array($data['orders']) && count($data['orders']) > 0): ?>
-                    <?php foreach($data['orders'] as $order): ?>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td class="order_id"><?= htmlspecialchars($order->order_id) ?></td>
-                            <td class="title"><?= htmlspecialchars($order->title) ?></td>
-                            <td class="genre"><?= htmlspecialchars($order->genre) ?></td>
-                            <td><?= htmlspecialchars($order->price) ?></td>
-                            <td><?= htmlspecialchars($order->discount_applied) ?></td>
-                            <td><?= htmlspecialchars($order->quanitity) ?></td>
+                            <th>Order ID</th>
+                            <th>Book Title</th>
+                            <th>Genre</th>
+                            <th>Price</th>
+                            <th>Discount Applied</th>
+                            <th>Sales Quantity</th>
                         </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="5">No listnings found</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
-    </div> 
+                    </thead>
+                <tbody>
+                    <?php if(isset($data['orders']) && is_array($data['orders']) && count($data['orders']) > 0): ?>
+                        <?php foreach($data['orders'] as $order): ?>
+                            <tr>
+                                <td class="order_id"><?= htmlspecialchars($order->order_id) ?></td>
+                                <td class="title"><?= htmlspecialchars($order->title) ?></td>
+                                <td class="genre"><?= htmlspecialchars($order->genre) ?></td>
+                                <td><?= htmlspecialchars($order->price) ?></td>
+                                <td><?= htmlspecialchars($order->discount_applied) ?></td>
+                                <td><?= htmlspecialchars($order->quanitity) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="5">No listnings found</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div> 
+    </div>
 
     <!-- Ratings section -->
     <div class="section-title">

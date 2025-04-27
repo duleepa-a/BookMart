@@ -58,25 +58,35 @@
                 </div>
               <?php endforeach; ?>
             </div>
-
+                        
             <div class="order-summary">
-              <h3>Order Summary</h3>
-              <p>Subtotal: <span>Rs. <?= number_format($subtotal, 2) ?></span></p>
-              <p>Shipping Fee: <span>Rs. <?= number_format(count($cart)*250,2) ?></span></p>
-              <?php if (!empty($couponMessage)): ?>
+                <h3>Order Summary</h3>
+                <p>Subtotal: <span>Rs. <?= number_format($subtotal, 2) ?></span></p>
+
+                <?php 
+                $shippingFee = count($cart) * $_SESSION['deliveryFee'];
+                ?>
+                <p>Shipping Fee: <span>Rs. <?= number_format($shippingFee, 2) ?></span></p>
+
+                <?php if (!empty($couponMessage)): ?>
                     <p style="color: <?= (strpos($couponMessage, 'applied') !== false) ? 'green' : 'red' ?>; margin-top: 5px; margin-bottom: 10px;">
                         <?= $couponMessage ?>
                     </p>
-              <?php endif; ?>
-              <form action="<?= ROOT ?>/Payment/cartView" method="post">
-                <input type="text" placeholder="Enter Coupon Code" class="inuput-textbox" name="coupon-code">
-                <button class="apply-btn">APPLY</button>
-              </form>
-              <hr>
-              <h4>Total: <span>Rs. <?= number_format($subtotal + number_format(count($cart)*250,2), 2) ?></span></h4>
-              <form action="<?= ROOT ?>/Payment/cartCheckout" method="post">
-                <button class="checkout-btn">PROCEED TO CHECKOUT</button>
-              </form>
+                <?php endif; ?>
+
+                <form action="<?= ROOT ?>/Payment/cartView" method="post">
+                    <input type="text" placeholder="Enter Coupon Code" class="inuput-textbox" name="coupon-code">
+                    <button class="apply-btn">APPLY</button>
+                </form>
+                <hr>
+                <?php 
+                $total = $subtotal + $shippingFee;
+                ?>
+                <h4>Total: <span>Rs. <?= number_format($total, 2) ?></span></h4>
+
+                <form action="<?= ROOT ?>/Payment/cartCheckout" method="post">
+                    <button class="checkout-btn">PROCEED TO CHECKOUT</button>
+                </form>
             </div>
         </div>
     <?php else: ?>

@@ -88,8 +88,8 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(to right, #BE5715;, transparent);
-            border-radius: 3px;
+            background: linear-gradient(to right, #BE5715, transparent);
+            border-radius:3px;
         }
 
         .container h1{
@@ -247,20 +247,20 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>System Fee from books %</th>
-                                        <th>System Fee from adds %</th>
-                                        <th>Delivery Fee</th>
+                                        <th>System Fee from Book %</th>
+                                        <th>System Fee from Courier %</th>
+                                        <th>Delivery Fee (Rs.)</th>
                                         <th>System Email</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="editable">
                                         <td>
-                                            <input type="number" step="0.01" name="systemfee_book" 
+                                            <input type="number" step="0.01" name="systemfee_book" min="0" max="100"
                                                 value="<?= htmlspecialchars($stats->systemfee_book ?? '') ?>" required>
                                         </td>
                                         <td>
-                                            <input type="number" step="0.01" name="systemfee_add" 
+                                            <input type="number" step="0.01" name="systemfee_add" min="0" max="100"
                                                 value="<?= htmlspecialchars($stats->systemfee_add ?? '') ?>" required>
                                         </td>
                                         <td>

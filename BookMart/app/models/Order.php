@@ -122,7 +122,9 @@ class Order {
                     FROM {$this->table} o
                     LEFT JOIN book b ON o.book_id = b.id
                     LEFT JOIN buyer u ON o.buyer_id = u.user_id
-                    WHERE ";
+                    WHERE  b.title LIKE :keyword 
+                    OR b.publisher LIKE :keyword 
+                    OR u.full_name LIKE :keyword";
                     
         if ($limit !== null) {
             $query .= " LIMIT $limit OFFSET $offset";
@@ -174,7 +176,7 @@ class Order {
         return $this->query($query, $params);
     }
 
-    public function count($order_status = null) {
+    public function adminCount($order_status = null) {
         if ($order_status) {
             $query = "SELECT COUNT(*) as total FROM {$this->table} WHERE order_status = :order_status";
             $result = $this->query($query, [':order_status' => $order_status]);

@@ -7,7 +7,7 @@
                 </b><a href="<?= ROOT ?>/Buyer/refundRequest"><b>Refund request</b></a><b> | 
             <?php endif;?>
                 </b><a href="<?= ROOT ?>/contactUs"><b>Contact Us</b></a><b>    |   
-                </b><a href="<?= ROOT ?>/AboutUs"><b>About Us</b></a></p>
+                </b><a href="<?= ROOT ?>/user/aboutUs"><b>About Us</b></a></p>
                 <p>&copy; 2024 BookMart, all rights reserved.</p>
             </div>
             <div class="footer-center">

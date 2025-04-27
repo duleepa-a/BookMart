@@ -219,10 +219,24 @@ class Admin extends Controller {
 
     public function markAsResolve($id){
         $payrollModel = new payRoll();
+        $notfications = new NotificationModel();
+
         $payrollModel->update($id, ['settlement_status' => 'paid',
                                     'settlement_date' => date('Y-m-d H:i:s')
                                     ]);
-            
+
+        $_SESSION['success'] = "Resolved successfully!";
+        
+        $payroll = $payrollModel->first(['id' => $id]);
+
+        $notfications->createNotification(
+            $id,  
+            'Payment Settled!',
+            'Your earnings have been successfully transferred. Please check your payment details for confirmation.',
+            '/BookstoreController/payRolls' 
+        );
+        
+
         $this->payRolls();
 
     }
@@ -274,6 +288,7 @@ class Admin extends Controller {
 
             if($order->buyer_id != $payeeId){
                 $_SESSION['error'] = "Buyer ID doesn't smatch";
+                $this->payRolls();
                 return;
             }
     
@@ -311,6 +326,8 @@ class Admin extends Controller {
                 'canceled_date' => date('Y-m-d H:i:s'),
                 'payment_status' => 'refunded'
               ]);
+
+              $_SESSION['success'] = "Refund added successfully!";
         }
         
         $this->payRolls();
@@ -324,6 +341,8 @@ class Admin extends Controller {
             $refundModel = new RefundRequest();
 
             $refundModel->update($reqId,[ 'status' => $status ]);
+
+            $_SESSION['success'] = "Updated successfully!";
             
             $this->payRolls();
             
@@ -337,6 +356,7 @@ class Admin extends Controller {
             $refundModel = new RefundRequest();
 
             $refundModel->delete($reqId);   
+            $_SESSION['success'] = "Deleted successfully!";
             $this->payRolls();
         }
     }
@@ -391,7 +411,8 @@ class Admin extends Controller {
             readfile($filepath);
             exit;
         } else {
-            echo "File not found.";
+            $_SESSION['error'] = "File not found";
+            $this->payRolls();
         }
     }
 

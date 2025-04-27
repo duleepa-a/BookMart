@@ -22,7 +22,8 @@ class Home extends Controller{
         $recommendBookstores=[];
         $advertisments=[];
 
-        $advertisments = $adModel->findAll();
+        $adModel->updateExpiredAds();
+        $advertisments = $adModel->where(['active_status' => 1]);
 
 
         if(isset($_SESSION['user_id']) && ($_SESSION['user_role'] == 'buyer' || $_SESSION['user_role'] == 'bookSeller' )){

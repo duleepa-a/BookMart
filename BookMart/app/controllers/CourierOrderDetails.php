@@ -79,7 +79,16 @@ class CourierOrderDetails extends Controller{
             $order_id =$_POST['order_id'];
             $randomNumber = rand(10000, 99999);
 
+            $order = $ordersModel->first(['order_id' => $order_id]);  
+
             $ordersModel->update($order_id,['courier_id'=>$_SESSION['user_id'] ,'pinCode' => $randomNumber ]);
+
+            $notificationModel = new NotificationModel();
+            $notificationModel->createNotification(
+                $order->buyer_id,
+                'Order no '.$order->order_id.'has been accepted by a courier',
+                'View order details by clicking here.',
+                '/BookstoreController/orderView/' . $order_id  );
         }
         
         $orders = $ordersModel->where(['order_status' => 'pending']);
@@ -95,6 +104,7 @@ class CourierOrderDetails extends Controller{
         $orderModel = new Order();
         $courierOrdersModel = new CourierOrder();
         $payRoll = new Payroll();
+        $notificationModel = new NotificationModel();
         
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $order_id =$_POST['order_id'];
@@ -105,7 +115,25 @@ class CourierOrderDetails extends Controller{
             $orderModel->update($order_id,['order_status'=>'completed',
                                             'completed_date' => date('Y-m-d H:i:s')
                                           ]);
+
+            $order = $orderModel->first(['order_id' => $order_id]);
             $payRoll->addPayRoll($order_id);
+
+            $notificationModel->createNotification(
+                $order->buyer_id,
+                'Order Completed!',
+                'Your order has been successfully delivered. Thank you for shopping with us! We hope to see you again.',
+                '/Buyer/orders/' . $order_id
+            );
+
+            $notificationModel->createNotification(
+                $order->seller_id,
+                'Order Delivered!',
+                'The order for your book has been successfully completed and delivered to the buyer. Great job!',
+                '/BookstoreController/orderView/' . $order_id 
+            );
+            
+            
             
         }
 

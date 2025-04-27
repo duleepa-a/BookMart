@@ -82,6 +82,7 @@
                             <option value="all" <?= $filterStatus === 'all' ? 'selected' : '' ?>>All</option>
                             <option value="pending" <?= $filterStatus === 'pending' ? 'selected' : '' ?>>Pending</option>
                             <option value="approved" <?= $filterStatus === 'approved' ? 'selected' : '' ?>>Approved</option>
+                            <option value="paid" <?= $filterStatus === 'paid' ? 'selected' : '' ?>>Paid</option>
                             <option value="rejected" <?= $filterStatus === 'rejected' ? 'selected' : '' ?>>Rejected</option>
                         </select>
                     </div>
@@ -165,9 +166,12 @@
 
                                     <!-- Status with styling -->
                                     <td>
-                                        <?php if($ad->status = 'approved'){
+                                        <?php if($ad->status == 'approved'){
                                             $class = 'tag-green';
-                                        }else{
+                                        }else if ($ad->status == 'paid'){
+                                            $class = 'tag-blue';
+                                        }
+                                        else{
                                             $class = 'tag-red';
                                         }
                                         ?>
@@ -183,18 +187,18 @@
                                         <?= $ad->active_status == 1 ? '<span class="tag tag-green">Active</span>' : '<span class="tag tag-grey">Inactive</span>' ?>
                                     </td>
                                     <td>
-                                    <?php if ($ad->payment_amount > 0 && $ad->active_status == 0): ?>
+                                    <?php if ($ad->status == 'approved' && $ad->active_status == 0): ?>
                                         <form method="POST" action="<?= ROOT ?>/Payment/payAd">
                                             <input type="hidden" name="ad_id" value="<?= $ad->id ?>">
                                             <input type="hidden" name="amount" value="<?= $ad->payment_amount ?>">
                                             <button type="submit" class="pay-btn">Pay Now</button>
                                         </form>
-                                    <?php elseif ($ad->status == 'rejected'): ?>
+                                    <?php elseif ($ad->status == 'rejected' || ($ad->status == 'paid' && $ad->active_status == 0)): ?>
                                         <form method="POST" action="<?= ROOT ?>/BookstoreController/deleteAdvertisment">
                                             <input type="hidden" name="ad_id" value="<?= $ad->id ?>">
                                             <button type="submit" class="delete-btn">Delete</button>
                                         </form>
-                                    <?php elseif ($ad->payment_amount > 0 && $ad->active_status == 1): ?>
+                                    <?php elseif ($ad->status == 'paid'): ?>
                                         <span class="tag tag-green">Paid</span>
                                     <?php else: ?>
                                         <span class="tag tag-grey">-</span>

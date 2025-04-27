@@ -7,7 +7,6 @@ class AdminViewallusers extends Controller{
         $userModel = new UserModel();
         $role = isset($_GET['role']) ? $_GET['role'] : '';
 
-        // Pagination parameters
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $limit = 5;
         $offset = ($page - 1) * $limit;

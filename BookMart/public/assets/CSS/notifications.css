@@ -176,3 +176,174 @@ body {
     background-color: #f0f4f8;
     border-left: 4px solid #02224E;
 }
+
+.add-book-bttn {
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    padding: 20px 30px;
+    background-color: #f4e2d7; /* Light blue color */
+    color: #000; /* Black text */
+    font-weight:500;
+    font-size: 14px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.add-book-bttn:hover {
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show modal */
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Dark overlay */
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Modal content */
+.modal-content {
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    max-width: 90%;
+}
+
+.modal-content h2 {
+    margin: 0 0 10px;
+    font-size: 2rem;
+    color: #BE5715;
+}
+
+.modal-content label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.modal-content input, 
+.modal-content select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #a49f9f;
+}
+
+.modal-actions {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    grid-column: span 3; 
+    gap: 10px;
+}
+
+.modal-actions button {
+    padding: 15px 50px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.modal-actions button.add-button {
+    border:solid 3px #02224E;
+    background-color: #02224e00;
+    color: #02224E;
+}
+
+.modal-actions button.close-modal {
+    background-color: #c2413800;
+    border:solid 3px #000000;
+    color: #000000;
+}
+
+.modal-actions button.delete-modal {
+    background-color: #c2413800;
+    border:solid 3px #ff0000;
+    color: #ff0000;
+}
+
+
+.modal-actions button.add-button:hover {
+    border:solid 3px #02224E;
+    background-color: #02224e;
+    color: #ffffff;
+}
+
+.modal-actions button.close-modal:hover {
+    background-color: #000000;
+    border:solid 3px #000000;
+    color: #ffffff;
+}
+
+.modal-actions button.delete-modal:hover {
+    background-color: #ff0000;
+    border:solid 3px #ff0000;
+    color: #ffffff;
+}
+
+
+
+.add-book-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.8rem; /* Spacing between rows and columns */
+  }
+
+  .add-book-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+  }
+
+  .add-book-form input,
+  .add-book-form select,
+  .add-book-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+
+  .add-book-form .full-width {
+    grid-column: span 3; /* Spans across both columns */
+  }
+
+input{
+    accent-color: #BE5715;
+}
+
+.add-book-form input[text]:focus,
+  .add-book-form select:focus,
+  .add-book-form textarea:focus{
+    border-color: #BE5715;
+}

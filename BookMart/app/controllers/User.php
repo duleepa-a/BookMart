@@ -291,7 +291,11 @@ class User extends Controller {
                     'manager_email' => filter_var(trim($_POST['email-manager']), FILTER_SANITIZE_EMAIL),
                     'manager_phone_number' => htmlspecialchars(trim($_POST['phone-number-manager'])),
                     'manager_nic' => htmlspecialchars(trim($_POST['NIC-manager'])),
-                    'business_reg_no' => htmlspecialchars(trim($_POST['business-reg-NO']))
+                    'business_reg_no' => htmlspecialchars(trim($_POST['business-reg-NO'])),
+                    'bank' => htmlspecialchars(trim($_POST['bank'])),
+                    'branch_name' => htmlspecialchars(trim($_POST['branch-name'])),
+                    'account_number' => htmlspecialchars(trim($_POST['account-number'])),
+                    'account_name' => htmlspecialchars(trim($_POST['account-name'])),
                 ];
 
                 if (isset($_FILES['evidence-docs']) && $_FILES['evidence-docs']['error'] == 0) {
@@ -566,5 +570,12 @@ class User extends Controller {
         public function termsConditions(){
             $this->view('termsAndConditions');
         }
+
+        public function privacyAndPolicies(){
+            $this->view('privacyAndPolicy');
+        }
         
+        public function aboutUs(){
+            $this->view('aboutUsPage');
+        }
     }

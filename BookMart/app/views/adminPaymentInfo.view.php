@@ -26,7 +26,7 @@
         <div class="box">
         <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'superAdmin'): ?>
             <div class="add-toolbar">
-                <a href="<?= ROOT ?>/adminSystemStat" class="add-bttn" id="show-stats-btn">
+                <a href="<?= ROOT ?>/adminSystemStat" class="add-bttn" id="show-stats-btn" style="text-decoration:none;" >
                     <span class="compose-icon"><i class="fa-solid fa-plus"></i></span>System statistics
                 </a>
             </div>

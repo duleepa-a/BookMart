@@ -430,6 +430,15 @@ flex: 1;
     fill: #fff;
   }
   
+  .check-box-link{
+    text-decoration: none;
+    color: #004bb4;
+  }
+
+  .check-box-link:hover{
+    text-decoration: underline;
+  }
+
 
   @media screen and (max-width: 768px) {
     .container {

@@ -17,6 +17,7 @@ class BookstoreController extends Controller{
 
         if($is_store){
             $storeDetails =$storeModel ->first(['user_id' => $seller_id]); 
+            $advetismentsModel->updateExpiredAds();
             $advetisments=$advetismentsModel->where(['store_id' => $seller_id, 'active_status' => 1]);
             
             if (isset($_SESSION['user_id'])) {
@@ -321,6 +322,15 @@ class BookstoreController extends Controller{
                 'order_status' => 'shipping',
                 'shipped_date' => date('Y-m-d H:i:s')
             ]);
+
+            $notificationModel = new NotificationModel();
+
+            $notificationModel->createNotification(
+                $order->buyer_id,
+                'Your Order is on the way!',
+                'Good news! Your order has been picked up by the courier and is now on its way to you. Track your delivery here.',
+                '/Buyer/trackOrder/' . $orderId
+            );            
 
             echo json_encode(['success' => true]);
         } else {

@@ -16,62 +16,65 @@ class Buyer extends Controller{
         $bookModel = new BookModel(); 
         $userModel = new UserModel();     
         $groupedOrders = [];
-    
-        foreach ($orders as $order) {
-            $status = $order->order_status;
-    
-            // Fetch book details
-            $book = $bookModel->first(['id' => $order->book_id]);
-            
-            if ($book) {
-                $order->book_title = $book->title;
-                $order->book_author = $book->author;
-                $order->cover_image = $book->cover_image;
-                $order->seller_id = $book->seller_id;
-    
-                // Fetch seller's username
-                $seller = $userModel->first(['id' => $book->seller_id]);
-                $order->seller_username = $seller ? $seller->username : "Unknown Seller";
-            } else {
-                $order->book_title = "Unknown Book";
-                $order->seller_id = null;
-                $order->seller_username = "Unknown Seller";
+
+        if($orders){
+
+            foreach ($orders as $order) {
+                $status = $order->order_status;
+        
+                // Fetch book details
+                $book = $bookModel->first(['id' => $order->book_id]);
+                
+                if ($book) {
+                    $order->book_title = $book->title;
+                    $order->book_author = $book->author;
+                    $order->cover_image = $book->cover_image;
+                    $order->seller_id = $book->seller_id;
+        
+                    // Fetch seller's username
+                    $seller = $userModel->first(['id' => $book->seller_id]);
+                    $order->seller_username = $seller ? $seller->username : "Unknown Seller";
+                } else {
+                    $order->book_title = "Unknown Book";
+                    $order->seller_id = null;
+                    $order->seller_username = "Unknown Seller";
+                }
+        
+                // Group orders by status
+                if (!isset($groupedOrders[$status])) {
+                    $groupedOrders[$status] = [];
+                }
+                $groupedOrders[$status][] = $order;
             }
-    
-            // Group orders by status
-            if (!isset($groupedOrders[$status])) {
-                $groupedOrders[$status] = [];
+            foreach ($orders as $order) {
+                $status = 'all';
+        
+                // Fetch book details
+                $book = $bookModel->first(['id' => $order->book_id]);
+                
+                if ($book) {
+                    $order->book_title = $book->title;
+                    $order->book_author = $book->author;
+                    $order->cover_image = $book->cover_image;
+                    $order->seller_id = $book->seller_id;
+        
+                    // Fetch seller's username
+                    $seller = $userModel->first(['id' => $book->seller_id]);
+                    $order->seller_username = $seller ? $seller->username : "Unknown Seller";
+                } else {
+                    $order->book_title = "Unknown Book";
+                    $order->seller_id = null;
+                    $order->seller_username = "Unknown Seller";
+                }
+        
+                // Group orders by status
+                if (!isset($groupedOrders[$status])) {
+                    $groupedOrders[$status] = [];
+                }
+                $groupedOrders[$status][] = $order;
             }
-            $groupedOrders[$status][] = $order;
         }
-        foreach ($orders as $order) {
-            $status = 'all';
-    
-            // Fetch book details
-            $book = $bookModel->first(['id' => $order->book_id]);
-            
-            if ($book) {
-                $order->book_title = $book->title;
-                $order->book_author = $book->author;
-                $order->cover_image = $book->cover_image;
-                $order->seller_id = $book->seller_id;
-    
-                // Fetch seller's username
-                $seller = $userModel->first(['id' => $book->seller_id]);
-                $order->seller_username = $seller ? $seller->username : "Unknown Seller";
-            } else {
-                $order->book_title = "Unknown Book";
-                $order->seller_id = null;
-                $order->seller_username = "Unknown Seller";
-            }
-    
-            // Group orders by status
-            if (!isset($groupedOrders[$status])) {
-                $groupedOrders[$status] = [];
-            }
-            $groupedOrders[$status][] = $order;
-        }
-    
+        
         $this->view('buyerOrders', ['groupedOrders' => $groupedOrders]);
     }
     

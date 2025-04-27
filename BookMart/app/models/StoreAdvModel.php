@@ -20,6 +20,16 @@ class StoreAdvModel {
     ];
     
     
-    
-    
+    public function updateExpiredAds(){
+        $today = date('Y-m-d');
+
+        $query = "
+            UPDATE $this->table
+            SET active_status = 0
+            WHERE end_date < :today AND active_status = 1
+        ";
+
+        $this->query($query, [':today' => $today]);
+    }
+
 }

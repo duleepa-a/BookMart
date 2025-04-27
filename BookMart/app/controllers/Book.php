@@ -87,9 +87,9 @@ class Book extends Controller{
 
     public function addBook(){
         $bookModel = new BookModel();
-        echo("addBook");
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            echo("addBook POST in");
+
 
             $bookData = [
                 'title' => trim($_POST['title']),
@@ -118,48 +118,51 @@ class Book extends Controller{
                     $filename= uniqid() . '.' . $fileExtension;
                     $filePath = $uploadDir. '\\' . $filename; 
                     if (!file_exists($_FILES['cover_image']['tmp_name'])) {
-                        echo "Temporary file does not exist!<br>";
+                        $_SESSION['error'] =  "Temporary file does not exist!<br>";
+                        redirect('BookstoreController/inventory');
+                        return;
                     }
                     if (!is_dir($uploadDir)) {
-                        echo "Directory does not exist. Creating: $uploadDir<br>";
-                        mkdir($uploadDir, 0777, true); // Creates directory if missing
+                        $_SESSION['error'] =  "Directory does not exist. Creating: $uploadDir<br>";
+                        mkdir($uploadDir, 0777, true);
+                        redirect('BookstoreController/inventory');
+                        return;
                     }
                     if (!is_writable($uploadDir)) {
-                        echo "Directory is not writable: $uploadDir<br>";
+                       $_SESSION['error'] = "Directory is not writable: $uploadDir<br>";
+                       redirect('BookstoreController/inventory');
+                       return;
                     }
                     if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $filePath)) {
                         $bookData['cover_image'] = $filename;
                     } else {
-                        echo "Error uploading cover image!";
-                        // $this->view('addBook', $bookData);
+                        $_SESSION['error'] =  "Error uploading cover image!";
+                        redirect('BookstoreController/inventory');
                         return;
                     }
                 } else {
-                    echo "Invalid file type!";
-                    // $this->view('addBook', $bookData);
+                    $_SESSION['error'] =  "Invalid file type!";
+                    redirect('BookstoreController/inventory');
                     return;
                 }
             } else {
-                echo "Cover image is required!";
-                // $this->view('addBook', $bookData);
+                $_SESSION['error'] =  "Cover image is required!";
+                redirect('BookstoreController/inventory');
                 return;
             }
 
-            // Validate and save the book data
-            // if ($bookModel->validate($bookData)) {
-                echo("Validation passed");
                 if ($bookModel->insert($bookData)) {
+                    $_SESSION['success'] = "successfully added";
                     redirect('BookstoreController/inventory');
+                    return;
                 } else {
-                    echo "Something went wrong!";
+                    $_SESSION['error'] =  "Something went wrong!";
+                    redirect('BookstoreController/inventory');
+                    return;
                 }
-            // } else {
-            //     echo("Validation failed");
-                // $this->view('addBook', $bookData);
-            // }
         } else {
-            echo("addBook GET request");
-            $this->view('addBook');
+            redirect('BookstoreController/inventory');
+            return;
         }
     }
 
@@ -184,8 +187,6 @@ class Book extends Controller{
                 'description' => trim($_POST['description']),
             ];
 
-            show($bookData);
-
             // Handle cover image upload if a new image is provided
             if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] == 0) {
                 
@@ -204,11 +205,13 @@ class Book extends Controller{
                     if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $filePath)) {
                         $bookData['cover_image'] = $filename;
                     } else {
-                        echo "Error uploading cover image!";
+                        $_SESSION['error'] = "Error uploading cover image!";
+                        redirect('BookstoreController/inventory');
                         return;
                     }
                 } else {
-                    echo "Invalid file type!";
+                    $_SESSION['error'] = "Invalid file type!";
+                    redirect('BookstoreController/inventory');
                     return;
                 }
             }
@@ -217,12 +220,16 @@ class Book extends Controller{
             show($bookId);
             // Update the book record in the database
             if (!($bookModel->update($bookId, $bookData))) {
+
+                $_SESSION['success'] = "Successfully added";
                 redirect('BookstoreController/inventory');
             } else {
-                echo "Something went wrong while updating the book!";
+                $_SESSION['error'] = "Something went wrong while updating the book!";
+                redirect('BookstoreController/inventory');
             }
         } else {
-            echo "Invalid request method!";
+            $_SESSION['error'] = "Invalid request method!";
+            redirect('BookstoreController/inventory');
         }
     }
 
@@ -232,6 +239,7 @@ class Book extends Controller{
         
         show($id);
         $bookModel->update($id,['status' => 'removed']);
+        $_SESSION['success'] = "Successfully updated";
         redirect('BookstoreController/inventory');
         
     }

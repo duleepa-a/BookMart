@@ -371,7 +371,19 @@
 
         </div>
     </div>
-    <script src="<?= ROOT ?>/assets/JS/adminBookstore.js"></script>
+    <div id="custom-alert" class="error-alert" style="display: none;">
+    <div class="error__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none">
+                <path fill="#393a37" d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z"></path>
+            </svg>
+        </div>
+        <div class="error__title" id="alert-message">Alert message goes here</div>
+        <div class="error__close" onclick="closeAlert()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20">
+                <path fill="#393a37" d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"></path>
+            </svg>
+        </div>
+    </div>  
     <script>
         const ROOT = "<?= ROOT ?>";
         document.querySelectorAll('.resolve-btn').forEach(btn => {
@@ -380,35 +392,31 @@
                 window.location.href = `<?= ROOT ?>/admin/markAsResolve/${Id}`;
             });
         });
-        // Payroll filter
+
         const payrollStatusFilter = document.getElementById('status-filter');
         payrollStatusFilter.addEventListener('change', () => {
             const selectedStatus = payrollStatusFilter.value;
             const urlParams = new URLSearchParams(window.location.search);
             urlParams.set('status', selectedStatus);
-            urlParams.set('page', 1); // reset to first page on filter change
+            urlParams.set('page', 1);
             window.location.search = urlParams.toString();
         });
 
-        // Refund filter
         const refundStatusFilter = document.getElementById('refund-status-filter');
         refundStatusFilter.addEventListener('change', () => {
             const selectedStatus = refundStatusFilter.value;
             const urlParams = new URLSearchParams(window.location.search);
             urlParams.set('refund_status', selectedStatus);
-            urlParams.set('refund_page', 1); // reset to first page on filter change
+            urlParams.set('refund_page', 1); 
             window.location.search = urlParams.toString();
         });
 
-        // Tab switching - preserve pagination and filter state
         function showTab(tabId) {
-            // Hide all tab contents
             var tabContents = document.getElementsByClassName('tab-content');
             for (var i = 0; i < tabContents.length; i++) {
                 tabContents[i].style.display = 'none';
             }
 
-            // Remove 'active' class from all tab buttons
             var tabButtons = document.getElementsByClassName('tab-button');
             for (var i = 0; i < tabButtons.length; i++) {
                 tabButtons[i].classList.remove('active');
@@ -417,19 +425,15 @@
             const buttonId = tabId + "-button";
             const tabbutton = document.getElementById(buttonId);
 
-            // Show the selected tab content
             document.getElementById(tabId).style.display = 'block';
 
-            // Add 'active' class to the clicked tab button
             tabbutton.classList.add('active');
             
-            // Update URL to reflect current tab without reloading
             const urlParams = new URLSearchParams(window.location.search);
             urlParams.set('tab', tabId);
             history.replaceState(null, null, '?' + urlParams.toString());
         }
 
-        // On page load, check if a specific tab was requested
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             const requestedTab = urlParams.get('tab');
@@ -437,29 +441,24 @@
             if (requestedTab && (requestedTab === 'new-add' || requestedTab === 'refund-req')) {
                 showTab(requestedTab);
             } else {
-                showTab('new-add'); // Default to first tab
+                showTab('new-add');
             }
         });
 
-        // Select elements
         const addButton = document.querySelector('.add-bttn');
         const modal = document.querySelector('#add-modal');
         const closeModalButton = document.querySelector('.close-modal');
 
-
-        // Show modal
         addButton.addEventListener('click', () => {
             modal.classList.add('active');
         });
 
 
-        // Hide modal
         closeModalButton.addEventListener('click', () => {
             modal.classList.remove('active');
         });
 
 
-        // Close modal when clicking on the overlay
         modal.addEventListener('click', (e) => {
             if (e.target.classList.contains('modal-overlay')) {
                 modal.classList.remove('active');
@@ -468,48 +467,90 @@
 
     document.addEventListener("DOMContentLoaded", function () {
 
-    const selectAllCheckbox = document.getElementById("select-all-checkbox");
-    const checkboxes = document.querySelectorAll(".payroll-checkbox");
+        const selectAllCheckbox = document.getElementById("select-all-checkbox");
+        const checkboxes = document.querySelectorAll(".payroll-checkbox");
 
-    selectAllCheckbox.addEventListener("change", function () {
-        checkboxes.forEach(cb => cb.checked = selectAllCheckbox.checked);
-    });
+        selectAllCheckbox.addEventListener("change", function () {
+            checkboxes.forEach(cb => cb.checked = selectAllCheckbox.checked);
+        });
 
     const settleBtn = document.getElementById("settle-selected");
 
-    settleBtn.addEventListener("click", function () {
-            const selected = Array.from(checkboxes)
-                .filter(cb => cb.checked)
-                .map(cb => cb.value);
+    if(settleBtn){
+        settleBtn.addEventListener("click", function () {
+                const selected = Array.from(checkboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
 
-                console.log(selected);
+                    console.log(selected);
 
-            if (selected.length === 0) {
-                alert("Please select at least one payroll to settle.");
-                return;
-            }
-
-            fetch('<?= ROOT ?>/Admin/settleAllPayrolls', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ payrollIds: selected })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    console.log("successs");
-                    location.reload();
-                } else {
-                    alert("Error settling payrolls.");
+                if (selected.length === 0) {
+                    showAlert("Please select at least one payroll to settle.");
+                    return;
                 }
-            })
-            .catch(err => console.error(err));
+
+                fetch('<?= ROOT ?>/Admin/settleAllPayrolls', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ payrollIds: selected })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        showAlert("successs");
+                        location.href = '<?= ROOT ?>/Admin/payRolls'; 
+                    } else {
+                        showAlert("Error settling payrolls.");
+                    }
+                })
+                .catch(err => console.error(err));
+            });
+      
+        }
         });
-    });
+        
 
     </script>
+    <script>
+        function showAlert(message, type = "error") {
+            const alertBox = document.getElementById("custom-alert");
+            const alertMsg = document.getElementById("alert-message");
+            const alertMsgbox = document.getElementsByClassName("error-alert")[0];
+
+            if (type === "success") {
+                alertBox.style.backgroundColor = "#4CAF50";  
+            }
+
+            alertMsg.textContent = message;
+            alertBox.style.display = "flex";
+
+            console.log(alertMsg.textContent);
+
+            setTimeout(() => {
+                closeAlert();
+            }, 4000);
+        }
+
+        function closeAlert() {
+            document.getElementById("custom-alert").style.display = "none";
+        }
+    </script>
+
+    <?php if (!empty($_SESSION['error'])): ?>
+        <script>
+            showAlert("<?= $_SESSION['error'] ?>", "error");
+        </script>
+        <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+
+        <?php if (!empty($_SESSION['success'])): ?>
+            <script>
+                showAlert("<?= $_SESSION['success'] ?>", "success");
+            </script>
+            <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
 
 </body>
 </html>
