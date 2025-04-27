@@ -105,7 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
     });
 
-    // Event delegation for handling row clicks (similar to bookstoreInventory.js)
     document.querySelector(".inventory-table").addEventListener("click", (e) => {
         // Check if the clicked element is within a row
         const row = e.target.closest(".book-row");
@@ -119,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateModal.classList.add('active');
     });
 
-    // Add delete button functionality similar to bookstoreInventory.js
     document.querySelector(".delete-modal").addEventListener("click", (e) => {
         const bookId = document.getElementById("update-book-id").value;
         updateModal.classList.remove('active');
