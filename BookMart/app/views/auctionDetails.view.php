@@ -59,7 +59,7 @@
                                         class="profile-image">
                                 <?php else: ?>
                                     <div class="profile-placeholder">
-                                        <?= strtoupper(substr($bookSeller->full_name, 0, 2)) ?>
+                                        <?= strtoupper(substr($auction->seller_name, 0, 2)) ?>
                                     </div>
                                 <?php endif; ?>
                                 <div class="seller-details">
@@ -84,7 +84,9 @@
                                 <span class="status-badge <?= htmlspecialchars($auction->is_closed) ? 'inactive' : 'active' ?>"><?= htmlspecialchars($auction->is_closed) ? "Inactive" : "Active" ?></span>
                             </div>
                             
-                            <?php if ($auction->is_closed): ?>
+                            <?php if ($auction->is_closed && $data['is_early']): ?>
+                                <div class="auction-closed-message">This auction hasn't started.</div>
+                            <?php elseif ($auction->is_closed && !$data['is_early']): ?>
                                 <div class="auction-closed-message">This auction has ended.</div>
                             <?php endif; ?>
                             <div class="auction-timer" data-endtime="<?= htmlspecialchars($auction->end_time) ?>" data-is-closed="<?= htmlspecialchars($auction->is_closed) ?>">

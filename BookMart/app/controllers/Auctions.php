@@ -66,6 +66,7 @@ class Auctions extends Controller {
         $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
     
         $mainAuction = $auctionModel->getAuctionWithBook($id);
+        $is_early = 0;
 
         if ($mainAuction && !$mainAuction->is_closed) {
             $timeQuery = "SELECT NOW() as server_time";
@@ -120,6 +121,9 @@ class Auctions extends Controller {
                     '/auctions/details/' . $auctionData['id']
                 );
             }
+            else {
+                $is_early = 1;
+            }
         }
 
         if(!$mainAuction) {
@@ -141,7 +145,16 @@ class Auctions extends Controller {
             'recAuctions' => $recAuctions,
             'limit' => $limit,
             'userid' => $_SESSION['user_id'] ?? null,
+            'is_early' => $is_early,
         ];
+
+        if (isset($_SESSION['original_book_details'])) {
+            $originalDetails = $_SESSION['original_book_details'];
+            $bookModel = new BookModel();
+            $query = "UPDATE book SET price = :price, discount = :discount WHERE id = :id";
+            $params = ['id' => $mainAuction->book_id, 'discount' => $originalDetails['discount'], 'price' => $originalDetails['price']];
+            $bookModel->query($query, $params);
+        }
     
         $this->view('auctionDetails', $data);
     }   
@@ -179,13 +192,6 @@ class Auctions extends Controller {
         } else {
             redirect('bookSellerController/listings');
         }
-    }
-
-    public function activateAuction() {
-        $timeQuery = "SELECT NOW() as server_time";
-        $auction = new AuctionModel();
-        $result = $auction->query($timeQuery);
-        $db_time = $result[0]->server_time;
     }
 
     public function updateBid() {
@@ -232,23 +238,20 @@ class Auctions extends Controller {
                 'winner_user_id' => $_SESSION['user_id'],
                 'is_closed' => 1,
             ];
-  
-            $auction = new AuctionModel();
-            $auction->updateAuction($auctionData);
+
+            $_SESSION['auction_details'] = $auctionData;
+
+            $bookModel = new BookModel();
+            $bookDetails = $bookModel->first(['id' => $auctionData['book_id']]);
+            $originalBookDetails = [
+                'price' => $bookDetails->price,
+                'discount' => $bookDetails->discount,
+            ];
+            $_SESSION['original_book_details'] = $originalBookDetails;
 
             $query = "UPDATE book SET price = :price, discount = :discount WHERE id = :id";
             $params = ['id' => $auctionData['book_id'], 'discount' => 0, 'price' => $auctionData['current_price']];
-            $bookModel = new BookModel();
             $bookModel->query($query, $params);
-
-            $bookModel->update($auctionData['book_id'], ['status' => 'removed']);
-
-            $notificationModel = new NotificationModel();
-            $notificationModel->createNotification(
-                trim($_POST['seller_id']),
-                'Auction Update',
-                'The book ' . trim($_POST['title']) . ' that was placed for auction has been sold.'
-            );
             
             $qty = 1;
             redirect("payment/checkOut/{$auctionData['book_id']}/{$qty}");
