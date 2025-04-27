@@ -244,7 +244,6 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
-                            console.log(data.likes)
                             likeCountElem.textContent = data.likes;
                             iconElem.classList.toggle('liked', data.liked);
                         } else {

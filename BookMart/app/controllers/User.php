@@ -408,11 +408,9 @@ class User extends Controller {
                 }                
                 $likes = $review->likes;
 
-                // Check if user already liked
                 $likeExists = $reviewlikeModel->first(['user_id' => $user_id,'review_id' => $review_id]); 
                 
                 if ($likeExists) {
-                    // Unlike it
                     $reviewlikeModel->delete($likeExists->id);
 
                     $likes = $likes - 1;
@@ -424,7 +422,7 @@ class User extends Controller {
         
                     echo json_encode(['success' => true, 'likes' => $likes, 'liked' => false]);
                 } else {
-                    // Like it
+        
                     $reviewlikeModel->insert(['user_id' => $user_id,'review_id' => $review_id]);
         
                     $likes = $likes+1;

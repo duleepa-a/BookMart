@@ -109,7 +109,7 @@ class BookModel {
     }
 
 
-    public function adminsearchBooks($keyword, $limit = null, $offset = 0, $sortClause = "", $searchField = "") {
+    public function adminsearchBooks($keyword, $limit = null, $offset = 0, $sortClause = "", $searchField = ""){
         $query = "SELECT * FROM book WHERE status = 'available' AND ";
         
         if (!empty($searchField) && in_array($searchField, ['title', 'author', 'publisher'])) {
@@ -132,7 +132,7 @@ class BookModel {
         return $this->query($query, $data);
     }
     
-    public function countSearchResults($keyword, $searchField = "") {
+    public function countSearchResults($keyword, $searchField = ""){
         $query = "SELECT COUNT(*) as total FROM book WHERE status = 'available' AND ";
         
         if (!empty($searchField) && in_array($searchField, ['title', 'author', 'publisher'])) {

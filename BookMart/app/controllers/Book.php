@@ -172,7 +172,6 @@ class Book extends Controller{
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $bookId = $_POST['book_id'];
 
-            // Prepare book data for update
             $bookData = [
                 'title' => trim($_POST['title']),
                 'ISBN' => trim($_POST['ISBN']),
@@ -187,7 +186,6 @@ class Book extends Controller{
                 'description' => trim($_POST['description']),
             ];
 
-            // Handle cover image upload if a new image is provided
             if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] == 0) {
                 
                 $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
@@ -216,9 +214,6 @@ class Book extends Controller{
                 }
             }
 
-
-            show($bookId);
-            // Update the book record in the database
             if (!($bookModel->update($bookId, $bookData))) {
 
                 $_SESSION['success'] = "Successfully added";

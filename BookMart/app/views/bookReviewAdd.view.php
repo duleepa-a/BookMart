@@ -69,51 +69,23 @@
     <footer class="small-footer">
             <p>&copy; 2024 BookMart, all rights reserved.</p>
     </footer> 
-    <script src="<?= ROOT ?>/assets/JS/buyerReview.js"></script>
     <script>
         const stars = document.querySelectorAll('.rating-container label');
 
         stars.forEach((star, index) => {
-        star.addEventListener('mouseover', () => {
-            // Highlight current star and all stars to the left
-            for (let i = 0; i <= index; i++) {
-            stars[i].style.color = '#ffb700';
-            }
-        });
-        
-        star.addEventListener('mouseout', () => {
-            // Reset all stars (unless one is selected)
-            stars.forEach(s => {
-            if (!document.querySelector('.rating-container input:checked')) {
-                s.style.color = '#ccc';
-            }
+
+            star.addEventListener('click', () => {
+                const radioInput = star.previousElementSibling;
+                radioInput.checked = true;
+                
+                for (let i = 0; i <= index; i++) {
+                    stars[i].style.color = '#ffb700';
+                }
+                
+                for (let i = index + 1; i < stars.length; i++) {
+                    stars[i].style.color = '#ccc';
+                }
             });
-            
-            // If a star is selected, highlight up to that one
-            const checkedInput = document.querySelector('.rating-container input:checked');
-            if (checkedInput) {
-            const selectedIndex = Array.from(document.querySelectorAll('.rating-container input'))
-                .indexOf(checkedInput);
-            for (let i = 0; i <= selectedIndex; i++) {
-                stars[i].style.color = '#ffb700';
-            }
-            }
-        });
-        
-        star.addEventListener('click', () => {
-            const radioInput = star.previousElementSibling;
-            radioInput.checked = true;
-            
-            // Highlight stars up to the clicked one
-            for (let i = 0; i <= index; i++) {
-            stars[i].style.color = '#ffb700';
-            }
-            
-            // Reset stars after the clicked one
-            for (let i = index + 1; i < stars.length; i++) {
-            stars[i].style.color = '#ccc';
-            }
-        });
         });
     </script>
 </body>

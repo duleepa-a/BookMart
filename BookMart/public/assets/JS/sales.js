@@ -1,27 +1,15 @@
-document.getElementById('logoutButtonSales').addEventListener('click', function() {
+function searchOrders() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let orderCards = document.querySelectorAll(".order-card");
     
-    fetch('http://localhost/BookMart/public/user/logout', { 
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json(); 
-            throw new Error('Logout failed.');
-        }
-    })
-    .then(data => {
-        console.log(data); 
-        if (data.status === 'success') {
-            window.location.href = 'http://localhost/BookMart/public/'; 
+    orderCards.forEach((card) => {
+        let title = card.querySelector(".product-title").textContent.toLowerCase();
+        let seller = card.querySelector(".store-name span").textContent.toLowerCase();
+
+        if (title.includes(input) || seller.includes(input)) {
+            card.style.display = "";  
         } else {
-            alert('Error: ' + data.message);
+            card.style.display = "none"; 
         }
-    })
-    .catch(error => {
-        console.error('Error during logout:', error);
-        alert('Logout failed. Please try again.');
     });
-});
+}
