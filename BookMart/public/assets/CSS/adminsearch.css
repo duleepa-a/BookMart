@@ -13,9 +13,9 @@ body{
     text-align: center;
 }
 
-.container h2{
-    margin-top: 20px;
-    color: #BE5715;
+.container h1{
+    margin-top: 10px;
+    color: #02224E;
 }
 
 .box {
@@ -116,7 +116,7 @@ body{
     position: relative;
     display: flex;
     align-items: center;
-    width: 300px;
+    width: 500px;
 }
 
 .search-container input {

@@ -1,432 +1,483 @@
 /* Modern BookMart-inspired Admin Page Styling */
 :root {
-    --primary: #02224E;
-    --primary-orange: #E67E22;
-    --accent: #BE5715;
-    --background-gray: #f5f7fa;
-    --card-bg: #ffffff;
-    --text-dark: #2c3e50;
-    --text-muted: #7f8c8d;
-    --border-color: #ecf0f1;
-    --success-green: #27ae60;
-    --warning-orange: #f39c12;
-    --danger-red: #e74c3c;
-    --discount-green: #2ecc71;
-  }
-  
-  * {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  --primary: #02224E;
+  --primary-orange: #E67E22;
+  --accent: #BE5715;
+  --background-gray: #f5f7fa;
+  --card-bg: #ffffff;
+  --text-dark: #2c3e50;
+  --text-muted: #7f8c8d;
+  --border-color: #ecf0f1;
+  --success-green: #27ae60;
+  --warning-orange: #f39c12;
+  --danger-red: #e74c3c;
+  --discount-green: #2ecc71;
 }
-  
+
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    background-color: var(--light-bg);
-    color: var(--text-dark);
-    min-height: 100vh;
-    line-height: 1.6;
+  background-color: var(--light-bg);
+  color: var(--text-dark);
+  min-height: 100vh;
+  line-height: 1.6;
 }
 
 .main-container {
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 0 20px;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
 }
 
-/* Remove underlines from links while keeping them functional */
 a {
-    text-decoration: none; /* Removes the underline */
-    color: var(--primary); /* Uses your brand color for links */
-  }
-  
-  a:hover {
-    color: var(--accent); /* Changes color on hover for visual feedback */
-  }
+  text-decoration: none; 
+  color: var(--primary); 
+}
+
+a:hover {
+  color: var(--accent); 
+}
 /* Header styles */
 .header {
-    padding: 15px 0;
+  padding: 15px 0;
 }
 
-.header-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.button-group {
+display: flex;
+justify-content: center;
+margin: 10px 0;
+}
+
+.close-btn {
+border:solid 3px #02224E;
+color: #02224E;
+padding: 2px 10px;
+border-radius: 5px;
+cursor: pointer;
+font-size: 14px;
+transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+background-color: #02224E;
+color: white;
+transform: translateY(-2px);
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .logo-container {
-    display: flex;
-    align-items: center;
+  display: flex;
 }
 
 .logo {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--primary);
-    letter-spacing: -0.5px;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: -0.5px;
 }
 
 .highlight {
-    color: var(--accent);
+  color: var(--accent);
 }
 
 .page-title h1 {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--accent);
-    position: relative;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--accent);
+  position: relative;
 }
 
 .page-title h1::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(to right, var(--accent), transparent);
-    border-radius: 3px;
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, var(--accent), transparent);
+  border-radius: 3px;
 }
-  
-  /* Card/Box styling */
-  .box {
-    background-color: var(--card-bg);
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    padding: 25px;
-    margin-bottom: 30px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* User profile layout */
+
+.header-wrapper {
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.left-section {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+}
+
+.button-container {
+margin-bottom: 10px;
+}
+
+.spacer {
+/* This creates balance in the flexbox layout */
+width: equal-to-left-section;
+visibility: hidden;
+}
+
+/* Card/Box styling */
+.box {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.inbox {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inbox:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+/* User profile layout */
+.user-profile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.user-image {
+  width: 180px;
+  height: 180px;
+  background-color: var(--primary);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 60px;
+}
+
+.user-details {
+  flex: 1;
+  min-width: 300px;
+}
+
+.user-name {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--primary);
+}
+
+.user-type {
+  display: inline-block;
+  background-color: rgba(230, 126, 34, 0.1);
+  color: var(--primary-orange);
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+/* User information grid */
+.user-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.info-row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.label {
+  color: var(--text-muted);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.detail-value {
+  color: var(--text-dark);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Button styling */
+.button-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn i {
+  font-size: 16px;
+}
+
+.suspendBtn, .suspend {
+  background-color: var(--warning-orange);
+  color: white;
+}
+
+.activate {
+  background-color: var(--success-green);
+  color: white;
+}
+
+.messageBtn {
+  background-color: var(--primary);
+  color: white;
+}
+
+.deleteUserBtn {
+  background-color: var(--danger-red);
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* Tab styling */
+.tabs {
+  display: flex;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.tab {
+  padding: 12px 25px;
+  background-color: var(--background-gray);
+  color: var(--text-muted);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  margin-right: 5px;
+}
+
+.tab.active {
+  background-color: var(--card-bg);
+  color: var(--primary-orange);
+  border-bottom: 3px solid var(--primary-orange);
+}
+
+.tab:hover:not(.active) {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Table styling */
+.table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.table th {
+  background-color: var(--primary);
+  color: white;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 500;
+}
+
+.table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-dark);
+}
+
+.table tbody tr:hover {
+  background-color: rgba(236, 240, 241, 0.5);
+}
+
+.table tr:nth-child(even) {
+  background-color: rgba(245, 247, 250, 0.5);
+}
+
+/* Status display */
+.status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-active {
+  background-color: rgba(46, 204, 113, 0.15);
+  color: var(--success-green);
+}
+
+.status-suspended {
+  background-color: rgba(243, 156, 18, 0.15);
+  color: var(--warning-orange);
+}
+
+/* Price styling */
+.price {
+  color: var(--primary-orange);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.discount {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: rgba(46, 204, 113, 0.15);
+  color: var(--discount-green);
+  margin-left: 10px;
+}
+
+
+/* Dialog styling */
+#confirmationDialog, #successMessage {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+#confirmationDialog.show, #successMessage.show {
+  display: flex;
+}
+
+.dialog-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.dialog-content h3 {
+  color: var(--text-dark);
+  margin-bottom: 15px;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+
+
+.search-container {
+position: relative;
+display: flex;
+align-items: center;
+width: 500px;
+}
+
+.search-container input {
+width: 100%;
+padding: 10px 40px 10px 10px; /* Space for the icon */
+border: 1px solid #ccc;
+border-radius: 5px;
+}
+
+.search-container button {
+position: absolute;
+right: 10px;
+background: none;
+border: none;
+cursor: pointer;
+color: #555;
+font-size: 16px;
+}
+
+.search-container button:hover {
+color: #000;
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
   .user-profile {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    margin-bottom: 30px;
+    flex-direction: column;
   }
   
   .user-image {
-    width: 180px;
-    height: 180px;
-    background-color: var(--primary);
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 60px;
+    margin: 0 auto;
   }
   
-  .user-details {
-    flex: 1;
-    min-width: 300px;
-  }
-  
-  .user-name {
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: var(--primary);
-  }
-  
-  .user-type {
-    display: inline-block;
-    background-color: rgba(230, 126, 34, 0.1);
-    color: var(--primary-orange);
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 20px;
-  }
-  
-  /* User information grid */
   .user-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: 1fr;
   }
   
-  .info-row {
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border-color);
-  }
-  
-  .label {
-    color: var(--text-muted);
-    font-weight: 500;
-    display: block;
-    margin-bottom: 5px;
-    font-size: 14px;
-  }
-  
-  .detail-value {
-    color: var(--text-dark);
-    font-weight: 600;
-    font-size: 16px;
-  }
-  
-  /* Button styling */
   .button-group {
-    display: flex;
-    gap: 15px;
-    margin-top: 20px;
+    flex-direction: column;
   }
   
   .btn {
-    padding: 10px 20px;
-    border-radius: 6px;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: 'Poppins', sans-serif;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    width: 100%;
   }
   
-  .btn i {
-    font-size: 16px;
-  }
-  
-  .suspendBtn, .suspend {
-    background-color: var(--warning-orange);
-    color: white;
-  }
-  
-  .activate {
-    background-color: var(--success-green);
-    color: white;
-  }
-  
-  .messageBtn {
-    background-color: var(--primary);
-    color: white;
-  }
-  
-  .deleteUserBtn {
-    background-color: var(--danger-red);
-    color: white;
-  }
-  
-  .btn:hover {
-    transform: translateY(-2px);
-    opacity: 0.9;
-  }
-  
-  /* Tab styling */
   .tabs {
-    display: flex;
-    margin-bottom: 0;
-    border-bottom: none;
+    flex-wrap: wrap;
   }
   
   .tab {
-    padding: 12px 25px;
-    background-color: var(--background-gray);
-    color: var(--text-muted);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    margin-right: 5px;
-  }
-  
-  .tab.active {
-    background-color: var(--card-bg);
-    color: var(--primary-orange);
-    border-bottom: 3px solid var(--primary-orange);
-  }
-  
-  .tab:hover:not(.active) {
-    background-color: rgba(255, 255, 255, 0.8);
-  }
-  
-  /* Table styling */
-  .table-container {
-    overflow-x: auto;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    font-size: 14px;
-  }
-  
-  .table th {
-    background-color: var(--primary);
-    color: white;
-    padding: 12px 15px;
-    text-align: left;
-    font-weight: 500;
-  }
-  
-  .table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid var(--border-color);
-    color: var(--text-dark);
-  }
-  
-  .table tbody tr:hover {
-    background-color: rgba(236, 240, 241, 0.5);
-  }
-  
-  .table tr:nth-child(even) {
-    background-color: rgba(245, 247, 250, 0.5);
-  }
-  
-  /* Status display */
-  .status {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-  
-  .status-active {
-    background-color: rgba(46, 204, 113, 0.15);
-    color: var(--success-green);
-  }
-  
-  .status-suspended {
-    background-color: rgba(243, 156, 18, 0.15);
-    color: var(--warning-orange);
-  }
-  
-  /* Price styling */
-  .price {
-    color: var(--primary-orange);
-    font-weight: 700;
-    font-size: 16px;
-  }
-  
-  .discount {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
-    background-color: rgba(46, 204, 113, 0.15);
-    color: var(--discount-green);
-    margin-left: 10px;
-  }
-  
-  /* Search input styling */
-  .search-container {
-    margin-bottom: 20px;
-    position: relative;
-  }
-  
-  #searchInput, #reviewSearchInput {
-    width: 100%;
-    padding: 12px 20px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    padding-left: 40px;
-  }
-  
-  .search-container i {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-muted);
-  }
-  
-  #searchInput:focus, #reviewSearchInput:focus {
-    border-color: var(--primary-orange);
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(230, 126, 34, 0.2);
-  }
-  
-  /* Dialog styling */
-  #confirmationDialog, #successMessage {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  #confirmationDialog.show, #successMessage.show {
-    display: flex;
-  }
-  
-  .dialog-content {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    flex-grow: 1;
     text-align: center;
-    max-width: 400px;
-    width: 90%;
+    margin-bottom: 5px;
   }
-  
-  .dialog-content h3 {
-    color: var(--text-dark);
-    margin-bottom: 15px;
-  }
-  
-  .dialog-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .user-profile {
-      flex-direction: column;
-    }
-    
-    .user-image {
-      margin: 0 auto;
-    }
-    
-    .user-info {
-      grid-template-columns: 1fr;
-    }
-    
-    .button-group {
-      flex-direction: column;
-    }
-    
-    .btn {
-      width: 100%;
-    }
-    
-    .tabs {
-      flex-wrap: wrap;
-    }
-    
-    .tab {
-      flex-grow: 1;
-      text-align: center;
-      margin-bottom: 5px;
-    }
-  }
+}

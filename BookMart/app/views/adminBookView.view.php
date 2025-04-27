@@ -167,57 +167,95 @@
             </div>
         </div>
     </div>
-    
-    <script>
-        // Tab switching functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons and contents
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    // Show corresponding content
-                    const tabId = this.getAttribute('data-tab') + '-tab';
-                    document.getElementById(tabId).classList.add('active');
-                });
+
+ <!-- Success Message -->
+ <div id="successMessage">
+    <div class="dialog-content">
+        <h3>Success!</h3>
+        <p>Book deleted successfully.</p>
+    </div>
+</div>
+
+<script src="<?= ROOT ?>/assets/JS/adminViewusers.js"></script>
+
+<script>
+    // Tab switching functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab') + '-tab';
+                document.getElementById(tabId).classList.add('active');
             });
-            
-            // Delete modal functionality
-            const deleteBtn = document.getElementById('deleteBtn');
-            const modal = document.getElementById('delete-book-modal');
-            const closeModalBtn = document.querySelector('.close-modal');
-            const closeModalX = document.querySelector('.close-modal-x');
-            const confirmDelete = document.querySelector('.confirm-delete');
-            
-            deleteBtn.addEventListener('click', function() {
+        });
+        
+        
+        
+    });
+    
+    document.addEventListener('DOMContentLoaded', function() {
+    
+        // Fix delete functionality
+        const deleteBtn = document.getElementById('deleteBtn');
+        const modal = document.getElementById('delete-book-modal');
+        const cancelBtn = document.querySelector('.cancel-btn');
+        const closeModalX = document.querySelector('.close-modal-x');
+        const confirmDeleteBtn = document.querySelector('.confirm-delete');
+        const deleteForm = document.getElementById('delete-form');
+        const successMessage = document.getElementById('successMessage');
+        
+        // Open modal when clicking Delete button
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', function(e) {
+                e.preventDefault();
                 modal.classList.add('active');
             });
-            
-            closeModalBtn.addEventListener('click', function() {
+        }
+        
+        // Close modal with cancel button
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', function() {
                 modal.classList.remove('active');
             });
-            
+        }
+        
+        // Close modal with X button
+        if (closeModalX) {
             closeModalX.addEventListener('click', function() {
                 modal.classList.remove('active');
             });
-            
-            confirmDelete.addEventListener('click', function() {
-                document.querySelector('.delete-book-form').submit();
-            });
-            
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    modal.classList.remove('active');
-                }
-            });
+        }
+        
+        // Close when clicking outside modal
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.classList.remove('active');
+            }
         });
-    </script>
+        // Handle delete confirmation
+        document.querySelector('.modal-actions').addEventListener('click', function(e) {
+            if (e.target.classList.contains('confirm-delete') || e.target.innerText === 'Delete') {
+                e.preventDefault();
+                modal.classList.remove('active');
+
+                successMessage.style.display = 'block';
+
+                setTimeout(function() {
+                    document.getElementById('delete-form').submit();
+                }, 1500);
+            }
+            
+        });
+
+
+    });
+
+</script>
 </body>
 </html>

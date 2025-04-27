@@ -7,12 +7,12 @@ class App{
   
     private $roleAccess = [
         'admin' => [
-            'AdminHome' => ['index'],
+            'AdminHome' => ['index', 'getAdminHomeData'],
             'AdminAdvertisment' => ['index', 'addAdvertisement', 'getAllAds', 'updateAdvertisement', 'deleteAdvertisement','handleAdDecision'], 
             'AdminProfile' => ['__construct', 'model', 'index', 'updateUsername', 'changePassword'],
-            'AdminViewallusers' => ['index'],
+            'AdminViewallusers' => ['index', 'search'],
             'AdminBookstoreRequests' => ['index'],
-            'Admin' => ['index','bookstoreView','viewBookStore','approve','reject','downloadEvidenceDoc','downloadCourierDoc','viewCourier','payRolls','markAsResolve','addRefund','updateRefundStatus','deleteRefundRequest' ,'downloadRefundEvdience','settleAllPayrolls'],
+            'Admin' => ['index','bookstoreView','viewBookStore','approve','reject','downloadEvidenceDoc','downloadCourierDoc','viewCourier','payRolls','markAsResolve','addRefund','updateRefundStatus','deleteRefundRequest' ,'downloadRefundEvdience'],
             'AdminViewbuyer' => ['index', 'updateStatus'],
             'AdminViewcourier' => ['index', 'delete'],
             'AdminViewseller' => ['index'],
@@ -30,12 +30,12 @@ class App{
         ],
 
         'superAdmin' => [
-            'AdminHome' => ['index'],
+            'AdminHome' => ['index', 'getAdminHomeData'],
             'AdminAdvertisment' => ['index', 'addAdvertisement', 'getAllAds', 'updateAdvertisement', 'deleteAdvertisement','handleAdDecision'], 
             'AdminProfile' => ['__construct', 'model', 'index', 'updateUsername', 'changePassword'],
-            'AdminViewallusers' => ['index'],
+            'AdminViewallusers' => ['index', 'search'],
             'AdminBookstoreRequests' => ['index'],
-            'Admin' => ['index','bookstoreView','viewBookStore','approve','reject','downloadEvidenceDoc','downloadCourierDoc','viewCourier','payRolls','markAsResolve','addRefund','updateRefundStatus','deleteRefundRequest' ,'downloadRefundEvdience','settleAllPayrolls'],
+            'Admin' => ['index','bookstoreView','viewBookStore','approve','reject','downloadEvidenceDoc','downloadCourierDoc','viewCourier','payRolls','markAsResolve','addRefund','updateRefundStatus','deleteRefundRequest' ,'downloadRefundEvdience'],
             'AdminViewbuyer' => ['index', 'updateStatus'],
             'AdminViewcourier' => ['index', 'delete'],
             'AdminViewseller' => ['index'],

@@ -13,17 +13,23 @@
 <body>
      
 <div class="header">
-        <div class="header-wrapper">
+    <div class="header-wrapper">
+        <div class="left-section">
+            <div class="button-container">
+                <button onclick="window.location.href='<?= ROOT ?>/AdminViewallusers'" class="close-btn"><b>Back to Users</b></button>
+            </div>
             <div class="logo-container">
                 <a href="<?= ROOT ?>/home" class="title-link">
                     <h2 class="logo">Book<span class="highlight">Mart</span></h2>
                 </a>
             </div>
-            <div class="page-title">
-                <h1><center>Courier Details</center></h1>
-            </div>
         </div>
+        <div class="page-title">
+            <h1>Courier Details</h1>
+        </div>
+        <div class="spacer"></div>
     </div>
+</div>
 
 <div class="main-container">
     <div class="box">
@@ -58,96 +64,191 @@
     <div class="tabs">
         <div class="tab active">Basic Info</div>
         <div class="tab">Recent Deliveries</div>
-        <div class="tab">Ratings</div>
     </div>
-
     <div class="box">
-        <div class="user-info">
-            <div class="info-row">
-                <span class="label">Courier ID :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->id ?? '') ?></span>
+        <div class="inbox">
+            <div class="section-header">
+                <h3>Personal Information</h3>
             </div>
-            <div class="info-row">
-                <span class="label">First Name :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->first_name ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Last Name :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->last_name ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Date Of Birth :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->dob ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Gender :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->gender ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">NIC Number :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->nic_number ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">License Number :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->license_number ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Email:</span>
-                <span class="detail-value"><?= htmlspecialchars($data['user']->email ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Phone Number :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->phone_number ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">City :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->city ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Bank :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->bank ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Branch :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->branch_name ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Account Number :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->account_number ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Account Name :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->account_name ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Vehicle Type :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->vehicle_type  ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Vehicle Model :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->vehicle_model ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Vehicle Registration Number :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->vehicle_registration_number ?? '') ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Account Created :</span>
-                <span class="detail-value"><?= htmlspecialchars($data['courier']->created_at ?? '') ?></span>
+            <div class="user-info">
+                <div class="info-row">
+                    <span class="label">Courier ID :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->id ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">First Name :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->first_name ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Last Name :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->last_name ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Date Of Birth :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->dob ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Gender :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->gender ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">NIC Number :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->nic_number ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Photo of National ID Card:</span>
+                    <span class="detail-value">
+                        <div class="document-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="16" rx="2" ry="2"></rect>
+                                <circle cx="9" cy="10" r="2"></circle>
+                                <path d="M15 8h2"></path>
+                                <path d="M15 12h2"></path>
+                                <path d="M7 16h10"></path>
+                            </svg>
+                        </div>
+                        <a href="<?= ROOT ?>/admin/downloadCourierDoc/<?= urlencode($courier->photo_nic) ?>" class="download-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Download
+                        </a>
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span class="label">License Number :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->license_number ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Photo of Driving License :</span>
+                    <span class="detail-value">
+                        <div class="document-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="16" rx="2" ry="2"></rect>
+                                <path d="M7 8h10"></path>
+                                <path d="M7 12h10"></path>
+                                <path d="M7 16h6"></path>
+                            </svg>
+                        </div>
+                        <a href="<?= ROOT ?>/admin/downloadCourierDoc/<?= urlencode($courier->photo_of_driving_license) ?>" class="download-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Download
+                        </a>
+                    </span>
+                </div>
+
+                <div class="info-row">
+                    <span class="label">Email:</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['user']->email ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Phone Number :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->phone_number ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">City :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->city ?? '') ?></span>
+                </div>
+
             </div>
         </div>
-    </div> 
 
+        <div class="inbox">
+            <div class="section-header">
+                <h3>Bank Details</h3>
+            </div>
+            <div class="user-info">
+                <div class="info-row">
+                    <span class="label">Bank :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->bank ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Branch :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->branch_name ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Account Number :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->account_number ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Account Name :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->account_name ?? '') ?></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="inbox">
+            <div class="section-header">
+                <h3>Vehicle Information</h3>
+            </div>
+            <div class="user-info">
+                <div class="info-row">
+                    <span class="label">Vehicle Type :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->vehicle_type  ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Vehicle Model :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->vehicle_model ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Vehicle Registration Number :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->vehicle_registration_number ?? '') ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Vehicle Registration Document:</span>
+                    <span class="detail-value">
+                        <div class="document-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <a href="<?= ROOT ?>/admin/downloadCourierDoc/<?= urlencode($courier->vehicle_registration_document) ?>" class="download-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Download
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="inbox">
+            <div class="section-header">
+                <h3>Account Information</h3>
+            </div>
+            <div class="user-info">
+                <div class="info-row">
+                    <span class="label">Account Created :</span>
+                    <span class="detail-value"><?= htmlspecialchars($data['courier']->created_at ?? '') ?></span>
+                </div>
+            </div>
+        </div> 
+    </div>
     <!-- Listning section -->
     <div class="section-title">
         <h2>Recent Deliveries</h2>
     </div>
 
     <div class="box">
-        <div class="search-container">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Search recent deleveries...">
-        </div>
+            <div class="search-container">
+                <input type="text" name="search" placeholder="Search by ID, title, or status" id="searchInput">
+                <button type="submit">
+                    <i class="fa fa-search"></i> 
+                </button>
+            </div>
 
         <div class="table-container">
             <table class="table">
@@ -155,79 +256,41 @@
                     <tr>
                         <th>Delivery ID</th>
                         <th>Book Title</th>
-                        <th>Date</th>
+                        <th>Total amount</th>
                         <th>Status</th>
-                        <th>Amount</th>
+                        <th>Pickup Location</th>
+                        <th>Delivery Address</th>
+                        <th>Order Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    <?php if(!empty($data['deliveries'])): ?>
+                        <?php foreach($data['deliveries'] as $delivery): ?>
+                            <tr>
+                                <td class="id"><?= htmlspecialchars($delivery->id ?? '') ?></td>
+                                <td class="title"><?= htmlspecialchars($delivery->title ?? '') ?></td>
+                                <td><?= htmlspecialchars($delivery->total_amount ?? '') ?></td>
+                                <td class="status">
+                                    <span class="status <?= strtolower($delivery->status ?? '') == 'completed' ? 'status-active' : 'status-suspended' ?>">
+                                        <?= htmlspecialchars($delivery->status ?? '') ?>
+                                    </span>
+                                </td>
+                                <td><?= htmlspecialchars($delivery->pickup_location ?? '') ?></td>
+                                <td><?= htmlspecialchars($delivery->shipping_address ?? '') ?></td>
+                                <td><?= htmlspecialchars($delivery->created_on ?? '') ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="5" style="text-align: center;">No Recent deliveries found</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>    
         </div>
     </div>
 
-    <!-- Ratings section -->
-    <div class="section-title">
-        <h2>Ratings</h2>
-    </div>
-
-    <div class="box">
-        <div class="search-container">
-            <i class="fas fa-search"></i>
-            <input type="text" id="reviewSearchInput" placeholder="Search ratings...">
-        </div>
-
-        <div class="table-container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Rating ID</th>
-                        <th>Book Title</th>
-                        <th>Rating</th>
-                        <th>Date</th>
-                        <th>Comment</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    
     
     <!-- Confirmation Dialog -->
 <div id="confirmationDialog">
@@ -249,6 +312,33 @@
     </div>
 </div>
 
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('searchInput').addEventListener('keyup', function () {
+                const searchValue = this.value.toLowerCase();
+                const tableRows = document.querySelectorAll('.table tbody tr');
+
+                tableRows.forEach(row => {
+                    const id = row.querySelector('.order_id')?.textContent.toLowerCase() || '';
+                    const title = row.querySelector('.title')?.textContent.toLowerCase() || '';
+                    const status = row.querySelector('.status')?.textContent.toLowerCase() || '';
+
+                    const match = id.includes(searchValue) || title.includes(searchValue) || status.includes(searchValue);
+                    row.style.display = match ? '' : 'none';
+                });
+            });
+        });
+    </script>
+    <style>
+                
+        #searchInput {
+        flex: 1;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        }
+
+    </style>
 
     <script src="<?= ROOT ?>/assets/JS/adminViewusers.js"></script>
 </body>

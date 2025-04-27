@@ -66,8 +66,7 @@ class AdminSystemStat extends Controller {
                 'systemfee_book' => $systemfee_book,
                 'systemfee_add' => $systemfee_add,
                 'deliveryfee' => $deliveryfee,
-                'system_email' => $system_email,
-                'updated_at' => date('Y-m-d H:i:s')
+                'system_email' => $system_email
             ];
             
             $result = $systemStatModel->update($data['id'], $data);

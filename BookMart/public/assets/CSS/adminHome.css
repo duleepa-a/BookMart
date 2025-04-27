@@ -231,13 +231,16 @@ body{
     gap: 20px;
     padding: 20px;
     background-color: #00000000;
+    margin-left: 2px; 
+    max-width: 95%;
+    margin-bottom: 10px;
 }
 .card {
     background-color: white;
-    flex: 0 0 280px;
+    flex: 0 0 250px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    padding: 20px;
+    padding: 15px;
     display: flex;
     align-items: center;
     transition: transform 0.3s;
@@ -267,11 +270,14 @@ body{
     display: flex;
     width: 100%;
     padding: 20px;
+    padding: 10px 20px;
     justify-content: flex-start;
-    gap:100px;
+    gap:40px;
+    margin-top: 10px; 
 }
-.chart-container {
-    width: 45%;
+
+.bar-chart-container {
+    width: 47%;
     padding: 20px;
     background-color: white;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -279,19 +285,22 @@ body{
 }
 
 .pie-chart-container {
-    width: 45%;
+    width: 55%;
     max-width: 500px;
     height: 300px;
     padding: 20px;
     background-color: white;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
-.line-chart-container {
+.chart-container {
     width: 100%;
-    max-width: 90%;
+    max-width: 93%;
     height: 300px;
     margin-left: 20px;
     margin-bottom: 40px;
@@ -300,6 +309,7 @@ body{
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     border-radius: 8px;
     color: #de8c59;
+    margin-top: 10px;
 }
 
 .small-footer{

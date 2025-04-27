@@ -11,18 +11,24 @@
     <title>View Buyer</title>
 </head>
 <body>
-    <div class="header">
-        <div class="header-wrapper">
+<div class="header">
+    <div class="header-wrapper">
+        <div class="left-section">
+            <div class="button-container">
+                <button onclick="window.location.href='<?= ROOT ?>/AdminViewallusers'" class="close-btn"><b>Back to Users</b></button>
+            </div>
             <div class="logo-container">
                 <a href="<?= ROOT ?>/home" class="title-link">
                     <h2 class="logo">Book<span class="highlight">Mart</span></h2>
                 </a>
             </div>
-            <div class="page-title">
-                <h1><center>Buyer Details</center></h1>
-            </div>
         </div>
+        <div class="page-title">
+            <h1>Buyer Details</h1>
+        </div>
+        <div class="spacer"></div>
     </div>
+</div>
 
     <div class="main-container">
         <!-- User profile section -->
@@ -110,10 +116,6 @@
                     <span class="label">Account Created</span>
                     <span class="detail-value"><?= htmlspecialchars($data['user']->createdAt ?? '') ?></span>
                 </div>
-                <div class="info-row">
-                    <span class="label">Last Login</span>
-                    <span class="detail-value"><?= htmlspecialchars($data['user']->last_login ?? '') ?></span>
-                </div>
             </div>
         </div>
 
@@ -124,8 +126,10 @@
         
         <div class="box">
             <div class="search-container">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search orders...">
+                <input type="text" name="search" placeholder="Search by ID, title, or genre" id="searchOrderInput">
+                <button type="submit">
+                    <i class="fa fa-search"></i> 
+                </button>
             </div>
             
             <div class="table-container">
@@ -143,10 +147,10 @@
                         <?php if(isset($data['orders']) && is_array($data['orders']) && count($data['orders']) > 0): ?>
                             <?php foreach($data['orders'] as $order): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($order->order_id) ?></td>
-                                    <td><?= htmlspecialchars($order->title) ?></td>
+                                    <td class="order_id"><?= htmlspecialchars($order->order_id) ?></td>
+                                    <td class="title"><?= htmlspecialchars($order->title) ?></td>
                                     <td><?= htmlspecialchars($order->created_on) ?></td>
-                                    <td><span class="status <?= strtolower($order->order_status) === 'completed' ? 'status-active' : 'status-suspended' ?>"><?= htmlspecialchars($order->order_status) ?></span></td>
+                                    <td class="order_status"><span class="status <?= strtolower($order->order_status) === 'completed' ? 'status-active' : 'status-suspended' ?>"><?= htmlspecialchars($order->order_status) ?></span></td>
                                     <td><span class="price">$<?= htmlspecialchars($order->total_amount) ?></span></td>
                                 </tr>
                             <?php endforeach; ?>
@@ -167,8 +171,10 @@
         
         <div class="box">
             <div class="search-container">
-                <i class="fas fa-search"></i>
-                <input type="text" id="reviewSearchInput" placeholder="Search reviews...">
+                <input type="text" name="search" placeholder="Search by ID, title, or genre" id="searchReviewInput">
+                <button type="submit">
+                    <i class="fa fa-search"></i> 
+                </button>
             </div>
             
             <div class="table-container">
@@ -186,8 +192,8 @@
                         <?php if(isset($data['reviews']) && is_array($data['reviews']) && count($data['reviews']) > 0): ?>
                             <?php foreach($data['reviews'] as $review): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($review->id) ?></td>
-                                    <td><?= htmlspecialchars($review->title) ?></td>
+                                    <td class="id"><?= htmlspecialchars($review->id) ?></td>
+                                    <td class="title"><?= htmlspecialchars($review->title) ?></td>
                                     <td><?= str_repeat('<i class="fas fa-star" style="color: gold;"></i>', $review->rating) ?></td>
                                     <td><?= htmlspecialchars($review->review_date) ?></td>
                                     <td><?= htmlspecialchars($review->comment) ?></td>
@@ -223,6 +229,55 @@
             <p>User status has been updated successfully.</p>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('searchOrderInput').addEventListener('keyup', function () {
+                const searchValue = this.value.toLowerCase();
+                const tableRows = document.querySelectorAll('.table tbody tr');
+
+                tableRows.forEach(row => {
+                    const id = row.querySelector('.order_id')?.textContent.toLowerCase() || '';
+                    const title = row.querySelector('.title')?.textContent.toLowerCase() || '';
+                    const status = row.querySelector('.order_status')?.textContent.toLowerCase() || '';
+
+                    const match = id.includes(searchValue) || title.includes(searchValue) || status.includes(searchValue);
+                    row.style.display = match ? '' : 'none';
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('searchReviewInput').addEventListener('keyup', function () {
+                const searchValue = this.value.toLowerCase();
+                const tableRows = document.querySelectorAll('.table tbody tr');
+
+                tableRows.forEach(row => {
+                    const id = row.querySelector('.id')?.textContent.toLowerCase() || '';
+                    const title = row.querySelector('.title')?.textContent.toLowerCase() || '';
+
+                    const match = id.includes(searchValue) || title.includes(searchValue);
+                    row.style.display = match ? '' : 'none';
+                });
+            });
+        });
+    </script>
+    <style>
+                
+        #searchOrderInput {
+        flex: 1;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        }
+
+        #searchReviewInput {
+        flex: 1;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        }
+    </style>
 
     <script src="<?= ROOT ?>/assets/JS/adminViewusers.js"></script>
 </body>

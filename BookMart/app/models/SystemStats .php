@@ -9,7 +9,8 @@ class SystemStats {
     protected $allowedColumns = [
         'systemfee_book',
         'systemfee_add',
-        'deliveryfee'
+        'deliveryfee',
+        'system_email'
     ];
 
     public function getAll() {
@@ -23,7 +24,7 @@ class SystemStats {
         return $result ? $result[0] : null;
     }
     
-    public function updateStats($systemfee_book, $systemfee_add, $deliveryfee) {
+    public function updateStats($systemfee_book, $systemfee_add, $deliveryfee, $system_email) {
         // Check if stats record exists
         $stats = $this->getFirst();
         
@@ -33,24 +34,27 @@ class SystemStats {
                       systemfee_book = :systemfee_book,
                       systemfee_add = :systemfee_add,
                       deliveryfee = :deliveryfee
+                      system_email = :system_email
                       WHERE id = :id";
                       
             $params = [
                 'systemfee_book' => $systemfee_book,
                 'systemfee_add' => $systemfee_add,
                 'deliveryfee' => $deliveryfee,
+                'system_email' => $system_email,
                 'id' => $stats->id
             ];
         } else {
             // Insert new record
             $query = "INSERT INTO {$this->table} 
-                      (systemfee_book, systemfee_add, deliveryfee) 
-                      VALUES (:systemfee_book, :systemfee_add, :deliveryfee)";
+                      (systemfee_book, systemfee_add, deliveryfee, system_email) 
+                      VALUES (:systemfee_book, :systemfee_add, :deliveryfee, :system_email)";
                       
             $params = [
                 'systemfee_book' => $systemfee_book,
                 'systemfee_add' => $systemfee_add,
-                'deliveryfee' => $deliveryfee
+                'deliveryfee' => $deliveryfee,
+                'system_email' => $system_email
             ];
         }
         

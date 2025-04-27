@@ -38,6 +38,10 @@ class Book extends Controller{
 
         $groupedBooks = [];
 
+        if (!is_array($books) && !is_object($books)) {
+            return [];  
+        }
+    
         foreach ($books as $book) {
             $genre = $book->genre;
             if (!isset($groupedBooks[$genre])) {

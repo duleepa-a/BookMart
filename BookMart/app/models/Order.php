@@ -117,45 +117,13 @@ class Order {
     }
 
     //ADMIN
-    public function searchOrders($keyword, $limit = null, $offset = 0, $sortClause = "", $searchField = "") {
-        // Start with basic query
+    public function searchOrders($keyword, $limit = null, $offset = 0) {
         $query =  "SELECT o.*, b.title, b.publisher, b.price, u.full_name 
                     FROM {$this->table} o
                     LEFT JOIN book b ON o.book_id = b.id
                     LEFT JOIN buyer u ON o.buyer_id = u.user_id
                     WHERE ";
                     
-        // If a specific search field is specified, only search in that field
-        if (!empty($searchField)) {
-            switch($searchField) {
-                case 'title':
-                    $query .= "b.title LIKE :keyword";
-                    break;
-                case 'name':
-                    $query .= "u.full_name LIKE :keyword";
-                    break;
-                case 'store':
-                    $query .= "b.publisher LIKE :keyword";
-                    break;
-                case 'status':
-                    $query .= "o.order_status LIKE :keyword";
-                    break;
-                default:
-                    $query .= "o.order_id LIKE :keyword";
-            }  
-        } else {
-            // Otherwise use the default search across multiple fields
-            $query .= "b.title LIKE :keyword OR u.full_name LIKE :keyword OR b.publisher LIKE :keyword";
-        }
-        
-        // Apply sort clause if provided
-        if (!empty($sortClause)) {
-            $query .= $sortClause;
-        } else {
-            $query .= " ORDER BY b.title ASC"; // Default sorting
-        }
-        
-        // Add pagination
         if ($limit !== null) {
             $query .= " LIMIT $limit OFFSET $offset";
         }
@@ -164,34 +132,12 @@ class Order {
         return $this->query($query, $data);
     }
     
-    public function countSearchResults($keyword, $searchField = "") {
+    public function countSearchResults($keyword) {
         $query = "SELECT COUNT(*) as total 
               FROM {$this->table} o
               LEFT JOIN book b ON o.book_id = b.id
               LEFT JOIN buyer u ON o.buyer_id = u.user_id
               WHERE ";
-        
-        if (!empty($searchField)) {
-            switch($searchField) {
-                case 'title':
-                    $query .= "b.title LIKE :keyword";
-                    break;
-                case 'name':
-                    $query .= "u.full_name LIKE :keyword";
-                    break;
-                case 'store':
-                    $query .= "b.publisher LIKE :keyword";
-                    break;
-                case 'status':
-                    $query .= "o.order_status LIKE :keyword";
-                    break;
-                default:
-                    $query .= "o.order_id LIKE :keyword";
-            }
-        } else {
-            // Otherwise use the default search across multiple fields
-            $query .= "b.title LIKE :keyword OR u.full_name LIKE :keyword OR b.publisher LIKE :keyword";
-        }
         
         $data = [':keyword' => '%' . $keyword . '%'];
         $result = $this->query($query, $data);
@@ -212,20 +158,39 @@ class Order {
         return $result ? $result[0] : null;
     }
 
-    public function findAll($limit = null, $offset = 0, $sortClause = "") {
+    public function getordersByStatus($order_status, $limit = null, $offset = null) {
+        $query = "SELECT o.*, b.title, b.publisher, b.price, u.full_name 
+                FROM {$this->table} o
+                LEFT JOIN book b ON o.book_id = b.id
+                LEFT JOIN buyer u ON o.buyer_id = u.user_id
+                WHERE o.order_status = :order_status";
+        
+        $params = [':order_status' => $order_status];
+        
+        if ($limit !== null) {
+            $query .= " LIMIT " . (int)$limit . " OFFSET " . (int)$offset;
+        }
+        
+        return $this->query($query, $params);
+    }
+
+    public function count($order_status = null) {
+        if ($order_status) {
+            $query = "SELECT COUNT(*) as total FROM {$this->table} WHERE order_status = :order_status";
+            $result = $this->query($query, [':order_status' => $order_status]);
+        } else {
+            $query = "SELECT COUNT(*) as total FROM {$this->table}";
+            $result = $this->query($query);
+        }
+        return $result[0]->total ?? 0;
+    }
+
+    public function findAll($limit = null, $offset = 0) {
         $query = "SELECT o.*, b.title, b.publisher, b.price, u.full_name 
         FROM {$this->table} o
         LEFT JOIN book b ON o.book_id = b.id
         LEFT JOIN buyer u ON o.buyer_id = u.user_id";
         
-        // Apply sort clause if provided
-        if (!empty($sortClause)) {
-            $query .= $sortClause;
-        } else {
-            $query .= " ORDER BY b.title ASC"; // Default sorting
-        }
-        
-        // Add pagination
         if ($limit !== null) {
             $query .= " LIMIT $limit OFFSET $offset";
         }
@@ -233,16 +198,7 @@ class Order {
         return $this->query($query);
     }
 
-    public function count() {
-        $query = "SELECT COUNT(*) as total FROM {$this->table}";
-        $result = $this->query($query);
-        return $result[0]->total ?? 0;
-    }
-
-   
-
     public function delete($id) {
-        // First delete related payment records
         $this->deleteRelatedPayments($id);
         
         // Then delete the order
@@ -250,7 +206,7 @@ class Order {
         return $this->query($query, ['id' => $id]);
     }
     
-    // Add this new method to delete related payment records
+
     protected function deleteRelatedPayments($orderId) {
         $query = "DELETE FROM payment_info WHERE order_id = :order_id";
         return $this->query($query, ['order_id' => $orderId]);

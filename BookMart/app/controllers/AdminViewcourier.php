@@ -3,13 +3,11 @@
 class AdminViewcourier extends Controller {
 
     public function index($id = null) {
-        // Get the ID from URL parameter if not passed directly
         if(!$id) {
             $id = $_GET['id'] ?? null;
         }
         
         if(!$id) {
-            // Handle error - no ID provided
            redirect('adminViewcourier');
             return;
         }
@@ -17,8 +15,7 @@ class AdminViewcourier extends Controller {
         // Load models
         $courier = new Courier();
         $user = new UserModel();
-        $order = new Order();
-      //  $review = new Review();
+        $courierorder = new CourierOrder();
         
         // Get buyer data
         $courierInfo = $courier->first(['user_id' => $id]);
@@ -26,45 +23,29 @@ class AdminViewcourier extends Controller {
         // Get email from user table
         $userInfo = $user->first(['ID' => $id]);
         
+        //recent deliveries
+        if ($courierInfo) {
+            $deliveries = $courierorder->query("SELECT co.*, o.created_on, o.total_amount, b.title
+                                                FROM courierOrder co
+                                                LEFT JOIN orders o ON co.order_id = o.order_id
+                                                LEFT JOIN book b ON o.book_id = b.id
+                                                WHERE co.courier_id = :courier_id
+                                                ORDER BY co.id DESC
+                                                LIMIT 10", 
+                                                [':courier_id' => $courierInfo->user_id]);
+        } else {
+            $deliveries = [];
+        }
         
-        //   $reviews = $review->where(['buyer_id' => $id]);
         
-        // Combine data for the view
         $data = [
             'courier' => $courierInfo,
             'user' => $userInfo,
-         
+            'deliveries' => $deliveries
         ];
         
         $this->view('adminViewcourier', $data);
         
     }
 
-    public function delete() {
-        // Check if it's a POST request
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = json_decode(file_get_contents('php://input'), true);
-            $userId = $data['user_id'] ?? null; // This line might be the issue
-            
-            if (!$userId) {
-                return json_encode(['status' => 'error', 'message' => 'No user ID provided']);
-            }
-            
-            // Load courier model
-            $courier = new Courier();
-            $user = new UserModel();
-            
-          
-            
-            if(1) {
-                echo json_encode(['status' => 'success', 'message' => 'User deleted successfully']);
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'Failed to delete user']);
-            }
-            
-            return;
-        }
-        
-       redirect('admin/couriers');
-    }
 }

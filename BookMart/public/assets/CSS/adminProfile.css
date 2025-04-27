@@ -10,12 +10,11 @@ body{
 
 .container {
     width: 100%;
-    text-align: center;
 }
 
 .container h1{
-    margin-top: 20px;
-    color: #BE5715;
+    margin-top: 10px;
+    color: #02224E;
 }
 
 .box {
@@ -49,12 +48,12 @@ body{
 }
 
 .tab-button.first-child {
-    margin-left: 10%;
+    margin-left: 8%;
     padding-left: 0;
 }
 
 .tab-button.last-child {
-    margin-right: 43%;
+    margin-right: 50%;
     padding-right: 0;
 }
 

@@ -2,7 +2,7 @@
 
 require 'Book.php';
 require 'Articles.php';
-
+require 'AdminHome.php';
 
 class Home extends Controller{
     
@@ -11,6 +11,9 @@ class Home extends Controller{
         $articleController = new Articles();
         $bookStoreModel =new BookStore();
         $adModel = new AdvModel();
+        $order = new Order();
+        $Payroll = new Payroll();
+        $userModel = new UserModel();
 
         $newArrivals = $bookController->getNewArrivals();
         $bestSellers = $bookController->getBestSellers();
@@ -25,6 +28,12 @@ class Home extends Controller{
         if(isset($_SESSION['user_id']) && ($_SESSION['user_role'] == 'buyer' || $_SESSION['user_role'] == 'bookSeller' )){
 
             $recommendBookstores=$bookStoreModel->recommendBookstores($_SESSION['user_id']);
+        }
+
+        if(isset($_SESSION['user_id']) && ($_SESSION['user_role'] == 'admin' || $_SESSION['user_role'] == 'superAdmin' )){
+            $adminHomeController = new AdminHome();
+            $gethome = $adminHomeController->getAdminHomeData($_SESSION['user_id']);
+            $adminHomeData['adminHomeData'] = $gethome;
         }
         
         $data = ['newArrivals' => $newArrivals,
@@ -69,10 +78,10 @@ class Home extends Controller{
                     $this->view('bookStoreHome',$storeData);
                     break;
                 case 'admin':
-                    $this->view('adminHome');
+                    $this->view('adminHome',$adminHomeData);
                     break;
                 case 'superAdmin':
-                    $this->view('adminHome');
+                    $this->view('adminHome',$adminHomeData);
                     break;
                 case 'bookSeller':
                     $this->view('bookSellerHome',$data);

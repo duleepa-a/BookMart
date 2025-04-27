@@ -100,25 +100,25 @@ body {
 .button-group {
     display: flex;
     justify-content: center;
-    margin: 30px 0;
-}
-
-.close-btn {
-    border: none;
-    background-color: #02224E;
-    color: white;
-    padding: 12px 25px;
+    margin: 10px 0;
+  }
+  
+  .close-btn {
+    border:solid 3px #02224E;
+    color: #02224E;
+    padding: 2px 10px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     transition: all 0.3s ease;
-}
-
-.close-btn:hover {
-    background-color: #03316e;
+  }
+  
+  .close-btn:hover {
+    background-color: #02224E;
+    color: white;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+  }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

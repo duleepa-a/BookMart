@@ -23,7 +23,7 @@
     <div class="container">
         <div class="box">
             <div class="search-row">
-                <h2>Find Users</h2>
+                <h1>Users</h1>
                     <input type="text" class="search-input" placeholder="Filter users by User ID or Name" id="searchInput">
                     <select class="sort-by" id="roleFilter" onchange="filterByRole()">
                         <option value="">All Users</option>
@@ -62,8 +62,8 @@
                                 }
                                 
                                 echo "<tr onclick='window.location.href=\"" . ROOT . "/" . $viewPage . "?id=" . $user->ID . "\"'>";
-                                echo "<td>" . htmlspecialchars($user->ID) . "</td>";
-                                echo "<td>" . htmlspecialchars($user->username) . "</td>";
+                                echo "<td class='user-id'>" . htmlspecialchars($user->ID) . "</td>";
+                                echo "<td class='user-name'>" . htmlspecialchars($user->username) . "</td>";
                                 echo "<td>" . htmlspecialchars($user->email) . "</td>";
                                 echo "<td>" . htmlspecialchars($user->role) . "</td>";
                                 echo "</tr>";

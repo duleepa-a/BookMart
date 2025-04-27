@@ -24,19 +24,20 @@
         <div class="box">
             <form action="<?= ROOT ?>/adminSearchorders" method="GET">
                 <div class="search-row">
-                    <h2>Search Orders</h2>
+                    <h1>Orders</h1>
                     <div class="search-container">
-                        <input type="text" name="search" placeholder="Search by title, author, or ISBN" value="<?= htmlspecialchars($searchQuery) ?>">
+                        <input type="text" name="search" placeholder="Search by title, Customer name, or seller/store" id="searchOrderInput">
                         <button type="submit">
                             <i class="fa fa-search"></i> 
                         </button>
                     </div>
-                    <select class="sort-by" name="sort">
-                        <option value="">Sort by</option>
-                        <option value="title" <?= isset($_GET['sort']) && $_GET['sort'] == 'title' ? 'selected' : '' ?>>Book Title</option>
-                        <option value="name" <?= isset($_GET['sort']) && $_GET['sort'] == 'name' ? 'selected' : '' ?>>Customer Name</option>
-                        <option value="store" <?= isset($_GET['sort']) && $_GET['sort'] == 'store' ? 'selected' : '' ?>>Book store/Seller</option>
-                        <option value="status" <?= isset($_GET['sort']) && $_GET['sort'] == 'status' ? 'selected' : '' ?>>Order_status</option>
+                    <select class="sort-by" id="statusFilter" onchange="filterByStatus()">
+                        <option value="">Order Status</option>
+                        <option value="pending" <?= $data['selected_status'] == 'pending' ? 'selected' : '' ?>>pending</option>
+                        <option value="shipping" <?= $data['selected_status'] == 'shipping' ? 'selected' : '' ?>>shipping</option>
+                        <option value="completed" <?= $data['selected_status'] == 'completed' ? 'selected' : '' ?>>completed</option>
+                        <option value="reviewed" <?= $data['selected_status'] == 'reviewed' ? 'selected' : '' ?>>reviewed</option>
+                        <option value="canceled" <?= $data['selected_status'] == 'canceled' ? 'selected' : '' ?>>canceled</option>
                     </select>
                     <?php if (isset($_GET['page'])): ?>
                         <input type="hidden" name="page" value="<?= (int)$_GET['page'] ?>">
@@ -69,9 +70,9 @@
                                 data-bookquantity="<?= htmlspecialchars($order->quanitity) ?>"
                                 onclick="window.location.href='<?= ROOT ?>/adminOrderView?order_id=<?= $order->order_id ?>'">
 
-                                <td><?= htmlspecialchars($order->title) ?></td>
-                                <td><?= htmlspecialchars($order->full_name) ?></td>
-                                <td><?= htmlspecialchars($order->publisher) ?></td>
+                                <td class='title'><?= htmlspecialchars($order->title) ?></td>
+                                <td class='name'><?= htmlspecialchars($order->full_name) ?></td>
+                                <td class='store'><?= htmlspecialchars($order->publisher) ?></td>
                                 <td><?= htmlspecialchars($order->created_on) ?></td>
                                 <td><?= htmlspecialchars($order->total_amount) ?></td>
                                 <td><?= htmlspecialchars($order->quanitity) ?></a></td>
@@ -112,7 +113,24 @@
 
         </div>
     </div>
-    <br><br>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('searchOrderInput').addEventListener('keyup', function () {
+                const searchValue = this.value.toLowerCase();
+                const tableRows = document.querySelectorAll('.table tbody tr');
+
+                tableRows.forEach(row => {
+                    const title = row.querySelector('.title')?.textContent.toLowerCase() || '';
+                    const name = row.querySelector('.name')?.textContent.toLowerCase() || '';
+                    const store = row.querySelector('.store')?.textContent.toLowerCase() || '';
+
+                    const match = title.includes(searchValue) || name.includes(searchValue) || store.includes(searchValue);
+                    row.style.display = match ? '' : 'none';
+                });
+            });
+        });
+    </script>
 
     <script src="<?= ROOT ?>/assets/JS/adminsearch.js"></script>
 

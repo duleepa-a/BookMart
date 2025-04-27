@@ -24,19 +24,13 @@
         <div class="box">
             <form action="<?= ROOT ?>/adminSearchbooks" method="GET">
                 <div class="search-row">
-                    <h2>Search Books</h2>
+                    <h1>Books</h1>
                     <div class="search-container">
-                        <input type="text" name="search" placeholder="Search by title, author, or ISBN" value="<?= htmlspecialchars($searchQuery) ?>">
+                        <input type="text" name="search" placeholder="Search by title, author, or store/seller" id="searchBookInput">
                         <button type="submit">
                             <i class="fa fa-search"></i> 
                         </button>
                     </div>
-                    <select class="sort-by" name="sort" onchange="this.form.submit()">
-                        <option value="">Sort by</option>
-                        <option value="title" <?= isset($_GET['sort']) && $_GET['sort'] == 'title' ? 'selected' : '' ?>>Book Title</option>
-                        <option value="author" <?= isset($_GET['sort']) && $_GET['sort'] == 'author' ? 'selected' : '' ?>>Author</option>
-                        <option value="publisher" <?= isset($_GET['sort']) && $_GET['sort'] == 'publisher' ? 'selected' : '' ?>>Book store/Seller</option>
-                    </select>
                 </div>
             </form>
 
@@ -66,10 +60,10 @@
                                 data-bookquantity="<?= htmlspecialchars($book->quantity) ?>"
                                 onclick="window.location.href='<?= ROOT ?>/adminBookView?book_id=<?= $book->id ?>'">
 
-                                <td><?= htmlspecialchars($book->title) ?></td>
-                                <td><?= htmlspecialchars($book->author) ?></td>
+                                <td class='title'><?= htmlspecialchars($book->title) ?></td>
+                                <td class='author'><?= htmlspecialchars($book->author) ?></td>
                                 <td><?= htmlspecialchars($book->ISBN) ?></td>
-                                <td><?= htmlspecialchars($book->publisher) ?></td>
+                                <td class='store'><?= htmlspecialchars($book->publisher) ?></td>
                                 <td><?= htmlspecialchars($book->price) ?></td>
                                 <td><?= htmlspecialchars($book->quantity) ?></a></td>
                                 
@@ -108,7 +102,23 @@
 
         </div>
     </div>
-    <br><br>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('searchBookInput').addEventListener('keyup', function () {
+                const searchValue = this.value.toLowerCase();
+                const tableRows = document.querySelectorAll('.table tbody tr');
+
+                tableRows.forEach(row => {
+                    const title = row.querySelector('.title')?.textContent.toLowerCase() || '';
+                    const author = row.querySelector('.author')?.textContent.toLowerCase() || '';
+                    const store = row.querySelector('.store')?.textContent.toLowerCase() || '';
+
+                    const match = title.includes(searchValue) || author.includes(searchValue) || store.includes(searchValue);
+                    row.style.display = match ? '' : 'none';
+                });
+            });
+        });
+    </script>
 
     <script src="<?= ROOT ?>/assets/JS/adminsearch.js"></script>
 

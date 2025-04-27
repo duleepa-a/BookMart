@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             setTimeout(function() {
                 successMessage.classList.remove('show');
-            }, 2000);
+            }, 8000);
         });
     }
     

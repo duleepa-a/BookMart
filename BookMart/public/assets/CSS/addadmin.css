@@ -14,7 +14,7 @@ body {
 
 .container h1{
     margin-top: 10px;
-    color: #BE5715;
+    color: #02224E;
 }
 
 .box {
@@ -62,21 +62,18 @@ body {
     outline: none;
 }
 
-.submit-button {
-    margin-left: 17.5%;
-    margin-right: 6.5%;
-    padding: 20px 45px;
-    border: none;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #02224E;
+.save-status-btn {
+    padding: 5px 15px;
+    border: 3px solid #02224E;
+    color: #02224E;
     font-size: 1rem;
     cursor: pointer;
     align-self: center;
 }
 
-.submit-button:hover{
-    background-color: #F20000;
+.save-status-btn:hover{
+    background-color: #02224E;
+    color: #ffffff
 }
 
 
@@ -193,9 +190,8 @@ body {
 }
 
 .modal-actions button.close-modal {
-    background-color: #02224e00;
-    border:solid 3px #02224E;
-    color: #02224E;
+    border:solid 3px #000000;
+    color: #000000;
 }
 
 .modal-actions button[type="submit"]:hover {
@@ -205,8 +201,8 @@ body {
 }
 
 .modal-actions button.close-modal:hover {
-    background-color: #02224E;
-    border:solid 3px #02224e;
+    background-color: #000000;
+    border:solid 3px #000000;
     color: #ffffff;
 }
 

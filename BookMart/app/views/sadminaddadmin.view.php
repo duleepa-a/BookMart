@@ -37,7 +37,7 @@
                     <button class="add-bttn"><span class="compose-icon"><i class="fa-solid fa-plus"></i></span>Add Admin</button>
                 </div>
                 
-                <h2>Current Administrators</h2>
+                <h1>Current Administrators</h1>
                 <table class="add-table">
                     <thead>
                         <tr>
