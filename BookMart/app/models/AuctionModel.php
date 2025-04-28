@@ -107,6 +107,10 @@ class AuctionModel {
             $auctionData['is_closed'] = $data['is_closed'];
         }
 
+        if (array_key_exists('end_time', $data)) {
+            $auctionData['end_time'] = $data['end_time'];
+        }
+
         $result = $this->update($data['id'], $auctionData);
         
         return $result;
