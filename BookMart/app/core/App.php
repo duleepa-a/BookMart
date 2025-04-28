@@ -161,11 +161,9 @@ class App{
             }
         }
     
-        // Check if the controller and method are public
         if ($this->isPublic($this->controller, $this->method) || $this->checkAccess($this->controller, $this->method)) {
             call_user_func_array([$controller, $this->method], $URL);
         } else {
-            // Redirect to unauthorized access page or show an error
             redirect('unauthorized');
             exit();
         }

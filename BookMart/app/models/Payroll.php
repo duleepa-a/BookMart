@@ -47,7 +47,7 @@ class Payroll {
 
         $systemStats = $systemStatModel->first(['id' => 1 ]);
         $systemFeePercentageForDeliveries = $systemStats->systemfee_add ? ($systemStats->systemfee_add)/100 : 0.1;
-        $systemFeePercentageForBooks = $systemStats->systemfee_book ? ($systemStats->book)/100 : 0.1;
+        $systemFeePercentageForBooks = $systemStats->systemfee_book ? ($systemStats->systemfee_book)/100 : 0.1;
 
         $courierData = [
             'payee_id' => $courier->user_id,
