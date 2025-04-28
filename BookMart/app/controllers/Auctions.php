@@ -162,6 +162,19 @@ class Auctions extends Controller {
     public function createAuction() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
+            $is_closed = 0;
+
+            $auctionModel = new AuctionModel();
+            $timeQuery = "SELECT NOW() as server_time";
+            $result = $auctionModel->query($timeQuery);
+            $db_time = $result[0]->server_time;
+            
+            $serverTimestamp = strtotime($db_time);
+            $postTimestamp = strtotime($_POST['start_time']);
+
+            if ($serverTimestamp < $postTimestamp) {
+                $is_closed = 1;
+            }
             $auctionData = [
                 'book_id' => trim($_POST['book_id']),
                 'seller_id' => $_SESSION['user_id'],
@@ -170,10 +183,10 @@ class Auctions extends Controller {
                 'buy_now_price' => !empty(filter_var(trim($_POST['buy_now_price']))) ? filter_var(trim($_POST['buy_now_price']), FILTER_VALIDATE_FLOAT) : null,
                 'start_time' => trim($_POST['start_time']),
                 'end_time' => trim($_POST['end_time']),
-            ];
-            
-            $auction = new AuctionModel();
-            $auction->createAuction($auctionData);
+                'is_closed' => $is_closed,
+            ];  
+
+            $auctionModel->createAuction($auctionData);
             
             redirect('auctions');
         } else {
@@ -215,6 +228,10 @@ class Auctions extends Controller {
 
     public function buyNow() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            if(isset($_SESSION['auction_details'])) {
+                unset($_SESSION['auction_details']);
+            }
             
             $auctionData = [
                 'id' => trim($_POST['auction_id']),
