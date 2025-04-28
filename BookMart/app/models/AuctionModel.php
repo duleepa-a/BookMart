@@ -73,6 +73,7 @@ class AuctionModel {
             'buy_now_price' => $data['buy_now_price'],
             'start_time' => $data['start_time'],
             'end_time' => $data['end_time'],
+            'is_closed' => $data['is_closed'],
         ];
         
         $result = $this->insert($auctionData);
