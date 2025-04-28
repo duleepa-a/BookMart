@@ -266,11 +266,17 @@ class Auctions extends Controller {
 
     public function completeAuction() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $auctionModel = new AuctionModel();
+            $timeQuery = "SELECT NOW() as server_time";
+            $result = $auctionModel->query($timeQuery);
+            $db_time = $result[0]->server_time;
             
             $auctionData = [
                 'id' => trim($_POST['auction_id']),
                 'winner_user_id' => trim($_POST['current_bidder_id']),
                 'is_closed' => 1,
+                'end_time' => $db_time,
             ];
             
             $auction = new AuctionModel();
