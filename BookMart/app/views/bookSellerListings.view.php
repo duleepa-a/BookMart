@@ -26,9 +26,8 @@
 
         <br><br>
 
-        <div class="controls">      <!-- First row division begin -->
-            <input type="text" placeholder="Search..." class="search-bar">
-            <button>Search</button>
+        <div class="inventory-toolbar">      <!-- First row division begin -->
+            <input type="text" placeholder="Search your book in the inventory" class="inventory-search-bar">
         </div>                      <!-- First row division end -->
 
         <?php if (!empty($inventory)) : ?>
