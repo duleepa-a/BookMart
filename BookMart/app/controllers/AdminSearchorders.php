@@ -12,11 +12,11 @@ class AdminSearchorders extends Controller {
         
         if (!empty($order_status)) {
             $orders = $orderModel->getordersByStatus($order_status, $limit, $offset);
-            $totalOrders = $orderModel->count($order_status);
+            $totalOrders = $orderModel->adminCount($order_status);
         } 
         else {
             $orders = $orderModel->findAll($limit, $offset);
-            $totalOrders = $orderModel->count();
+            $totalOrders = $orderModel->adminCount();
         }
         
         $totalPages = ceil($totalOrders / $limit);
